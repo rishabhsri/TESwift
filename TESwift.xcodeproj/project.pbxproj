@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		0D57D2A630398D4060513A87 /* Pods_TESwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A7AEB55F82D75483310D6C5 /* Pods_TESwift.framework */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
 		1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */; };
@@ -84,7 +83,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				0D57D2A630398D4060513A87 /* Pods_TESwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -237,12 +235,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 186A23BF1DF9431E005E78D2 /* Build configuration list for PBXNativeTarget "TESwift" */;
 			buildPhases = (
-				99D7F220E426CEF74C1AA3C4 /* [CP] Check Pods Manifest.lock */,
 				186A23A61DF9431E005E78D2 /* Sources */,
 				186A23A71DF9431E005E78D2 /* Frameworks */,
 				186A23A81DF9431E005E78D2 /* Resources */,
-				88A048FFAAA8C9B391005B5E /* [CP] Embed Pods Frameworks */,
-				B052DA3949B216B73C49AD58 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -301,54 +296,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		88A048FFAAA8C9B391005B5E /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TESwift/Pods-TESwift-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		99D7F220E426CEF74C1AA3C4 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
-			showEnvVarsInLog = 0;
-		};
-		B052DA3949B216B73C49AD58 /* [CP] Copy Pods Resources */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "[CP] Copy Pods Resources";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TESwift/Pods-TESwift-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		186A23A61DF9431E005E78D2 /* Sources */ = {
@@ -503,7 +450,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vgroup.TESwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "TESwift-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TESwift/TESwift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -518,7 +465,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.vgroup.TESwift;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "TESwift-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "TESwift/TESwift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
