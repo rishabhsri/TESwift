@@ -5,6 +5,6 @@ target 'TESwift' do
   
 use_frameworks!
   # Pods for TESwift
- pod "AFNetworking-BoltsSupport”
+
 
 end
