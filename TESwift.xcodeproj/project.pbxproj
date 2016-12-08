@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0D57D2A630398D4060513A87 /* Pods_TESwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2A7AEB55F82D75483310D6C5 /* Pods_TESwift.framework */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
-		186A23B61DF9431E005E78D2 /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 186A23B41DF9431E005E78D2 /* TESwift.xcdatamodeld */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
 		1878C81C1DF948B100DAC10E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1878C8171DF948B100DAC10E /* ViewController.swift */; };
 		1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */; };
@@ -19,13 +19,15 @@
 /* Begin PBXFileReference section */
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		186A23B51DF9431E005E78D2 /* TESwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TESwift.xcdatamodel; sourceTree = "<group>"; };
 		186A23B71DF9431E005E78D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		186A23BC1DF9431E005E78D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1878C8171DF948B100DAC10E /* ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1878C81A1DF948B100DAC10E /* TESwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TESwift.xcdatamodel; sourceTree = "<group>"; };
 		1878C8201DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1878C8221DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
+		2A7AEB55F82D75483310D6C5 /* Pods_TESwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TESwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
+		C9FEF4390619399CADF35F6A /* Pods-TESwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -33,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0D57D2A630398D4060513A87 /* Pods_TESwift.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -44,6 +47,8 @@
 			children = (
 				186A23AC1DF9431E005E78D2 /* TESwift */,
 				186A23AB1DF9431E005E78D2 /* Products */,
+				DD6101464481FED89DA7017D /* Pods */,
+				212A20BA2F8D1EE10C6B4E00 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -64,7 +69,6 @@
 				186A23AD1DF9431E005E78D2 /* AppDelegate.swift */,
 				186A23B71DF9431E005E78D2 /* Assets.xcassets */,
 				186A23BC1DF9431E005E78D2 /* Info.plist */,
-				186A23B41DF9431E005E78D2 /* TESwift.xcdatamodeld */,
 			);
 			path = TESwift;
 			sourceTree = "<group>";
@@ -102,6 +106,23 @@
 			path = Base.lproj;
 			sourceTree = "<group>";
 		};
+		212A20BA2F8D1EE10C6B4E00 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2A7AEB55F82D75483310D6C5 /* Pods_TESwift.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		DD6101464481FED89DA7017D /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				C9FEF4390619399CADF35F6A /* Pods-TESwift.debug.xcconfig */,
+				6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -109,9 +130,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 186A23BF1DF9431E005E78D2 /* Build configuration list for PBXNativeTarget "TESwift" */;
 			buildPhases = (
+				99D7F220E426CEF74C1AA3C4 /* [CP] Check Pods Manifest.lock */,
 				186A23A61DF9431E005E78D2 /* Sources */,
 				186A23A71DF9431E005E78D2 /* Frameworks */,
 				186A23A81DF9431E005E78D2 /* Resources */,
+				88A048FFAAA8C9B391005B5E /* [CP] Embed Pods Frameworks */,
+				B052DA3949B216B73C49AD58 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -170,12 +194,59 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		88A048FFAAA8C9B391005B5E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TESwift/Pods-TESwift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		99D7F220E426CEF74C1AA3C4 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		B052DA3949B216B73C49AD58 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TESwift/Pods-TESwift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		186A23A61DF9431E005E78D2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				186A23B61DF9431E005E78D2 /* TESwift.xcdatamodeld in Sources */,
 				1878C81C1DF948B100DAC10E /* ViewController.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
 				1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */,
@@ -299,6 +370,7 @@
 		};
 		186A23C01DF9431E005E78D2 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = C9FEF4390619399CADF35F6A /* Pods-TESwift.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NQL478KXAA;
@@ -312,6 +384,7 @@
 		};
 		186A23C11DF9431E005E78D2 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				DEVELOPMENT_TEAM = NQL478KXAA;
@@ -347,16 +420,6 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		186A23B41DF9431E005E78D2 /* TESwift.xcdatamodeld */ = {
-			isa = XCVersionGroup;
-			children = (
-				186A23B51DF9431E005E78D2 /* TESwift.xcdatamodel */,
-			);
-			currentVersion = 186A23B51DF9431E005E78D2 /* TESwift.xcdatamodel */;
-			path = TESwift.xcdatamodeld;
-			sourceTree = "<group>";
-			versionGroupType = wrapper.xcdatamodel;
-		};
 		1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
