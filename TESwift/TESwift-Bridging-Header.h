@@ -8,6 +8,6 @@
 
 #ifndef TESwift_Bridging_Header_h
 #define TESwift_Bridging_Header_h
-
+#import "AFNetworking.h"
 
 #endif /* TESwift_Bridging_Header_h */
