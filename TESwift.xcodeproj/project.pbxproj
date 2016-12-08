@@ -28,6 +28,7 @@
 		188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8EAF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m */; };
 		188C8EC01DF979C300C2D52E /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8EB11DF979C300C2D52E /* UIWebView+AFNetworking.m */; };
 		188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188C8EC31DF97D6900C2D52E /* BaseViewController.swift */; };
+		189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B54881DF9857D0091FDAD /* TEServiceCall.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -72,6 +73,7 @@
 		188C8EB01DF979C300C2D52E /* UIWebView+AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIWebView+AFNetworking.h"; sourceTree = "<group>"; };
 		188C8EB11DF979C300C2D52E /* UIWebView+AFNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIWebView+AFNetworking.m"; sourceTree = "<group>"; };
 		188C8EC31DF97D6900C2D52E /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
+		189B54881DF9857D0091FDAD /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		2A7AEB55F82D75483310D6C5 /* Pods_TESwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TESwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
@@ -134,6 +136,7 @@
 			isa = PBXGroup;
 			children = (
 				1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */,
+				189B54881DF9857D0091FDAD /* TEServiceCall.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -314,6 +317,7 @@
 				1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
+				189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */,
 				188C8EB51DF979C300C2D52E /* AFURLRequestSerialization.m in Sources */,
 				188C8EBA1DF979C300C2D52E /* AFNetworkActivityIndicatorManager.m in Sources */,
 				188C8EB61DF979C300C2D52E /* AFURLResponseSerialization.m in Sources */,
