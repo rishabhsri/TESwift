@@ -8,14 +8,33 @@
 
 import UIKit
 
-class LogInViewController: UIViewController {
+class LogInViewController: BaseViewController , UITextFieldDelegate {
 
+    @IBOutlet weak var txtUsername: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    
+    
+    @IBAction func loginAction(_ sender: AnyObject) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.addDismisskeyboardTapGesture()
+        self.styleGuide()
 
         // Do any additional setup after loading the view.
     }
 
+    
+    func styleGuide()->Void {
+    
+        txtUsername.attributedPlaceholder = NSAttributedString(string:"Username or Email-Id",
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+        txtPassword.attributedPlaceholder = NSAttributedString(string:"Password",
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+    }
+    
+        
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

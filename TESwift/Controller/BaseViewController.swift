@@ -16,6 +16,18 @@ class BaseViewController: UIViewController {
         // Do any additional setup after loading the view.
     }
 
+    
+    func addDismisskeyboardTapGesture()->Void{
+        
+        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        self.view.addGestureRecognizer(tap)
+        
+    }
+    
+    func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
