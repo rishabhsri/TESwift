@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
 		1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */; };
@@ -32,6 +33,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		186A23B71DF9431E005E78D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 			isa = PBXGroup;
 			children = (
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
+				184C42581DFA983F001B576A /* LogInViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -313,6 +316,7 @@
 				188C8EBC1DF979C300C2D52E /* UIButton+AFNetworking.m in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
+				184C42591DFA983F001B576A /* LogInViewController.swift in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
 				1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
