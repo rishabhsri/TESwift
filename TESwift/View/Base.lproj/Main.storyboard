@@ -78,9 +78,12 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" keyboardAppearance="alert" returnKeyType="next"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="bS2-Y2-dmv"/>
+                                                </connections>
                                             </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomLine" translatesAutoresizingMaskIntoConstraints="NO" id="qOT-o1-mXG">
+                                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomLine" translatesAutoresizingMaskIntoConstraints="NO" id="qOT-o1-mXG">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="TnR-52-5s9"/>
                                                 </constraints>
@@ -91,9 +94,12 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done" secureTextEntry="YES"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done" secureTextEntry="YES"/>
+                                                <connections>
+                                                    <outlet property="delegate" destination="BYZ-38-t0r" id="jfG-L5-94z"/>
+                                                </connections>
                                             </textField>
-                                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomLine" translatesAutoresizingMaskIntoConstraints="NO" id="TOW-j6-BnP">
+                                            <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomLine" translatesAutoresizingMaskIntoConstraints="NO" id="TOW-j6-BnP">
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="1" id="fPV-5w-Imc"/>
                                                 </constraints>
@@ -133,7 +139,7 @@
                                             <constraint firstAttribute="height" constant="1" id="Y8n-Hu-qay"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FzF-yw-dOI">
+                                    <label opaque="NO" userInteractionEnabled="NO" alpha="0.5" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FzF-yw-dOI">
                                         <constraints>
                                             <constraint firstAttribute="height" constant="21" id="DaB-Mw-4Hx"/>
                                             <constraint firstAttribute="width" constant="20" id="KkG-V2-gRJ"/>
