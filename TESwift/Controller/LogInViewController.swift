@@ -27,11 +27,9 @@ class LogInViewController: BaseViewController  {
         
         @IBAction func actionOnSignup(_ sender: AnyObject) {
             
-            // Instantiate SecondViewController
-            signupViewController = self.storyboard?.instantiateViewController(withIdentifier: "signupViewController") as! SignUpViewController
+            let storyBoard : UIStoryboard = UIStoryboard(name: "Main", bundle:nil)
             
-            
-            // Take user to SecondViewController
+            let signupViewController = storyBoard.instantiateViewController(withIdentifier: "signupViewController")as!SignUpViewController
             self.navigationController?.pushViewController(signupViewController, animated: true)
             
         }
@@ -110,7 +108,7 @@ class LogInViewController: BaseViewController  {
         func getUserLogin(_ userInfo: NSMutableDictionary) -> Void {
             
             
-            ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "GET", successCall: (serviceCallOnSuccess(NSDictionary?, _callType: RequestedUrlType)), falureCall: (serviceCallOnFailure(String?, RequestedUrlType)))
+//            ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "GET", successCall: (serviceCallOnSuccess(data: NSDictionary?, callType: RequestedUrlType)), falureCall: (serviceCallOnFailure(String?, RequestedUrlType)))
             
         }
         

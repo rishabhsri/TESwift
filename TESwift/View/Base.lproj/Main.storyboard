@@ -257,12 +257,6 @@
                                             <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomLine" translatesAutoresizingMaskIntoConstraints="NO" id="5wI-VU-FVy">
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="237" id="DuY-9C-GUz"/>
-                                            <constraint firstAttribute="height" constant="1" id="cPu-3b-Cu9"/>
-                                        </constraints>
-                                    </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDQ-H8-69I">
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <state key="normal" title="FORGOT PASSWORD?">
@@ -270,6 +264,12 @@
                                             <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomLine" translatesAutoresizingMaskIntoConstraints="NO" id="5wI-VU-FVy">
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="237" id="DuY-9C-GUz"/>
+                                            <constraint firstAttribute="height" constant="1" id="cPu-3b-Cu9"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -281,7 +281,7 @@
                                     <constraint firstItem="5wI-VU-FVy" firstAttribute="centerX" secondItem="9wu-uZ-z8I" secondAttribute="centerX" id="OpQ-tS-tNV"/>
                                     <constraint firstItem="26f-se-iLr" firstAttribute="top" secondItem="9wu-uZ-z8I" secondAttribute="top" constant="8" id="P45-Ea-hus"/>
                                     <constraint firstItem="eDQ-H8-69I" firstAttribute="leading" secondItem="9wu-uZ-z8I" secondAttribute="leading" id="R4b-Z8-ch1"/>
-                                    <constraint firstItem="eDQ-H8-69I" firstAttribute="top" secondItem="5wI-VU-FVy" secondAttribute="bottom" constant="-1" id="YVj-zC-7Zz"/>
+                                    <constraint firstItem="eDQ-H8-69I" firstAttribute="top" secondItem="5wI-VU-FVy" secondAttribute="bottom" constant="4" id="YVj-zC-7Zz"/>
                                     <constraint firstItem="7ar-dG-8aC" firstAttribute="leading" secondItem="9wu-uZ-z8I" secondAttribute="leading" constant="1" id="er0-cZ-o45"/>
                                     <constraint firstAttribute="trailing" secondItem="7ar-dG-8aC" secondAttribute="trailing" constant="1" id="f6n-p0-lgJ"/>
                                     <constraint firstItem="Mc7-jn-2ry" firstAttribute="top" secondItem="7ar-dG-8aC" secondAttribute="bottom" constant="8" id="jwO-ii-QMC"/>
@@ -291,7 +291,7 @@
                                     <constraint firstAttribute="height" constant="185" id="pHv-wE-wgP"/>
                                     <constraint firstItem="3dn-8I-Vx9" firstAttribute="top" secondItem="9wu-uZ-z8I" secondAttribute="top" id="pKv-EU-5I6"/>
                                     <constraint firstAttribute="bottom" secondItem="3dn-8I-Vx9" secondAttribute="bottom" id="sQD-tt-Mka"/>
-                                    <constraint firstItem="5wI-VU-FVy" firstAttribute="top" secondItem="VDv-JN-uot" secondAttribute="bottom" constant="10" id="tnS-w5-vja"/>
+                                    <constraint firstItem="5wI-VU-FVy" firstAttribute="top" secondItem="VDv-JN-uot" secondAttribute="bottom" constant="5" id="tnS-w5-vja"/>
                                     <constraint firstItem="Mc7-jn-2ry" firstAttribute="leading" secondItem="9wu-uZ-z8I" secondAttribute="leading" constant="5" id="uS1-kw-3kM"/>
                                     <constraint firstItem="VDv-JN-uot" firstAttribute="top" secondItem="Mc7-jn-2ry" secondAttribute="bottom" constant="8" id="w8r-e3-2G1"/>
                                     <constraint firstAttribute="trailing" secondItem="3dn-8I-Vx9" secondAttribute="trailing" id="xle-48-xO1"/>
