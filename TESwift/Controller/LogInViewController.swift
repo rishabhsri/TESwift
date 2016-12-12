@@ -8,17 +8,17 @@
 
 import UIKit
 
-class LogInViewController: BaseViewController , UITextFieldDelegate {
+
+class LogInViewController: BaseViewController  {
 
     @IBOutlet weak var txtUsername: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
     
     
-    @IBAction func loginAction(_ sender: AnyObject) {
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        txtPassword.tag = 1;
         self.addDismisskeyboardTapGesture()
         self.styleGuide()
 
@@ -40,7 +40,46 @@ class LogInViewController: BaseViewController , UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    @IBAction func loginAction(_ sender: AnyObject) {
+        
+        if self.validate() {
+            
+            let userInfo:NSMutableDictionary = ["username" : txtUsername.text! as String, "password" : txtPassword.text! as String]
+            
+            self.getUserLogin(userInfo)
+        }
+    }
 
+    func validate() -> Bool {
+        
+        if self.isEmptySting(txtUsername.text!) || self.isEmptySting(txtPassword.text!) {
+            
+            
+            self.showAlert("Message", "Username or password either null or consist blanks.", 100)
+            
+            return false
+        }
+        
+        return true
+    }
+    
+    func getUserLogin(_ userInfo: NSMutableDictionary) -> Void {
+        
+    
+        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "GET", successCall: (serviceCallOnSuccess(NSDictionary?, _callType: RequestedUrlType)), falureCall: (serviceCallOnFailure(String?, RequestedUrlType)))
+        
+        }
+    
+    //MARK: -Service Call response ---
+    
+    func serviceCallOnSuccess(_ data: NSDictionary, _callType: RequestedUrlType) -> Void {
+        
+    }
+    
+    func serviceCallOnFailure(_ data: String, _callType: RequestedUrlType) -> Void {
+        
+    }
+    
     /*
     // MARK: - Navigation
 
