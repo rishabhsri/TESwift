@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G1004" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="11201" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11161"/>
@@ -14,7 +14,7 @@
         <!--Log In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="LogInViewController" customModule="TESwift" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LogInViewController" id="BYZ-38-t0r" customClass="LogInViewController" customModule="TESwift" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -242,7 +242,8 @@
                                         <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mc7-jn-2ry">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Mc7-jn-2ry">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <state key="normal" title="SIGN UP">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
@@ -251,25 +252,28 @@
                                             <action selector="actionOnSignup:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Ua6-LX-p1Y"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VDv-JN-uot">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VDv-JN-uot">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <state key="normal" title="USE AS A GUEST">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BottomLine" translatesAutoresizingMaskIntoConstraints="NO" id="5wI-VU-FVy">
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="237" id="DuY-9C-GUz"/>
-                                            <constraint firstAttribute="height" constant="1" id="cPu-3b-Cu9"/>
-                                        </constraints>
-                                    </imageView>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDQ-H8-69I">
+                                    <button opaque="NO" contentMode="scaleToFill" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eDQ-H8-69I">
+                                        <frame key="frameInset" width="1000" height="1000"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="11"/>
                                         <state key="normal" title="FORGOT PASSWORD?">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                             <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                         </state>
                                     </button>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" image="BottomLine" translatesAutoresizingMaskIntoConstraints="NO" id="5wI-VU-FVy">
+                                        <frame key="frameInset" width="1000" height="1000"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="237" id="DuY-9C-GUz"/>
+                                            <constraint firstAttribute="height" constant="1" id="cPu-3b-Cu9"/>
+                                        </constraints>
+                                    </imageView>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -281,7 +285,7 @@
                                     <constraint firstItem="5wI-VU-FVy" firstAttribute="centerX" secondItem="9wu-uZ-z8I" secondAttribute="centerX" id="OpQ-tS-tNV"/>
                                     <constraint firstItem="26f-se-iLr" firstAttribute="top" secondItem="9wu-uZ-z8I" secondAttribute="top" constant="8" id="P45-Ea-hus"/>
                                     <constraint firstItem="eDQ-H8-69I" firstAttribute="leading" secondItem="9wu-uZ-z8I" secondAttribute="leading" id="R4b-Z8-ch1"/>
-                                    <constraint firstItem="eDQ-H8-69I" firstAttribute="top" secondItem="5wI-VU-FVy" secondAttribute="bottom" constant="-1" id="YVj-zC-7Zz"/>
+                                    <constraint firstItem="eDQ-H8-69I" firstAttribute="top" secondItem="5wI-VU-FVy" secondAttribute="bottom" constant="4" id="YVj-zC-7Zz"/>
                                     <constraint firstItem="7ar-dG-8aC" firstAttribute="leading" secondItem="9wu-uZ-z8I" secondAttribute="leading" constant="1" id="er0-cZ-o45"/>
                                     <constraint firstAttribute="trailing" secondItem="7ar-dG-8aC" secondAttribute="trailing" constant="1" id="f6n-p0-lgJ"/>
                                     <constraint firstItem="Mc7-jn-2ry" firstAttribute="top" secondItem="7ar-dG-8aC" secondAttribute="bottom" constant="8" id="jwO-ii-QMC"/>
@@ -291,7 +295,7 @@
                                     <constraint firstAttribute="height" constant="185" id="pHv-wE-wgP"/>
                                     <constraint firstItem="3dn-8I-Vx9" firstAttribute="top" secondItem="9wu-uZ-z8I" secondAttribute="top" id="pKv-EU-5I6"/>
                                     <constraint firstAttribute="bottom" secondItem="3dn-8I-Vx9" secondAttribute="bottom" id="sQD-tt-Mka"/>
-                                    <constraint firstItem="5wI-VU-FVy" firstAttribute="top" secondItem="VDv-JN-uot" secondAttribute="bottom" constant="10" id="tnS-w5-vja"/>
+                                    <constraint firstItem="5wI-VU-FVy" firstAttribute="top" secondItem="VDv-JN-uot" secondAttribute="bottom" constant="5" id="tnS-w5-vja"/>
                                     <constraint firstItem="Mc7-jn-2ry" firstAttribute="leading" secondItem="9wu-uZ-z8I" secondAttribute="leading" constant="5" id="uS1-kw-3kM"/>
                                     <constraint firstItem="VDv-JN-uot" firstAttribute="top" secondItem="Mc7-jn-2ry" secondAttribute="bottom" constant="8" id="w8r-e3-2G1"/>
                                     <constraint firstAttribute="trailing" secondItem="3dn-8I-Vx9" secondAttribute="trailing" id="xle-48-xO1"/>
