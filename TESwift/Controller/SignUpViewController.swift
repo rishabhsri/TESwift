@@ -9,7 +9,22 @@
 import UIKit
 
 class SignUpViewController: BaseViewController {
-
+    @IBOutlet weak var txtUsername: UITextField!
+    @IBOutlet weak var txtDisplayname: UITextField!
+    @IBOutlet weak var txtPassword: UITextField!
+    @IBOutlet weak var txtConfirmPassword: UITextField!
+    @IBOutlet weak var txtEmailId: UITextField!
+    @IBOutlet weak var txtLocation: UITextField!
+    
+    @IBAction func actionOnSignUpBtn(_ sender: AnyObject) {
+    }
+    @IBAction func actionOnProfilePicBtn(_ sender: AnyObject) {
+    }
+    
+    @IBAction func actionOnUpArrow(_ sender: AnyObject) {
+    }
+    @IBAction func actionGetUserLocation(_ sender: AnyObject) {
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
 
