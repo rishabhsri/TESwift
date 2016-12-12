@@ -13,10 +13,16 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-
+    var navController: UINavigationController?
+    var loginviewController:LogInViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let loginviewController = storyboard.instantiateViewController(withIdentifier: "LogInViewController") as UIViewController
+        navController = UINavigationController(rootViewController:loginviewController)
+        navController?.setNavigationBarHidden(true, animated: false)
+        self.window!.rootViewController = navController
         return true
     }
 
