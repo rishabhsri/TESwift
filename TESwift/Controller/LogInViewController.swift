@@ -9,12 +9,43 @@
 import UIKit
 
 
+<<<<<<< HEAD
 class LogInViewController: BaseViewController  {
+=======
+class LogInViewController: BaseViewController , UITextFieldDelegate {
+>>>>>>> 6cb238485efd6d5a7b9d4f4d4e22027efc1dc64f
 
+    @IBOutlet weak var txtUsernameTop: NSLayoutConstraint!
+    @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
+    @IBOutlet weak var socialConnectWidth: NSLayoutConstraint!
     @IBOutlet weak var txtUsername: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
+   
+    @IBOutlet weak var viewForLogin: UIView!
+    @IBOutlet var viewForArrow: UIView!
     
+    @IBOutlet weak var viewForSocial: UIView!
+   
+    var signupViewController = SignUpViewController()
     
+    @IBAction func actionOnSignup(_ sender: AnyObject) {
+        
+        // Instantiate SecondViewController
+         signupViewController = self.storyboard?.instantiateViewController(withIdentifier: "signupViewController") as! SignUpViewController
+        
+        
+        // Take user to SecondViewController
+        self.navigationController?.pushViewController(signupViewController, animated: true)
+        
+    }
+    
+<<<<<<< HEAD
+=======
+    @IBAction func loginAction(_ sender: AnyObject) {
+    }
+   
+    
+>>>>>>> 6cb238485efd6d5a7b9d4f4d4e22027efc1dc64f
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -32,9 +63,31 @@ class LogInViewController: BaseViewController  {
                                                                 attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         txtPassword.attributedPlaceholder = NSAttributedString(string:"Password",
                                                                 attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        if (IS_IPHONE_5) {
+            self.socialConnectHieght.constant = 40
+            self.socialConnectWidth.constant = 40
+            self.txtUsernameTop.constant = 30
+        }
+        
     }
     
+    
+    @IBAction func actionOnArrowUp(_ sender: AnyObject) {
+    self.viewForArrow.isHidden = false
+    self.viewForSocial.isHidden = true
+    self.viewForLogin.isHidden = true
         
+    }
+    
+    @IBAction func actionCloseSignUpViewBtn(_ sender: AnyObject) {
+     self.viewForArrow.isHidden = true
+     self.viewForSocial.isHidden = false
+     self.viewForLogin.isHidden = false
+
+    }
+
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
