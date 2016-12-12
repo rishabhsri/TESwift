@@ -74,14 +74,16 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
         self.present(alertController, animated: true, completion: nil)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    func parseResponse(responseObject:Any) -> NSDictionary {
+        
+        if let responseDict:NSDictionary = responseObject as? NSDictionary {
+            return responseDict;
+        }else if let responseString:String = responseObject as? String
+        {
+           return responseString.convertToDictionary(text: responseString)
+        }
+        
+        return NSDictionary()
     }
-    */
-
+    
 }

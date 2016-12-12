@@ -13,6 +13,7 @@
 		1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */; };
 		1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C81F1DF9491C00DAC10E /* LaunchScreen.storyboard */; };
 		1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C8211DF9491C00DAC10E /* Main.storyboard */; };
+		187E7D851DFE923800896C18 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E7D841DFE923800896C18 /* String+Utilities.swift */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
 		188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E961DF979C300C2D52E /* AFSecurityPolicy.m */; };
@@ -43,6 +44,7 @@
 		1878C81A1DF948B100DAC10E /* TESwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TESwift.xcdatamodel; sourceTree = "<group>"; };
 		1878C8201DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1878C8221DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
+		187E7D841DFE923800896C18 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		188C8E921DF979C300C2D52E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -145,6 +147,7 @@
 			children = (
 				1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */,
 				189B54881DF9857D0091FDAD /* TEServiceCall.swift */,
+				187E7D841DFE923800896C18 /* String+Utilities.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -325,6 +328,7 @@
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
 				184C42591DFA983F001B576A /* LogInViewController.swift in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
+				187E7D851DFE923800896C18 /* String+Utilities.swift in Sources */,
 				1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,

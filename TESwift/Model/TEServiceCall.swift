@@ -20,8 +20,8 @@ let File_Header = ServerURL + "file"
 let Admin_Header = ServerURL + "admin"
 let Network_Header = ServerURL + "network"
 
-typealias successHandler = (NSDictionary ,RequestedUrlType) -> Void
-typealias falureHandler = (String ,RequestedUrlType) -> Void
+typealias successHandler = (Any?,RequestedUrlType) -> Void
+typealias falureHandler = (NSError, String ,RequestedUrlType) -> Void
 
 class ServiceCall: NSObject {
     
@@ -41,9 +41,7 @@ class ServiceCall: NSObject {
         {
         case .GetUserLogin:
             urlString = String(format: "%@/login",Network_Header)
-            fallthrough
-        default :
-            urlString = ""
+            break
         }
         return urlString
     }
@@ -53,12 +51,20 @@ class ServiceCall: NSObject {
         let strURL = getRequestUrl(urlType: urlType, parameter: parameters)
         let manager:AFHTTPSessionManager = AFHTTPSessionManager.init(baseURL: NSURL(string: strURL) as URL?)
         
+        manager.requestSerializer = AFJSONRequestSerializer()
+        manager.responseSerializer = AFJSONResponseSerializer()
+        
+        manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
+        manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        var authKey:String = ""
+        
         let defaults = UserDefaults.standard
+        if defaults.value(forKey: "authkey") != nil {
+            authKey = defaults.value(forKey: "authkey") as! String
+        }
         
         if method == "GET" {
-            if defaults.value(forKey: "authkey") != nil {
-                manager.requestSerializer.setValue(defaults.value(forKey: "authkey") as? String,forHTTPHeaderField:"AUTH-KEY")
-            }
             
             manager.get(strURL, parameters: parameters, progress: nil,
                         success:{(task,responseObject) in
@@ -70,26 +76,24 @@ class ServiceCall: NSObject {
                             
                             if task.state == URLSessionTask.State.completed
                             {
-                                let responseDict:NSDictionary = responseObject as! NSDictionary
-                                successCall(responseDict,urlType)
+                                successCall(responseObject,urlType)
                             }else
                             {
-                                falureCall("request failed",urlType)
+                                let error:NSError = NSError();
+                                falureCall(error,"request failed",urlType)
                             }
                             
             }, failure: {(task,error) in
                 
-                falureCall(error.localizedDescription,urlType)
+                falureCall(error as NSError,error.localizedDescription,urlType)
                 
             })
             
         }else if method == "POST"
         {
-            manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
+            
             if urlType != .GetUserLogin {
-                if defaults.value(forKey: "authkey") != nil {
-                    manager.requestSerializer.setValue(defaults.value(forKey: "authkey") as? String,forHTTPHeaderField:"AUTH-KEY")
-                }
+                manager.requestSerializer.setValue(authKey,forHTTPHeaderField:"AUTH-KEY")
             }
             
             manager.post(strURL, parameters: parameters, progress: nil,
@@ -102,27 +106,45 @@ class ServiceCall: NSObject {
                             
                             if task.state == URLSessionTask.State.completed
                             {
-                                let responseDict:NSDictionary = responseObject as! NSDictionary
-                                 successCall(responseDict,urlType)
+                                if let httpResponse:HTTPURLResponse = task.response as? HTTPURLResponse
+                                {
+                                    if(httpResponse.statusCode == 200)
+                                    {
+                                        if urlType == .GetUserLogin {
+                                            
+                                            if let headers = httpResponse.allHeaderFields as NSDictionary? as! [String:String]?
+                                            {
+                                                let cookieString:String = headers["Set-Cookie"]!
+                                                let seperatedStrings:Array = cookieString.components(separatedBy: ";")
+                                                let seperatedStrings2:Array = (seperatedStrings.first?.components(separatedBy: "="))!
+                                                let authKey:String = seperatedStrings2.last!
+                                                
+                                                defaults.set(authKey, forKey: "authkey")
+                                                defaults.synchronize()
+                                            }
+                                        }
+                                    }
+                                }
+                                
+                                successCall(responseObject,urlType)
                             }else
                             {
-                                falureCall("request failed",urlType)
+                                let error:NSError = NSError();
+                                falureCall(error,"request failed",urlType)
                             }
                             
             }, failure: {(task, error) in
                 
-                falureCall(error.localizedDescription,urlType)
+                falureCall(error as NSError,error.localizedDescription,urlType)
             })
             
             
         }else if method == "PUT" || method == "DELETE"
         {
-            manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
-            if defaults.value(forKey: "authkey") != nil {
-                manager.requestSerializer.setValue(defaults.value(forKey: "authkey") as? String,forHTTPHeaderField:"AUTH-KEY")
-            }
+            
+            manager.requestSerializer.setValue(authKey,forHTTPHeaderField:"AUTH-KEY")
+            
             if method == "PUT" {
-                manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
                 manager.put(strURL, parameters: parameters,
                             success:{(task, responseObject) in
                                 
@@ -133,16 +155,16 @@ class ServiceCall: NSObject {
                                 
                                 if task.state == URLSessionTask.State.completed
                                 {
-                                    let responseDict:NSDictionary = responseObject as! NSDictionary
-                                     successCall(responseDict,urlType)
+                                    successCall(responseObject,urlType)
                                 }else
                                 {
-                                    falureCall("request failed",urlType)
+                                    let error:NSError = NSError();
+                                    falureCall(error,"request failed",urlType)
                                 }
                                 
                 }, failure: {(task, error) in
                     
-                    falureCall(error.localizedDescription,urlType)
+                    falureCall(error as NSError,error.localizedDescription,urlType)
                 })
                 
             }else
@@ -157,16 +179,16 @@ class ServiceCall: NSObject {
                                 
                                 if task.state == URLSessionTask.State.completed
                                 {
-                                    let responseDict:NSDictionary = responseObject as! NSDictionary
-                                     successCall(responseDict,urlType)
+                                    successCall(responseObject,urlType)
                                 }else
                                 {
-                                    falureCall("request failed",urlType)
+                                    let error:NSError = NSError();
+                                    falureCall(error,"request failed",urlType)
                                 }
                                 
                 }, failure: {(task, error) in
                     
-                    falureCall(error.localizedDescription,urlType)
+                    falureCall(error as NSError,error.localizedDescription,urlType)
                 })
                 
             }
