@@ -9,13 +9,13 @@
 import UIKit
 
 class BaseViewController: UIViewController, UITextFieldDelegate {
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     
     func addDismisskeyboardTapGesture()->Void{
         
@@ -27,13 +27,13 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
     func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-  // MARK: - TextFields Delegate
+    // MARK: - TextFields Delegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
@@ -52,7 +52,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
         }
         return false // We do not want UITextField to insert line-breaks.
     }
-
+    
     func isEmptySting(_ text: String) -> Bool {
         
         if text.isEmpty{
@@ -75,13 +75,13 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
     }
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
