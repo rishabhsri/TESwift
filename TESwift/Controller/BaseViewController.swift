@@ -64,7 +64,7 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     
-    func showAlert(_ title: String, _ message: String, _ tag: NSInteger) -> Void {
+    func showAlert(title: String, message: String,tag: NSInteger) -> Void {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default) {

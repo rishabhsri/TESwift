@@ -9,6 +9,7 @@
 import UIKit
 
 class SignUpViewController: BaseViewController {
+    
     @IBOutlet weak var txtUsername: UITextField!
     @IBOutlet weak var txtDisplayname: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
@@ -16,35 +17,106 @@ class SignUpViewController: BaseViewController {
     @IBOutlet weak var txtEmailId: UITextField!
     @IBOutlet weak var txtLocation: UITextField!
     
-    @IBAction func actionOnSignUpBtn(_ sender: AnyObject) {
+    //MARK:- Life Cycle Methods
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        // Do any additional setup after loading the view.
     }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+    }
+    
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
+
+    //MARK:- IBAction Methods
+    
+    @IBAction func actionOnSignUpBtn(_ sender: AnyObject) {
+        
+        if self.isValid() {
+            print("everything is fine!!")
+        }
+    }
+    
     @IBAction func actionOnProfilePicBtn(_ sender: AnyObject) {
     }
     
     @IBAction func actionOnUpArrow(_ sender: AnyObject) {
     }
+    
     @IBAction func actionGetUserLocation(_ sender: AnyObject) {
     }
-    override func viewDidLoad() {
-        super.viewDidLoad()
-
-        // Do any additional setup after loading the view.
-    }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    //MARK:- Utility Methods
+    
+    func isValid() -> Bool {
+        
+        var flag:Bool = true
+        
+        if (self.txtUsername.text?.isEmpty)!
+        {
+            self.showAlert(title: kError, message: kEnterUsername, tag: 0)
+           flag = false
+        }else if(self.txtDisplayname.text?.isEmpty)!
+        {
+            self.showAlert(title: kError, message: kEnterDisplayname, tag: 0)
+            flag = false
+        }else if(self.txtPassword.text?.isEmpty)!
+        {
+            self.showAlert(title: kError, message: kEnterPassword, tag: 0)
+            flag = false
+        }else if(!CommonSetting.sharedInstance.validatePassword(password: self.txtPassword.text!))
+        {
+            self.showAlert(title: kError, message: kPasswordRulesMessage, tag: 0)
+            flag = false
+        }else if(self.txtConfirmPassword.text?.isEmpty)!
+        {
+            self.showAlert(title: kError, message: kEnterConfirmPassword, tag: 0)
+            flag = false
+        }else if(self.txtPassword.text != self.txtConfirmPassword.text)
+        {
+            self.showAlert(title: kError, message: kEnterSamePassword, tag: 0)
+            flag = false
+        }else if(self.txtEmailId.text?.isEmpty)!
+        {
+            self.showAlert(title: kError, message: kEnterEmail, tag: 0)
+            flag = false
+        }else if(!CommonSetting.sharedInstance.validateEmailID(emailID: self.txtEmailId.text!))
+        {
+            self.showAlert(title: kError, message: kInvalidEmail, tag: 0)
+            flag = false
+        }else if(self.txtLocation.text?.isEmpty)!
+        {
+            self.showAlert(title: kError, message: kEnterLocation, tag: 0)
+            flag = false
+        }
+        return flag
     }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
+        
+        //On Success Call
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+        }
+        
+        //On Falure Call
+        let falure:falureHandler = {error,responseMessage,requestType in
+            
+            // Falure call implementation
+            print(responseMessage)
+        }
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
+        
     }
-    */
-
+    
 }
