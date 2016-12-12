@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: BaseViewController {
+class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     @IBOutlet weak var txtUsername: UITextField!
     @IBOutlet weak var txtDisplayname: UITextField!
@@ -16,13 +16,18 @@ class SignUpViewController: BaseViewController {
     @IBOutlet weak var txtConfirmPassword: UITextField!
     @IBOutlet weak var txtEmailId: UITextField!
     @IBOutlet weak var txtLocation: UITextField!
+    @IBOutlet weak var profilePicBtn: UIButton!
+    
+    var isImageAdded = false
+    let imagePicker = UIImagePickerController()
     
     //MARK:- Life Cycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        //setup picker
+        imagePicker.delegate = self
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -40,10 +45,21 @@ class SignUpViewController: BaseViewController {
         
         if self.isValid() {
             print("everything is fine!!")
+            if isImageAdded {
+                self.uploadImage()
+            }else
+            {
+               // self.getUserSignup(<#T##userInfo: NSMutableDictionary##NSMutableDictionary#>)
+            }
         }
     }
     
-    @IBAction func actionOnProfilePicBtn(_ sender: AnyObject) {
+    @IBAction func actionOnProfilePicBtn(_ sender: AnyObject)
+    {
+        imagePicker.allowsEditing = false
+        imagePicker.sourceType = .photoLibrary
+        
+        present(imagePicker, animated: true, completion: nil)
     }
     
     @IBAction func actionOnUpArrow(_ sender: AnyObject) {
@@ -98,6 +114,10 @@ class SignUpViewController: BaseViewController {
         return flag
     }
     
+    func uploadImage() {
+        
+    }
+    
     
     func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
         
@@ -115,8 +135,27 @@ class SignUpViewController: BaseViewController {
             print(responseMessage)
         }
         
-        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
+      //  ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
     
+    
+    
+    // MARK: - UIImagePickerControllerDelegate Methods
+    
+    private func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        
+        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            self.profilePicBtn.setBackgroundImage(pickedImage, for: UIControlState.normal)
+            self.profilePicBtn.layer.cornerRadius = self.profilePicBtn.frame.size.height/2
+            self.profilePicBtn.layer.masksToBounds = true;
+            isImageAdded = true
+        }
+        
+        dismiss(animated: true, completion: nil)
+    }
+
+    private func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
 }
