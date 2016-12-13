@@ -71,19 +71,40 @@ class LogInViewController: BaseViewController  {
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            
             print(responseDict)
+            
+            if responseDict.value(forKey: "userID") != nil {
+                self.onLogInSuccess(responseDict)
+            }
         }
         
         //On Falure Call
         let falure:falureHandler = {error,responseMessage,requestType in
             
             // Falure call implementation
+            
             print(responseMessage)
+            self.onLogInFailure(responseMessage)
         }
         
         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
+    
+    func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+        
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let dbController = storyBoard.instantiateViewController(withIdentifier: "MyDashBoardViewController") as! MyDashBoardViewController
+        dbController.userDataDict = userInfo
+        self.navigationController?.pushViewController(dbController, animated:true)
+    }
+    
+    func onLogInFailure(_ userInfo: String) -> Void {
+        
+       self.showAlert("Error", userInfo, 200)
+    }
+
     
     //MARK:- IBAction Methods
     @IBAction func actionOnArrowUp(_ sender: AnyObject) {
