@@ -24,6 +24,10 @@ let IS_IPHONE_5 = (IS_IPHONE && SCREEN_MAX_LENGTH == 568.0)
 
 let kPasswordRegex = "^.{6,}$"
 
+let ProfileImageBorder:CGFloat = 3.5
+
+let commonSetting:CommonSetting = CommonSetting.sharedInstance
+
 //MARK: - Error messages
 
 let UserName_Pwd_ErrorMsg = "Username or password either null or consist blanks."

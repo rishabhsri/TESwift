@@ -38,6 +38,7 @@ class MyDashBoardViewController: BaseViewController {
     var hypetoShowArray:NSArray = NSArray()
     var tournamentsToShowArray:NSArray = NSArray()
     var notificationToShowArray:NSArray = NSArray()
+    var userProfileInfo:NSMutableDictionary = NSMutableDictionary()
     
     
     
@@ -45,14 +46,12 @@ class MyDashBoardViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.setUpStyleGuide()
+        
         self.setupMenu()
         
         self.setupData()
         
-        self.setUpStyleGuide()
-        
-        self.getUserProfileData()
-
     }
     
     override func didReceiveMemoryWarning() {
@@ -72,21 +71,49 @@ class MyDashBoardViewController: BaseViewController {
         
         self.addSwipeGesture()
         
+        self.setProfileData(userInfo: commonSetting.userLoginInfo)
         
+        self.getUserProfileData()
         
+    }
+    
+    func setProfileData(userInfo:NSDictionary) {
+        
+        self.userNameLbl.text = userInfo.stringValueForKey(key: "name").uppercased()
+        self.emaillbl.text = userInfo.stringValueForKey(key: "email")
+        let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
+        
+        if !commonSetting.isEmptySting(imagekey)
+        {
+            //On Success Call
+            let success:downloadImageSuccess = {image,imageKey in
+                // Success call implementation
+                
+                self.userProImage.setRoundedImage(image: image, borderWidth: ProfileImageBorder, imageWidth: self.profileImageWidth.constant)
+                
             }
-    
-    
-    func setupMenu() -> Void {
-        
-        if  revealViewController() != nil {
-            menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            
+            //On Falure Call
+            let falure:downloadImageFailed = {error,responseMessage in
+                
+                // Falure call implementation
+                
+            }
+            
+            ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
         }
     }
     
     
-    func getUserProfileData() -> Void {
+    func setupMenu() -> Void {
+        if  revealViewController() != nil {
+            menuButton.target(forAction: #selector(SWRevealViewController.revealToggle(_:)), withSender: AnyObject.self)
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+    }
+    
+    
+    func getUserProfileData(){
         
         //On success
         let success: successHandler = {responseObject, responseType in
@@ -95,47 +122,42 @@ class MyDashBoardViewController: BaseViewController {
             print(responseDict)
             
             if responseType == RequestedUrlType.GetUserProfileData {
-                self.configureHypeArray(userData: responseDict)
-                self.configureTournamentArray(userData: responseDict)
-            }
-            else if responseType == RequestedUrlType.GetAllNotification
+                
+                //initialize hype list
+                self.hypetoShowArray = responseDict.object(forKey: "hypes") as! NSArray
+                
+                //initialize tournament list
+                self.tournamentsToShowArray = responseDict.object(forKey: "upcoming") as! NSArray
+                
+                //Parse User Data
+                self.parseUserInfo(userInfo: responseDict.object(forKey: "person") as! NSDictionary)
+                
+            }else if responseType == RequestedUrlType.GetAllNotification
             {
-                self.configureNotificationArray(userData: responseDict)
+                self.notificationToShowArray = responseDict.object(forKey: "list") as! NSArray
             }
             
         }
         let failure: falureHandler = {error, responseString, responseType in
-        
-        print(responseString)
+            
+            print(responseString)
         }
         
-        let userInfo:NSMutableDictionary = NSMutableDictionary()
-        userInfo.setValue("", forKey: "Nothing")
-        
         // Service call for get user profile data (Hypes, upcomings, person, followers)
-        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserProfileData, method: "GET", successCall: success, falureCall: failure)
+        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetUserProfileData, method: "GET", successCall: success, falureCall: failure)
         
         // Service call for notifications
-        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetAllNotification, method: "GET", successCall: success, falureCall: failure)
+        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetAllNotification, method: "GET", successCall: success, falureCall: failure)
         
     }
     
-    func configureHypeArray(userData: NSDictionary) -> Void {
+    func parseUserInfo(userInfo:NSDictionary) {
         
-       self.hypetoShowArray = userData.object(forKey: "hypes") as! NSArray
-    }
-    
-    func configureTournamentArray(userData: NSDictionary) -> Void {
+        self.userProfileInfo.setDictionary(userInfo as! [AnyHashable : Any])
+        self.userProfileInfo.addEntries(from: commonSetting.userLoginInfo as! [AnyHashable : Any])
+        self.setProfileData(userInfo: self.userProfileInfo)
         
-        self.tournamentsToShowArray = userData.object(forKey: "upcoming") as! NSArray
     }
-    
-    func configureNotificationArray(userData: NSDictionary) -> Void {
-        
-  //      self.notificationToShowArray = userData.object(forKey: "upcoming") as! NSArray
-    }
-
-
     
     //MARK:- SwipeGesture methods
     
@@ -169,9 +191,11 @@ class MyDashBoardViewController: BaseViewController {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-        }, completion: {(isCompleted) -> Void in
-            self.isSwipedUp = true
+            }, completion: {(isCompleted) -> Void in
+                self.isSwipedUp = true
         })
+        
+        commonSetting.animateProfileImage(imageView: self.userProImage)
         
     }
     func swipeDownHandler(sender:UISwipeGestureRecognizer){
@@ -192,9 +216,11 @@ class MyDashBoardViewController: BaseViewController {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-        }, completion: {(isCompleted) -> Void in
-            self.isSwipedUp = false
+            }, completion: {(isCompleted) -> Void in
+                self.isSwipedUp = false
         })
+        
+        commonSetting.animateProfileImage(imageView: self.userProImage)
     }
     
     // MARK: - IBOutlet Actions

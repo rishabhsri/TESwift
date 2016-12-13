@@ -247,7 +247,7 @@ class ServiceCall: NSObject {
     
     func downloadImage(imageKey:String,urlType:RequestedUrlType,successCall:@escaping downloadImageSuccess,falureCall:@escaping downloadImageFailed){
         
-        if CommonSetting.sharedInstance.isEmptySting(imageKey) {
+        if commonSetting.isEmptySting(imageKey) {
             let error:NSError = NSError();
             falureCall(error,"Invalid Parameter")
         }
