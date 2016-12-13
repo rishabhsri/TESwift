@@ -57,10 +57,8 @@ class LogInViewController: BaseViewController  {
     func validate() -> Bool {
         
         if self.isEmptySting(txtUsername.text!) || self.isEmptySting(txtPassword.text!) {
-            
-            
-            self.showAlert("Message", "Username or password either null or consist blanks.", 100)
-            
+    
+            self.showAlert(title: "Message", message: "Username or password either null or consist blanks.", tag: 100)
             return false
         }
         
