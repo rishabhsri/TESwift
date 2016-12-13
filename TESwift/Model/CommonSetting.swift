@@ -42,5 +42,16 @@ class CommonSetting: NSObject {
             return false
         }
     }
+    
+    func isEmptySting(_ text: String) -> Bool {
+        
+        if text.isEmpty{
+            return true
+        }
+        if (text.rangeOfCharacter(from: NSCharacterSet.whitespacesAndNewlines) != nil) {
+            return true
+        }
+        return false
+    }
 
 }

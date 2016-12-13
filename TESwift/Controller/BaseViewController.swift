@@ -54,17 +54,6 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
         }
         return false // We do not want UITextField to insert line-breaks.
     }
-
-    func isEmptySting(_ text: String) -> Bool {
-        
-        if text.isEmpty{
-            return true
-        }
-        if (text.rangeOfCharacter(from: NSCharacterSet.whitespacesAndNewlines) != nil) {
-            return true
-        }
-        return false
-    }
     
     func showAlert(title: String, message: String,tag: NSInteger) -> Void {
         

@@ -33,7 +33,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3si-Xg-aJF">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
                                 <subviews>
-                                    <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headerBG" translatesAutoresizingMaskIntoConstraints="NO" id="Lla-d0-S6h">
+                                    <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="headerBG" translatesAutoresizingMaskIntoConstraints="NO" id="Lla-d0-S6h">
                                         <rect key="frame" x="0.0" y="0.0" width="375" height="317"/>
                                     </imageView>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ekw-gI-gia">
@@ -168,12 +168,14 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="emailTop" destination="VZT-D8-EYN" id="hB9-mw-JYn"/>
                         <outlet property="emaillbl" destination="mch-G8-BoJ" id="vRZ-1t-WRB"/>
                         <outlet property="headerViewHeight" destination="kOm-vn-Qpj" id="usQ-5h-EYU"/>
                         <outlet property="hypBtn" destination="Odg-wV-OXE" id="gPu-G0-o01"/>
                         <outlet property="menuBtnTop" destination="cRe-90-juc" id="yJv-AZ-M5F"/>
                         <outlet property="menuButton" destination="ekw-gI-gia" id="7RF-eG-laM"/>
                         <outlet property="notificationBtn" destination="RoH-ZT-uB0" id="lOx-uh-PRM"/>
+                        <outlet property="profileImageTop" destination="DVa-WW-pdH" id="Xvm-vS-jxu"/>
                         <outlet property="profileImageWidth" destination="F34-K6-0Hf" id="fqh-cU-XpW"/>
                         <outlet property="tableViewbtn" destination="c2d-88-Xss" id="29U-6h-CbC"/>
                         <outlet property="topViewBGImg" destination="Lla-d0-S6h" id="hk8-4A-sbu"/>

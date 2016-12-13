@@ -56,7 +56,7 @@ class LogInViewController: BaseViewController  {
     
     func validate() -> Bool {
         
-        if self.isEmptySting(txtUsername.text!) || self.isEmptySting(txtPassword.text!) {
+        if CommonSetting.sharedInstance.isEmptySting(txtUsername.text!) || CommonSetting.sharedInstance.isEmptySting(txtPassword.text!) {
     
             self.showAlert(title: "Message", message: "Username or password either null or consist blanks.", tag: 100)
             return false
@@ -102,7 +102,7 @@ class LogInViewController: BaseViewController  {
     
     func onLogInFailure(_ userInfo: String) -> Void {
         
-       self.showAlert("Error", userInfo, 200)
+       self.showAlert(title: "Error", message: userInfo, tag: 200)
     }
 
     

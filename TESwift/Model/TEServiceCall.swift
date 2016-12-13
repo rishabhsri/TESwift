@@ -12,6 +12,7 @@ import UIKit
 
 enum RequestedUrlType {
     case GetUserLogin
+    case DownloadImage
 }
 
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
@@ -20,10 +21,24 @@ let File_Header = ServerURL + "file"
 let Admin_Header = ServerURL + "admin"
 let Network_Header = ServerURL + "network"
 
+let imageDownloadURL = "https://s3.amazonaws.com/vgroup-tournament"
+
+// Service Call response handlers
+
 typealias successHandler = (Any?,RequestedUrlType) -> Void
 typealias falureHandler = (NSError, String ,RequestedUrlType) -> Void
 
+typealias uploadImageSuccess = (String) -> Void
+typealias uploadImageFailed = (NSError, String) -> Void
+
+typealias downloadImageSuccess = (UIImage,String) -> Void
+typealias downloadImageFailed = (NSError, String) -> Void
+
 class ServiceCall: NSObject {
+    
+    //Local Variables
+    var sessionManager:AFHTTPSessionManager
+    var imageDownloadManager:AFHTTPSessionManager
     
     //Methods
     class var sharedInstance: ServiceCall {
@@ -31,6 +46,18 @@ class ServiceCall: NSObject {
             static let instance = ServiceCall()
         }
         return Singleton.instance
+    }
+    
+     override init() {
+        
+        self.sessionManager = AFHTTPSessionManager()
+        self.sessionManager.requestSerializer = AFJSONRequestSerializer()
+        self.sessionManager.responseSerializer = AFJSONResponseSerializer()
+        
+        self.imageDownloadManager = AFHTTPSessionManager()
+        self.imageDownloadManager.requestSerializer = AFJSONRequestSerializer()
+        self.imageDownloadManager.responseSerializer = AFHTTPResponseSerializer()
+        
     }
     
     func getRequestUrl(urlType: RequestedUrlType , parameter:NSMutableDictionary ) -> String {
@@ -42,17 +69,19 @@ class ServiceCall: NSObject {
         case .GetUserLogin:
             urlString = String(format: "%@/login",Network_Header)
             break
+        case .DownloadImage:
+            urlString = String(format: "%@/%@",imageDownloadURL,parameter.value(forKey: "imageKey") as! String)
+            break
         }
+        
         return urlString
     }
     
     func sendRequest(parameters:NSMutableDictionary ,urlType:RequestedUrlType,method:String,successCall:@escaping successHandler,falureCall:@escaping falureHandler) -> Void {
         
         let strURL = getRequestUrl(urlType: urlType, parameter: parameters)
-        let manager:AFHTTPSessionManager = AFHTTPSessionManager.init(baseURL: NSURL(string: strURL) as URL?)
-        
-        manager.requestSerializer = AFJSONRequestSerializer()
-        manager.responseSerializer = AFJSONResponseSerializer()
+       
+        let manager:AFHTTPSessionManager = self.sessionManager
         
         manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
         manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -194,5 +223,63 @@ class ServiceCall: NSObject {
             }
         }
     }
+    
+    func uploadImage(image:UIImage?,parameter:NSDictionary,urlType:RequestedUrlType,successCall:@escaping uploadImageSuccess,falureCall:@escaping uploadImageFailed){
+        
+        if image == nil {
+            let error:NSError = NSError();
+            falureCall(error,"Invalid Parameter")
+        }
+        
+        
+        
+    }
+    
+    func downloadImage(imageKey:String,urlType:RequestedUrlType,successCall:@escaping downloadImageSuccess,falureCall:@escaping downloadImageFailed){
+        
+        if CommonSetting.sharedInstance.isEmptySting(imageKey) {
+            let error:NSError = NSError();
+            falureCall(error,"Invalid Parameter")
+        }
+        
+        let parameters:NSMutableDictionary = NSMutableDictionary()
+        parameters.setValue(imageKey, forKey: "imageKey")
+        
+        let strURL = getRequestUrl(urlType: urlType, parameter:parameters)
+        
+        let manager:AFHTTPSessionManager = self.imageDownloadManager
+
+        manager.get(strURL, parameters: nil, progress: nil,
+                    success:{(task,responseObject) in
+                        
+                        if task.state == URLSessionTask.State.canceling || task.state == URLSessionTask.State.suspended
+                        {
+                            return
+                        }
+                        
+                        if task.state == URLSessionTask.State.completed
+                        {
+                            if let image:UIImage = UIImage.init(data: responseObject as! Data)
+                            {
+                                successCall(image,imageKey)
+                            }else
+                            {
+                                let error:NSError = NSError();
+                                falureCall(error,"request failed")
+                            }
+                            
+                        }else
+                        {
+                            let error:NSError = NSError();
+                            falureCall(error,"request failed")
+                        }
+                        
+        }, failure: {(task,error) in
+            
+            falureCall(error as NSError,error.localizedDescription)
+            
+        })
+   }
+    
 }
 
