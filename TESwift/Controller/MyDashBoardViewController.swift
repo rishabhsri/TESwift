@@ -75,8 +75,6 @@ class MyDashBoardViewController: BaseViewController {
         self.userNameLbl.text = self.userDataDict.value(forKey: "name") as! String?;
         self.emaillbl.text = self.userDataDict.value(forKey: "email") as! String?;
         
-        self.getUserProfile()
-        
         if let imagekey:String = self.userDataDict.value(forKey: "key") as! String? {
             
             //On Success Call
@@ -96,31 +94,6 @@ class MyDashBoardViewController: BaseViewController {
         }
     }
     
-    func getUserProfile() {
-        
-        //On Success Call
-        let success:successHandler = {responseObject,requestType in
-            // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
-            
-            print(responseDict)
-            
-            if responseDict.value(forKey: "userID") != nil {
-                self.onLogInSuccess(responseDict)
-            }
-        }
-        
-        //On Falure Call
-        let falure:falureHandler = {error,responseMessage,requestType in
-            
-            // Falure call implementation
-            
-            print(responseMessage)
-            self.onLogInFailure(responseMessage)
-        }
-        
-        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
-    }
     
     func setupMenu() -> Void {
         if  revealViewController() != nil {
