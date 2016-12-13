@@ -72,33 +72,16 @@ class MyDashBoardViewController: BaseViewController {
         
         self.addSwipeGesture()
         
-        self.userNameLbl.text = self.userDataDict.value(forKey: "name") as! String?;
-        self.emaillbl.text = self.userDataDict.value(forKey: "email") as! String?;
         
-        if let imagekey:String = self.userDataDict.value(forKey: "key") as! String? {
-            
-            //On Success Call
-            let success:downloadImageSuccess = {image,imageKey in
-                // Success call implementation
-                
+        
             }
-            
-            //On Falure Call
-            let falure:downloadImageFailed = {error,responseMessage in
-                
-                // Falure call implementation
-    
-            }
-
-            ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
-        }
-    }
     
     
     func setupMenu() -> Void {
+        
         if  revealViewController() != nil {
-            menuButton.target(forAction: #selector(SWRevealViewController.revealToggle(_:)), withSender: AnyObject.self)
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
     }
     

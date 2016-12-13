@@ -95,8 +95,8 @@ class LogInViewController: BaseViewController  {
     func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
-        let dbController = storyBoard.instantiateViewController(withIdentifier: "MyDashBoardViewController") as! MyDashBoardViewController
-        dbController.userDataDict = userInfo
+        let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
+        //dbController.userDataDict = userInfo
         self.navigationController?.pushViewController(dbController, animated:true)
     }
     
