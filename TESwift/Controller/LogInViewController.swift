@@ -102,7 +102,7 @@ class LogInViewController: BaseViewController  {
     
     func onLogInFailure(_ userInfo: String) -> Void {
         
-       self.showAlert("Error", userInfo, 200)
+       self.showAlert(title: "Error", message: userInfo, tag: 200)
     }
 
     

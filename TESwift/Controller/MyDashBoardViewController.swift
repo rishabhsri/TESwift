@@ -30,6 +30,13 @@ class MyDashBoardViewController: BaseViewController {
     @IBOutlet weak var usernameTop: NSLayoutConstraint!// 21
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!//317
     
+    //Arrays for Hype, tournaments and notifications
+    var hypetoShowArray:NSArray = NSArray()
+    var tournamentsToShowArray:NSArray = NSArray()
+    var notificationToShowArray:NSArray = NSArray()
+    
+    
+    
     //MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -39,6 +46,8 @@ class MyDashBoardViewController: BaseViewController {
         self.setupData()
         
         self.setUpStyleGuide()
+        
+        self.getUserProfileData()
 
     }
     
@@ -68,6 +77,58 @@ class MyDashBoardViewController: BaseViewController {
         }
     }
     
+    
+    func getUserProfileData() -> Void {
+        
+        //On success
+        let success: successHandler = {responseObject, responseType in
+            
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            
+            if responseType == RequestedUrlType.GetUserProfileData {
+                self.configureHypeArray(userData: responseDict)
+                self.configureTournamentArray(userData: responseDict)
+            }
+            else if responseType == RequestedUrlType.GetAllNotification
+            {
+                self.configureNotificationArray(userData: responseDict)
+            }
+            
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+        
+        print(responseString)
+        }
+        
+        let userInfo:NSMutableDictionary = NSMutableDictionary()
+        userInfo.setValue("", forKey: "Nothing")
+        
+        // Service call for get user profile data (Hypes, upcomings, person, followers)
+        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserProfileData, method: "GET", successCall: success, falureCall: failure)
+        
+        // Service call for notifications
+        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetAllNotification, method: "GET", successCall: success, falureCall: failure)
+        
+    }
+    
+    func configureHypeArray(userData: NSDictionary) -> Void {
+        
+       self.hypetoShowArray = userData.object(forKey: "hypes") as! NSArray
+    }
+    
+    func configureTournamentArray(userData: NSDictionary) -> Void {
+        
+        self.tournamentsToShowArray = userData.object(forKey: "upcoming") as! NSArray
+    }
+    
+    func configureNotificationArray(userData: NSDictionary) -> Void {
+        
+  //      self.notificationToShowArray = userData.object(forKey: "upcoming") as! NSArray
+    }
+
+
+    
     // MARK: - IBOutlet Actions
     @IBAction func notificationAction(_ sender: AnyObject) {
         
@@ -87,5 +148,7 @@ class MyDashBoardViewController: BaseViewController {
         self.hypBtn.alpha = 1.0
         self.tournamentsBtn.alpha = 0.25
     }
+    
+    
     
 }
