@@ -107,8 +107,9 @@ class MyDashBoardViewController: BaseViewController {
     
     func setupMenu() -> Void {
         if  revealViewController() != nil {
-            menuButton.target(forAction: #selector(SWRevealViewController.revealToggle(_:)), withSender: AnyObject.self)
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+
         }
     }
     
