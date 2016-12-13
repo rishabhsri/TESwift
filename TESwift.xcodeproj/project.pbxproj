@@ -14,8 +14,11 @@
 		1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */; };
 		1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C81F1DF9491C00DAC10E /* LaunchScreen.storyboard */; };
 		1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C8211DF9491C00DAC10E /* Main.storyboard */; };
-		187E7D851DFE923800896C18 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E7D841DFE923800896C18 /* String+Utilities.swift */; };
 		187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E7D861DFEC75D00896C18 /* CommonSetting.swift */; };
+		1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E95F1E000D6500AC5575 /* String+Utilities.swift */; };
+		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
+		1888E9641E0012AB00AC5575 /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */; };
+		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
 		188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E961DF979C300C2D52E /* AFSecurityPolicy.m */; };
@@ -51,8 +54,11 @@
 		1878C81A1DF948B100DAC10E /* TESwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TESwift.xcdatamodel; sourceTree = "<group>"; };
 		1878C8201DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1878C8221DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
-		187E7D841DFE923800896C18 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		187E7D861DFEC75D00896C18 /* CommonSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonSetting.swift; sourceTree = "<group>"; };
+		1888E95F1E000D6500AC5575 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
+		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
+		1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
+		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		188C8E921DF979C300C2D52E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -142,6 +148,7 @@
 			children = (
 				1878C8181DF948B100DAC10E /* Model */,
 				188C8E8E1DF979C300C2D52E /* Library */,
+				1888E95E1E000D5100AC5575 /* Extensions */,
 				1878C8161DF948B100DAC10E /* Controller */,
 				1878C81B1DF948B100DAC10E /* View */,
 				186A23AD1DF9431E005E78D2 /* AppDelegate.swift */,
@@ -169,7 +176,6 @@
 			children = (
 				1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */,
 				189B54881DF9857D0091FDAD /* TEServiceCall.swift */,
-				187E7D841DFE923800896C18 /* String+Utilities.swift */,
 				187E7D861DFEC75D00896C18 /* CommonSetting.swift */,
 			);
 			path = Model;
@@ -191,6 +197,17 @@
 				1878C8211DF9491C00DAC10E /* Main.storyboard */,
 			);
 			path = Base.lproj;
+			sourceTree = "<group>";
+		};
+		1888E95E1E000D5100AC5575 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				1888E95F1E000D6500AC5575 /* String+Utilities.swift */,
+				1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */,
+				1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */,
+				1888E9651E00139800AC5575 /* UIColor+Utilities.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		188C8E8E1DF979C300C2D52E /* Library */ = {
@@ -350,6 +367,8 @@
 				188C8EBD1DF979C300C2D52E /* UIImageView+AFNetworking.m in Sources */,
 				188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */,
 				188C8EBC1DF979C300C2D52E /* UIButton+AFNetworking.m in Sources */,
+				1888E9641E0012AB00AC5575 /* UIImageView+Utilities.swift in Sources */,
+				1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */,
 				1812EBC41DFFDA11006AB49B /* SWRevealViewController.m in Sources */,
 				188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
@@ -357,15 +376,16 @@
 				18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */,
 				184C42591DFA983F001B576A /* LogInViewController.swift in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
-				187E7D851DFE923800896C18 /* String+Utilities.swift in Sources */,
 				1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
 				189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */,
+				1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */,
 				A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */,
 				188C8EB51DF979C300C2D52E /* AFURLRequestSerialization.m in Sources */,
 				188C8EBA1DF979C300C2D52E /* AFNetworkActivityIndicatorManager.m in Sources */,
 				188C8EB61DF979C300C2D52E /* AFURLResponseSerialization.m in Sources */,
+				1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */,
 				188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */,
 				187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */,
 				188C8EB91DF979C300C2D52E /* AFImageDownloader.m in Sources */,

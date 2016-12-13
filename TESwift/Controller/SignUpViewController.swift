@@ -120,23 +120,23 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         
         var flag:Bool = true
         
-        if (CommonSetting.sharedInstance.isEmptySting(self.txtUsername.text!))
+        if (commonSetting.isEmptySting(self.txtUsername.text!))
         {
             self.showAlert(title: kError, message: kEnterUsername, tag: 0)
            flag = false
-        }else if(CommonSetting.sharedInstance.isEmptySting(self.txtDisplayname.text!))
+        }else if(commonSetting.isEmptySting(self.txtDisplayname.text!))
         {
             self.showAlert(title: kError, message: kEnterDisplayname, tag: 0)
             flag = false
-        }else if(CommonSetting.sharedInstance.isEmptySting(self.txtPassword.text!))
+        }else if(commonSetting.isEmptySting(self.txtPassword.text!))
         {
             self.showAlert(title: kError, message: kEnterPassword, tag: 0)
             flag = false
-        }else if(!CommonSetting.sharedInstance.validatePassword(password: self.txtPassword.text!))
+        }else if(!commonSetting.validatePassword(password: self.txtPassword.text!))
         {
             self.showAlert(title: kError, message: kPasswordRulesMessage, tag: 0)
             flag = false
-        }else if(CommonSetting.sharedInstance.isEmptySting(self.txtConfirmPassword.text!))
+        }else if(commonSetting.isEmptySting(self.txtConfirmPassword.text!))
         {
             self.showAlert(title: kError, message: kEnterConfirmPassword, tag: 0)
             flag = false
@@ -144,11 +144,11 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         {
             self.showAlert(title: kError, message: kEnterSamePassword, tag: 0)
             flag = false
-        }else if(CommonSetting.sharedInstance.isEmptySting(self.txtEmailId.text!))
+        }else if(commonSetting.isEmptySting(self.txtEmailId.text!))
         {
             self.showAlert(title: kError, message: kEnterEmail, tag: 0)
             flag = false
-        }else if(!CommonSetting.sharedInstance.validateEmailID(emailID: self.txtEmailId.text!))
+        }else if(!commonSetting.validateEmailID(emailID: self.txtEmailId.text!))
         {
             self.showAlert(title: kError, message: kInvalidEmail, tag: 0)
             flag = false
