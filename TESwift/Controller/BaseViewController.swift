@@ -9,7 +9,9 @@
 import UIKit
 
 class BaseViewController: UIViewController, UITextFieldDelegate {
-
+    
+    var userDataDict:NSDictionary!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

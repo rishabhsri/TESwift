@@ -12,3 +12,5 @@
 #endif /* TESwift_Bridging_Header_h */
 
 #import "AFNetworking.h"
+
+#import "SWRevealViewController.h"
