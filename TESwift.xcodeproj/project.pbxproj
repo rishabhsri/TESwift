@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1812EBC41DFFDA11006AB49B /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812EBC31DFFDA11006AB49B /* SWRevealViewController.m */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
@@ -33,7 +34,6 @@
 		188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188C8EC31DF97D6900C2D52E /* BaseViewController.swift */; };
 		188FEAA91DFEB4ED00C8A181 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 188FEAA71DFEB4ED00C8A181 /* Storyboard.storyboard */; };
 		188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FEAAA1DFEB52F00C8A181 /* MyDashBoardViewController.swift */; };
-		188FEAAF1DFEB89E00C8A181 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 188FEAAE1DFEB89E00C8A181 /* SWRevealViewController.m */; };
 		189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B54881DF9857D0091FDAD /* TEServiceCall.swift */; };
 		18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */; };
 		A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D51DFAF9B30077EF4E /* Constant.swift */; };
@@ -41,6 +41,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1812EBC21DFFDA11006AB49B /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		1812EBC31DFFDA11006AB49B /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -87,8 +89,6 @@
 		188C8EC31DF97D6900C2D52E /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		188FEAA81DFEB4ED00C8A181 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		188FEAAA1DFEB52F00C8A181 /* MyDashBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDashBoardViewController.swift; sourceTree = "<group>"; };
-		188FEAAD1DFEB89E00C8A181 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		188FEAAE1DFEB89E00C8A181 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		189B54881DF9857D0091FDAD /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
 		18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeftMenuViewController.swift; path = TESwift/Controller/LeftMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -110,6 +110,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1812EBC11DFFDA11006AB49B /* SWRevealViewController */ = {
+			isa = PBXGroup;
+			children = (
+				1812EBC21DFFDA11006AB49B /* SWRevealViewController.h */,
+				1812EBC31DFFDA11006AB49B /* SWRevealViewController.m */,
+			);
+			path = SWRevealViewController;
+			sourceTree = "<group>";
+		};
 		186A23A11DF9431E005E78D2 = {
 			isa = PBXGroup;
 			children = (
@@ -188,7 +197,7 @@
 			isa = PBXGroup;
 			children = (
 				A1D555D51DFAF9B30077EF4E /* Constant.swift */,
-				188FEAAC1DFEB89E00C8A181 /* SWRevealViewController */,
+				1812EBC11DFFDA11006AB49B /* SWRevealViewController */,
 				188C8E8F1DF979C300C2D52E /* AFNetworking */,
 				188C8E9D1DF979C300C2D52E /* UIKit+AFNetworking */,
 			);
@@ -240,16 +249,6 @@
 				188C8EB11DF979C300C2D52E /* UIWebView+AFNetworking.m */,
 			);
 			path = "UIKit+AFNetworking";
-			sourceTree = "<group>";
-		};
-		188FEAAC1DFEB89E00C8A181 /* SWRevealViewController */ = {
-			isa = PBXGroup;
-			children = (
-				188FEAAD1DFEB89E00C8A181 /* SWRevealViewController.h */,
-				188FEAAE1DFEB89E00C8A181 /* SWRevealViewController.m */,
-			);
-			name = SWRevealViewController;
-			path = "../../../Downloads/SWRevealViewController-master/SWRevealViewController";
 			sourceTree = "<group>";
 		};
 		212A20BA2F8D1EE10C6B4E00 /* Frameworks */ = {
@@ -351,13 +350,13 @@
 				188C8EBD1DF979C300C2D52E /* UIImageView+AFNetworking.m in Sources */,
 				188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */,
 				188C8EBC1DF979C300C2D52E /* UIButton+AFNetworking.m in Sources */,
+				1812EBC41DFFDA11006AB49B /* SWRevealViewController.m in Sources */,
 				188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
 				18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */,
 				184C42591DFA983F001B576A /* LogInViewController.swift in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
-				188FEAAF1DFEB89E00C8A181 /* SWRevealViewController.m in Sources */,
 				187E7D851DFE923800896C18 /* String+Utilities.swift in Sources */,
 				1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
