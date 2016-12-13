@@ -56,7 +56,7 @@ class LogInViewController: BaseViewController  {
     
     func validate() -> Bool {
         
-        if CommonSetting.sharedInstance.isEmptySting(txtUsername.text!) || CommonSetting.sharedInstance.isEmptySting(txtPassword.text!) {
+        if commonSetting.isEmptySting(txtUsername.text!) || commonSetting.isEmptySting(txtPassword.text!) {
     
             self.showAlert(title: "Message", message: "Username or password either null or consist blanks.", tag: 100)
             return false
@@ -94,9 +94,11 @@ class LogInViewController: BaseViewController  {
     
     func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
+        commonSetting.userLoginInfo = userInfo
+        
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
-        let dbController = storyBoard.instantiateViewController(withIdentifier: "MyDashBoardViewController") as! MyDashBoardViewController
-        dbController.userDataDict = userInfo
+        let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
+        //dbController.userDataDict = userInfo
         self.navigationController?.pushViewController(dbController, animated:true)
     }
     

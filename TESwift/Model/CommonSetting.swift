@@ -10,18 +10,20 @@ import UIKit
 
 class CommonSetting: NSObject {
     
+    var userLoginInfo:NSDictionary = NSDictionary()
+    
     //Methods
     class var sharedInstance: CommonSetting {
         struct Singleton {
             static let instance = CommonSetting()
         }
         return Singleton.instance
-}
+    }
     
     func validatePassword(password:String) -> Bool {
         return true
         let predicate:NSPredicate = NSPredicate(format: "SELF MATCHES %@", kPasswordRegex)
-
+        
         if predicate.evaluate(with: predicate) {
             return true
         }else
@@ -53,5 +55,16 @@ class CommonSetting: NSObject {
         }
         return false
     }
-
+    
+    func animateProfileImage(imageView:UIImageView) {
+        
+        let estimateCorner:CGFloat = imageView.bounds.size.width / 2
+        let animation = CABasicAnimation(keyPath: "cornerRadius")
+        animation.timingFunction = CAMediaTimingFunction(name:kCAMediaTimingFunctionLinear) //[CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionLinear];
+        animation.fromValue = imageView.layer.cornerRadius
+        animation.toValue = estimateCorner
+        animation.duration = 0.25;
+        imageView.layer.cornerRadius = estimateCorner
+        imageView.layer.add(animation, forKey: "cornerRadius")
+    }
 }
