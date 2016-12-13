@@ -32,6 +32,7 @@
 		188C8EC01DF979C300C2D52E /* UIWebView+AFNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8EB11DF979C300C2D52E /* UIWebView+AFNetworking.m */; };
 		188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188C8EC31DF97D6900C2D52E /* BaseViewController.swift */; };
 		189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B54881DF9857D0091FDAD /* TEServiceCall.swift */; };
+		A1177BC61DFFD0B400145BDD /* Storyboard_iPad.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = A1177BC51DFFD0B400145BDD /* Storyboard_iPad.storyboard */; };
 		A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D51DFAF9B30077EF4E /* Constant.swift */; };
 		A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
@@ -85,6 +86,7 @@
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		2A7AEB55F82D75483310D6C5 /* Pods_TESwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TESwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
+		A1177BC51DFFD0B400145BDD /* Storyboard_iPad.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = Storyboard_iPad.storyboard; path = ../../../Storyboard_iPad.storyboard; sourceTree = "<group>"; };
 		A1D555D51DFAF9B30077EF4E /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = TESwift/Controller/SignUpViewController.swift; sourceTree = SOURCE_ROOT; };
 		C9FEF4390619399CADF35F6A /* Pods-TESwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.debug.xcconfig"; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 			children = (
 				1878C81F1DF9491C00DAC10E /* LaunchScreen.storyboard */,
 				1878C8211DF9491C00DAC10E /* Main.storyboard */,
+				A1177BC51DFFD0B400145BDD /* Storyboard_iPad.storyboard */,
 			);
 			path = Base.lproj;
 			sourceTree = "<group>";
@@ -310,6 +313,7 @@
 				1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */,
 				186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */,
 				1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */,
+				A1177BC61DFFD0B400145BDD /* Storyboard_iPad.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -476,6 +480,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TESwift/TESwift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -491,6 +496,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_OBJC_BRIDGING_HEADER = "TESwift/TESwift-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

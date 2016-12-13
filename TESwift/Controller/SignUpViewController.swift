@@ -21,11 +21,24 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
     var isImageAdded = false
     let imagePicker = UIImagePickerController()
     
+    @IBOutlet weak var socialConnectWidth: NSLayoutConstraint!
+    @IBOutlet weak var viewForSocial: UIView!
+    @IBOutlet weak var viewForSignUp: UIView!
+    @IBOutlet weak var viewForLogin: UIView!
+   
+    @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
+    
     //MARK:- Life Cycle Methods
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //Add Dismiss Keyboard Tap Gesture
+        self.addDismisskeyboardTapGesture()
+        
+        // Set Style Guide
+        self.styleGuide()
+
         //setup picker
         imagePicker.delegate = self
     }
@@ -39,6 +52,29 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         // Dispose of any resources that can be recreated.
     }
 
+    //MARK:- Utility Methods
+    func styleGuide()->Void {
+        
+        txtUsername.attributedPlaceholder = NSAttributedString(string:"Username",
+                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+        txtDisplayname.attributedPlaceholder = NSAttributedString(string:"Display Name",
+                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        txtPassword.attributedPlaceholder = NSAttributedString(string:"Password",
+                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        txtConfirmPassword.attributedPlaceholder = NSAttributedString(string:"Confirm Password",
+                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        txtEmailId.attributedPlaceholder = NSAttributedString(string:"Email-ID",
+                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        txtLocation.attributedPlaceholder = NSAttributedString(string:"Location",
+                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        if (IS_IPHONE_5) {
+            self.socialConnectHieght.constant = 40
+            self.socialConnectWidth.constant = 40
+           
+        }
+    }
+    
+    
     //MARK:- IBAction Methods
     
     @IBAction func actionOnSignUpBtn(_ sender: AnyObject) {
@@ -63,6 +99,16 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
     }
     
     @IBAction func actionOnUpArrow(_ sender: AnyObject) {
+        
+        self.viewForLogin.isHidden = false
+        self.viewForSocial.isHidden = true
+        self.viewForSignUp.isHidden = true
+        
+    }
+    @IBAction func actionOnCloseBtn(_ sender: AnyObject) {
+        self.viewForLogin.isHidden = true
+        self.viewForSocial.isHidden = false
+        self.viewForSignUp.isHidden = false
     }
     
     @IBAction func actionGetUserLocation(_ sender: AnyObject) {
