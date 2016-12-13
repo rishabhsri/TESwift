@@ -83,9 +83,7 @@ class LogInViewController: BaseViewController  {
         let falure:falureHandler = {error,responseMessage,requestType in
             
             // Falure call implementation
-            
-            print(responseMessage)
-            self.onLogInFailure(responseMessage)
+            self.showAlert(title: kError, message: responseMessage, tag: 0)
         }
         
         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
@@ -100,12 +98,6 @@ class LogInViewController: BaseViewController  {
         let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
         self.navigationController?.pushViewController(dbController, animated:true)
     }
-    
-    func onLogInFailure(_ userInfo: String) -> Void {
-        
-        self.showAlert(title: "Error", message: userInfo, tag: 200)
-    }
-    
     
     //MARK:- IBAction Methods
     @IBAction func actionOnArrowUp(_ sender: AnyObject) {

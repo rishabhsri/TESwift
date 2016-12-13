@@ -112,7 +112,7 @@ class MyDashBoardViewController: BaseViewController {
         if  revealViewController() != nil {
             menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-
+            
         }
     }
     
@@ -195,8 +195,8 @@ class MyDashBoardViewController: BaseViewController {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-            }, completion: {(isCompleted) -> Void in
-                self.isSwipedUp = true
+        }, completion: {(isCompleted) -> Void in
+            self.isSwipedUp = true
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
@@ -220,8 +220,8 @@ class MyDashBoardViewController: BaseViewController {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-            }, completion: {(isCompleted) -> Void in
-                self.isSwipedUp = false
+        }, completion: {(isCompleted) -> Void in
+            self.isSwipedUp = false
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
