@@ -12,6 +12,8 @@ import UIKit
 
 enum RequestedUrlType {
     case GetUserLogin
+    case GetUserProfileData
+    case GetAllNotification
     case DownloadImage
 }
 
@@ -68,6 +70,14 @@ class ServiceCall: NSObject {
         {
         case .GetUserLogin:
             urlString = String(format: "%@/login",Network_Header)
+            break
+            
+        case .GetUserProfileData:
+            urlString = String(format: "%@/user/profile/web", Network_Header)
+            break
+            
+        case .GetAllNotification:
+            urlString = String(format: "%@/notifications", Main_Header)
             break
         case .DownloadImage:
             urlString = String(format: "%@/%@",imageDownloadURL,parameter.value(forKey: "imageKey") as! String)
