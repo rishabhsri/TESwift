@@ -90,6 +90,9 @@ class MyDashBoardViewController: BaseViewController {
                 // Success call implementation
                 
                 self.userProImage.setRoundedImage(image: image, borderWidth: ProfileImageBorder, imageWidth: self.profileImageWidth.constant)
+                self.topViewBGImg.image = image
+                
+                self.setBlurImage(imageView: self.topViewBGImg)
                 
             }
             

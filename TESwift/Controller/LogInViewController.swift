@@ -57,7 +57,7 @@ class LogInViewController: BaseViewController  {
     func validate() -> Bool {
         
         if commonSetting.isEmptySting(txtUsername.text!) || commonSetting.isEmptySting(txtPassword.text!) {
-    
+            
             self.showAlert(title: "Message", message: "Username or password either null or consist blanks.", tag: 100)
             return false
         }
@@ -98,15 +98,14 @@ class LogInViewController: BaseViewController  {
         
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
-        //dbController.userDataDict = userInfo
         self.navigationController?.pushViewController(dbController, animated:true)
     }
     
     func onLogInFailure(_ userInfo: String) -> Void {
         
-       self.showAlert(title: "Error", message: userInfo, tag: 200)
+        self.showAlert(title: "Error", message: userInfo, tag: 200)
     }
-
+    
     
     //MARK:- IBAction Methods
     @IBAction func actionOnArrowUp(_ sender: AnyObject) {
@@ -122,7 +121,7 @@ class LogInViewController: BaseViewController  {
         self.viewForLogin.isHidden = false
         
     }
-
+    
     @IBAction func loginAction(_ sender: AnyObject) {
         
         if self.validate() {
@@ -142,7 +141,7 @@ class LogInViewController: BaseViewController  {
         
         // Take user to SecondViewController
         self.navigationController?.pushViewController(controller, animated: true)
-
+        
         
     }
     

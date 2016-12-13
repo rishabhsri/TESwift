@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1812EBC41DFFDA11006AB49B /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 1812EBC31DFFDA11006AB49B /* SWRevealViewController.m */; };
+		17B7B6A79D886003F38C6AFD /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
@@ -44,8 +44,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		1812EBC21DFFDA11006AB49B /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
-		1812EBC31DFFDA11006AB49B /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -98,7 +96,7 @@
 		189B54881DF9857D0091FDAD /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
 		18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeftMenuViewController.swift; path = TESwift/Controller/LeftMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
-		2A7AEB55F82D75483310D6C5 /* Pods_TESwift.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TESwift.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TESwift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
 		A1D555D51DFAF9B30077EF4E /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
 		A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = TESwift/Controller/SignUpViewController.swift; sourceTree = SOURCE_ROOT; };
@@ -110,21 +108,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				17B7B6A79D886003F38C6AFD /* libPods-TESwift.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1812EBC11DFFDA11006AB49B /* SWRevealViewController */ = {
-			isa = PBXGroup;
-			children = (
-				1812EBC21DFFDA11006AB49B /* SWRevealViewController.h */,
-				1812EBC31DFFDA11006AB49B /* SWRevealViewController.m */,
-			);
-			path = SWRevealViewController;
-			sourceTree = "<group>";
-		};
 		186A23A11DF9431E005E78D2 = {
 			isa = PBXGroup;
 			children = (
@@ -214,7 +204,6 @@
 			isa = PBXGroup;
 			children = (
 				A1D555D51DFAF9B30077EF4E /* Constant.swift */,
-				1812EBC11DFFDA11006AB49B /* SWRevealViewController */,
 				188C8E8F1DF979C300C2D52E /* AFNetworking */,
 				188C8E9D1DF979C300C2D52E /* UIKit+AFNetworking */,
 			);
@@ -271,7 +260,7 @@
 		212A20BA2F8D1EE10C6B4E00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				2A7AEB55F82D75483310D6C5 /* Pods_TESwift.framework */,
+				1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -292,9 +281,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 186A23BF1DF9431E005E78D2 /* Build configuration list for PBXNativeTarget "TESwift" */;
 			buildPhases = (
+				96D678CD2BFADE8E6BF8B23C /* [CP] Check Pods Manifest.lock */,
 				186A23A61DF9431E005E78D2 /* Sources */,
 				186A23A71DF9431E005E78D2 /* Frameworks */,
 				186A23A81DF9431E005E78D2 /* Resources */,
+				4F9C705725ADA61884BFA1DD /* [CP] Embed Pods Frameworks */,
+				A12A13A836F2D72B5C8EF887 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -355,6 +347,54 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		4F9C705725ADA61884BFA1DD /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TESwift/Pods-TESwift-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		96D678CD2BFADE8E6BF8B23C /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		A12A13A836F2D72B5C8EF887 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-TESwift/Pods-TESwift-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		186A23A61DF9431E005E78D2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -369,7 +409,6 @@
 				188C8EBC1DF979C300C2D52E /* UIButton+AFNetworking.m in Sources */,
 				1888E9641E0012AB00AC5575 /* UIImageView+Utilities.swift in Sources */,
 				1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */,
-				1812EBC41DFFDA11006AB49B /* SWRevealViewController.m in Sources */,
 				188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
