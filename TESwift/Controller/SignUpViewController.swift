@@ -120,15 +120,15 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         
         var flag:Bool = true
         
-        if (self.txtUsername.text?.isEmpty)!
+        if (self.isEmptySting(self.txtUsername.text!))
         {
             self.showAlert(title: kError, message: kEnterUsername, tag: 0)
            flag = false
-        }else if(self.txtDisplayname.text?.isEmpty)!
+        }else if(self.isEmptySting(self.txtDisplayname.text!))
         {
             self.showAlert(title: kError, message: kEnterDisplayname, tag: 0)
             flag = false
-        }else if(self.txtPassword.text?.isEmpty)!
+        }else if(self.isEmptySting(self.txtPassword.text!))
         {
             self.showAlert(title: kError, message: kEnterPassword, tag: 0)
             flag = false
@@ -136,7 +136,7 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         {
             self.showAlert(title: kError, message: kPasswordRulesMessage, tag: 0)
             flag = false
-        }else if(self.txtConfirmPassword.text?.isEmpty)!
+        }else if(self.isEmptySting(self.txtConfirmPassword.text!))
         {
             self.showAlert(title: kError, message: kEnterConfirmPassword, tag: 0)
             flag = false
@@ -144,7 +144,7 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         {
             self.showAlert(title: kError, message: kEnterSamePassword, tag: 0)
             flag = false
-        }else if(self.txtEmailId.text?.isEmpty)!
+        }else if(self.isEmptySting(self.txtEmailId.text!))
         {
             self.showAlert(title: kError, message: kEnterEmail, tag: 0)
             flag = false
