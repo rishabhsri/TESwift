@@ -74,7 +74,7 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         
         var flag:Bool = true
         
-        if if(self.isEmptySting(self.txtUsername.text!))
+        if (self.isEmptySting(self.txtUsername.text!))
         {
             self.showAlert(title: kError, message: kEnterUsername, tag: 0)
            flag = false
