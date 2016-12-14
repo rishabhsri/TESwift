@@ -85,11 +85,17 @@ class MyDashBoardViewController: BaseViewController {
         
         if !commonSetting.isEmptySting(imagekey)
         {
+            // For storing temporary imageKey for using in MenuViewController
+            
+            commonSetting.imageKeyProfile = imagekey
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
                 // Success call implementation
                 
                 self.userProImage.setRoundedImage(image: image, borderWidth: ProfileImageBorder, imageWidth: self.profileImageWidth.constant)
+                self.topViewBGImg.image = image
+                
+                self.setBlurImage(imageView: self.topViewBGImg)
                 
             }
             
@@ -107,8 +113,10 @@ class MyDashBoardViewController: BaseViewController {
     
     func setupMenu() -> Void {
         if  revealViewController() != nil {
-            menuButton.target(forAction: #selector(SWRevealViewController.revealToggle(_:)), withSender: AnyObject.self)
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
+            self.revealViewController().rearViewRevealWidth = 300
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            
         }
     }
     
@@ -191,8 +199,8 @@ class MyDashBoardViewController: BaseViewController {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-            }, completion: {(isCompleted) -> Void in
-                self.isSwipedUp = true
+        }, completion: {(isCompleted) -> Void in
+            self.isSwipedUp = true
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
@@ -216,8 +224,8 @@ class MyDashBoardViewController: BaseViewController {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-            }, completion: {(isCompleted) -> Void in
-                self.isSwipedUp = false
+        }, completion: {(isCompleted) -> Void in
+            self.isSwipedUp = false
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)

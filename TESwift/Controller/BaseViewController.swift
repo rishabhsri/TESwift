@@ -12,10 +12,10 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     
     func addDismisskeyboardTapGesture()->Void{
         
@@ -27,13 +27,13 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
     func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-  // MARK: - TextFields Delegate
+    // MARK: - TextFields Delegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         
@@ -69,10 +69,20 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
             return responseDict;
         }else if let responseString:String = responseObject as? String
         {
-           return responseString.convertToDictionary(text: responseString)
+            return responseString.convertToDictionary(text: responseString)
         }
-        
         return NSDictionary()
     }
     
+    func setBlurImage(imageView:UIImageView) {
+        
+        let blurRadius:CGFloat = 80;
+        let saturationDeltaFactor:CGFloat = 1.3;
+        let tintColor:UIColor? = nil
+        let tempimage:UIImage = imageView.image!
+        let image:UIImage = UIImage.ty_imageByApplyingBlur(to: tempimage, withRadius: blurRadius, tintColor: tintColor, saturationDeltaFactor: saturationDeltaFactor, maskImage: nil)!
+        imageView.image = image
+        imageView.layer.backgroundColor = UIColor.black.cgColor
+        imageView.layer.opacity = 0.45
+    }
 }

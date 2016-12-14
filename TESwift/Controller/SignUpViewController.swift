@@ -17,16 +17,14 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
     @IBOutlet weak var txtEmailId: UITextField!
     @IBOutlet weak var txtLocation: UITextField!
     @IBOutlet weak var profilePicBtn: UIButton!
-    
-    var isImageAdded = false
-    let imagePicker = UIImagePickerController()
-    
     @IBOutlet weak var socialConnectWidth: NSLayoutConstraint!
     @IBOutlet weak var viewForSocial: UIView!
     @IBOutlet weak var viewForSignUp: UIView!
     @IBOutlet weak var viewForLogin: UIView!
-   
     @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
+    
+    var isImageAdded = false
+    let imagePicker = UIImagePickerController()
     
     //MARK:- Life Cycle Methods
     
@@ -38,7 +36,7 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         
         // Set Style Guide
         self.styleGuide()
-
+        
         //setup picker
         imagePicker.delegate = self
     }
@@ -51,26 +49,26 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     //MARK:- Utility Methods
     func styleGuide()->Void {
         
         txtUsername.attributedPlaceholder = NSAttributedString(string:"Username",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         txtDisplayname.attributedPlaceholder = NSAttributedString(string:"Display Name",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+                                                                  attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
         txtPassword.attributedPlaceholder = NSAttributedString(string:"Password",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
         txtConfirmPassword.attributedPlaceholder = NSAttributedString(string:"Confirm Password",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+                                                                      attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
         txtEmailId.attributedPlaceholder = NSAttributedString(string:"Email-ID",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+                                                              attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
         txtLocation.attributedPlaceholder = NSAttributedString(string:"Location",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
         if (IS_IPHONE_5) {
             self.socialConnectHieght.constant = 40
             self.socialConnectWidth.constant = 40
-           
+            
         }
     }
     
@@ -85,7 +83,7 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
                 self.uploadImage()
             }else
             {
-               // self.getUserSignup(<#T##userInfo: NSMutableDictionary##NSMutableDictionary#>)
+                // self.getUserSignup(<#T##userInfo: NSMutableDictionary##NSMutableDictionary#>)
             }
         }
     }
@@ -127,7 +125,7 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         if (commonSetting.isEmptySting(self.txtUsername.text!))
         {
             self.showAlert(title: kError, message: kEnterUsername, tag: 0)
-           flag = false
+            flag = false
         }else if(commonSetting.isEmptySting(self.txtDisplayname.text!))
         {
             self.showAlert(title: kError, message: kEnterDisplayname, tag: 0)
@@ -185,7 +183,7 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
             print(responseMessage)
         }
         
-      //  ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
+        //  ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
     
@@ -204,7 +202,7 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         
         dismiss(animated: true, completion: nil)
     }
-
+    
     private func imagePickerControllerDidCancel(picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }

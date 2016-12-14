@@ -89,6 +89,12 @@ class ServiceCall: NSObject {
     
     func sendRequest(parameters:NSMutableDictionary ,urlType:RequestedUrlType,method:String,successCall:@escaping successHandler,falureCall:@escaping falureHandler) -> Void {
         
+        if !commonSetting.isInternetAvailable {
+            
+            let error:NSError = NSError();
+            falureCall(error,"Internet is not available",urlType)
+        }
+        
         let strURL = getRequestUrl(urlType: urlType, parameter: parameters)
        
         let manager:AFHTTPSessionManager = self.sessionManager
