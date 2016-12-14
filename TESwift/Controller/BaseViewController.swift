@@ -35,18 +35,6 @@ class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK:- Social Connect handlers
-    @IBAction func socialLoginViaFacebook(_ sender: Any)
-    {
-    }
-    
-    @IBAction func socialLoginViaGooglePlus(_ sender: Any)
-    {
-    }
-    @IBAction func socialLoginViaTwitch(_ sender: Any)
-    {
-    }
-    
     //MARK:- Utility methods
     func addDismisskeyboardTapGesture()->Void{
         
@@ -106,7 +94,10 @@ class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         let blurRadius:CGFloat = 80;
         let saturationDeltaFactor:CGFloat = 1.3;
         let tintColor:UIColor? = nil
-        let tempimage:UIImage = imageView.image!
+        var tempimage:UIImage = imageView.image!
+        
+        let size:CGSize = CGSize(width:200, height:150)
+        tempimage = tempimage.withImage(tempimage, scaledTo: size)
         let image:UIImage = UIImage.ty_imageByApplyingBlur(to: tempimage, withRadius: blurRadius, tintColor: tintColor, saturationDeltaFactor: saturationDeltaFactor, maskImage: nil)!
         imageView.image = image
         imageView.layer.backgroundColor = UIColor.black.cgColor

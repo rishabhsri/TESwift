@@ -8,36 +8,110 @@
 
 import UIKit
 
-class SocialConnectViewController: BaseViewController {
-
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var webView: UIWebView!
+class SocialConnectViewController: BaseViewController,SocialLoginViewControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
     
-    // MARK: - IBAction Methods
+    //MARK:- Social Connect handlers
     
-    @IBAction func actionOnClose(_ sender: Any) {
+    //MARK: Facebook Login
+    @IBAction func socialLoginViaFacebook(_ sender: Any)
+    {
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
+        socialLoginController.socialConnectType = .FACEBOOK
+        socialLoginController.delegate = self
+        self.navigationController?.present(socialLoginController, animated: true, completion: nil)
     }
     
-    @IBAction func actionOnBack(_ sender: Any) {
+    //MARK: GooglePlus Login
+    @IBAction func socialLoginViaGooglePlus(_ sender: Any)
+    {
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
+        socialLoginController.socialConnectType = .GOOGLEPLUS
+        socialLoginController.delegate = self
+        self.navigationController?.present(socialLoginController, animated: true, completion: nil)
     }
-
-    @IBAction func actionOnRefresh(_ sender: Any) {
+    
+    //MARK: Twitch Login
+    @IBAction func socialLoginViaTwitch(_ sender: Any)
+    {
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
+        socialLoginController.socialConnectType = .TWITCH
+        socialLoginController.delegate = self
+        self.navigationController?.present(socialLoginController, animated: true, completion: nil)
     }
-
-    @IBAction func actionOnForward(_ sender: Any) {
+    
+    //MARK:- SocialLoginViewController Delegates
+    
+    func didSocialLoginSuccessfully(sessionKey: String, connectType: SocialConnectType) {
+        
+        let defaults = UserDefaults.standard
+        defaults.set(true, forKey: "isSocialLogin")
+        defaults.removeObject(forKey: "authkey")
+        defaults.synchronize()
+        
+        let parameters:NSMutableDictionary = NSMutableDictionary()
+        parameters.setValue(sessionKey, forKey: "key")
+        
+        self.proceedLogin(parameters)
+        
     }
+    
+    func proceedLogin(_ userInfo: NSMutableDictionary) {
+        //On Success Call
+        
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict:NSDictionary = self.parseResponse(responseObject: responseObject as Any)
+            
+            if responseDict.intValueForKey(key: "validUserName") == 1
+            {
+                if responseDict.boolValueForKey(key: "loggedIn") {
+                    self.onLogInSuccess(responseDict)
+                }
+            }else
+            {
+                // ask for new username
+            }
+        }
+        
+        //On Falure Call
+        let falure:falureHandler = {error,responseMessage,requestType in
+            
+            // Falure call implementation
+            self.showAlert(title: kError, message: responseMessage, tag: 0)
+            
+        }
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
+    }
+    
+    func didSocialLoginFailed(errorString:String,connectType:SocialConnectType)
+    {
+        if !commonSetting.isEmptySting(errorString) {
+            let deadlineTime = DispatchTime.now() + .seconds(1)
+            DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
+                self.showAlert(title: kError, message: errorString, tag: 0)
+            }
+        }
+    }
+    
+    func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+        
+        //overrided in child
+    }
+    
 }

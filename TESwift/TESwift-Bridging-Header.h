@@ -14,6 +14,8 @@
 #import "AFNetworking.h"
 
 #import "SWRevealViewController.h"
+#import "UIImage+ResizeAndFitImage.h"
+#import "UIImage+BlurEffects.h"
 
 #import "UIImage+BlurEffects.h"
 

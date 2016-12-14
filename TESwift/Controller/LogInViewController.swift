@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LogInViewController: BaseViewController  {
+class LogInViewController: SocialConnectViewController  {
     
     @IBOutlet weak var txtUsernameTop: NSLayoutConstraint!
     @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
@@ -92,13 +92,12 @@ class LogInViewController: BaseViewController  {
         
     }
     
-    func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+    override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         commonSetting.userLoginInfo = userInfo
         
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
-        //dbController.userDataDict = userInfo
         self.navigationController?.pushViewController(dbController, animated:true)
     }
     

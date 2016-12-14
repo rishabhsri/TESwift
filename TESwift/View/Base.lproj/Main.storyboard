@@ -214,21 +214,21 @@
                                         </constraints>
                                         <state key="normal" backgroundImage="SM_Facebook"/>
                                         <connections>
-                                            <action selector="socialLoginViaFacebook:" destination="BYZ-38-t0r" eventType="touchUpInside" id="adX-b0-lTe"/>
+                                            <action selector="socialLoginViaFacebook:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0HV-5g-buk"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aTI-03-CFx">
                                         <rect key="frame" x="163" y="36" width="50" height="50"/>
                                         <state key="normal" backgroundImage="SM_Google"/>
                                         <connections>
-                                            <action selector="socialLoginViaGooglePlus:" destination="BYZ-38-t0r" eventType="touchUpInside" id="TQl-IW-qjb"/>
+                                            <action selector="socialLoginViaGooglePlus:" destination="BYZ-38-t0r" eventType="touchUpInside" id="B22-4m-Hbv"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="fs4-p2-RVL">
                                         <rect key="frame" x="296" y="36" width="50" height="50"/>
                                         <state key="normal" backgroundImage="SM_Twitch"/>
                                         <connections>
-                                            <action selector="socialLoginViaTwitch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Mnh-bY-DlU"/>
+                                            <action selector="socialLoginViaTwitch:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Rmp-um-Z2b"/>
                                         </connections>
                                     </button>
                                 </subviews>
