@@ -12,6 +12,7 @@ class CommonSetting: NSObject {
     
     var userLoginInfo:NSDictionary = NSDictionary()
     var imageKeyProfile:String?
+    var isInternetAvailable:Bool = false
     
     //Methods
     class var sharedInstance: CommonSetting {

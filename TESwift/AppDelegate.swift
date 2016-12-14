@@ -18,11 +18,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-//        let storyboard = UIStoryboard(name: "Main", bundle: nil)
-//        let loginviewController = storyboard.instantiateViewController(withIdentifier: "LogInViewController") as UIViewController
-//        navController = UINavigationController(rootViewController:loginviewController)
-//        navController?.setNavigationBarHidden(true, animated: false)
-//        self.window!.rootViewController = navController
+
+        //Reachability Monitoring
+        self.internetReachabilityStartMonitoring()
+        
         return true
     }
 
@@ -93,6 +92,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
             }
         }
+    }
+    
+    
+    // MARK: - Reachability Monitoring
+    
+    func internetReachabilityStartMonitoring() {
+        
+        AFNetworkReachabilityManager.shared().startMonitoring()
+        AFNetworkReachabilityManager.shared().setReachabilityStatusChange({ (status) in
+            
+            var internetAvailable:Bool = false
+            switch status
+            {
+            case .unknown:
+                internetAvailable = false
+            case .notReachable:
+                internetAvailable = false
+                break;
+            case .reachableViaWWAN:
+                internetAvailable = true
+                break;
+            case .reachableViaWiFi:
+                internetAvailable = true
+                break;
+            }
+            
+            commonSetting.isInternetAvailable = internetAvailable
+        })
+    }
+    
+    func internetReachabilityStopMonitoring() {
+        
+        AFNetworkReachabilityManager.shared().stopMonitoring()
     }
 
 }
