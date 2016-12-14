@@ -10,13 +10,31 @@ import UIKit
 
 class BaseViewController: UIViewController, UITextFieldDelegate {
     
+    //MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
     }
     
+    override func didReceiveMemoryWarning() {
+        super.didReceiveMemoryWarning()
+        // Dispose of any resources that can be recreated.
+    }
     
+    //MARK:- Social Connect handlers
+    @IBAction func socialLoginViaFacebook(_ sender: Any)
+    {
+    }
+    
+    @IBAction func socialLoginViaGooglePlus(_ sender: Any)
+    {
+    }
+    @IBAction func socialLoginViaTwitch(_ sender: Any)
+    {
+    }
+    
+    //MARK:- Utility methods
     func addDismisskeyboardTapGesture()->Void{
         
         let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
@@ -28,10 +46,6 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
         view.endEditing(true)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
     
     // MARK: - TextFields Delegate
     

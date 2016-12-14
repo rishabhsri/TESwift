@@ -40,8 +40,6 @@ class MyDashBoardViewController: BaseViewController {
     var notificationToShowArray:NSArray = NSArray()
     var userProfileInfo:NSMutableDictionary = NSMutableDictionary()
     
-    
-    
     //MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()

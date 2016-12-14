@@ -10,6 +10,10 @@ import UIKit
 
 class SocialConnectViewController: BaseViewController {
 
+    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var webView: UIWebView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -22,14 +26,18 @@ class SocialConnectViewController: BaseViewController {
     }
     
 
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+    
+    // MARK: - IBAction Methods
+    
+    @IBAction func actionOnClose(_ sender: Any) {
     }
-    */
+    
+    @IBAction func actionOnBack(_ sender: Any) {
+    }
 
+    @IBAction func actionOnRefresh(_ sender: Any) {
+    }
+
+    @IBAction func actionOnForward(_ sender: Any) {
+    }
 }
