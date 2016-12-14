@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController {
+class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -20,7 +20,7 @@ class MyDashBoardViewController: BaseViewController {
     @IBOutlet weak var notificationBtn: UIButton!
     @IBOutlet weak var hypBtn: UIButton!
     @IBOutlet weak var tournamentsBtn: UIButton!
-    @IBOutlet weak var tableViewbtn: UITableView!
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var menuButton: UIButton!
     
     //autolayout constants                              // Actual values
@@ -44,11 +44,15 @@ class MyDashBoardViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier:"Cell")
+        
         self.setUpStyleGuide()
         
         self.setupMenu()
         
         self.setupData()
+        
+        self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
         
     }
     
@@ -62,7 +66,7 @@ class MyDashBoardViewController: BaseViewController {
     func setUpStyleGuide() -> Void {
         self.notificationBtn.alpha = 0.25
         self.hypBtn.alpha = 1.0
-        self.tournamentsBtn.alpha = 0.25
+        self.tournamentsBtn.alpha = 0.2
     }
     
     func setupData() -> Void {
@@ -73,6 +77,24 @@ class MyDashBoardViewController: BaseViewController {
         
         self.getUserProfileData()
         
+    }
+    
+    func saveUserDetails(loginInfo: NSDictionary) -> Void {
+        
+        let userInfo:NSMutableDictionary = NSMutableDictionary()
+        
+        userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
+        userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
+        userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
+        userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
+        userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
+        
+        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
+        UserDetails.save(self.manageObjectContext())
+        
+        let predi = NSPredicate(format: "age = %d", 33)
+        let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
+        print(user)
     }
     
     func setProfileData(userInfo:NSDictionary) {
@@ -249,6 +271,26 @@ class MyDashBoardViewController: BaseViewController {
         self.tournamentsBtn.alpha = 0.25
     }
     
+    // MARK: - TableView Delegate
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 5
+    }
+    
+    // create a cell for each table view row
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        // create a new cell if needed or reuse an old one
+        let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+      //  let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as UITableViewCell!
+        cell.backgroundColor = UIColor.clear
+        // set the text from the data model
+       // cell.textLabel?.text = self.animals[indexPath.row]
+        
+        return cell
+    }
+
     
     
 }

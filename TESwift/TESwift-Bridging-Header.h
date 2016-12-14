@@ -16,3 +16,5 @@
 #import "SWRevealViewController.h"
 
 #import "UIImage+BlurEffects.h"
+
+#import "TESwiftModel.h"
