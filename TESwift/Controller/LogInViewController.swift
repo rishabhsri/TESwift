@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LogInViewController: BaseViewController  {
+class LogInViewController: SocialConnectViewController  {
     
     @IBOutlet weak var txtUsernameTop: NSLayoutConstraint!
     @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!

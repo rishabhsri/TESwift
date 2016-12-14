@@ -22,18 +22,6 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
         // Dispose of any resources that can be recreated.
     }
     
-    //MARK:- Social Connect handlers
-    @IBAction func socialLoginViaFacebook(_ sender: Any)
-    {
-    }
-    
-    @IBAction func socialLoginViaGooglePlus(_ sender: Any)
-    {
-    }
-    @IBAction func socialLoginViaTwitch(_ sender: Any)
-    {
-    }
-    
     //MARK:- Utility methods
     func addDismisskeyboardTapGesture()->Void{
         
