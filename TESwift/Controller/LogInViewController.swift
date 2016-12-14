@@ -135,14 +135,17 @@ class LogInViewController: BaseViewController  {
     
     @IBAction func actionOnSignup(_ sender: AnyObject) {
         
-        // Instantiate SecondViewController
+         self.viewForArrow.isHidden = true
+         self.viewForLogin.isHidden = false
+         self.viewForSocial.isHidden = false
         
+        // Instantiate SecondViewController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         let controller = storyboard.instantiateViewController(withIdentifier: "signupViewController") as UIViewController
         
         // Take user to SecondViewController
         self.navigationController?.pushViewController(controller, animated: true)
-
+       
         
     }
     

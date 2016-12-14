@@ -114,6 +114,10 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
     @IBAction func actionGetUserLocation(_ sender: AnyObject) {
     }
     
+    @IBAction func actionOnLoginBtn(_ sender: AnyObject) {
+      _ = self.navigationController?.popViewController(animated: true)
+        
+    }
     //MARK:- Utility Methods
     
     func isValid() -> Bool {
