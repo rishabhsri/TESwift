@@ -8,11 +8,8 @@
 
 import UIKit
 
-class SocialConnectViewController: BaseViewController,UIWebViewDelegate {
+class SocialConnectViewController: BaseViewController {
 
-    
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var webView: UIWebView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,21 +23,6 @@ class SocialConnectViewController: BaseViewController,UIWebViewDelegate {
     }
     
 
-    
-    // MARK: - IBAction Methods
-    
-    @IBAction func actionOnClose(_ sender: Any) {
-    }
-    
-    @IBAction func actionOnBack(_ sender: Any) {
-    }
-
-    @IBAction func actionOnRefresh(_ sender: Any) {
-    }
-
-    @IBAction func actionOnForward(_ sender: Any) {
-    }
-    
     //MARK:- Social Connect handlers
     
     @IBAction func socialLoginViaFacebook(_ sender: Any) {
@@ -52,25 +34,4 @@ class SocialConnectViewController: BaseViewController,UIWebViewDelegate {
     @IBAction func socialLoginViaTwitch(_ sender: Any) {
     }
     
-    //MARK:- Web View Delegates
-    
-    func webView(_ webView: UIWebView, shouldStartLoadWith request: URLRequest, navigationType: UIWebViewNavigationType) -> Bool
-    {
-        return true
-    }
-
-    func webViewDidStartLoad(_ webView: UIWebView)
-    {
-        
-    }
-    
-    func webViewDidFinishLoad(_ webView: UIWebView)
-    {
-        
-    }
-
-    func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
-    {
-        
-    }
 }

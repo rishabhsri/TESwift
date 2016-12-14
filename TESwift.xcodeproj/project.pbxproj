@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		17B7B6A79D886003F38C6AFD /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */; };
 		180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */; };
+		180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA201E0135320065BF6B /* SocialLoginViewController.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
@@ -46,6 +47,7 @@
 
 /* Begin PBXFileReference section */
 		180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialConnectViewController.swift; sourceTree = "<group>"; };
+		180EDA201E0135320065BF6B /* SocialLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialLoginViewController.swift; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -121,6 +123,7 @@
 			isa = PBXGroup;
 			children = (
 				180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */,
+				180EDA201E0135320065BF6B /* SocialLoginViewController.swift */,
 			);
 			path = SocialConnect;
 			sourceTree = "<group>";
@@ -431,6 +434,7 @@
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
 				189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */,
+				180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */,
 				1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */,
 				A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */,
 				188C8EB51DF979C300C2D52E /* AFURLRequestSerialization.m in Sources */,
