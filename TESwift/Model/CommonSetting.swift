@@ -11,6 +11,7 @@ import UIKit
 class CommonSetting: NSObject {
     
     var userLoginInfo:NSDictionary = NSDictionary()
+    var imageKeyProfile:String?
     
     //Methods
     class var sharedInstance: CommonSetting {

@@ -85,6 +85,9 @@ class MyDashBoardViewController: BaseViewController {
         
         if !commonSetting.isEmptySting(imagekey)
         {
+            // For storing temporary imageKey for using in MenuViewController
+            
+            commonSetting.imageKeyProfile = imagekey
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
                 // Success call implementation
@@ -111,6 +114,7 @@ class MyDashBoardViewController: BaseViewController {
     func setupMenu() -> Void {
         if  revealViewController() != nil {
             menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
+            self.revealViewController().rearViewRevealWidth = 300
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
 
         }
