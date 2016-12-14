@@ -9,6 +9,12 @@
 import Foundation
 
 
+enum SocialConnectType{
+   case FACEBOOK
+   case GOOGLEPLUS
+   case TWITCH
+}
+
 //MARK: - Screens size---
 
 let IS_IPHONE = (UI_USER_INTERFACE_IDIOM() == .phone)
@@ -62,3 +68,4 @@ let kCancel = "Cancel"
 let kMessage = "Message"
 let kYes = "Yes"
 let kNo = "No"
+

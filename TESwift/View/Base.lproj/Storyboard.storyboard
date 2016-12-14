@@ -209,7 +209,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Login_BG" translatesAutoresizingMaskIntoConstraints="NO" id="JRz-Jj-ir5">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="E1A78064-98C8-46A1-87DE-441786C11C4E" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-iP-Wev">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="E4F0FF5B-018B-49E5-9BB1-5F892F4C206E" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-iP-Wev">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="DDc-ai-ARo"/>
@@ -302,8 +302,9 @@
                     <connections>
                         <outlet property="backButton" destination="CMJ-Gh-CG8" id="3gu-5i-Kcm"/>
                         <outlet property="pwdButton" destination="QpV-tq-hRW" id="eyg-vT-k9X"/>
+                        <outlet property="stopButton" destination="C08-TB-FKF" id="fxR-xm-Gek"/>
                         <outlet property="titleLabel" destination="yFI-93-8eb" id="N7T-FG-GsK"/>
-                        <outlet property="webView" destination="1r7-j6-da7" id="w5U-bC-xqK"/>
+                        <outlet property="webView" destination="1r7-j6-da7" id="wJx-Ww-3y0"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="L3m-vK-ok7" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -532,7 +533,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="E1A78064-98C8-46A1-87DE-441786C11C4E" width="720" height="146">
+        <image name="E4F0FF5B-018B-49E5-9BB1-5F892F4C206E" width="720" height="146">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

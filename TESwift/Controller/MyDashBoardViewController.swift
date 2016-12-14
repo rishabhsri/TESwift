@@ -130,17 +130,26 @@ class MyDashBoardViewController: BaseViewController {
             if responseType == RequestedUrlType.GetUserProfileData {
                 
                 //initialize hype list
-                self.hypetoShowArray = responseDict.object(forKey: "hypes") as! NSArray
-                
+                if let array:NSArray =  responseDict.object(forKey: "hypes") as? NSArray
+                {
+                    self.hypetoShowArray = array
+                }
                 //initialize tournament list
-                self.tournamentsToShowArray = responseDict.object(forKey: "upcoming") as! NSArray
+                if let array:NSArray =  responseDict.object(forKey: "upcoming") as? NSArray
+                {
+                    self.tournamentsToShowArray = array
+                }
                 
                 //Parse User Data
                 self.parseUserInfo(userInfo: responseDict.object(forKey: "person") as! NSDictionary)
                 
             }else if responseType == RequestedUrlType.GetAllNotification
             {
-                self.notificationToShowArray = responseDict.object(forKey: "list") as! NSArray
+                //initialize hype list
+                if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
+                {
+                    self.notificationToShowArray = array
+                }
             }
             
         }

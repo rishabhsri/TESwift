@@ -27,5 +27,38 @@ extension NSDictionary {
         return strValue
     }
     
+    func intValueForKey(key:String) -> Int {
+        
+        var intValue:Int = 0
+        
+        if let value:Int = self.value(forKey: key) as? Int
+        {
+            intValue = value
+            
+        }else if let value:NSNumber = self.value(forKey: key) as? NSNumber
+        {
+            intValue = Int(value)
+            
+        }
+        return intValue
+    }
+    
+    func boolValueForKey(key:String) -> Bool {
+        
+        var boolValue:Bool = false
+        
+        if let value:Bool = self.value(forKey: key) as? Bool
+        {
+            boolValue = value
+            
+        }else if let value:NSNumber = self.value(forKey: key) as? NSNumber
+        {
+            boolValue = Bool(value)
+            
+        }
+        return boolValue
+    }
+
+    
 }
 

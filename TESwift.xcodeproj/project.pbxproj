@@ -10,6 +10,8 @@
 		17B7B6A79D886003F38C6AFD /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */; };
 		180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */; };
 		180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA201E0135320065BF6B /* SocialLoginViewController.swift */; };
+		180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */; };
+		180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
@@ -19,7 +21,6 @@
 		187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E7D861DFEC75D00896C18 /* CommonSetting.swift */; };
 		1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E95F1E000D6500AC5575 /* String+Utilities.swift */; };
 		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
-		1888E9641E0012AB00AC5575 /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */; };
 		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
@@ -48,6 +49,9 @@
 /* Begin PBXFileReference section */
 		180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialConnectViewController.swift; sourceTree = "<group>"; };
 		180EDA201E0135320065BF6B /* SocialLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialLoginViewController.swift; sourceTree = "<group>"; };
+		180EDA281E01765D0065BF6B /* UIImage+ResizeAndFitImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeAndFitImage.h"; sourceTree = "<group>"; };
+		180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeAndFitImage.m"; sourceTree = "<group>"; };
+		180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -59,7 +63,6 @@
 		187E7D861DFEC75D00896C18 /* CommonSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonSetting.swift; sourceTree = "<group>"; };
 		1888E95F1E000D6500AC5575 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
-		1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
@@ -126,6 +129,16 @@
 				180EDA201E0135320065BF6B /* SocialLoginViewController.swift */,
 			);
 			path = SocialConnect;
+			sourceTree = "<group>";
+		};
+		180EDA271E01765D0065BF6B /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				180EDA281E01765D0065BF6B /* UIImage+ResizeAndFitImage.h */,
+				180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */,
+				180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */,
+			);
+			path = UIImage;
 			sourceTree = "<group>";
 		};
 		186A23A11DF9431E005E78D2 = {
@@ -206,9 +219,9 @@
 		1888E95E1E000D5100AC5575 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				180EDA271E01765D0065BF6B /* UIImage */,
 				1888E95F1E000D6500AC5575 /* String+Utilities.swift */,
 				1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */,
-				1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */,
 				1888E9651E00139800AC5575 /* UIColor+Utilities.swift */,
 			);
 			path = Extensions;
@@ -389,7 +402,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A12A13A836F2D72B5C8EF887 /* [CP] Copy Pods Resources */ = {
@@ -421,7 +434,6 @@
 				188C8EBD1DF979C300C2D52E /* UIImageView+AFNetworking.m in Sources */,
 				188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */,
 				188C8EBC1DF979C300C2D52E /* UIButton+AFNetworking.m in Sources */,
-				1888E9641E0012AB00AC5575 /* UIImageView+Utilities.swift in Sources */,
 				1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */,
 				188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
@@ -439,8 +451,10 @@
 				A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */,
 				188C8EB51DF979C300C2D52E /* AFURLRequestSerialization.m in Sources */,
 				188C8EBA1DF979C300C2D52E /* AFNetworkActivityIndicatorManager.m in Sources */,
+				180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */,
 				188C8EB61DF979C300C2D52E /* AFURLResponseSerialization.m in Sources */,
 				1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */,
+				180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */,
 				188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */,
 				187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */,
 				188C8EB91DF979C300C2D52E /* AFImageDownloader.m in Sources */,
