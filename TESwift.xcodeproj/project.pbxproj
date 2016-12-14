@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		17B7B6A79D886003F38C6AFD /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */; };
+		180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
@@ -44,6 +45,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialConnectViewController.swift; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -115,6 +117,14 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		180EDA1B1E0121AC0065BF6B /* SocialConnect */ = {
+			isa = PBXGroup;
+			children = (
+				180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */,
+			);
+			path = SocialConnect;
+			sourceTree = "<group>";
+		};
 		186A23A11DF9431E005E78D2 = {
 			isa = PBXGroup;
 			children = (
@@ -152,6 +162,7 @@
 		1878C8161DF948B100DAC10E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
 				184C42581DFA983F001B576A /* LogInViewController.swift */,
 				A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */,
@@ -416,6 +427,7 @@
 				184C42591DFA983F001B576A /* LogInViewController.swift in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
 				1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */,
+				180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
 				189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */,
