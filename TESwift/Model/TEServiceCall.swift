@@ -381,7 +381,7 @@ class ServiceCall: NSObject {
     func saveImage(imageData:Data,imageKey:String) {
         
         let filePath:String = self.getDocumentsDirectoryPath().appendingFormat("/%@.png", imageKey)
-        let fileURL = NSURL(string:filePath)
+        let fileURL = NSURL(string:"file://\(filePath)")
         
         do {
             try imageData.write(to: fileURL as! URL, options: .atomic)
@@ -422,7 +422,7 @@ class ServiceCall: NSObject {
                 print(error.localizedDescription);
             }
         }
-        return "file://\(imageDirectoryPath)"
+        return imageDirectoryPath
     }
     
 }
