@@ -100,7 +100,8 @@
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TESwift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
-		A1D555D51DFAF9B30077EF4E /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		A1BCB0DB1E01570D005EF993 /* Base */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base; path = StyleGuide.swift; sourceTree = "<group>"; };
+		A1D555D51DFAF9B30077EF4E /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constant.swift; path = ../Library/Constant.swift; sourceTree = "<group>"; };
 		A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = TESwift/Controller/SignUpViewController.swift; sourceTree = SOURCE_ROOT; };
 		C9FEF4390619399CADF35F6A /* Pods-TESwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -146,6 +147,7 @@
 		186A23AC1DF9431E005E78D2 /* TESwift */ = {
 			isa = PBXGroup;
 			children = (
+				A1BCB0DC1E015798005EF993 /* Utilities */,
 				1878C8181DF948B100DAC10E /* Model */,
 				188C8E8E1DF979C300C2D52E /* Library */,
 				1888E95E1E000D5100AC5575 /* Extensions */,
@@ -214,7 +216,6 @@
 		188C8E8E1DF979C300C2D52E /* Library */ = {
 			isa = PBXGroup;
 			children = (
-				A1D555D51DFAF9B30077EF4E /* Constant.swift */,
 				188C8E8F1DF979C300C2D52E /* AFNetworking */,
 				188C8E9D1DF979C300C2D52E /* UIKit+AFNetworking */,
 			);
@@ -275,6 +276,16 @@
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
+		};
+		A1BCB0DC1E015798005EF993 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				A1BCB0DA1E01570D005EF993 /* StyleGuide.swift */,
+				A1D555D51DFAF9B30077EF4E /* Constant.swift */,
+			);
+			name = Utilities;
+			path = TESwift/Utilities;
+			sourceTree = SOURCE_ROOT;
 		};
 		DD6101464481FED89DA7017D /* Pods */ = {
 			isa = PBXGroup;
@@ -386,7 +397,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A12A13A836F2D72B5C8EF887 /* [CP] Copy Pods Resources */ = {
@@ -469,6 +480,15 @@
 				188FEAA81DFEB4ED00C8A181 /* Base */,
 			);
 			name = Storyboard.storyboard;
+			sourceTree = "<group>";
+		};
+		A1BCB0DA1E01570D005EF993 /* StyleGuide.swift */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A1BCB0DB1E01570D005EF993 /* Base */,
+			);
+			name = StyleGuide.swift;
+			path = ../View/Base.lproj;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
