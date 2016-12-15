@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate{
+class BaseViewController: UIViewController, UITextFieldDelegate{
     
     var context:NSManagedObjectContext? = nil
     
@@ -55,6 +55,17 @@ class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         alertController.addAction(OKAction)
         self.present(alertController, animated: true, completion: nil)
     }
+    
+    func showNoInternetAlert() -> Void {
+        
+        let alertController = UIAlertController(title: kError, message: kNoInternetConnect, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) {
+            (action: UIAlertAction) in print("Youve pressed OK Button")
+        }
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+
     
     func parseResponse(responseObject:Any) -> NSDictionary {
         

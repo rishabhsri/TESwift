@@ -93,6 +93,7 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
             }
         }
         
+        self.showHUD()
         self.webView.loadRequest(webRequest as URLRequest)
         
     }
@@ -112,6 +113,7 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
     @IBAction func actionOnClose(_ sender: Any)
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
+        self.showHUD()
         self.delegate?.didSocialLoginFailed(errorString: "", connectType: self.socialConnectType!)
         self.dismiss(animated: true, completion: nil)
     }
@@ -134,6 +136,7 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
                         defaults.set(authKey, forKey: "authkey")
                         defaults.synchronize()
                     }
+                    self.showHUD()
                     self.delegate?.didSocialLoginSuccessfully(sessionKey: authKey, connectType: self.socialConnectType!)
                     self.dismiss(animated: true, completion: nil)
                 }
@@ -148,11 +151,13 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
                     if seperatedStrings.count > 0 {
                         let authKey:String = (seperatedStrings.last?.replacingOccurrences(of: "#_=_", with: ""))!
                         let errorString:String = authKey.removingPercentEncoding!
+                        self.showHUD()
                         self.delegate?.didSocialLoginFailed(errorString: errorString, connectType: self.socialConnectType!)
                         self.dismiss(animated: true, completion: nil)
                     }
                 }else
                 {
+                    self.showHUD()
                     self.delegate?.didSocialLoginFailed(errorString: "", connectType: self.socialConnectType!)
                     self.dismiss(animated: true, completion: nil)
                     
@@ -172,11 +177,13 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
     {
         UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.updateButtons()
+        self.hideHUD()
     }
     
     func webView(_ webView: UIWebView, didFailLoadWithError error: Error)
     {
         self.updateButtons()
+        self.hideHUD()
     }
     
     func updateButtons()

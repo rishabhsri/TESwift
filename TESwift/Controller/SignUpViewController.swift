@@ -91,7 +91,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     //MARK:- IBAction Methods
     
     @IBAction func actionOnSignUpBtn(_ sender: AnyObject) {
-        
+        self.uploadImage()
         if self.isValid() {
             print("everything is fine!!")
             if isImageAdded {
@@ -105,10 +105,45 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     @IBAction func actionOnProfilePicBtn(_ sender: AnyObject)
     {
-        imagePicker.allowsEditing = false
-        imagePicker.sourceType = .photoLibrary
-        
-        present(imagePicker, animated: true, completion: nil)
+           let optionMenu = UIAlertController(title: nil, message: "Add Photo", preferredStyle: .actionSheet)
+            
+            let addAction = UIAlertAction(title: "Take a photo", style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
+                {
+                    self.imagePicker.delegate=self;
+                    self.imagePicker.allowsEditing = true
+                    self.imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+                    self.present(self.imagePicker, animated: true, completion: nil)
+                }else
+                {
+                    let alert = UIAlertController(title: "Message", message: kCameraNotAvailableMessage, preferredStyle: UIAlertControllerStyle.alert)
+                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+                    self.present(alert, animated: true, completion: nil)
+                }
+            })
+            
+            let takeAction = UIAlertAction(title: "Choose from gallery", style: .default, handler: {
+                (alert: UIAlertAction!) -> Void in
+                
+                self.imagePicker.delegate=self;
+                self.imagePicker.allowsEditing = true
+                
+                self.imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.present(self.imagePicker, animated: true, completion: nil)
+                
+            })
+            
+            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+                (alert: UIAlertAction!) -> Void in
+                optionMenu.dismiss(animated: true, completion: nil)
+            })
+            
+            optionMenu.addAction(addAction)
+            optionMenu.addAction(takeAction)
+            optionMenu.addAction(cancelAction)
+            
+            self.present(optionMenu, animated: true, completion: nil)
     }
     
     @IBAction func actionOnUpArrow(_ sender: AnyObject) {
@@ -179,6 +214,20 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     func uploadImage() {
         
+        let success:uploadImageSuccess = {imageKey in
+            // Success call implementation
+            print(imageKey)
+        }
+        
+        //On Falure Call
+        let falure:uploadImageFailed = {error,responseMessage in
+            
+            // Falure call implementation
+            print(responseMessage)
+        }
+        
+          ServiceCall.sharedInstance.uploadImage(image: self.profilePicBtn.currentBackgroundImage, urlType: RequestedUrlType.UploadImage, successCall: success, falureCall: falure)
+        
     }
     
     func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
@@ -200,14 +249,18 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         //  ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
-    
+    //MARK:- Social Login response
     override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         commonSetting.userLoginInfo = userInfo
-        
+        self.hideHUD()
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
         self.navigationController?.pushViewController(dbController, animated:true)
+    }
+    func onLogInFailure(_ userInfo: String) -> Void {
+        self.hideHUD()
+        self.showAlert(title: "Error", message: userInfo, tag: 200)
     }
     
     
@@ -301,7 +354,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         return true
     }
     
-    //Mark: - Keyboard add and Remove Notification
+    //MARK:- Keyboard add and Remove Notification
     
     func registerForKeyboardNotifications() {
         
@@ -332,8 +385,8 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     // MARK: - UIImagePickerControllerDelegate Methods
     
-    private func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
-        
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any])
+    {
         if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
             self.profilePicBtn.setBackgroundImage(pickedImage, for: UIControlState.normal)
             self.profilePicBtn.layer.cornerRadius = self.profilePicBtn.frame.size.height/2
@@ -344,7 +397,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         dismiss(animated: true, completion: nil)
     }
     
-    private func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         dismiss(animated: true, completion: nil)
     }
 }
