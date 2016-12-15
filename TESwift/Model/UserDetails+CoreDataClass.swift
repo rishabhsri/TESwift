@@ -43,11 +43,17 @@ public class UserDetails: TESwiftModel {
     
     static func updateUserDetails(userDetail:UserDetails, info:NSDictionary) -> Void {
         
-        userDetail.userName = info.value(forKey: "username") as! String?
-        userDetail.name = info.value(forKey: "name") as! String?
-        userDetail.userID = info.value(forKey: "userID") as! String?
-        userDetail.email = info.value(forKey: "email") as! String?
+        userDetail.userName = info.stringValueForKey(key: "username")
+        userDetail.name = info.stringValueForKey(key: "name")
+        userDetail.userID = info.stringValueForKey(key: "userID")
+        userDetail.email = info.stringValueForKey(key: "email")
         userDetail.subscriptionType = info.value(forKey: "userSubscription") as! Bool
+        
+//        userDetail.userName = info.value(forKey: "username") as! String?
+//        userDetail.name = info.value(forKey: "name") as! String?
+//        userDetail.userID = info.value(forKey: "userID") as! String?
+//        userDetail.email = info.value(forKey: "email") as! String?
+//        userDetail.subscriptionType = info.value(forKey: "userSubscription") as! Bool
         
     }
 

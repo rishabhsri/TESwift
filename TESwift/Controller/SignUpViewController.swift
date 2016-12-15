@@ -87,6 +87,24 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         }
     }
     
+    func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
+        
+        //On Success Call
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+        }
+        
+        //On Failure Call
+        let failure:falureHandler = {error,responseMessage,requestType in
+            
+            // Falure call implementation
+            print(responseMessage)
+        }
+         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserSignUp, method: "POST", successCall: success, falureCall: failure)
+        
+    }
     
     //MARK:- IBAction Methods
     
@@ -98,7 +116,21 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
                 self.uploadImage()
             }else
             {
-                // self.getUserSignup(<#T##userInfo: NSMutableDictionary##NSMutableDictionary#>)
+                let userInfo = NSMutableDictionary()
+                userInfo.setObject("", forKey:"country" as NSCopying)
+                userInfo.setObject("", forKey:"phoneNumber" as NSCopying)
+                userInfo.setObject("", forKey: "city" as NSCopying)
+                userInfo.setObject("", forKey: "imageKey" as NSCopying)
+                userInfo.setObject("", forKey: "state" as NSCopying)
+                userInfo.setObject("",forKey:"location" as NSCopying)
+                
+                userInfo.setObject(self.txtUsername.text!, forKey: "username" as NSCopying)
+                userInfo.setObject(self.txtDisplayname.text!, forKey: "name" as NSCopying)
+                userInfo.setObject(self.txtPassword.text!, forKey: "password" as NSCopying)
+                userInfo.setObject(self.txtEmailId.text!, forKey: "email" as NSCopying)
+                userInfo.setObject(self.txtLocation.text!, forKey: "location" as NSCopying)
+                
+                self.getUserSignup(userInfo )
             }
         }
     }
@@ -229,27 +261,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
           ServiceCall.sharedInstance.uploadImage(image: self.profilePicBtn.currentBackgroundImage, urlType: RequestedUrlType.UploadImage, successCall: success, falureCall: falure)
         
     }
-    
-    func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
         
-        //On Success Call
-        let success:successHandler = {responseObject,requestType in
-            // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
-            print(responseDict)
-        }
-        
-        //On Falure Call
-        let falure:falureHandler = {error,responseMessage,requestType in
-            
-            // Falure call implementation
-            print(responseMessage)
-        }
-        
-        //  ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
-        
-    }
-    //MARK:- Social Login response
     override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         commonSetting.userLoginInfo = userInfo
@@ -263,6 +275,9 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         self.showAlert(title: "Error", message: userInfo, tag: 200)
     }
     
+
+    
+   //MARK:- Textfield delegate
     
     //MARK:- Textfield delegate
     
