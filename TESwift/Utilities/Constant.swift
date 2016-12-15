@@ -59,6 +59,8 @@ let kOfflineIncorrectUsernamePassword = "Connect to internet for login."
 let kInvalidEmail = "Please enter valid email"
 let kPasswordRulesMessage  = "Password must contain at least 6 characters"
 let kEnterSamePassword = "Password and Confirm Password should be the same"
+let kCameraNotAvailableMessage = "Camera is not available."
+let kNoInternetConnect = "No Internet Connectivity.Please try again later."
 
 //MARK:- Titles
 

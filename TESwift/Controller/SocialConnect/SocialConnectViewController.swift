@@ -33,6 +33,10 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     //MARK: Facebook Login
     func socialLoginViaFacebook(_ sender: Any)
     {
+        if !commonSetting.isInternetAvailable {
+            self.showNoInternetAlert()
+            return
+        }
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
         socialLoginController.socialConnectType = .FACEBOOK
@@ -43,6 +47,10 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     //MARK: GooglePlus Login
      func socialLoginViaGooglePlus(_ sender: Any)
     {
+        if !commonSetting.isInternetAvailable {
+            self.showNoInternetAlert()
+            return
+        }
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
         socialLoginController.socialConnectType = .GOOGLEPLUS
@@ -53,6 +61,10 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     //MARK: Twitch Login
      func socialLoginViaTwitch(_ sender: Any)
     {
+        if !commonSetting.isInternetAvailable {
+            self.showNoInternetAlert()
+            return
+        }
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
         socialLoginController.socialConnectType = .TWITCH

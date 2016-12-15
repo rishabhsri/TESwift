@@ -15,6 +15,7 @@ enum RequestedUrlType {
     case GetUserProfileData
     case GetAllNotification
     case DownloadImage
+    case UploadImage
     case GetUserSignUp
 }
 
@@ -51,7 +52,7 @@ class ServiceCall: NSObject {
         return Singleton.instance
     }
     
-     override init() {
+    override init() {
         
         self.sessionManager = AFHTTPSessionManager()
         self.sessionManager.requestSerializer = AFJSONRequestSerializer()
@@ -83,6 +84,9 @@ class ServiceCall: NSObject {
         case .DownloadImage:
             urlString = String(format: "%@/%@",imageDownloadURL,parameter.value(forKey: "imageKey") as! String)
             break
+        case .UploadImage:
+            urlString = String(format: "%@",File_Header)
+            break
         case .GetUserSignUp:
             urlString = String(format: "%@/user/register",Network_Header)
             break
@@ -97,11 +101,11 @@ class ServiceCall: NSObject {
         if !commonSetting.isInternetAvailable {
             
             let error:NSError = NSError();
-            falureCall(error,"Internet is not available",urlType)
+            falureCall(error,kNoInternetConnect,urlType)
         }
         
         let strURL = getRequestUrl(urlType: urlType, parameter: parameters)
-       
+        
         let manager:AFHTTPSessionManager = self.sessionManager
         
         manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
@@ -245,62 +249,181 @@ class ServiceCall: NSObject {
         }
     }
     
-    func uploadImage(image:UIImage?,parameter:NSDictionary,urlType:RequestedUrlType,successCall:@escaping uploadImageSuccess,falureCall:@escaping uploadImageFailed){
+    func uploadImage(image:UIImage?,urlType:RequestedUrlType,successCall:@escaping uploadImageSuccess,falureCall:@escaping uploadImageFailed){
         
         if image == nil {
             let error:NSError = NSError();
             falureCall(error,"Invalid Parameter")
+        }else if !commonSetting.isInternetAvailable {
+            let error:NSError = NSError();
+            falureCall(error,kNoInternetConnect)
         }
         
+        var receivedImage:UIImage = image!
+        receivedImage = UIImage.fixrotation(receivedImage)
+        let imageData:Data = UIImageJPEGRepresentation(receivedImage, 0.1)!
         
+        let strURL = getRequestUrl(urlType: urlType, parameter:NSMutableDictionary())
+        
+        let manager:AFHTTPSessionManager = AFHTTPSessionManager()
+        self.imageDownloadManager.requestSerializer = AFHTTPRequestSerializer()
+        self.imageDownloadManager.responseSerializer = AFHTTPResponseSerializer()
+        
+        
+        manager.post(strURL, parameters: nil, constructingBodyWith:{(fromData) in
+            fromData.appendPart(withFileData: imageData, name: "file", fileName: "image.jpg", mimeType: "image/jpeg")
+        }, progress: nil,
+           success:{(task, responseObject) in
+            
+            if task.state == URLSessionTask.State.canceling || task.state == URLSessionTask.State.suspended
+            {
+                return
+            }
+            
+            if task.state == URLSessionTask.State.completed
+            {
+                if let httpResponse:HTTPURLResponse = task.response as? HTTPURLResponse
+                {
+                    if(httpResponse.statusCode == 200)
+                    {
+                        if let resosneString:String = responseObject as? String{
+                            successCall(resosneString)
+                        }
+                    }
+                }
+            }else
+            {
+                let error:NSError = NSError();
+                falureCall(error,"request failed")
+            }
+            
+        }, failure: {(task, error) in
+            
+            falureCall(error as NSError,error.localizedDescription)
+        })
         
     }
     
     func downloadImage(imageKey:String,urlType:RequestedUrlType,successCall:@escaping downloadImageSuccess,falureCall:@escaping downloadImageFailed){
         
-        if commonSetting.isEmptySting(imageKey) {
+        if !commonSetting.isInternetAvailable {
+            let error:NSError = NSError();
+            falureCall(error,kNoInternetConnect)
+        }else if commonSetting.isEmptySting(imageKey) {
             let error:NSError = NSError();
             falureCall(error,"Invalid Parameter")
         }
         
-        let parameters:NSMutableDictionary = NSMutableDictionary()
-        parameters.setValue(imageKey, forKey: "imageKey")
-        
-        let strURL = getRequestUrl(urlType: urlType, parameter:parameters)
-        
-        let manager:AFHTTPSessionManager = self.imageDownloadManager
-
-        manager.get(strURL, parameters: nil, progress: nil,
-                    success:{(task,responseObject) in
-                        
-                        if task.state == URLSessionTask.State.canceling || task.state == URLSessionTask.State.suspended
-                        {
-                            return
-                        }
-                        
-                        if task.state == URLSessionTask.State.completed
-                        {
-                            if let image:UIImage = UIImage.init(data: responseObject as! Data)
+        if let cachedImage:UIImage = self.getImageForKey(imageKey: imageKey)
+        {
+            successCall(cachedImage,imageKey)
+        }else
+        {
+            let parameters:NSMutableDictionary = NSMutableDictionary()
+            parameters.setValue(imageKey, forKey: "imageKey")
+            
+            let strURL = getRequestUrl(urlType: urlType, parameter:parameters)
+            
+            let manager:AFHTTPSessionManager = self.imageDownloadManager
+            
+            manager.get(strURL, parameters: nil, progress: nil,
+                        success:{(task,responseObject) in
+                            
+                            if task.state == URLSessionTask.State.canceling || task.state == URLSessionTask.State.suspended
                             {
-                                successCall(image,imageKey)
+                                return
+                            }
+                            
+                            if task.state == URLSessionTask.State.completed
+                            {
+                                if let image:UIImage = UIImage.init(data: responseObject as! Data)
+                                {
+                                    self.saveImage(imageData: responseObject as! Data, imageKey: imageKey)
+                                    successCall(image,imageKey)
+                                }else
+                                {
+                                    let error:NSError = NSError();
+                                    falureCall(error,"request failed")
+                                }
+                                
                             }else
                             {
                                 let error:NSError = NSError();
                                 falureCall(error,"request failed")
                             }
                             
-                        }else
-                        {
-                            let error:NSError = NSError();
-                            falureCall(error,"request failed")
-                        }
-                        
-        }, failure: {(task,error) in
-            
-            falureCall(error as NSError,error.localizedDescription)
-            
-        })
-   }
+            }, failure: {(task,error) in
+                
+                falureCall(error as NSError,error.localizedDescription)
+                
+            })
+        }
+    }
+    
+    func getImageForKey(imageKey:String) -> UIImage?{
+        
+        if commonSetting.isEmptySting(imageKey)
+        {
+            return nil
+        }else
+        {
+            let filePath:String = self.getDocumentsDirectoryPath().appendingFormat("/%@.png", imageKey)
+            if let image = UIImage(contentsOfFile: filePath)
+            {
+                return image
+            }else
+            {
+                return nil
+            }
+        }
+    }
+    
+    func saveImage(imageData:Data,imageKey:String) {
+        
+        let filePath:String = self.getDocumentsDirectoryPath().appendingFormat("/%@.png", imageKey)
+        let fileURL = NSURL(string:filePath)
+        
+        do {
+            try imageData.write(to: fileURL as! URL, options: .atomic)
+            print("saved")
+        } catch {
+            print(error)
+        }
+    }
+    
+    func deleteCacheImageForKey(imageKey:String) {
+        let filePath:String = self.getDocumentsDirectoryPath().appendingFormat("/%@.png", imageKey)
+        do {
+            try FileManager.default.removeItem(atPath: filePath)
+        } catch {
+            print(error)
+        }
+    }
+    
+    func getDocumentsDirectoryPath() -> String {
+        
+        let documentsDirectory:String = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0]
+        let imageDirectoryPath:String = documentsDirectory.appendingFormat("/%@", "TESWIFTIMAGES")
+        
+        let fileManager = FileManager.default
+        var isDir : ObjCBool = false
+        if fileManager.fileExists(atPath: imageDirectoryPath, isDirectory:&isDir) {
+            if !isDir.boolValue {
+                do {
+                    try FileManager.default.createDirectory(atPath: imageDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+                } catch let error as NSError {
+                    print(error.localizedDescription);
+                }
+            }
+        } else {
+            do {
+                try FileManager.default.createDirectory(atPath: imageDirectoryPath, withIntermediateDirectories: false, attributes: nil)
+            } catch let error as NSError {
+                print(error.localizedDescription);
+            }
+        }
+        return "file://\(imageDirectoryPath)"
+    }
     
 }
 
