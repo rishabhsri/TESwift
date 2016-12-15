@@ -23,7 +23,11 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     @IBOutlet weak var viewForLogin: UIView!
     @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
     
+    @IBOutlet weak var scrollData: UIScrollView!
+    @IBOutlet weak var lblAlready: UILabel!
     var isImageAdded = false
+    var activeField = UITextField()
+    var textField = UITextField()
     let imagePicker = UIImagePickerController()
     
     //MARK:- Life Cycle Methods
@@ -43,6 +47,14 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        self.registerForKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.deregisterFromKeyboardNotifications()
     }
     
     override func didReceiveMemoryWarning() {
@@ -65,6 +77,9 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
         txtLocation.attributedPlaceholder = NSAttributedString(string:"Location",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        
+        lblAlready.textColor = UIColor (colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
+        
         if (IS_IPHONE_5) {
             self.socialConnectHieght.constant = 40
             self.socialConnectWidth.constant = 40
@@ -197,6 +212,128 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     }
 
     
+   //MARK:- Textfield delegate
+    
+    
+    // return NO to disallow editing.
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
+        
+        return true
+        
+    }
+    
+    
+    // became first responder
+    func textFieldDidBeginEditing(_ textField: UITextField){
+
+        addDismisskeyboardTapGesture()
+        
+        if IS_IPAD {
+        
+            if (textField == txtPassword || textField == txtConfirmPassword){
+                let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(391 - 300))
+                self.scrollData.contentSize = CGSize(width: 320, height: 600)
+                self.scrollData.setContentOffset(scrollPoint, animated: true)
+            }
+           else if(textField == txtEmailId || textField == txtLocation){
+                let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(391 - 250))
+                self.scrollData.contentSize = CGSize(width: 320, height: 600)
+                self.scrollData.setContentOffset(scrollPoint, animated: true)
+            }
+            
+        }
+        
+       
+    }
+    
+    // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool{
+        return true
+    }
+    
+    // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
+    func textFieldDidEndEditing(_ textField: UITextField){
+        
+    }
+    
+    // return NO to not change text
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
+        
+        let length = txtUsername.text!.characters.count
+        
+        if textField == txtUsername && length >= 50 {
+            return false
+        }
+        else if textField == txtDisplayname && (textField.text!.characters.count) >= 50 {
+            return false
+        }
+        else if textField == txtEmailId && (textField.text?.characters.count)! >= 150{
+            return false
+        }
+        else if (textField == txtPassword || textField == txtConfirmPassword) && (textField.text?.characters.count)! >= 50{
+            return false
+        }
+        
+        return true
+    }
+    
+    // called when clear button pressed. return NO to ignore (no notifications)
+    func textFieldShouldClear(_ textField: UITextField) -> Bool{
+        return true
+    }
+    
+    // called when 'return' key pressed. return NO to ignore.
+    override func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        if textField == txtUsername {
+            txtDisplayname.becomeFirstResponder()
+        }
+        else if textField == txtDisplayname {
+            txtPassword.becomeFirstResponder()
+        }
+        else if textField == txtPassword {
+            
+            txtConfirmPassword.becomeFirstResponder()
+        }
+        else if textField == txtConfirmPassword {
+            txtEmailId.becomeFirstResponder()
+        }
+        else if textField == txtEmailId{
+            txtLocation.becomeFirstResponder()
+        }
+        else{
+            textField.resignFirstResponder()
+        }
+
+        return true
+    }
+    
+    //Mark: - Keyboard add and Remove Notification
+    
+    func registerForKeyboardNotifications() {
+       
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+       
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func deregisterFromKeyboardNotifications() {
+       
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    
+    func keyboardWasShown(_ aNotification: Notification){
+        
+    }
+    
+    func keyboardWillBeHidden(_ aNotification: Notification) {
+        if IS_IPAD {
+            self.scrollData.contentSize = CGSize(width: CGFloat(320), height: CGFloat(400))
+            self.scrollData.setContentOffset(CGPoint.zero, animated: true)
+        }
+    }
     
     
     // MARK: - UIImagePickerControllerDelegate Methods

@@ -8,13 +8,26 @@
 
 import UIKit
 
-class BaseViewController: UIViewController, UITextFieldDelegate {
+class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate{
+    
+    var context:NSManagedObjectContext? = nil
+    
     
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func manageObjectContext() -> NSManagedObjectContext {
+        
+        if context == nil {
+            let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+            context = appDelegate.persistentContainer.viewContext
+            }
+        return context!
     }
     
     override func didReceiveMemoryWarning() {
