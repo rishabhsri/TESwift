@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     @IBOutlet weak var txtUsername: UITextField!
     @IBOutlet weak var txtDisplayname: UITextField!
@@ -186,6 +186,16 @@ class SignUpViewController: BaseViewController ,UIImagePickerControllerDelegate,
         //  ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
+    
+    override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+        
+        commonSetting.userLoginInfo = userInfo
+        
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
+        self.navigationController?.pushViewController(dbController, animated:true)
+    }
+
     
     
     
