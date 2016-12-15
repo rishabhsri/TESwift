@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SignUpViewController: BaseViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate{
+class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
     
     @IBOutlet weak var txtUsername: UITextField!
     @IBOutlet weak var txtDisplayname: UITextField!
@@ -160,7 +160,7 @@ class SignUpViewController: BaseViewController,UIImagePickerControllerDelegate,U
     }
     
     @IBAction func actionOnLoginBtn(_ sender: AnyObject) {
-      _ = self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
         
     }
     //MARK:- Utility Methods
@@ -213,39 +213,66 @@ class SignUpViewController: BaseViewController,UIImagePickerControllerDelegate,U
         
     }
     
+    func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
+        
+        //On Success Call
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+        }
+        
+        //On Falure Call
+        let falure:falureHandler = {error,responseMessage,requestType in
+            
+            // Falure call implementation
+            print(responseMessage)
+        }
+        
+        //  ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
+        
+    }
+    
+    override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+        
+        commonSetting.userLoginInfo = userInfo
+        
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
+        self.navigationController?.pushViewController(dbController, animated:true)
+    }
+    
 
     
    //MARK:- Textfield delegate
     
+    //MARK:- Textfield delegate
+    
+    
     // return NO to disallow editing.
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
-        
         return true
-        
     }
     
     
     // became first responder
     func textFieldDidBeginEditing(_ textField: UITextField){
-
+        
         addDismisskeyboardTapGesture()
         
         if IS_IPAD {
-        
+            
             if (textField == txtPassword || textField == txtConfirmPassword){
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(391 - 300))
                 self.scrollData.contentSize = CGSize(width: 320, height: 600)
                 self.scrollData.setContentOffset(scrollPoint, animated: true)
             }
-           else if(textField == txtEmailId || textField == txtLocation){
+            else if(textField == txtEmailId || textField == txtLocation){
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(391 - 250))
                 self.scrollData.contentSize = CGSize(width: 320, height: 600)
                 self.scrollData.setContentOffset(scrollPoint, animated: true)
             }
-            
         }
-        
-       
     }
     
     // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
@@ -305,21 +332,21 @@ class SignUpViewController: BaseViewController,UIImagePickerControllerDelegate,U
         else{
             textField.resignFirstResponder()
         }
-
+        
         return true
     }
     
     //Mark: - Keyboard add and Remove Notification
     
     func registerForKeyboardNotifications() {
-       
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-       
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func deregisterFromKeyboardNotifications() {
-       
+        
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)

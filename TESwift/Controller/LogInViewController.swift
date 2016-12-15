@@ -18,14 +18,14 @@ class LogInViewController: SocialConnectViewController {
     @IBOutlet weak var viewForLogin: UIView!
     @IBOutlet var viewForArrow: UIView!
     @IBOutlet weak var viewForSocial: UIView!
-    
     @IBOutlet weak var forgotPassword: UIButton!
     @IBOutlet weak var userGuest: UIButton!
     @IBOutlet weak var signUp: UIButton!
     @IBOutlet weak var newLbl: UILabel!
-    var signupViewController = SignUpViewController()
-        
     @IBOutlet weak var scrollData: UIScrollView!
+    
+    var signupViewController = SignUpViewController()
+    
     //MARK:- Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,8 +67,6 @@ class LogInViewController: SocialConnectViewController {
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
         newLbl.textColor = UIColor (colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
         
-        
-        
         if (IS_IPHONE_5) {
             self.socialConnectHieght.constant = 40
             self.socialConnectWidth.constant = 40
@@ -79,7 +77,7 @@ class LogInViewController: SocialConnectViewController {
     func validate() -> Bool {
         
         if commonSetting.isEmptySting(txtUsername.text!) || commonSetting.isEmptySting(txtPassword.text!) {
-    
+            
             self.showAlert(title: "Message", message: "Username or password either null or consist blanks.", tag: 100)
             return false
         }
@@ -91,6 +89,8 @@ class LogInViewController: SocialConnectViewController {
         
         //On Success Call
         let success:successHandler = {responseObject,requestType in
+            
+            self.hideHUD()
             // Success call implementation
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             
@@ -103,13 +103,14 @@ class LogInViewController: SocialConnectViewController {
         
         //On Falure Call
         let falure:falureHandler = {error,responseMessage,requestType in
-            
+            self.hideHUD()
             // Falure call implementation
             
             print(responseMessage)
             self.onLogInFailure(responseMessage)
         }
         
+        self.showHUD()
         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
@@ -125,9 +126,9 @@ class LogInViewController: SocialConnectViewController {
     
     func onLogInFailure(_ userInfo: String) -> Void {
         
-       self.showAlert(title: "Error", message: userInfo, tag: 200)
+        self.showAlert(title: "Error", message: userInfo, tag: 200)
     }
-
+    
     
     //MARK:- IBAction Methods
     @IBAction func actionOnArrowUp(_ sender: AnyObject) {
@@ -143,7 +144,7 @@ class LogInViewController: SocialConnectViewController {
         self.viewForLogin.isHidden = false
         
     }
-
+    
     @IBAction func loginAction(_ sender: AnyObject) {
         
         if self.validate() {
@@ -156,9 +157,9 @@ class LogInViewController: SocialConnectViewController {
     
     @IBAction func actionOnSignup(_ sender: AnyObject) {
         
-         self.viewForArrow.isHidden = true
-         self.viewForLogin.isHidden = false
-         self.viewForSocial.isHidden = false
+        self.viewForArrow.isHidden = true
+        self.viewForLogin.isHidden = false
+        self.viewForSocial.isHidden = false
         
         // Instantiate SecondViewController
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
@@ -166,13 +167,11 @@ class LogInViewController: SocialConnectViewController {
         
         // Take user to SecondViewController
         self.navigationController?.pushViewController(controller, animated: true)
-       
+        
         
     }
     
-    
     //MARK:- Textfield delegate
-    
     override func textFieldShouldReturn(_ textField: UITextField) -> Bool{
         if textField == txtUsername {
             txtPassword.becomeFirstResponder()
@@ -183,16 +182,12 @@ class LogInViewController: SocialConnectViewController {
         
         return true
     }
-
     
     
     // return NO to disallow editing.
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
-        
         return true
-        
     }
-    
     
     // became first responder
     func textFieldDidBeginEditing(_ textField: UITextField){
@@ -200,7 +195,6 @@ class LogInViewController: SocialConnectViewController {
         addDismisskeyboardTapGesture()
         
         if IS_IPAD {
-            
             if (textField == txtUsername){
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(255 - 200))
                 self.scrollData.contentSize = CGSize(width: 320, height: 600)
@@ -210,36 +204,34 @@ class LogInViewController: SocialConnectViewController {
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(255 - 200))
                 self.scrollData.contentSize = CGSize(width: 320, height: 600)
                 self.scrollData.setContentOffset(scrollPoint, animated: true)
-
             }
         }
     }
     
-        //Mark: - Keyboard add and Remove Notification
+    //Mark:- Keyboard add and Remove Notification
+    
+    func registerForKeyboardNotifications() {
         
-        func registerForKeyboardNotifications() {
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-            
-            NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func deregisterFromKeyboardNotifications() {
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+        
+        NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+    }
+    
+    func keyboardWasShown(_ aNotification: Notification){
+        
+    }
+    
+    func keyboardWillBeHidden(_ aNotification: Notification) {
+        if IS_IPAD {
+            self.scrollData.contentSize = CGSize(width: CGFloat(320), height: CGFloat(400))
+            self.scrollData.setContentOffset(CGPoint.zero, animated: true)
         }
-        
-        func deregisterFromKeyboardNotifications() {
-            
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-            
-            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
-        }
-        
-        
-        func keyboardWasShown(_ aNotification: Notification){
-            
-        }
-        
-        func keyboardWillBeHidden(_ aNotification: Notification) {
-            if IS_IPAD {
-                self.scrollData.contentSize = CGSize(width: CGFloat(320), height: CGFloat(400))
-                self.scrollData.setContentOffset(CGPoint.zero, animated: true)
-            }
-        }
+    }
 }

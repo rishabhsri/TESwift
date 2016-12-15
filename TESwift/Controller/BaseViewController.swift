@@ -46,28 +46,6 @@ class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDele
     func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-    
-    
-    // MARK: - TextFields Delegate
-    
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        let nextTage=textField.tag+1;
-        // Try to find next responder
-        let nextResponder=textField.superview?.viewWithTag(nextTage) as UIResponder!
-        
-        if (nextResponder != nil){
-            // Found next responder, so set it.
-            nextResponder?.becomeFirstResponder()
-        }
-        else
-        {
-            // Not found, so remove keyboard
-            textField.resignFirstResponder()
-        }
-        return false // We do not want UITextField to insert line-breaks.
-    }
-    
     func showAlert(title: String, message: String,tag: NSInteger) -> Void {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
@@ -102,5 +80,37 @@ class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         imageView.image = image
         imageView.layer.backgroundColor = UIColor.black.cgColor
         imageView.layer.opacity = 0.45
+    }
+    
+    
+    
+    // MARK: - TextFields Delegate
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        
+        let nextTage=textField.tag+1;
+        // Try to find next responder
+        let nextResponder=textField.superview?.viewWithTag(nextTage) as UIResponder!
+        
+        if (nextResponder != nil){
+            // Found next responder, so set it.
+            nextResponder?.becomeFirstResponder()
+        }
+        else
+        {
+            // Not found, so remove keyboard
+            textField.resignFirstResponder()
+        }
+        return false // We do not want UITextField to insert line-breaks.
+    }
+    
+    //MARK:- HUD
+    func showHUD() {
+        PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
+        PKHUD.sharedHUD.show()
+    }
+    
+    func hideHUD(){
+        PKHUD.sharedHUD.hide()
     }
 }

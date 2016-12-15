@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
+class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -33,6 +33,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     //Local Variables
     var isSwipedUp = false
+    var currentButtonIndex:NSInteger = 0
     
     //Arrays for Hype, tournaments and notifications
     var hypetoShowArray:NSArray = NSArray()
@@ -44,7 +45,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier:"Cell")
+        tableView.register(hypeTableViewCell.self, forCellReuseIdentifier:"Cell")
         
         self.setUpStyleGuide()
         
@@ -53,6 +54,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         self.setupData()
         
         self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
+        
+        
         
     }
     
@@ -66,7 +69,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     func setUpStyleGuide() -> Void {
         self.notificationBtn.alpha = 0.25
         self.hypBtn.alpha = 1.0
-        self.tournamentsBtn.alpha = 0.2
+        self.tournamentsBtn.alpha = 0.25
+        currentButtonIndex = 1
     }
     
     func setupData() -> Void {
@@ -81,20 +85,20 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     func saveUserDetails(loginInfo: NSDictionary) -> Void {
         
-        let userInfo:NSMutableDictionary = NSMutableDictionary()
-        
-        userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
-        userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
-        userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
-        userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
-        userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
-        
-        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
-        UserDetails.save(self.manageObjectContext())
-        
-        let predi = NSPredicate(format: "age = %d", 33)
-        let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
-        print(user)
+        //        let userInfo:NSMutableDictionary = NSMutableDictionary()
+        //
+        //        userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
+        //        userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
+        //        userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
+        //        userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
+        //        userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
+        //
+        //        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
+        //        UserDetails.save(self.manageObjectContext())
+        //
+        //        let predi = NSPredicate(format: "age = %d", 33)
+        //        let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
+        //        print(user)
     }
     
     func setProfileData(userInfo:NSDictionary) {
@@ -193,6 +197,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         self.userProfileInfo.setDictionary(userInfo as! [AnyHashable : Any])
         self.userProfileInfo.addEntries(from: commonSetting.userLoginInfo as! [AnyHashable : Any])
         self.setProfileData(userInfo: self.userProfileInfo)
+        self.tableView.reloadData()
         
     }
     
@@ -228,8 +233,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-        }, completion: {(isCompleted) -> Void in
-            self.isSwipedUp = true
+            }, completion: {(isCompleted) -> Void in
+                self.isSwipedUp = true
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
@@ -253,8 +258,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-        }, completion: {(isCompleted) -> Void in
-            self.isSwipedUp = false
+            }, completion: {(isCompleted) -> Void in
+                self.isSwipedUp = false
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
@@ -266,40 +271,91 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         self.notificationBtn.alpha = 1.0
         self.hypBtn.alpha = 0.25
         self.tournamentsBtn.alpha = 0.25
+        currentButtonIndex = 0
+        
     }
     
     @IBAction func tournamentAction(_ sender: AnyObject) {
         self.notificationBtn.alpha = 0.25
         self.hypBtn.alpha = 0.25
         self.tournamentsBtn.alpha = 1.0
+        currentButtonIndex = 2
+        self.tableView.reloadData()
     }
     
     @IBAction func hypeAction(_ sender: AnyObject) {
         self.notificationBtn.alpha = 0.25
         self.hypBtn.alpha = 1.0
         self.tournamentsBtn.alpha = 0.25
+        currentButtonIndex = 1
+        self.tableView.reloadData()
     }
     
     // MARK: - TableView Delegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 5
+        
+        if currentButtonIndex == 0 {
+            return 2
+        }else if currentButtonIndex == 1
+        {
+            return hypetoShowArray.count
+        }else
+        {
+            return tournamentsToShowArray.count
+        }
     }
+   
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // create a new cell if needed or reuse an old one
-        let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
         
-      //  let cell:UITableViewCell = self.tableView.dequeueReusableCell(withIdentifier: "Cell") as UITableViewCell!
+        let cell:UITableViewCell
+        if currentButtonIndex == 0 {
+            cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
+        }else if currentButtonIndex == 1
+        {
+            cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
+            
+        }else
+        {
+            cell = self.configureTournamentCell(tableView: tableView, indexPath: indexPath)
+        }
+        
         cell.backgroundColor = UIColor.clear
-        // set the text from the data model
-       // cell.textLabel?.text = self.animals[indexPath.row]
         
         return cell
     }
+    
+    func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
+        
+        let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
+        
+        let hypeInfo:NSDictionary = self.parseResponse(responseObject: hypetoShowArray.object(at: indexPath.row))
+        cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
+        cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game")
+        cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue")
+        cell.dateLbl.text = hypeInfo.stringValueForKey(key: "startDate")
+        
+        return cell
+    }
+    
+    func  configureTournamentCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
+        
+        let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
+        
+        let hypeInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
+       
+        cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
+        cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
+        cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game")
+        cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue")
+        cell.dateLbl.text = hypeInfo.stringValueForKey(key: "startDate")
 
-    
-    
+        
+        return cell
+    }
 }
