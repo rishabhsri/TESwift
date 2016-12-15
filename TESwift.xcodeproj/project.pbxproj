@@ -42,6 +42,7 @@
 		1892778F1E01784C000E2732 /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1892778D1E01784C000E2732 /* TESwift.xcdatamodeld */; };
 		189277921E0179A2000E2732 /* UserDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189277901E0179A2000E2732 /* UserDetails+CoreDataClass.swift */; };
 		189277931E0179A2000E2732 /* UserDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */; };
+		189277971E018BBD000E2732 /* hypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189277961E018BBD000E2732 /* hypeTableViewCell.swift */; };
 		189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B54881DF9857D0091FDAD /* TEServiceCall.swift */; };
 		18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */; };
 		18E7AD3C1E01386F00E1FC58 /* TESwiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */; };
@@ -105,6 +106,7 @@
 		1892778E1E01784C000E2732 /* TESwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TESwift.xcdatamodel; sourceTree = "<group>"; };
 		189277901E0179A2000E2732 /* UserDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
 		189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		189277961E018BBD000E2732 /* hypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = hypeTableViewCell.swift; sourceTree = "<group>"; };
 		189B54881DF9857D0091FDAD /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
 		18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeftMenuViewController.swift; path = TESwift/Controller/LeftMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -185,6 +187,7 @@
 		1878C8161DF948B100DAC10E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				189277961E018BBD000E2732 /* hypeTableViewCell.swift */,
 				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
 				184C42581DFA983F001B576A /* LogInViewController.swift */,
@@ -457,6 +460,7 @@
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
 				180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
+				189277971E018BBD000E2732 /* hypeTableViewCell.swift in Sources */,
 				189277931E0179A2000E2732 /* UserDetails+CoreDataProperties.swift in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
 				189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */,
