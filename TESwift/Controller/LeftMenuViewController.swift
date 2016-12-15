@@ -88,7 +88,7 @@ class LeftMenuViewController: BaseViewController {
     
     @IBAction func logoutAction(_ sender: AnyObject) {
         
-        self.navigationController?.popToRootViewController(animated: true)
+      _ =  self.navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func syncToSerAction(_ sender: AnyObject) {
