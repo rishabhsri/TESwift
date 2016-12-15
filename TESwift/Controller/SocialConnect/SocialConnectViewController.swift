@@ -10,10 +10,17 @@ import UIKit
 
 class SocialConnectViewController: BaseViewController,SocialLoginViewControllerDelegate {
     
+    @IBOutlet weak var facebookBtn: UIButton!
+    @IBOutlet weak var googlePlusBtn: UIButton!
+    @IBOutlet weak var twitchBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Do any additional setup after loading the view.
+        self.facebookBtn.addTarget(self, action:#selector(SocialConnectViewController.socialLoginViaFacebook(_:)), for: UIControlEvents.touchUpInside)
+        self.googlePlusBtn.addTarget(self, action:#selector(SocialConnectViewController.socialLoginViaGooglePlus(_:)), for: UIControlEvents.touchUpInside)
+        self.twitchBtn.addTarget(self, action:#selector(SocialConnectViewController.socialLoginViaTwitch(_:)), for: UIControlEvents.touchUpInside)
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -21,11 +28,10 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
         // Dispose of any resources that can be recreated.
     }
     
-    
     //MARK:- Social Connect handlers
     
     //MARK: Facebook Login
-    @IBAction func socialLoginViaFacebook(_ sender: Any)
+    func socialLoginViaFacebook(_ sender: Any)
     {
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
@@ -35,7 +41,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     }
     
     //MARK: GooglePlus Login
-    @IBAction func socialLoginViaGooglePlus(_ sender: Any)
+     func socialLoginViaGooglePlus(_ sender: Any)
     {
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
@@ -45,7 +51,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     }
     
     //MARK: Twitch Login
-    @IBAction func socialLoginViaTwitch(_ sender: Any)
+     func socialLoginViaTwitch(_ sender: Any)
     {
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController

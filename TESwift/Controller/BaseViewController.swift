@@ -103,4 +103,14 @@ class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDele
         }
         return false // We do not want UITextField to insert line-breaks.
     }
+    
+    //MARK:- HUD
+    func showHUD() {
+        PKHUD.sharedHUD.contentView = PKHUDSystemActivityIndicatorView()
+        PKHUD.sharedHUD.show()
+    }
+    
+    func hideHUD(){
+        PKHUD.sharedHUD.hide()
+    }
 }

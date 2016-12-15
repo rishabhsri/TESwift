@@ -15,6 +15,7 @@ enum RequestedUrlType {
     case GetUserProfileData
     case GetAllNotification
     case DownloadImage
+    case GetUserSignUp
 }
 
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
@@ -82,6 +83,10 @@ class ServiceCall: NSObject {
         case .DownloadImage:
             urlString = String(format: "%@/%@",imageDownloadURL,parameter.value(forKey: "imageKey") as! String)
             break
+        case .GetUserSignUp:
+            urlString = String(format: "%@/user/register",Network_Header)
+            break
+            
         }
         
         return urlString

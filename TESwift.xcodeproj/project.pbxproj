@@ -7,22 +7,39 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		17B7B6A79D886003F38C6AFD /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */; };
 		180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */; };
 		180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA201E0135320065BF6B /* SocialLoginViewController.swift */; };
 		180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */; };
 		180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */; };
-		1825FCDF1E0285DE00998E98 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825FCDE1E0285DE00998E98 /* NotificationTableViewCell.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
 		1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C81F1DF9491C00DAC10E /* LaunchScreen.storyboard */; };
 		1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C8211DF9491C00DAC10E /* Main.storyboard */; };
 		187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E7D861DFEC75D00896C18 /* CommonSetting.swift */; };
+		188163B21E0275CF00AB2E74 /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163B11E0275CF00AB2E74 /* Constant.swift */; };
+		188163B41E02764500AB2E74 /* StyleGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163B31E02764500AB2E74 /* StyleGuide.swift */; };
+		188163C91E02779E00AB2E74 /* FrameView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163B61E02779E00AB2E74 /* FrameView.swift */; };
+		188163CA1E02779E00AB2E74 /* HUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163B71E02779E00AB2E74 /* HUD.swift */; };
+		188163CB1E02779E00AB2E74 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 188163B81E02779E00AB2E74 /* Images.xcassets */; };
+		188163CC1E02779E00AB2E74 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 188163B91E02779E00AB2E74 /* Info.plist */; };
+		188163CD1E02779E00AB2E74 /* PKHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163BB1E02779E00AB2E74 /* PKHUD.swift */; };
+		188163CE1E02779E00AB2E74 /* PKHUDAnimating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163BC1E02779E00AB2E74 /* PKHUDAnimating.swift */; };
+		188163CF1E02779E00AB2E74 /* PKHUDAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163BD1E02779E00AB2E74 /* PKHUDAnimation.swift */; };
+		188163D01E02779E00AB2E74 /* PKHUDAssets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163BE1E02779E00AB2E74 /* PKHUDAssets.swift */; };
+		188163D11E02779E00AB2E74 /* PKHUDErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163BF1E02779E00AB2E74 /* PKHUDErrorView.swift */; };
+		188163D21E02779E00AB2E74 /* PKHUDProgressView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C01E02779E00AB2E74 /* PKHUDProgressView.swift */; };
+		188163D31E02779E00AB2E74 /* PKHUDRotatingImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C11E02779E00AB2E74 /* PKHUDRotatingImageView.swift */; };
+		188163D41E02779E00AB2E74 /* PKHUDSquareBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C21E02779E00AB2E74 /* PKHUDSquareBaseView.swift */; };
+		188163D51E02779E00AB2E74 /* PKHUDSuccessView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C31E02779E00AB2E74 /* PKHUDSuccessView.swift */; };
+		188163D61E02779E00AB2E74 /* PKHUDSystemActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C41E02779E00AB2E74 /* PKHUDSystemActivityIndicatorView.swift */; };
+		188163D71E02779E00AB2E74 /* PKHUDTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C51E02779E00AB2E74 /* PKHUDTextView.swift */; };
+		188163D81E02779E00AB2E74 /* PKHUDWideBaseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C61E02779E00AB2E74 /* PKHUDWideBaseView.swift */; };
+		188163D91E02779E00AB2E74 /* Window.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C71E02779E00AB2E74 /* Window.swift */; };
+		188163DA1E02779E00AB2E74 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C81E02779E00AB2E74 /* WindowRootViewController.swift */; };
 		1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E95F1E000D6500AC5575 /* String+Utilities.swift */; };
 		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
 		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
-		188C7F1E1E02A60E001E1C79 /* Discord-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 188C7F1D1E02A60E001E1C79 /* Discord-Logo.png */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
 		188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E961DF979C300C2D52E /* AFSecurityPolicy.m */; };
@@ -48,7 +65,7 @@
 		189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B54881DF9857D0091FDAD /* TEServiceCall.swift */; };
 		18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */; };
 		18E7AD3C1E01386F00E1FC58 /* TESwiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */; };
-		A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D51DFAF9B30077EF4E /* Constant.swift */; };
+		88FFFDA670937AC39853BFEA /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */; };
 		A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -58,7 +75,6 @@
 		180EDA281E01765D0065BF6B /* UIImage+ResizeAndFitImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeAndFitImage.h"; sourceTree = "<group>"; };
 		180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeAndFitImage.m"; sourceTree = "<group>"; };
 		180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
-		1825FCDE1E0285DE00998E98 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationTableViewCell.swift; path = TESwift/Controller/NotificationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,10 +83,30 @@
 		1878C8201DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1878C8221DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		187E7D861DFEC75D00896C18 /* CommonSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonSetting.swift; sourceTree = "<group>"; };
+		188163B11E0275CF00AB2E74 /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		188163B31E02764500AB2E74 /* StyleGuide.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StyleGuide.swift; sourceTree = "<group>"; };
+		188163B61E02779E00AB2E74 /* FrameView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FrameView.swift; sourceTree = "<group>"; };
+		188163B71E02779E00AB2E74 /* HUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HUD.swift; sourceTree = "<group>"; };
+		188163B81E02779E00AB2E74 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		188163B91E02779E00AB2E74 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		188163BA1E02779E00AB2E74 /* PKHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PKHUD.h; sourceTree = "<group>"; };
+		188163BB1E02779E00AB2E74 /* PKHUD.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUD.swift; sourceTree = "<group>"; };
+		188163BC1E02779E00AB2E74 /* PKHUDAnimating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDAnimating.swift; sourceTree = "<group>"; };
+		188163BD1E02779E00AB2E74 /* PKHUDAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDAnimation.swift; sourceTree = "<group>"; };
+		188163BE1E02779E00AB2E74 /* PKHUDAssets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDAssets.swift; sourceTree = "<group>"; };
+		188163BF1E02779E00AB2E74 /* PKHUDErrorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDErrorView.swift; sourceTree = "<group>"; };
+		188163C01E02779E00AB2E74 /* PKHUDProgressView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDProgressView.swift; sourceTree = "<group>"; };
+		188163C11E02779E00AB2E74 /* PKHUDRotatingImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDRotatingImageView.swift; sourceTree = "<group>"; };
+		188163C21E02779E00AB2E74 /* PKHUDSquareBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDSquareBaseView.swift; sourceTree = "<group>"; };
+		188163C31E02779E00AB2E74 /* PKHUDSuccessView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDSuccessView.swift; sourceTree = "<group>"; };
+		188163C41E02779E00AB2E74 /* PKHUDSystemActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDSystemActivityIndicatorView.swift; sourceTree = "<group>"; };
+		188163C51E02779E00AB2E74 /* PKHUDTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDTextView.swift; sourceTree = "<group>"; };
+		188163C61E02779E00AB2E74 /* PKHUDWideBaseView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PKHUDWideBaseView.swift; sourceTree = "<group>"; };
+		188163C71E02779E00AB2E74 /* Window.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Window.swift; sourceTree = "<group>"; };
+		188163C81E02779E00AB2E74 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowRootViewController.swift; sourceTree = "<group>"; };
 		1888E95F1E000D6500AC5575 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
 		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
-		188C7F1D1E02A60E001E1C79 /* Discord-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Discord-Logo.png"; path = "../../tournamentedition/iOS/SignUpMod/SupportingFiles/Images/Discord-Logo.png"; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		188C8E921DF979C300C2D52E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -116,11 +152,9 @@
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		18E7AD3A1E01386F00E1FC58 /* TESwiftModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TESwiftModel.h; sourceTree = "<group>"; };
 		18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TESwiftModel.m; sourceTree = "<group>"; };
-		1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TESwift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
-		A1BCB0DB1E01570D005EF993 /* Base */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base; path = StyleGuide.swift; sourceTree = "<group>"; };
-		A1D555D51DFAF9B30077EF4E /* Constant.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Constant.swift; path = ../Library/Constant.swift; sourceTree = "<group>"; };
 		A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = TESwift/Controller/SignUpViewController.swift; sourceTree = SOURCE_ROOT; };
+		AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TESwift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FEF4390619399CADF35F6A /* Pods-TESwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -129,7 +163,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				17B7B6A79D886003F38C6AFD /* libPods-TESwift.a in Frameworks */,
+				88FFFDA670937AC39853BFEA /* libPods-TESwift.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -176,7 +210,7 @@
 		186A23AC1DF9431E005E78D2 /* TESwift */ = {
 			isa = PBXGroup;
 			children = (
-				A1BCB0DC1E015798005EF993 /* Utilities */,
+				188163B01E0275CF00AB2E74 /* Utilities */,
 				1878C8181DF948B100DAC10E /* Model */,
 				188C8E8E1DF979C300C2D52E /* Library */,
 				1888E95E1E000D5100AC5575 /* Extensions */,
@@ -184,7 +218,6 @@
 				1878C81B1DF948B100DAC10E /* View */,
 				186A23AD1DF9431E005E78D2 /* AppDelegate.swift */,
 				186A23B71DF9431E005E78D2 /* Assets.xcassets */,
-				188C7F1D1E02A60E001E1C79 /* Discord-Logo.png */,
 				186A23BC1DF9431E005E78D2 /* Info.plist */,
 				18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */,
 			);
@@ -195,7 +228,6 @@
 			isa = PBXGroup;
 			children = (
 				189277961E018BBD000E2732 /* hypeTableViewCell.swift */,
-				1825FCDE1E0285DE00998E98 /* NotificationTableViewCell.swift */,
 				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
 				184C42581DFA983F001B576A /* LogInViewController.swift */,
@@ -238,6 +270,41 @@
 			path = Base.lproj;
 			sourceTree = "<group>";
 		};
+		188163B01E0275CF00AB2E74 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				188163B31E02764500AB2E74 /* StyleGuide.swift */,
+				188163B11E0275CF00AB2E74 /* Constant.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
+		188163B51E02779E00AB2E74 /* PKHUD */ = {
+			isa = PBXGroup;
+			children = (
+				188163B61E02779E00AB2E74 /* FrameView.swift */,
+				188163B71E02779E00AB2E74 /* HUD.swift */,
+				188163B81E02779E00AB2E74 /* Images.xcassets */,
+				188163B91E02779E00AB2E74 /* Info.plist */,
+				188163BA1E02779E00AB2E74 /* PKHUD.h */,
+				188163BB1E02779E00AB2E74 /* PKHUD.swift */,
+				188163BC1E02779E00AB2E74 /* PKHUDAnimating.swift */,
+				188163BD1E02779E00AB2E74 /* PKHUDAnimation.swift */,
+				188163BE1E02779E00AB2E74 /* PKHUDAssets.swift */,
+				188163BF1E02779E00AB2E74 /* PKHUDErrorView.swift */,
+				188163C01E02779E00AB2E74 /* PKHUDProgressView.swift */,
+				188163C11E02779E00AB2E74 /* PKHUDRotatingImageView.swift */,
+				188163C21E02779E00AB2E74 /* PKHUDSquareBaseView.swift */,
+				188163C31E02779E00AB2E74 /* PKHUDSuccessView.swift */,
+				188163C41E02779E00AB2E74 /* PKHUDSystemActivityIndicatorView.swift */,
+				188163C51E02779E00AB2E74 /* PKHUDTextView.swift */,
+				188163C61E02779E00AB2E74 /* PKHUDWideBaseView.swift */,
+				188163C71E02779E00AB2E74 /* Window.swift */,
+				188163C81E02779E00AB2E74 /* WindowRootViewController.swift */,
+			);
+			path = PKHUD;
+			sourceTree = "<group>";
+		};
 		1888E95E1E000D5100AC5575 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
@@ -252,6 +319,7 @@
 		188C8E8E1DF979C300C2D52E /* Library */ = {
 			isa = PBXGroup;
 			children = (
+				188163B51E02779E00AB2E74 /* PKHUD */,
 				188C8E8F1DF979C300C2D52E /* AFNetworking */,
 				188C8E9D1DF979C300C2D52E /* UIKit+AFNetworking */,
 			);
@@ -308,20 +376,10 @@
 		212A20BA2F8D1EE10C6B4E00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */,
+				AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
-		};
-		A1BCB0DC1E015798005EF993 /* Utilities */ = {
-			isa = PBXGroup;
-			children = (
-				A1BCB0DA1E01570D005EF993 /* StyleGuide.swift */,
-				A1D555D51DFAF9B30077EF4E /* Constant.swift */,
-			);
-			name = Utilities;
-			path = TESwift/Utilities;
-			sourceTree = SOURCE_ROOT;
 		};
 		DD6101464481FED89DA7017D /* Pods */ = {
 			isa = PBXGroup;
@@ -397,7 +455,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */,
-				188C7F1E1E02A60E001E1C79 /* Discord-Logo.png in Resources */,
+				188163CB1E02779E00AB2E74 /* Images.xcassets in Resources */,
+				188163CC1E02779E00AB2E74 /* Info.plist in Resources */,
 				188FEAA91DFEB4ED00C8A181 /* Storyboard.storyboard in Resources */,
 				186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */,
 				1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */,
@@ -462,14 +521,20 @@
 				A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */,
 				188C8EBE1DF979C300C2D52E /* UIProgressView+AFNetworking.m in Sources */,
 				188C8EB71DF979C300C2D52E /* AFURLSessionManager.m in Sources */,
+				188163CA1E02779E00AB2E74 /* HUD.swift in Sources */,
+				188163DA1E02779E00AB2E74 /* WindowRootViewController.swift in Sources */,
 				189277921E0179A2000E2732 /* UserDetails+CoreDataClass.swift in Sources */,
 				188C8EC01DF979C300C2D52E /* UIWebView+AFNetworking.m in Sources */,
 				188C8EBD1DF979C300C2D52E /* UIImageView+AFNetworking.m in Sources */,
 				1892778F1E01784C000E2732 /* TESwift.xcdatamodeld in Sources */,
+				188163B21E0275CF00AB2E74 /* Constant.swift in Sources */,
 				188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */,
 				188C8EBC1DF979C300C2D52E /* UIButton+AFNetworking.m in Sources */,
 				1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */,
 				188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */,
+				188163D01E02779E00AB2E74 /* PKHUDAssets.swift in Sources */,
+				188163D51E02779E00AB2E74 /* PKHUDSuccessView.swift in Sources */,
+				188163CD1E02779E00AB2E74 /* PKHUD.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
 				18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */,
@@ -477,22 +542,32 @@
 				18E7AD3C1E01386F00E1FC58 /* TESwiftModel.m in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
 				180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */,
+				188163D61E02779E00AB2E74 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
+				188163D21E02779E00AB2E74 /* PKHUDProgressView.swift in Sources */,
+				188163D81E02779E00AB2E74 /* PKHUDWideBaseView.swift in Sources */,
+				188163D31E02779E00AB2E74 /* PKHUDRotatingImageView.swift in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
 				189277971E018BBD000E2732 /* hypeTableViewCell.swift in Sources */,
 				189277931E0179A2000E2732 /* UserDetails+CoreDataProperties.swift in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
 				189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */,
 				180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */,
+				188163D71E02779E00AB2E74 /* PKHUDTextView.swift in Sources */,
 				1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */,
-				A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */,
-				1825FCDF1E0285DE00998E98 /* NotificationTableViewCell.swift in Sources */,
+				188163CE1E02779E00AB2E74 /* PKHUDAnimating.swift in Sources */,
+				188163D41E02779E00AB2E74 /* PKHUDSquareBaseView.swift in Sources */,
+				188163C91E02779E00AB2E74 /* FrameView.swift in Sources */,
 				188C8EB51DF979C300C2D52E /* AFURLRequestSerialization.m in Sources */,
+				188163CF1E02779E00AB2E74 /* PKHUDAnimation.swift in Sources */,
+				188163B41E02764500AB2E74 /* StyleGuide.swift in Sources */,
 				188C8EBA1DF979C300C2D52E /* AFNetworkActivityIndicatorManager.m in Sources */,
 				180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */,
 				188C8EB61DF979C300C2D52E /* AFURLResponseSerialization.m in Sources */,
 				1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */,
+				188163D11E02779E00AB2E74 /* PKHUDErrorView.swift in Sources */,
 				180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */,
 				188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */,
+				188163D91E02779E00AB2E74 /* Window.swift in Sources */,
 				187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */,
 				188C8EB91DF979C300C2D52E /* AFImageDownloader.m in Sources */,
 				188C8EBB1DF979C300C2D52E /* UIActivityIndicatorView+AFNetworking.m in Sources */,
@@ -524,15 +599,6 @@
 				188FEAA81DFEB4ED00C8A181 /* Base */,
 			);
 			name = Storyboard.storyboard;
-			sourceTree = "<group>";
-		};
-		A1BCB0DA1E01570D005EF993 /* StyleGuide.swift */ = {
-			isa = PBXVariantGroup;
-			children = (
-				A1BCB0DB1E01570D005EF993 /* Base */,
-			);
-			name = StyleGuide.swift;
-			path = ../View/Base.lproj;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

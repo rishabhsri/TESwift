@@ -87,6 +87,24 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         }
     }
     
+    func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
+        
+        //On Success Call
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+        }
+        
+        //On Failure Call
+        let failure:falureHandler = {error,responseMessage,requestType in
+            
+            // Falure call implementation
+            print(responseMessage)
+        }
+         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserSignUp, method: "POST", successCall: success, falureCall: failure)
+        
+    }
     
     //MARK:- IBAction Methods
     
@@ -98,7 +116,21 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
                 self.uploadImage()
             }else
             {
-                // self.getUserSignup(<#T##userInfo: NSMutableDictionary##NSMutableDictionary#>)
+                let userInfo = NSMutableDictionary()
+                userInfo.setObject("", forKey:"country" as NSCopying)
+                userInfo.setObject("", forKey:"phoneNumber" as NSCopying)
+                userInfo.setObject("", forKey: "city" as NSCopying)
+                userInfo.setObject("", forKey: "imageKey" as NSCopying)
+                userInfo.setObject("", forKey: "state" as NSCopying)
+                userInfo.setObject("",forKey:"location" as NSCopying)
+                
+                userInfo.setObject(self.txtUsername.text!, forKey: "username" as NSCopying)
+                userInfo.setObject(self.txtDisplayname.text!, forKey: "name" as NSCopying)
+                userInfo.setObject(self.txtPassword.text!, forKey: "password" as NSCopying)
+                userInfo.setObject(self.txtEmailId.text!, forKey: "email" as NSCopying)
+                userInfo.setObject(self.txtLocation.text!, forKey: "location" as NSCopying)
+                
+                self.getUserSignup(userInfo )
             }
         }
     }
@@ -128,7 +160,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     }
     
     @IBAction func actionOnLoginBtn(_ sender: AnyObject) {
-      _ = self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
         
     }
     //MARK:- Utility Methods
@@ -181,7 +213,6 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
     }
     
-    
     func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
         
         //On Success Call
@@ -210,40 +241,38 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
         self.navigationController?.pushViewController(dbController, animated:true)
     }
+    
 
     
    //MARK:- Textfield delegate
     
+    //MARK:- Textfield delegate
+    
     
     // return NO to disallow editing.
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
-        
         return true
-        
     }
     
     
     // became first responder
     func textFieldDidBeginEditing(_ textField: UITextField){
-
+        
         addDismisskeyboardTapGesture()
         
         if IS_IPAD {
-        
+            
             if (textField == txtPassword || textField == txtConfirmPassword){
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(391 - 300))
                 self.scrollData.contentSize = CGSize(width: 320, height: 600)
                 self.scrollData.setContentOffset(scrollPoint, animated: true)
             }
-           else if(textField == txtEmailId || textField == txtLocation){
+            else if(textField == txtEmailId || textField == txtLocation){
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(391 - 250))
                 self.scrollData.contentSize = CGSize(width: 320, height: 600)
                 self.scrollData.setContentOffset(scrollPoint, animated: true)
             }
-            
         }
-        
-       
     }
     
     // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
@@ -303,21 +332,21 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         else{
             textField.resignFirstResponder()
         }
-
+        
         return true
     }
     
     //Mark: - Keyboard add and Remove Notification
     
     func registerForKeyboardNotifications() {
-       
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-       
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func deregisterFromKeyboardNotifications() {
-       
+        
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
