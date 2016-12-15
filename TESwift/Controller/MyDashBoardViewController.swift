@@ -83,20 +83,20 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     func saveUserDetails(loginInfo: NSDictionary) -> Void {
         
-//                let userInfo:NSMutableDictionary = NSMutableDictionary()
-//        
-//                userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
-//                userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
-//                userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
-//                userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
-//                userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
-//        
-//                _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
-//                UserDetails.save(self.manageObjectContext())
-//        
-//                let predi = NSPredicate(format: "age = %d", 33)
-//                let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
-//                print(user)
+        //                let userInfo:NSMutableDictionary = NSMutableDictionary()
+        //
+        //                userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
+        //                userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
+        //                userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
+        //                userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
+        //                userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
+        //
+        //                _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
+        //                UserDetails.save(self.manageObjectContext())
+        //
+        //                let predi = NSPredicate(format: "age = %d", 33)
+        //                let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
+        //                print(user)
     }
     
     func setProfileData(userInfo:NSDictionary) {
@@ -305,7 +305,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             return tournamentsToShowArray.count
         }
     }
-   
+    
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -362,14 +362,14 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             
             // On failure implementation
         }
-       
+        
         // CAll api if image key available..
         if imageKey != "" {
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }else
         {
             // set default image if image key is not available..
-            cell.hypeBgImg.image = UIImage(named: "defalut.png")
+            cell.hypeBgImg.image = UIImage(named: "Default")
         }
         
         cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
@@ -385,7 +385,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
         
         let tournaInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
-       
+        
         let val = tournaInfo.value(forKey: "hype") as! NSNumber
         
         if val == 0 {
@@ -417,13 +417,13 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }else
         {
-            cell.hypeBgImg.image = UIImage(named: "defalut.png")
+            cell.hypeBgImg.image = UIImage(named: "Default")
         }
         cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name")
         cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game")
         cell.locationLbl.text = tournaInfo.stringValueForKey(key: "venue")
         cell.dateLbl.text = tournaInfo.stringValueForKey(key: "startDate")
-
+        
         
         return cell
     }
