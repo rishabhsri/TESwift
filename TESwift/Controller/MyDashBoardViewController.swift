@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITableViewDelegate {
+class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -45,8 +45,6 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(hypeTableViewCell.self, forCellReuseIdentifier:"Cell")
-        
         self.setUpStyleGuide()
         
         self.setupMenu()
@@ -54,8 +52,6 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
         self.setupData()
         
         self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
-        
-        
         
     }
     
@@ -81,24 +77,26 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
         
         self.getUserProfileData()
         
+        saveUserDetails(loginInfo: commonSetting.userLoginInfo)
+        
     }
     
     func saveUserDetails(loginInfo: NSDictionary) -> Void {
         
-        //        let userInfo:NSMutableDictionary = NSMutableDictionary()
-        //
-        //        userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
-        //        userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
-        //        userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
-        //        userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
-        //        userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
-        //
-        //        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
-        //        UserDetails.save(self.manageObjectContext())
-        //
-        //        let predi = NSPredicate(format: "age = %d", 33)
-        //        let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
-        //        print(user)
+//                let userInfo:NSMutableDictionary = NSMutableDictionary()
+//        
+//                userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
+//                userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
+//                userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
+//                userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
+//                userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
+//        
+//                _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
+//                UserDetails.save(self.manageObjectContext())
+//        
+//                let predi = NSPredicate(format: "age = %d", 33)
+//                let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
+//                print(user)
     }
     
     func setProfileData(userInfo:NSDictionary) {
@@ -201,6 +199,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
         
     }
     
+    
     //MARK:- SwipeGesture methods
     
     func addSwipeGesture(){
@@ -272,6 +271,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
         self.hypBtn.alpha = 0.25
         self.tournamentsBtn.alpha = 0.25
         currentButtonIndex = 0
+        self.tableView.reloadData()
         
     }
     
@@ -296,7 +296,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if currentButtonIndex == 0 {
-            return 2
+            return notificationToShowArray.count
         }else if currentButtonIndex == 1
         {
             return hypetoShowArray.count
@@ -314,7 +314,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
         
         let cell:UITableViewCell
         if currentButtonIndex == 0 {
-            cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
+            
+            cell = self.configureNotificationCell(tableView: tableView, indexPath: indexPath)
         }else if currentButtonIndex == 1
         {
             cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
@@ -334,7 +335,35 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
         let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
         
         let hypeInfo:NSDictionary = self.parseResponse(responseObject: hypetoShowArray.object(at: indexPath.row))
-        cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        
+        // SETUP HYPE BORDER IMAGE
+        if hypeInfo.stringValueForKey(key: "hypableType") == "TOURNAMENT" {
+            cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        }else
+        {
+            cell.hypeBorderImg.image = UIImage(named: "EventCellHyped")
+        }
+        cell.hypeBgImg.image = nil
+        let imageKey = hypeInfo.stringValueForKey(key: "imageKey")
+        
+        let sucess:downloadImageSuccess = {image, imageKey in
+            
+            cell.hypeBgImg.image = image
+            
+        }
+        
+        let failure:downloadImageFailed = {error, responseString in
+            
+            // On failure implementation
+        }
+        
+        if imageKey != "" {
+            ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+        }else
+        {
+            cell.hypeBgImg.image = UIImage(named: "Discord-Logo.png")
+        }
+        
         cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
         cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game")
         cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue")
@@ -347,15 +376,54 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UITa
         
         let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
         
-        let hypeInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
+        let tournaInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
        
         cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
-        cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
-        cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game")
-        cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue")
-        cell.dateLbl.text = hypeInfo.stringValueForKey(key: "startDate")
+        
+        cell.hypeBgImg.image = nil
+        
+        let imageKey = tournaInfo.stringValueForKey(key: "imageKey")
+        
+        let sucess:downloadImageSuccess = {image, imageKey in
+            
+            cell.hypeBgImg.image = image
+            
+        }
+        
+        let failure:downloadImageFailed = {error, responseString in
+            
+            // On failure implementation
+        }
+        if imageKey != "" {
+            ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+        }else
+        {
+            cell.hypeBgImg.image = UIImage(named: "Discord-Logo.png")
+        }
+        cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name")
+        cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game")
+        cell.locationLbl.text = tournaInfo.stringValueForKey(key: "venue")
+        cell.dateLbl.text = tournaInfo.stringValueForKey(key: "startDate")
 
         
         return cell
     }
+    
+    func  configureNotificationCell(tableView:UITableView, indexPath:IndexPath) -> NotificationTableViewCell {
+        
+        let cell:NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
+        
+        let notificationInfo:NSDictionary = self.parseResponse(responseObject: notificationToShowArray.object(at: indexPath.row))
+        
+        cell.notificationTextView.text = notificationInfo.stringValueForKey(key: "notificationHeader")
+        
+        return cell
+    }
+    
+    func downloadImage(imageKey: String) -> UIImage{
+    
+        var downloadedImage:UIImage = UIImage()
+        
+         return downloadedImage
+        }
 }

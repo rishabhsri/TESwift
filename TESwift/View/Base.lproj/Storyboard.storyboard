@@ -129,8 +129,12 @@
                                                     <frame key="frameInset" width="375" height="139"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1tl-p3-mQc"/>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UIn-vG-EZT"/>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1tl-p3-mQc">
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </imageView>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="UIn-vG-EZT">
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                        </imageView>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uLl-KA-ucK">
                                                             <fontDescription key="fontDescription" name="Futura-Bold" family="Futura" pointSize="17"/>
                                                             <color key="textColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
@@ -183,6 +187,40 @@
                                                     <outlet property="hypeBgImg" destination="1tl-p3-mQc" id="BWw-0M-C5R"/>
                                                     <outlet property="hypeBorderImg" destination="UIn-vG-EZT" id="rT8-0i-aHA"/>
                                                     <outlet property="locationLbl" destination="Gfu-Tb-XE6" id="ayY-Yr-ba8"/>
+                                                </connections>
+                                            </tableViewCell>
+                                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NotificationTableViewCell" rowHeight="60" id="dTA-FO-D0i" customClass="NotificationTableViewCell" customModule="TESwift" customModuleProvider="target">
+                                                <rect key="frame" x="0.0" y="167" width="375" height="60"/>
+                                                <autoresizingMask key="autoresizingMask"/>
+                                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dTA-FO-D0i" id="qSJ-gh-QHI">
+                                                    <frame key="frameInset" width="375" height="60"/>
+                                                    <autoresizingMask key="autoresizingMask"/>
+                                                    <subviews>
+                                                        <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W98-7Q-QKK">
+                                                            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                            <color key="textColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <fontDescription key="fontDescription" name="Futura-Medium" family="Futura" pointSize="13"/>
+                                                            <textInputTraits key="textInputTraits"/>
+                                                        </textField>
+                                                        <imageView userInteractionEnabled="NO" alpha="0.5" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1sR-eY-YP0">
+                                                            <color key="backgroundColor" red="0.92941176469999998" green="0.92941176469999998" blue="0.92941176469999998" alpha="1" colorSpace="calibratedRGB"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="height" constant="1" id="cOP-c4-f0B"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstItem="1sR-eY-YP0" firstAttribute="top" secondItem="qSJ-gh-QHI" secondAttribute="topMargin" constant="45" id="0Ny-ak-dMQ"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="W98-7Q-QKK" secondAttribute="trailing" constant="25" id="4Ug-Uf-rNH"/>
+                                                        <constraint firstAttribute="trailingMargin" secondItem="1sR-eY-YP0" secondAttribute="trailing" constant="45" id="7ko-02-1GI"/>
+                                                        <constraint firstItem="W98-7Q-QKK" firstAttribute="leading" secondItem="qSJ-gh-QHI" secondAttribute="leadingMargin" constant="25" id="Fec-gD-hhr"/>
+                                                        <constraint firstItem="1sR-eY-YP0" firstAttribute="leading" secondItem="qSJ-gh-QHI" secondAttribute="leadingMargin" constant="45" id="IeR-bb-O2h"/>
+                                                        <constraint firstItem="W98-7Q-QKK" firstAttribute="top" secondItem="qSJ-gh-QHI" secondAttribute="topMargin" constant="7" id="NG6-mV-YwF"/>
+                                                    </constraints>
+                                                </tableViewCellContentView>
+                                                <connections>
+                                                    <outlet property="notificationTextView" destination="W98-7Q-QKK" id="Kms-FH-mI3"/>
                                                 </connections>
                                             </tableViewCell>
                                         </prototypes>
@@ -258,7 +296,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Login_BG" translatesAutoresizingMaskIntoConstraints="NO" id="JRz-Jj-ir5"/>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="D873460D-CD2B-4063-96E2-F21FC1B628DC" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-iP-Wev">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="0F9747B1-81E1-44E5-B354-46BA9ED73188" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-iP-Wev">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="DDc-ai-ARo"/>
                                 </constraints>
@@ -563,7 +601,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="D873460D-CD2B-4063-96E2-F21FC1B628DC" width="720" height="146">
+        <image name="0F9747B1-81E1-44E5-B354-46BA9ED73188" width="720" height="146">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

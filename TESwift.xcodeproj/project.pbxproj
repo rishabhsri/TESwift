@@ -12,6 +12,7 @@
 		180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA201E0135320065BF6B /* SocialLoginViewController.swift */; };
 		180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */; };
 		180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */; };
+		1825FCDF1E0285DE00998E98 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1825FCDE1E0285DE00998E98 /* NotificationTableViewCell.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 		1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E95F1E000D6500AC5575 /* String+Utilities.swift */; };
 		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
 		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
+		188C7F1E1E02A60E001E1C79 /* Discord-Logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 188C7F1D1E02A60E001E1C79 /* Discord-Logo.png */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
 		188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E961DF979C300C2D52E /* AFSecurityPolicy.m */; };
@@ -56,6 +58,7 @@
 		180EDA281E01765D0065BF6B /* UIImage+ResizeAndFitImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeAndFitImage.h"; sourceTree = "<group>"; };
 		180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeAndFitImage.m"; sourceTree = "<group>"; };
 		180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
+		1825FCDE1E0285DE00998E98 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationTableViewCell.swift; path = TESwift/Controller/NotificationTableViewCell.swift; sourceTree = SOURCE_ROOT; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,6 +70,7 @@
 		1888E95F1E000D6500AC5575 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
 		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
+		188C7F1D1E02A60E001E1C79 /* Discord-Logo.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Discord-Logo.png"; path = "../../tournamentedition/iOS/SignUpMod/SupportingFiles/Images/Discord-Logo.png"; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		188C8E921DF979C300C2D52E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -180,6 +184,7 @@
 				1878C81B1DF948B100DAC10E /* View */,
 				186A23AD1DF9431E005E78D2 /* AppDelegate.swift */,
 				186A23B71DF9431E005E78D2 /* Assets.xcassets */,
+				188C7F1D1E02A60E001E1C79 /* Discord-Logo.png */,
 				186A23BC1DF9431E005E78D2 /* Info.plist */,
 				18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */,
 			);
@@ -190,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				189277961E018BBD000E2732 /* hypeTableViewCell.swift */,
+				1825FCDE1E0285DE00998E98 /* NotificationTableViewCell.swift */,
 				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
 				184C42581DFA983F001B576A /* LogInViewController.swift */,
@@ -391,6 +397,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */,
+				188C7F1E1E02A60E001E1C79 /* Discord-Logo.png in Resources */,
 				188FEAA91DFEB4ED00C8A181 /* Storyboard.storyboard in Resources */,
 				186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */,
 				1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */,
@@ -478,6 +485,7 @@
 				180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */,
 				1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */,
 				A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */,
+				1825FCDF1E0285DE00998E98 /* NotificationTableViewCell.swift in Sources */,
 				188C8EB51DF979C300C2D52E /* AFURLRequestSerialization.m in Sources */,
 				188C8EBA1DF979C300C2D52E /* AFNetworkActivityIndicatorManager.m in Sources */,
 				180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */,
