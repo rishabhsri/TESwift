@@ -212,27 +212,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     func uploadImage() {
         
     }
-    
-    func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
         
-        //On Success Call
-        let success:successHandler = {responseObject,requestType in
-            // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
-            print(responseDict)
-        }
-        
-        //On Falure Call
-        let falure:falureHandler = {error,responseMessage,requestType in
-            
-            // Falure call implementation
-            print(responseMessage)
-        }
-        
-        //  ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
-        
-    }
-    
     override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         commonSetting.userLoginInfo = userInfo

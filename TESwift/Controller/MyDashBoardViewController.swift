@@ -330,6 +330,10 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
     func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
         
         let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
@@ -346,9 +350,11 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         cell.hypeBgImg.image = nil
         let imageKey = hypeInfo.stringValueForKey(key: "imageKey")
         
+        weak var weakCell:hypeTableViewCell? = cell
+        
         let sucess:downloadImageSuccess = {image, imageKey in
             
-            cell.hypeBgImg.image = image
+            weakCell!.hypeBgImg.image = image
             
         }
         
@@ -356,12 +362,14 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             
             // On failure implementation
         }
-        
+       
+        // CAll api if image key available..
         if imageKey != "" {
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }else
         {
-            cell.hypeBgImg.image = UIImage(named: "Discord-Logo.png")
+            // set default image if image key is not available..
+            cell.hypeBgImg.image = UIImage(named: "defalut.png")
         }
         
         cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
@@ -378,15 +386,26 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         
         let tournaInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
        
+        let val = tournaInfo.value(forKey: "hype") as! NSNumber
+        
+        if val == 0 {
+            cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
+        }else
+        {
+            cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        }
+        
         cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
         
         cell.hypeBgImg.image = nil
         
         let imageKey = tournaInfo.stringValueForKey(key: "imageKey")
         
+        weak var weakCell:hypeTableViewCell? = cell
+        
         let sucess:downloadImageSuccess = {image, imageKey in
             
-            cell.hypeBgImg.image = image
+            weakCell!.hypeBgImg.image = image
             
         }
         
@@ -398,7 +417,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }else
         {
-            cell.hypeBgImg.image = UIImage(named: "Discord-Logo.png")
+            cell.hypeBgImg.image = UIImage(named: "defalut.png")
         }
         cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name")
         cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game")
@@ -420,10 +439,4 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         return cell
     }
     
-    func downloadImage(imageKey: String) -> UIImage{
-    
-        var downloadedImage:UIImage = UIImage()
-        
-         return downloadedImage
-        }
 }

@@ -40,6 +40,8 @@
 		1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E95F1E000D6500AC5575 /* String+Utilities.swift */; };
 		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
 		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
+		188C7F201E02AE79001E1C79 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188C7F1F1E02AE79001E1C79 /* NotificationTableViewCell.swift */; };
+		188C7F231E02AFBC001E1C79 /* defalut.png in Resources */ = {isa = PBXBuildFile; fileRef = 188C7F221E02AFBC001E1C79 /* defalut.png */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
 		188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E961DF979C300C2D52E /* AFSecurityPolicy.m */; };
@@ -107,6 +109,8 @@
 		1888E95F1E000D6500AC5575 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
 		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
+		188C7F1F1E02AE79001E1C79 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationTableViewCell.swift; path = ../Controller/NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		188C7F221E02AFBC001E1C79 /* defalut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = defalut.png; path = ../../Desktop/defalut.png; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		188C8E921DF979C300C2D52E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -146,7 +150,7 @@
 		1892778E1E01784C000E2732 /* TESwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TESwift.xcdatamodel; sourceTree = "<group>"; };
 		189277901E0179A2000E2732 /* UserDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
 		189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
-		189277961E018BBD000E2732 /* hypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = hypeTableViewCell.swift; sourceTree = "<group>"; };
+		189277961E018BBD000E2732 /* hypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = hypeTableViewCell.swift; path = ../Controller/hypeTableViewCell.swift; sourceTree = "<group>"; };
 		189B54881DF9857D0091FDAD /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
 		18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeftMenuViewController.swift; path = TESwift/Controller/LeftMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -214,10 +218,12 @@
 				1878C8181DF948B100DAC10E /* Model */,
 				188C8E8E1DF979C300C2D52E /* Library */,
 				1888E95E1E000D5100AC5575 /* Extensions */,
+				188C7F211E02AEBA001E1C79 /* Cells */,
 				1878C8161DF948B100DAC10E /* Controller */,
 				1878C81B1DF948B100DAC10E /* View */,
 				186A23AD1DF9431E005E78D2 /* AppDelegate.swift */,
 				186A23B71DF9431E005E78D2 /* Assets.xcassets */,
+				188C7F221E02AFBC001E1C79 /* defalut.png */,
 				186A23BC1DF9431E005E78D2 /* Info.plist */,
 				18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */,
 			);
@@ -227,7 +233,6 @@
 		1878C8161DF948B100DAC10E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				189277961E018BBD000E2732 /* hypeTableViewCell.swift */,
 				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
 				184C42581DFA983F001B576A /* LogInViewController.swift */,
@@ -315,6 +320,16 @@
 			);
 			path = Extensions;
 			sourceTree = "<group>";
+		};
+		188C7F211E02AEBA001E1C79 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				189277961E018BBD000E2732 /* hypeTableViewCell.swift */,
+				188C7F1F1E02AE79001E1C79 /* NotificationTableViewCell.swift */,
+			);
+			name = Cells;
+			path = TESwift/Cells;
+			sourceTree = SOURCE_ROOT;
 		};
 		188C8E8E1DF979C300C2D52E /* Library */ = {
 			isa = PBXGroup;
@@ -455,6 +470,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */,
+				188C7F231E02AFBC001E1C79 /* defalut.png in Resources */,
 				188163CB1E02779E00AB2E74 /* Images.xcassets in Resources */,
 				188163CC1E02779E00AB2E74 /* Info.plist in Resources */,
 				188FEAA91DFEB4ED00C8A181 /* Storyboard.storyboard in Resources */,
@@ -518,6 +534,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				188C7F201E02AE79001E1C79 /* NotificationTableViewCell.swift in Sources */,
 				A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */,
 				188C8EBE1DF979C300C2D52E /* UIProgressView+AFNetworking.m in Sources */,
 				188C8EB71DF979C300C2D52E /* AFURLSessionManager.m in Sources */,
