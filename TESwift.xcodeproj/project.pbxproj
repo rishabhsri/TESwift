@@ -9,16 +9,17 @@
 /* Begin PBXBuildFile section */
 		17B7B6A79D886003F38C6AFD /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */; };
 		180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */; };
+		180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA201E0135320065BF6B /* SocialLoginViewController.swift */; };
+		180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */; };
+		180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
-		1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */; };
 		1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C81F1DF9491C00DAC10E /* LaunchScreen.storyboard */; };
 		1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C8211DF9491C00DAC10E /* Main.storyboard */; };
 		187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 187E7D861DFEC75D00896C18 /* CommonSetting.swift */; };
 		1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E95F1E000D6500AC5575 /* String+Utilities.swift */; };
 		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
-		1888E9641E0012AB00AC5575 /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */; };
 		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
@@ -38,26 +39,32 @@
 		188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188C8EC31DF97D6900C2D52E /* BaseViewController.swift */; };
 		188FEAA91DFEB4ED00C8A181 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 188FEAA71DFEB4ED00C8A181 /* Storyboard.storyboard */; };
 		188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FEAAA1DFEB52F00C8A181 /* MyDashBoardViewController.swift */; };
+		1892778F1E01784C000E2732 /* TESwift.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 1892778D1E01784C000E2732 /* TESwift.xcdatamodeld */; };
+		189277921E0179A2000E2732 /* UserDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189277901E0179A2000E2732 /* UserDetails+CoreDataClass.swift */; };
+		189277931E0179A2000E2732 /* UserDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */; };
 		189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B54881DF9857D0091FDAD /* TEServiceCall.swift */; };
 		18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */; };
+		18E7AD3C1E01386F00E1FC58 /* TESwiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */; };
 		A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D51DFAF9B30077EF4E /* Constant.swift */; };
 		A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialConnectViewController.swift; sourceTree = "<group>"; };
+		180EDA201E0135320065BF6B /* SocialLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialLoginViewController.swift; sourceTree = "<group>"; };
+		180EDA281E01765D0065BF6B /* UIImage+ResizeAndFitImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeAndFitImage.h"; sourceTree = "<group>"; };
+		180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+ResizeAndFitImage.m"; sourceTree = "<group>"; };
+		180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		186A23B71DF9431E005E78D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		186A23BC1DF9431E005E78D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		1878C81A1DF948B100DAC10E /* TESwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TESwift.xcdatamodel; sourceTree = "<group>"; };
 		1878C8201DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1878C8221DF9491C00DAC10E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Main.storyboard; sourceTree = "<group>"; };
 		187E7D861DFEC75D00896C18 /* CommonSetting.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CommonSetting.swift; sourceTree = "<group>"; };
 		1888E95F1E000D6500AC5575 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
-		1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
@@ -95,9 +102,14 @@
 		188C8EC31DF97D6900C2D52E /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		188FEAA81DFEB4ED00C8A181 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		188FEAAA1DFEB52F00C8A181 /* MyDashBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDashBoardViewController.swift; sourceTree = "<group>"; };
+		1892778E1E01784C000E2732 /* TESwift.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TESwift.xcdatamodel; sourceTree = "<group>"; };
+		189277901E0179A2000E2732 /* UserDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		189B54881DF9857D0091FDAD /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
 		18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeftMenuViewController.swift; path = TESwift/Controller/LeftMenuViewController.swift; sourceTree = SOURCE_ROOT; };
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
+		18E7AD3A1E01386F00E1FC58 /* TESwiftModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TESwiftModel.h; sourceTree = "<group>"; };
+		18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TESwiftModel.m; sourceTree = "<group>"; };
 		1A9F6D5AE2D253809E040388 /* libPods-TESwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TESwift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
 		A1BCB0DB1E01570D005EF993 /* Base */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Base; path = StyleGuide.swift; sourceTree = "<group>"; };
@@ -122,8 +134,19 @@
 			isa = PBXGroup;
 			children = (
 				180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */,
+				180EDA201E0135320065BF6B /* SocialLoginViewController.swift */,
 			);
 			path = SocialConnect;
+			sourceTree = "<group>";
+		};
+		180EDA271E01765D0065BF6B /* UIImage */ = {
+			isa = PBXGroup;
+			children = (
+				180EDA281E01765D0065BF6B /* UIImage+ResizeAndFitImage.h */,
+				180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */,
+				180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */,
+			);
+			path = UIImage;
 			sourceTree = "<group>";
 		};
 		186A23A11DF9431E005E78D2 = {
@@ -177,9 +200,13 @@
 		1878C8181DF948B100DAC10E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */,
+				1892778D1E01784C000E2732 /* TESwift.xcdatamodeld */,
+				18E7AD3A1E01386F00E1FC58 /* TESwiftModel.h */,
+				18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */,
 				189B54881DF9857D0091FDAD /* TEServiceCall.swift */,
 				187E7D861DFEC75D00896C18 /* CommonSetting.swift */,
+				189277901E0179A2000E2732 /* UserDetails+CoreDataClass.swift */,
+				189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -205,9 +232,9 @@
 		1888E95E1E000D5100AC5575 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				180EDA271E01765D0065BF6B /* UIImage */,
 				1888E95F1E000D6500AC5575 /* String+Utilities.swift */,
 				1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */,
-				1888E9631E0012AB00AC5575 /* UIImageView+Utilities.swift */,
 				1888E9651E00139800AC5575 /* UIColor+Utilities.swift */,
 			);
 			path = Extensions;
@@ -425,29 +452,34 @@
 				A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */,
 				188C8EBE1DF979C300C2D52E /* UIProgressView+AFNetworking.m in Sources */,
 				188C8EB71DF979C300C2D52E /* AFURLSessionManager.m in Sources */,
+				189277921E0179A2000E2732 /* UserDetails+CoreDataClass.swift in Sources */,
 				188C8EC01DF979C300C2D52E /* UIWebView+AFNetworking.m in Sources */,
 				188C8EBD1DF979C300C2D52E /* UIImageView+AFNetworking.m in Sources */,
+				1892778F1E01784C000E2732 /* TESwift.xcdatamodeld in Sources */,
 				188C8EC41DF97D6900C2D52E /* BaseViewController.swift in Sources */,
 				188C8EBC1DF979C300C2D52E /* UIButton+AFNetworking.m in Sources */,
-				1888E9641E0012AB00AC5575 /* UIImageView+Utilities.swift in Sources */,
 				1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */,
 				188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
 				18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */,
 				184C42591DFA983F001B576A /* LogInViewController.swift in Sources */,
+				18E7AD3C1E01386F00E1FC58 /* TESwiftModel.m in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
-				1878C81D1DF948B100DAC10E /* TESwift.xcdatamodeld in Sources */,
 				180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
+				189277931E0179A2000E2732 /* UserDetails+CoreDataProperties.swift in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
 				189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */,
+				180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */,
 				1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */,
 				A1D555D61DFAF9B30077EF4E /* Constant.swift in Sources */,
 				188C8EB51DF979C300C2D52E /* AFURLRequestSerialization.m in Sources */,
 				188C8EBA1DF979C300C2D52E /* AFNetworkActivityIndicatorManager.m in Sources */,
+				180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */,
 				188C8EB61DF979C300C2D52E /* AFURLResponseSerialization.m in Sources */,
 				1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */,
+				180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */,
 				188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */,
 				187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */,
 				188C8EB91DF979C300C2D52E /* AFImageDownloader.m in Sources */,
@@ -645,12 +677,12 @@
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		1878C8191DF948B100DAC10E /* TESwift.xcdatamodeld */ = {
+		1892778D1E01784C000E2732 /* TESwift.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				1878C81A1DF948B100DAC10E /* TESwift.xcdatamodel */,
+				1892778E1E01784C000E2732 /* TESwift.xcdatamodel */,
 			);
-			currentVersion = 1878C81A1DF948B100DAC10E /* TESwift.xcdatamodel */;
+			currentVersion = 1892778E1E01784C000E2732 /* TESwift.xcdatamodel */;
 			path = TESwift.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;

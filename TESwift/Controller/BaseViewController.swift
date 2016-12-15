@@ -8,13 +8,26 @@
 
 import UIKit
 
-class BaseViewController: UIViewController, UITextFieldDelegate {
+class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate{
+    
+    var context:NSManagedObjectContext? = nil
+    
     
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
         // Do any additional setup after loading the view.
+    }
+    
+    func manageObjectContext() -> NSManagedObjectContext {
+        
+        if context == nil {
+            let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+            context = appDelegate.persistentContainer.viewContext
+            }
+        return context!
     }
     
     override func didReceiveMemoryWarning() {
@@ -81,7 +94,10 @@ class BaseViewController: UIViewController, UITextFieldDelegate {
         let blurRadius:CGFloat = 80;
         let saturationDeltaFactor:CGFloat = 1.3;
         let tintColor:UIColor? = nil
-        let tempimage:UIImage = imageView.image!
+        var tempimage:UIImage = imageView.image!
+        
+        let size:CGSize = CGSize(width:200, height:150)
+        tempimage = tempimage.withImage(tempimage, scaledTo: size)
         let image:UIImage = UIImage.ty_imageByApplyingBlur(to: tempimage, withRadius: blurRadius, tintColor: tintColor, saturationDeltaFactor: saturationDeltaFactor, maskImage: nil)!
         imageView.image = image
         imageView.layer.backgroundColor = UIColor.black.cgColor
