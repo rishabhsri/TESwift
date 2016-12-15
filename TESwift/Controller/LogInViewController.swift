@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LogInViewController: SocialConnectViewController  {
+class LogInViewController: SocialConnectViewController {
     
     @IBOutlet weak var txtUsernameTop: NSLayoutConstraint!
     @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
@@ -19,8 +19,13 @@ class LogInViewController: SocialConnectViewController  {
     @IBOutlet var viewForArrow: UIView!
     @IBOutlet weak var viewForSocial: UIView!
     
+    @IBOutlet weak var forgotPassword: UIButton!
+    @IBOutlet weak var userGuest: UIButton!
+    @IBOutlet weak var signUp: UIButton!
+    @IBOutlet weak var newLbl: UILabel!
     var signupViewController = SignUpViewController()
-    
+        
+    @IBOutlet weak var scrollData: UIScrollView!
     //MARK:- Life Cycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +40,19 @@ class LogInViewController: SocialConnectViewController  {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        self.registerForKeyboardNotifications()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        self.deregisterFromKeyboardNotifications()
+    }
+    
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -47,6 +65,10 @@ class LogInViewController: SocialConnectViewController  {
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         txtPassword.attributedPlaceholder = NSAttributedString(string:"Password",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        newLbl.textColor = UIColor (colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
+        
+        
+        
         if (IS_IPHONE_5) {
             self.socialConnectHieght.constant = 40
             self.socialConnectWidth.constant = 40
@@ -148,4 +170,76 @@ class LogInViewController: SocialConnectViewController  {
         
     }
     
+    
+    //MARK:- Textfield delegate
+    
+    override func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        if textField == txtUsername {
+            txtPassword.becomeFirstResponder()
+        }
+        else{
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
+
+    
+    
+    // return NO to disallow editing.
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
+        
+        return true
+        
+    }
+    
+    
+    // became first responder
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        
+        addDismisskeyboardTapGesture()
+        
+        if IS_IPAD {
+            
+            if (textField == txtUsername){
+                let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(255 - 200))
+                self.scrollData.contentSize = CGSize(width: 320, height: 600)
+                self.scrollData.setContentOffset(scrollPoint, animated: true)
+            }
+            else if(textField == txtPassword){
+                let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(255 - 200))
+                self.scrollData.contentSize = CGSize(width: 320, height: 600)
+                self.scrollData.setContentOffset(scrollPoint, animated: true)
+
+            }
+        }
+    }
+    
+        //Mark: - Keyboard add and Remove Notification
+        
+        func registerForKeyboardNotifications() {
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+            
+            NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        }
+        
+        func deregisterFromKeyboardNotifications() {
+            
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
+            
+            NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
+        }
+        
+        
+        func keyboardWasShown(_ aNotification: Notification){
+            
+        }
+        
+        func keyboardWillBeHidden(_ aNotification: Notification) {
+            if IS_IPAD {
+                self.scrollData.contentSize = CGSize(width: CGFloat(320), height: CGFloat(400))
+                self.scrollData.setContentOffset(CGPoint.zero, animated: true)
+            }
+        }
 }

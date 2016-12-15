@@ -34,6 +34,11 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
         self.loadWebView()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+     super.viewDidDisappear(animated)
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -100,11 +105,13 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
     
     @IBAction func actionOnStop(_ sender: Any)
     {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.webView.stopLoading()
     }
     
     @IBAction func actionOnClose(_ sender: Any)
     {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.delegate?.didSocialLoginFailed(errorString: "", connectType: self.socialConnectType!)
         self.dismiss(animated: true, completion: nil)
     }
@@ -157,11 +164,13 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
     
     func webViewDidStartLoad(_ webView: UIWebView)
     {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = true
         self.updateButtons()
     }
     
     func webViewDidFinishLoad(_ webView: UIWebView)
     {
+        UIApplication.shared.isNetworkActivityIndicatorVisible = false
         self.updateButtons()
     }
     
