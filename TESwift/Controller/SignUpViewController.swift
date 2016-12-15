@@ -128,7 +128,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     }
     
     @IBAction func actionOnLoginBtn(_ sender: AnyObject) {
-      _ = self.navigationController?.popViewController(animated: true)
+        _ = self.navigationController?.popViewController(animated: true)
         
     }
     //MARK:- Utility Methods
@@ -181,7 +181,6 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
     }
     
-    
     func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
         
         //On Success Call
@@ -210,40 +209,35 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
         self.navigationController?.pushViewController(dbController, animated:true)
     }
-
     
-   //MARK:- Textfield delegate
+    
+    //MARK:- Textfield delegate
     
     
     // return NO to disallow editing.
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
-        
         return true
-        
     }
     
     
     // became first responder
     func textFieldDidBeginEditing(_ textField: UITextField){
-
+        
         addDismisskeyboardTapGesture()
         
         if IS_IPAD {
-        
+            
             if (textField == txtPassword || textField == txtConfirmPassword){
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(391 - 300))
                 self.scrollData.contentSize = CGSize(width: 320, height: 600)
                 self.scrollData.setContentOffset(scrollPoint, animated: true)
             }
-           else if(textField == txtEmailId || textField == txtLocation){
+            else if(textField == txtEmailId || textField == txtLocation){
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(391 - 250))
                 self.scrollData.contentSize = CGSize(width: 320, height: 600)
                 self.scrollData.setContentOffset(scrollPoint, animated: true)
             }
-            
         }
-        
-       
     }
     
     // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
@@ -303,21 +297,21 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         else{
             textField.resignFirstResponder()
         }
-
+        
         return true
     }
     
     //Mark: - Keyboard add and Remove Notification
     
     func registerForKeyboardNotifications() {
-       
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWasShown), name: NSNotification.Name.UIKeyboardDidShow, object: nil)
-       
+        
         NotificationCenter.default.addObserver(self, selector: #selector(self.keyboardWillBeHidden), name: NSNotification.Name.UIKeyboardWillHide, object: nil)
     }
     
     func deregisterFromKeyboardNotifications() {
-       
+        
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardDidShow, object: nil)
         
         NotificationCenter.default.removeObserver(self, name: NSNotification.Name.UIKeyboardWillHide, object: nil)
