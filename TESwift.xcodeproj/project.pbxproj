@@ -41,7 +41,6 @@
 		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
 		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
 		188C7F201E02AE79001E1C79 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188C7F1F1E02AE79001E1C79 /* NotificationTableViewCell.swift */; };
-		188C7F231E02AFBC001E1C79 /* defalut.png in Resources */ = {isa = PBXBuildFile; fileRef = 188C7F221E02AFBC001E1C79 /* defalut.png */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
 		188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E961DF979C300C2D52E /* AFSecurityPolicy.m */; };
@@ -110,7 +109,6 @@
 		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
 		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
 		188C7F1F1E02AE79001E1C79 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = NotificationTableViewCell.swift; path = ../Controller/NotificationTableViewCell.swift; sourceTree = "<group>"; };
-		188C7F221E02AFBC001E1C79 /* defalut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = defalut.png; path = ../../Desktop/defalut.png; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		188C8E921DF979C300C2D52E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -223,7 +221,6 @@
 				1878C81B1DF948B100DAC10E /* View */,
 				186A23AD1DF9431E005E78D2 /* AppDelegate.swift */,
 				186A23B71DF9431E005E78D2 /* Assets.xcassets */,
-				188C7F221E02AFBC001E1C79 /* defalut.png */,
 				186A23BC1DF9431E005E78D2 /* Info.plist */,
 				18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */,
 			);
@@ -470,7 +467,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */,
-				188C7F231E02AFBC001E1C79 /* defalut.png in Resources */,
 				188163CB1E02779E00AB2E74 /* Images.xcassets in Resources */,
 				188163CC1E02779E00AB2E74 /* Info.plist in Resources */,
 				188FEAA91DFEB4ED00C8A181 /* Storyboard.storyboard in Resources */,
