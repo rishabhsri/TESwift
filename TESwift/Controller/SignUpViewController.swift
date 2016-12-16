@@ -45,7 +45,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         tableView.dataSource = self
         // Set Style Guide
         self.styleGuide()
-    
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -158,59 +158,61 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     //MARK:- IBAction Methods
     
     @IBAction func actionOnSignUpBtn(_ sender: AnyObject) {
-        self.uploadImage()
+        
         if self.isValid() {
             print("everything is fine!!")
-            if isImageAdded {
-                self.uploadImage()
-            }else
-            {
-                self.getUserSignup(self.getSignUpParameters(imageKey: ""))
-            }
+            self.getUserSignup(self.getSignUpParameters(imageKey: ""))
+
+//            if isImageAdded {
+//                self.uploadImage()
+//            }else
+//            {
+//                self.getUserSignup(self.getSignUpParameters(imageKey: ""))
+//            }
         }
     }
     
     @IBAction func actionOnProfilePicBtn(_ sender: AnyObject)
     {
-           let optionMenu = UIAlertController(title: nil, message: "Add Photo", preferredStyle: .actionSheet)
-            
-            let addAction = UIAlertAction(title: "Take a photo", style: .default, handler: {
-                (alert: UIAlertAction!) -> Void in
-                if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
-                {
-                    self.imagePicker.delegate=self;
-                    self.imagePicker.allowsEditing = true
-                    self.imagePicker.sourceType = UIImagePickerControllerSourceType.camera
-                    self.present(self.imagePicker, animated: true, completion: nil)
-                }else
-                {
-                    let alert = UIAlertController(title: "Message", message: kCameraNotAvailableMessage, preferredStyle: UIAlertControllerStyle.alert)
-                    alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
-                    self.present(alert, animated: true, completion: nil)
-                }
-            })
-            
-            let takeAction = UIAlertAction(title: "Choose from gallery", style: .default, handler: {
-                (alert: UIAlertAction!) -> Void in
-                
+        let optionMenu = UIAlertController(title: nil, message: "Add Photo", preferredStyle: .actionSheet)
+        
+        let addAction = UIAlertAction(title: "Take a photo", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
+            {
                 self.imagePicker.delegate=self;
                 self.imagePicker.allowsEditing = true
-                
-                self.imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+                self.imagePicker.sourceType = UIImagePickerControllerSourceType.camera
                 self.present(self.imagePicker, animated: true, completion: nil)
-                
-            })
+            }else
+            {
+                let alert = UIAlertController(title: "Message", message: kCameraNotAvailableMessage, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        })
+        
+        let takeAction = UIAlertAction(title: "Choose from gallery", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
             
-            let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
-                (alert: UIAlertAction!) -> Void in
-                optionMenu.dismiss(animated: true, completion: nil)
-            })
+            self.imagePicker.delegate=self;
+            self.imagePicker.allowsEditing = true
             
-            optionMenu.addAction(addAction)
-            optionMenu.addAction(takeAction)
-            optionMenu.addAction(cancelAction)
+            self.imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
             
-            self.present(optionMenu, animated: true, completion: nil)
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            optionMenu.dismiss(animated: true, completion: nil)
+        })
+        
+        optionMenu.addAction(addAction)
+        optionMenu.addAction(takeAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
     }
     
     @IBAction func actionOnUpArrow(_ sender: AnyObject) {
@@ -301,10 +303,10 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             print(responseMessage)
         }
         
-          ServiceCall.sharedInstance.uploadImage(image: self.profilePicBtn.currentBackgroundImage, urlType: RequestedUrlType.UploadImage, successCall: success, falureCall: falure)
+        ServiceCall.sharedInstance.uploadImage(image: self.profilePicBtn.currentBackgroundImage, urlType: RequestedUrlType.UploadImage, successCall: success, falureCall: falure)
         
     }
-        
+    
     override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         commonSetting.userLoginInfo = userInfo
@@ -464,7 +466,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         self.dismiss(animated: true, completion: nil)
     }
     
-     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
     
