@@ -8,9 +8,10 @@
 
 import UIKit
 
-class BaseViewController: UIViewController{
+class BaseViewController: UIViewController, UITextFieldDelegate{
     
     var context:NSManagedObjectContext? = nil
+    var dateFormatter:DateFormatter? = nil
     
     
     //MARK:- Lifecycle methods
@@ -26,7 +27,7 @@ class BaseViewController: UIViewController{
         if context == nil {
             let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
             context = appDelegate.persistentContainer.viewContext
-            }
+        }
         return context!
     }
     
@@ -56,6 +57,17 @@ class BaseViewController: UIViewController{
         self.present(alertController, animated: true, completion: nil)
     }
     
+    func showNoInternetAlert() -> Void {
+        
+        let alertController = UIAlertController(title: kError, message: kNoInternetConnect, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) {
+            (action: UIAlertAction) in print("Youve pressed OK Button")
+        }
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    
     func parseResponse(responseObject:Any) -> NSDictionary {
         
         if let responseDict:NSDictionary = responseObject as? NSDictionary {
@@ -82,7 +94,64 @@ class BaseViewController: UIViewController{
         imageView.layer.opacity = 0.45
     }
     
+    func getLocaleDateFromString(dateString:String) -> Date {
+        
+        if self.dateFormatter == nil {
+            self.dateFormatter = DateFormatter()
+        }
+        
+        self.dateFormatter?.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        self.dateFormatter?.timeZone = NSTimeZone(name:"GMT") as TimeZone!
+        var finalDate:Date? = self.dateFormatter?.date(from: dateString)
+        if finalDate == nil {
+            self.dateFormatter?.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+            self.dateFormatter?.timeZone = NSTimeZone(name:"GMT") as TimeZone!
+            finalDate = self.dateFormatter?.date(from: dateString)
+        }
+        return finalDate!
+    }
     
+    func getLocaleDateStringFromString(dateString:String) -> String {
+        
+        let receivedDate:Date = self.getLocaleDateFromString(dateString: dateString)
+        let formatString:String = DateFormatter.dateFormat(fromTemplate: "ddMMy", options: 0, locale: NSLocale.current)!
+        
+        self.dateFormatter?.dateFormat = formatString
+        self.dateFormatter?.locale = NSLocale.current
+        self.dateFormatter?.timeZone = NSTimeZone.system
+        
+        if  let dateString:String = self.dateFormatter?.string(from: receivedDate)
+        {
+            return dateString
+        }else
+        {
+            return " "
+        }
+    }
+    
+    func getFormattedDateString(info:NSDictionary,indexPath:IndexPath,format:String) -> String {
+        
+        var startKeyName:String = "startDateTime"
+        var endKeyName:String = "endDateTime"
+        
+        
+        if commonSetting.isEmptySting(info.stringValueForKey(key: startKeyName)) {
+            startKeyName = "startDate"
+        }
+        if commonSetting.isEmptySting(info.stringValueForKey(key: endKeyName)) {
+            endKeyName = "endDate"
+        }
+        
+        let targetStartDate:String = String.dateStringFromString(sourceString: info.stringValueForKey(key: startKeyName),format: format)
+        let targetEndDate:String = String.dateStringFromString(sourceString:info.stringValueForKey(key: startKeyName),format:format)
+        if targetEndDate == targetStartDate
+        {
+            return targetStartDate
+        }else
+        {
+            return String.init(format: "%@ - %@", targetStartDate,targetEndDate)
+        }
+    }
     
     // MARK: - TextFields Delegate
     

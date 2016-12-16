@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
+class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UIScrollViewDelegate {
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -45,8 +45,6 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        tableView.register(hypeTableViewCell.self, forCellReuseIdentifier:"Cell")
-        
         self.setUpStyleGuide()
         
         self.setupMenu()
@@ -55,7 +53,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
         
         self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
         
-        
+        self.getMyProfile()
         
     }
     
@@ -81,24 +79,26 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
         
         self.getUserProfileData()
         
+        saveUserDetails(loginInfo: commonSetting.userLoginInfo)
+        
     }
     
     func saveUserDetails(loginInfo: NSDictionary) -> Void {
         
-        //        let userInfo:NSMutableDictionary = NSMutableDictionary()
+        //                let userInfo:NSMutableDictionary = NSMutableDictionary()
         //
-        //        userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
-        //        userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
-        //        userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
-        //        userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
-        //        userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
+        //                userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
+        //                userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
+        //                userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
+        //                userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
+        //                userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
         //
-        //        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
-        //        UserDetails.save(self.manageObjectContext())
+        //                _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
+        //                UserDetails.save(self.manageObjectContext())
         //
-        //        let predi = NSPredicate(format: "age = %d", 33)
-        //        let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
-        //        print(user)
+        //                let predi = NSPredicate(format: "age = %d", 33)
+        //                let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
+        //                print(user)
     }
     
     func setProfileData(userInfo:NSDictionary) {
@@ -138,12 +138,41 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
     func setupMenu() -> Void {
         if  revealViewController() != nil {
             menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
-            self.revealViewController().rearViewRevealWidth = 300
+            if DeviceType.IS_IPHONE_5
+            {
+                self.revealViewController().rearViewRevealWidth = 250
+            }else
+            {
+                self.revealViewController().rearViewRevealWidth = 300
+            }
+            
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
             
         }
     }
     
+    
+    func getMyProfile() {
+        //On success
+        
+        let success: successHandler = {responseObject, responseType in
+            
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
+            TEMyProfile.parsetMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
+            
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            
+            print(responseString)
+        }
+        
+        // Service call for get user profile data (Hypes, upcomings, person, followers)
+       // ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
+        
+
+    }
     
     func getUserProfileData(){
         
@@ -201,6 +230,11 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
         
     }
     
+    private func scrollViewWillEndDecelerating(_ scrollView: UIScrollView) {
+        scrollView.setContentOffset(scrollView.contentOffset, animated: true)
+    }
+    
+    
     //MARK:- SwipeGesture methods
     
     func addSwipeGesture(){
@@ -233,8 +267,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-            }, completion: {(isCompleted) -> Void in
-                self.isSwipedUp = true
+        }, completion: {(isCompleted) -> Void in
+            self.isSwipedUp = true
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
@@ -258,8 +292,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-            }, completion: {(isCompleted) -> Void in
-                self.isSwipedUp = false
+        }, completion: {(isCompleted) -> Void in
+            self.isSwipedUp = false
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
@@ -272,6 +306,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
         self.hypBtn.alpha = 0.25
         self.tournamentsBtn.alpha = 0.25
         currentButtonIndex = 0
+        self.tableView.reloadData()
         
     }
     
@@ -296,16 +331,21 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if currentButtonIndex == 0 {
-            return 2
+            tableView.rowHeight = 60.0
+            return notificationToShowArray.count
+            
         }else if currentButtonIndex == 1
         {
+            tableView.rowHeight = 139.0
             return hypetoShowArray.count
+            
         }else
         {
+            tableView.rowHeight = 139.0
             return tournamentsToShowArray.count
         }
     }
-   
+    
     
     // create a cell for each table view row
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -314,7 +354,9 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
         
         let cell:UITableViewCell
         if currentButtonIndex == 0 {
-            cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
+            
+            cell = self.configureNotificationCell(tableView: tableView, indexPath: indexPath)
+            
         }else if currentButtonIndex == 1
         {
             cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
@@ -329,33 +371,165 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource{
         return cell
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        if currentButtonIndex == 0 {
+            
+            return UITableViewAutomaticDimension
+            
+        }else
+        {
+            return 139.0
+            
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        cell.preservesSuperviewLayoutMargins = false
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
+    }
+    
+    
     func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
         
         let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
         
         let hypeInfo:NSDictionary = self.parseResponse(responseObject: hypetoShowArray.object(at: indexPath.row))
-        cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        
+        
+        // SETUP HYPE BORDER IMAGE
+        if hypeInfo.stringValueForKey(key: "hypableType") == "TOURNAMENT" {
+            cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        }else
+        {
+            cell.hypeBorderImg.image = UIImage(named: "EventCellHyped")
+        }
+        cell.hypeBgImg.image = nil
+        let imageKey = hypeInfo.stringValueForKey(key: "imageKey")
+        
+        weak var weakCell:hypeTableViewCell? = cell
+        
+        let sucess:downloadImageSuccess = {image, imageKey in
+            
+            weakCell!.hypeBgImg.image = image
+            weakCell!.progressBar.stopAnimating()
+            
+        }
+        
+        let failure:downloadImageFailed = {error, responseString in
+            
+            // On failure implementation
+        }
+        
+        // CAll api if image key available..
+        if imageKey != "" {
+            cell.progressBar.startAnimating()
+            ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+        }else
+        {
+            // set default image if image key is not available..
+            cell.progressBar.stopAnimating()
+            cell.hypeBgImg.image = UIImage(named: "Default")
+        }
+        
         cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
         cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game")
         cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue")
-        cell.dateLbl.text = hypeInfo.stringValueForKey(key: "startDate")
+        cell.dateLbl.text = self.getLocaleDateStringFromString(dateString: hypeInfo.stringValueForKey(key: "startDate"))
         
         return cell
     }
+    
     
     func  configureTournamentCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
         
         let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
         
-        let hypeInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
-       
+        let tournaInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
+        
+        let val = tournaInfo.value(forKey: "hype") as! NSNumber
+        
+        if val == 0 {
+            cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
+        }else
+        {
+            cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        }
+        
         cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
-        cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
-        cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game")
-        cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue")
-        cell.dateLbl.text = hypeInfo.stringValueForKey(key: "startDate")
-
+        
+        cell.hypeBgImg.image = nil
+        
+        let imageKey = tournaInfo.stringValueForKey(key: "imageKey")
+        
+        weak var weakCell:hypeTableViewCell? = cell
+        
+        let sucess:downloadImageSuccess = {image, imageKey in
+            
+            weakCell!.hypeBgImg.image = image
+            weakCell!.progressBar.stopAnimating()
+        }
+        
+        let failure:downloadImageFailed = {error, responseString in
+            
+            // On failure implementation
+        }
+        if imageKey != "" {
+            cell.progressBar.startAnimating()
+            ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+        }else
+        {
+            cell.progressBar.stopAnimating()
+            cell.hypeBgImg.image = UIImage(named: "Default")
+        }
+        cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name").uppercased()
+        cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game")
+        cell.locationLbl.text = tournaInfo.stringValueForKey(key: "venue")
+        cell.dateLbl.text = self.getFormattedDateString(info: tournaInfo, indexPath: indexPath, format: "yyyy")
+        
         
         return cell
     }
+    
+    func  configureNotificationCell(tableView:UITableView, indexPath:IndexPath) -> NotificationTableViewCell {
+        
+        let cell:NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+        tableView.separatorColor = UIColor.darkGray
+        
+        let notificationInfo:NSDictionary = self.parseResponse(responseObject: notificationToShowArray.object(at: indexPath.row))
+        var mesage:String = notificationInfo.stringValueForKey(key: "notificationHeader")
+        
+        var originator:String = notificationInfo.stringValueForKey(key: "originator").lowercased()
+        
+        mesage = mesage.replacingOccurrences(of: originator, with: String.init(format: "@%@", originator))
+        
+        originator = String.init(format: "@%@", originator)
+        
+        
+        let nsText = mesage as NSString
+        let textRange = NSMakeRange(0, nsText.length)
+        let attributedString = NSMutableAttributedString(string: mesage, attributes: [NSForegroundColorAttributeName : UIColor.lightGray])
+        
+        nsText.enumerateSubstrings(in: textRange, options: .byWords, using: {
+            (substring, substringRange, _, _) in
+            let str = "@" + substring!
+            if (str == originator) {
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0), range: substringRange)
+                attributedString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 15), range: substringRange)
+            }
+        })
+        
+        
+        cell.notificationTextView.text = nil
+        cell.notificationTextView.attributedText = nil
+        cell.notificationTextView.attributedText = attributedString
+        
+        
+        
+        return cell
+    }
+    
 }

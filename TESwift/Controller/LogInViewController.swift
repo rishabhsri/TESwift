@@ -67,7 +67,7 @@ class LogInViewController: SocialConnectViewController, UITextFieldDelegate {
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
         newLbl.textColor = UIColor (colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
         
-        if (IS_IPHONE_5) {
+        if (DeviceType.IS_IPHONE_5) {
             self.socialConnectHieght.constant = 40
             self.socialConnectWidth.constant = 40
             self.txtUsernameTop.constant = 30
@@ -114,18 +114,18 @@ class LogInViewController: SocialConnectViewController, UITextFieldDelegate {
         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
-    
+    //MARK:- Social Login response
     override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         commonSetting.userLoginInfo = userInfo
-        
+        self.hideHUD()
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
         self.navigationController?.pushViewController(dbController, animated:true)
     }
     
     func onLogInFailure(_ userInfo: String) -> Void {
-        
+        self.hideHUD()
         self.showAlert(title: "Error", message: userInfo, tag: 200)
     }
     

@@ -22,6 +22,7 @@ class hypeTableViewCell: UITableViewCell {
     
     @IBOutlet  var dateLbl: UILabel!
     
+    @IBOutlet var progressBar: UIActivityIndicatorView!
     
     override func awakeFromNib() {
         super.awakeFromNib()
