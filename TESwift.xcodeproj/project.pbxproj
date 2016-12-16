@@ -65,6 +65,8 @@
 		189277931E0179A2000E2732 /* UserDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */; };
 		189B54891DF9857D0091FDAD /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 189B54881DF9857D0091FDAD /* TEServiceCall.swift */; };
 		18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */; };
+		18C8DDF31E02CC010051FADF /* TEMyProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8DDF11E02CC010051FADF /* TEMyProfile+CoreDataClass.swift */; };
+		18C8DDF41E02CC010051FADF /* TEMyProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C8DDF21E02CC010051FADF /* TEMyProfile+CoreDataProperties.swift */; };
 		18E7AD3C1E01386F00E1FC58 /* TESwiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */; };
 		88FFFDA670937AC39853BFEA /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */; };
 		A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */; };
@@ -151,6 +153,8 @@
 		189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		189B54881DF9857D0091FDAD /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
 		18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeftMenuViewController.swift; path = TESwift/Controller/LeftMenuViewController.swift; sourceTree = SOURCE_ROOT; };
+		18C8DDF11E02CC010051FADF /* TEMyProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEMyProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
+		18C8DDF21E02CC010051FADF /* TEMyProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEMyProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		18E7AD3A1E01386F00E1FC58 /* TESwiftModel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TESwiftModel.h; sourceTree = "<group>"; };
 		18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TESwiftModel.m; sourceTree = "<group>"; };
@@ -249,6 +253,8 @@
 				187E7D861DFEC75D00896C18 /* CommonSetting.swift */,
 				189277901E0179A2000E2732 /* UserDetails+CoreDataClass.swift */,
 				189277911E0179A2000E2732 /* UserDetails+CoreDataProperties.swift */,
+				18C8DDF11E02CC010051FADF /* TEMyProfile+CoreDataClass.swift */,
+				18C8DDF21E02CC010051FADF /* TEMyProfile+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -531,6 +537,7 @@
 			files = (
 				188163DF1E02BE4D00AB2E74 /* NotificationTableViewCell.swift in Sources */,
 				A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */,
+				18C8DDF41E02CC010051FADF /* TEMyProfile+CoreDataProperties.swift in Sources */,
 				188C8EBE1DF979C300C2D52E /* UIProgressView+AFNetworking.m in Sources */,
 				188C8EB71DF979C300C2D52E /* AFURLSessionManager.m in Sources */,
 				188163CA1E02779E00AB2E74 /* HUD.swift in Sources */,
@@ -579,6 +586,7 @@
 				180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */,
 				188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */,
 				188163D91E02779E00AB2E74 /* Window.swift in Sources */,
+				18C8DDF31E02CC010051FADF /* TEMyProfile+CoreDataClass.swift in Sources */,
 				187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */,
 				188C8EB91DF979C300C2D52E /* AFImageDownloader.m in Sources */,
 				188C8EBB1DF979C300C2D52E /* UIActivityIndicatorView+AFNetworking.m in Sources */,

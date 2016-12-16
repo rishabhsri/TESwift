@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
+class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UIScrollViewDelegate {
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -199,6 +199,10 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         
     }
     
+    private func scrollViewWillEndDecelerating(_ scrollView: UIScrollView) {
+        scrollView.setContentOffset(scrollView.contentOffset, animated: true)
+    }
+    
     
     //MARK:- SwipeGesture methods
     
@@ -296,12 +300,17 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
         if currentButtonIndex == 0 {
+            tableView.rowHeight = 60.0
             return notificationToShowArray.count
+           
         }else if currentButtonIndex == 1
         {
+            tableView.rowHeight = 139.0
             return hypetoShowArray.count
+      
         }else
         {
+            tableView.rowHeight = 139.0
             return tournamentsToShowArray.count
         }
     }
@@ -316,6 +325,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         if currentButtonIndex == 0 {
             
             cell = self.configureNotificationCell(tableView: tableView, indexPath: indexPath)
+            
         }else if currentButtonIndex == 1
         {
             cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
@@ -330,15 +340,12 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         return cell
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableViewAutomaticDimension
-    }
-    
     func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
         
         let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
         
         let hypeInfo:NSDictionary = self.parseResponse(responseObject: hypetoShowArray.object(at: indexPath.row))
+        
         
         // SETUP HYPE BORDER IMAGE
         if hypeInfo.stringValueForKey(key: "hypableType") == "TOURNAMENT" {
@@ -355,6 +362,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         let sucess:downloadImageSuccess = {image, imageKey in
             
             weakCell!.hypeBgImg.image = image
+            weakCell!.progressBar.stopAnimating()
             
         }
         
@@ -365,10 +373,12 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         
         // CAll api if image key available..
         if imageKey != "" {
+            cell.progressBar.startAnimating()
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }else
         {
             // set default image if image key is not available..
+            cell.progressBar.stopAnimating()
             cell.hypeBgImg.image = UIImage(named: "Default")
         }
         
@@ -379,6 +389,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         
         return cell
     }
+    
     
     func  configureTournamentCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
         
@@ -406,7 +417,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         let sucess:downloadImageSuccess = {image, imageKey in
             
             weakCell!.hypeBgImg.image = image
-            
+            weakCell!.progressBar.stopAnimating()
         }
         
         let failure:downloadImageFailed = {error, responseString in
@@ -414,9 +425,11 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             // On failure implementation
         }
         if imageKey != "" {
+            cell.progressBar.startAnimating()
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }else
         {
+            cell.progressBar.stopAnimating()
             cell.hypeBgImg.image = UIImage(named: "Default")
         }
         cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name")
