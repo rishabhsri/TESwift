@@ -9,7 +9,7 @@
 import UIKit
 
 class LeftMenuViewController: BaseViewController {
-
+    
     // Outlets for UI elements
     @IBOutlet weak var backGround_BG: UIImageView!
     
@@ -22,12 +22,13 @@ class LeftMenuViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       // Do any additional setup after loading the view.
-        
-        self.setUpData(userInfo: commonSetting.userLoginInfo)
-        
+        // Do any additional setup after loading the view.
     }
-
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.setUpData(userInfo: commonSetting.userLoginInfo)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -46,7 +47,7 @@ class LeftMenuViewController: BaseViewController {
             let success:downloadImageSuccess = {image,imageKey in
                 // Success call implementation
                 
-                self.userProImage.setRoundedImage(image: image, borderWidth: ProfileImageBorder, imageWidth: 125)
+                self.userProImage.setRoundedImage(image: image, borderWidth: 0, imageWidth: self.userProImage.frame.size.width)
                 
                 self.backGround_BG.image = image
                 
@@ -63,11 +64,10 @@ class LeftMenuViewController: BaseViewController {
             
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey!, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
         }
-
     }
     
     // MARK: - IBActions
-
+    
     @IBAction func tournamentAction(_ sender: AnyObject) {
     }
     
@@ -88,21 +88,9 @@ class LeftMenuViewController: BaseViewController {
     
     @IBAction func logoutAction(_ sender: AnyObject) {
         
-      _ =  self.navigationController?.popToRootViewController(animated: true)
+        _ =  self.navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func syncToSerAction(_ sender: AnyObject) {
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
