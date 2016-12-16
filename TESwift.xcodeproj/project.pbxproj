@@ -67,6 +67,8 @@
 		18E7AD3C1E01386F00E1FC58 /* TESwiftModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */; };
 		88FFFDA670937AC39853BFEA /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */; };
 		A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */; };
+		A1F7E8D01E02B903007E842D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7E8CF1E02B903007E842D /* CoreLocation.framework */; };
+		A1F7E8D21E02B92A007E842D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7E8D11E02B92A007E842D /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -154,6 +156,8 @@
 		18E7AD3B1E01386F00E1FC58 /* TESwiftModel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TESwiftModel.m; sourceTree = "<group>"; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
 		A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = TESwift/Controller/SignUpViewController.swift; sourceTree = SOURCE_ROOT; };
+		A1F7E8CF1E02B903007E842D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A1F7E8D11E02B92A007E842D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-TESwift.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		C9FEF4390619399CADF35F6A /* Pods-TESwift.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.debug.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -163,6 +167,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A1F7E8D21E02B92A007E842D /* CoreFoundation.framework in Frameworks */,
+				A1F7E8D01E02B903007E842D /* CoreLocation.framework in Frameworks */,
 				88FFFDA670937AC39853BFEA /* libPods-TESwift.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -376,6 +382,8 @@
 		212A20BA2F8D1EE10C6B4E00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A1F7E8D11E02B92A007E842D /* CoreFoundation.framework */,
+				A1F7E8CF1E02B903007E842D /* CoreLocation.framework */,
 				AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */,
 			);
 			name = Frameworks;

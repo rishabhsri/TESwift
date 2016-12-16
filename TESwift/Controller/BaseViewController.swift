@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate{
+class BaseViewController: UIViewController{
     
     var context:NSManagedObjectContext? = nil
     
