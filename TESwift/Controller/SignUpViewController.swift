@@ -80,7 +80,8 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         lblAlready.textColor = UIColor (colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
         
-        if (IS_IPHONE_5) {
+        if DeviceType.IS_IPHONE_5
+        {
             self.socialConnectHieght.constant = 40
             self.socialConnectWidth.constant = 40
             
