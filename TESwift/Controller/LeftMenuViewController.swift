@@ -19,6 +19,10 @@ class LeftMenuViewController: BaseViewController {
     
     @IBOutlet weak var userNameLbl: UILabel!
     
+    @IBOutlet weak var tournamentYPos: NSLayoutConstraint!
+    
+    @IBOutlet var yPositions: [NSLayoutConstraint]!
+   
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,11 +31,35 @@ class LeftMenuViewController: BaseViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         self.setUpData(userInfo: commonSetting.userLoginInfo)
+        self.updateConstraints()
     }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func updateConstraints() {
+        
+        var verticalSpacing:CGFloat = 15
+        if DeviceType.IS_IPHONE_5
+        {
+            verticalSpacing = 10
+            self.tournamentYPos.constant = 15
+        }else if DeviceType.IS_IPHONE_6
+        {
+            self.tournamentYPos.constant = 25
+            verticalSpacing = 20
+        }else if DeviceType.IS_IPHONE_6P
+        {
+            self.tournamentYPos.constant = 35
+            verticalSpacing = 30
+        }
+        
+        for constraint:NSLayoutConstraint in yPositions {
+            constraint.constant = verticalSpacing
+        }
+        self.view.setNeedsLayout()
     }
     
     func setUpData(userInfo: NSDictionary) -> Void {

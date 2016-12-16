@@ -136,7 +136,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     func setupMenu() -> Void {
         if  revealViewController() != nil {
             menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
-            if IS_IPHONE_5
+            if DeviceType.IS_IPHONE_5
             {
                 self.revealViewController().rearViewRevealWidth = 250
             }else
