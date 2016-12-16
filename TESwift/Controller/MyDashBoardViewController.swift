@@ -53,6 +53,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         
         self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
         
+        self.getMyProfile()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -149,6 +151,28 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         }
     }
     
+    
+    func getMyProfile() {
+        //On success
+        
+        let success: successHandler = {responseObject, responseType in
+            
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
+            TEMyProfile.parsetMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
+            
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            
+            print(responseString)
+        }
+        
+        // Service call for get user profile data (Hypes, upcomings, person, followers)
+       // ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
+        
+
+    }
     
     func getUserProfileData(){
         

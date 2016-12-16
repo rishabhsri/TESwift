@@ -20,7 +20,7 @@
         <attribute name="notify_topurnament_player" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="player_Added_to_tournament" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="showTeamIcon" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="showTeamIcon" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="subscriptionType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="teamIconUrl" optional="YES" attributeType="String" syncable="YES"/>
@@ -30,7 +30,7 @@
         <relationship name="socialdetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UserSocialDetail" inverseName="myprofile" inverseEntity="UserSocialDetail" syncable="YES"/>
         <relationship name="tournament" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TETournamentList" inverseName="myProfile" inverseEntity="TETournamentList" syncable="YES"/>
     </entity>
-    <entity name="TETournamentList" syncable="YES">
+    <entity name="TETournamentList" representedClassName=".TETournamentList" syncable="YES">
         <attribute name="acceptAttachments" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="allowUserScoreSubmission" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="autoApprovalTime" optional="YES" attributeType="String" syncable="YES"/>
@@ -98,14 +98,7 @@
         <attribute name="webURL" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="myProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TEMyProfile" inverseName="tournament" inverseEntity="TEMyProfile" syncable="YES"/>
     </entity>
-    <entity name="UserDetails" representedClassName="UserDetails" syncable="YES">
-        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="subscriptionType" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
-        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
-    </entity>
-    <entity name="UserSocialDetail" syncable="YES">
+    <entity name="UserSocialDetail" representedClassName=".UserSocialDetail" syncable="YES">
         <attribute name="connectType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="emailId" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="imageKey" optional="YES" attributeType="String" syncable="YES"/>
@@ -116,9 +109,8 @@
         <relationship name="myprofile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TEMyProfile" inverseName="socialdetails" inverseEntity="TEMyProfile" syncable="YES"/>
     </entity>
     <elements>
-        <element name="TEMyProfile" positionX="-776" positionY="27" width="164" height="463"/>
+        <element name="TEMyProfile" positionX="-776" positionY="27" width="164" height="465"/>
         <element name="TETournamentList" positionX="-486" positionY="180" width="153" height="58"/>
-        <element name="UserDetails" positionX="-945" positionY="27" width="153" height="120"/>
         <element name="UserSocialDetail" positionX="-567" positionY="-3" width="128" height="163"/>
     </elements>
 </model>
