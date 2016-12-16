@@ -17,9 +17,9 @@ enum RequestedUrlType {
     case DownloadImage
     case UploadImage
     case GetUserSignUp
+    case GetUnAuthSearchedLocation
     case GetMyProfile
 }
-
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
 let Main_Header = ServerURL + "main"
 let File_Header = ServerURL + "file"
@@ -91,6 +91,10 @@ class ServiceCall: NSObject {
         case .GetUserSignUp:
             urlString = String(format: "%@/user/register",Network_Header)
             break
+        
+        case .GetUnAuthSearchedLocation:
+             urlString = String(format: "%@unauthenticated/search/location?query=%@",ServerURL,parameter.value(forKey: "locationText") as! String)
+            break
         case .GetMyProfile:
             urlString = String(format: "%@/user/profile",Network_Header)
             break
@@ -150,7 +154,7 @@ class ServiceCall: NSObject {
         }else if method == "POST"
         {
             
-            if urlType != .GetUserLogin {
+            if (urlType != .GetUserLogin || urlType != .GetUserSignUp){
                 manager.requestSerializer.setValue(authKey,forHTTPHeaderField:"AUTH-KEY")
             }
             
@@ -168,7 +172,7 @@ class ServiceCall: NSObject {
                                 {
                                     if(httpResponse.statusCode == 200)
                                     {
-                                        if urlType == .GetUserLogin {
+                                        if (urlType == .GetUserLogin || urlType == .GetUserSignUp){
                                             
                                             if let headers = httpResponse.allHeaderFields as NSDictionary? as! [String:String]?
                                             {

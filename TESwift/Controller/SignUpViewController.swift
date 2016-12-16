@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import CoreLocation
 
-class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate {
+class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate, UITextFieldDelegate,UITableViewDataSource, UITableViewDelegate{
     
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var txtUsername: UITextField!
     @IBOutlet weak var txtDisplayname: UITextField!
     @IBOutlet weak var txtPassword: UITextField!
@@ -29,7 +31,8 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     var activeField = UITextField()
     var textField = UITextField()
     let imagePicker = UIImagePickerController()
-    
+    var locationManager = CLLocationManager()
+    var autoLocationList = [String]()
     //MARK:- Life Cycle Methods
     
     override func viewDidLoad() {
@@ -38,6 +41,8 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         //Add Dismiss Keyboard Tap Gesture
         self.addDismisskeyboardTapGesture()
         
+        tableView.delegate = self
+        tableView.dataSource = self
         // Set Style Guide
         self.styleGuide()
     
@@ -59,6 +64,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     
     //MARK:- Utility Methods
     func styleGuide()->Void {
@@ -86,6 +92,27 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         }
     }
     
+    func getSignUpParameters(imageKey:String)->NSMutableDictionary {
+        
+        let userInfo = NSMutableDictionary()
+        userInfo.setValue("", forKey:"country")
+        userInfo.setValue("", forKey:"phoneNumber")
+        userInfo.setValue("", forKey: "city")
+        userInfo.setValue("", forKey: "state")
+        
+        userInfo.setValue(self.txtUsername.text!, forKey: "username")
+        userInfo.setValue(self.txtDisplayname.text!, forKey: "name")
+        userInfo.setValue(self.txtPassword.text!, forKey: "password")
+        userInfo.setValue(self.txtEmailId.text!, forKey: "email")
+        userInfo.setValue(self.txtLocation.text!, forKey: "location")
+        
+        if !commonSetting.isEmptySting(imageKey)
+        {
+            userInfo.setValue(imageKey, forKey: "imageKey")
+        }
+        return userInfo
+    }
+    
     func getUserSignup(_ userInfo: NSMutableDictionary) -> Void {
         
         //On Success Call
@@ -96,12 +123,35 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         }
         
         //On Failure Call
-        let failure:falureHandler = {error,responseMessage,requestType in
+        let falure:falureHandler = {error,responseMessage,requestType in
+            
+            let errResponse: String = String(data: (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)!
+            print(errResponse)
+            let responseDict = self.parseResponse(responseObject: errResponse as Any)
             
             // Falure call implementation
-            print(responseMessage)
+            print(responseDict)
+            if let arr:NSArray = responseDict.value(forKey: "errorMessages") as! NSArray?
+            {
+                let str:String = arr.firstObject as! String
+                let str1:String = "An email has been sent for account activation."
+                let alertController = UIAlertController(title: kMessage, message: str, preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default) {
+                    (action: UIAlertAction) in
+                    if str1 == str
+                    {
+                        _ = self.navigationController?.popViewController(animated: true)
+                    }
+                }
+                alertController.addAction(OKAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+            
         }
-         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserSignUp, method: "POST", successCall: success, falureCall: failure)
+        
+        print(userInfo)
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserSignUp, method: "POST", successCall: success, falureCall: falure)
         
     }
     
@@ -115,21 +165,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
                 self.uploadImage()
             }else
             {
-                let userInfo = NSMutableDictionary()
-                userInfo.setObject("", forKey:"country" as NSCopying)
-                userInfo.setObject("", forKey:"phoneNumber" as NSCopying)
-                userInfo.setObject("", forKey: "city" as NSCopying)
-                userInfo.setObject("", forKey: "imageKey" as NSCopying)
-                userInfo.setObject("", forKey: "state" as NSCopying)
-                userInfo.setObject("",forKey:"location" as NSCopying)
-                
-                userInfo.setObject(self.txtUsername.text!, forKey: "username" as NSCopying)
-                userInfo.setObject(self.txtDisplayname.text!, forKey: "name" as NSCopying)
-                userInfo.setObject(self.txtPassword.text!, forKey: "password" as NSCopying)
-                userInfo.setObject(self.txtEmailId.text!, forKey: "email" as NSCopying)
-                userInfo.setObject(self.txtLocation.text!, forKey: "location" as NSCopying)
-                
-                self.getUserSignup(userInfo )
+                self.getUserSignup(self.getSignUpParameters(imageKey: ""))
             }
         }
     }
@@ -191,6 +227,14 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     }
     
     @IBAction func actionGetUserLocation(_ sender: AnyObject) {
+        txtLocation.resignFirstResponder()
+        txtEmailId.resignFirstResponder()
+        self.showHUD()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
     }
     
     @IBAction func actionOnLoginBtn(_ sender: AnyObject) {
@@ -274,14 +318,8 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         self.showAlert(title: "Error", message: userInfo, tag: 200)
     }
     
-
-    
-   //MARK:- Textfield delegate
-    
     //MARK:- Textfield delegate
     
-    
-    // return NO to disallow editing.
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
         return true
     }
@@ -318,7 +356,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     }
     
     // return NO to not change text
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
+    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
         
         let length = txtUsername.text!.characters.count
         
@@ -334,9 +372,24 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         else if (textField == txtPassword || textField == txtConfirmPassword) && (textField.text?.characters.count)! >= 50{
             return false
         }
+        else if textField == txtLocation {
+            self.perform(#selector(SignUpViewController.textdidChange), with: self, afterDelay: 2.0)
+        }
         
         return true
     }
+    
+    func textdidChange() -> Void {
+        
+        if txtLocation.text?.characters.count == 0{
+            self.tableView.isHidden = true
+        }
+        if txtLocation.text!.characters.count > 2 {
+            self.fetchAutocompleteLocation(keyword: self.txtLocation.text!)
+            self.tableView.isHidden = false
+        }
+    }
+    
     
     // called when clear button pressed. return NO to ignore (no notifications)
     func textFieldShouldClear(_ textField: UITextField) -> Bool{
@@ -414,4 +467,120 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
      func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    // MARK:- CLLocation button Methods
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        
+        let userLocation : CLLocation = locations[0] as CLLocation
+        manager.stopUpdatingLocation()
+        
+        print("user latitude = \(userLocation.coordinate.latitude)")
+        print("user longitude = \(userLocation.coordinate.longitude)")
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
+            
+            var placemark:CLPlacemark!
+            
+            if error == nil && (placemarks?.count)! > 0 {
+                placemark = (placemarks?[0])! as CLPlacemark
+                
+                var addressString : String = ""
+                
+                if placemark.isoCountryCode == "TW" {
+                    if placemark.country != nil {
+                        addressString = placemark.country!
+                    }
+                    
+                    if placemark.locality != nil {
+                        addressString = addressString + placemark.locality!
+                    }
+                    
+                } else {
+                    if placemark.locality != nil {
+                        addressString = addressString + placemark.locality! + ", "
+                    }
+                    
+                    if placemark.country != nil {
+                        addressString = addressString + placemark.country!
+                    }
+                }
+                print(addressString)
+                self.txtLocation.text = addressString
+                self.hideHUD()
+            }
+            
+        })
+        
+    }
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
+        print("Error while updating location " + error.localizedDescription)
+    }
+    
+    //  Location search on location textfield method
+    
+    func fetchAutocompleteLocation(keyword: String) {
+        let dicInfo = NSMutableDictionary()
+        dicInfo.setValue(keyword, forKey: "locationText")
+        //On Success Call
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            
+            let listItems = responseDict["list"] as! NSArray
+            self.autoLocationList.removeAll()
+            
+            for i in 0 ..< (listItems.count)     {
+                let dicValue = listItems.object(at: i) as! NSDictionary
+                let address = dicValue.value(forKey: "formatted_address") as! String
+                print(address)
+                self.autoLocationList.append(address)
+            }
+            self.tableView.reloadData()
+            
+        }
+        
+        //On Failure Call
+        let failure:falureHandler = {error,responseMessage,requestType in
+            
+            // Falure call implementation
+            print(responseMessage)
+        }
+        print(dicInfo)
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: dicInfo, urlType: RequestedUrlType.GetUnAuthSearchedLocation, method: "GET", successCall: success, falureCall: failure)
+        
+    }
+    
+    //MARK:- TableView Delegate Methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return autoLocationList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        
+        let index = indexPath.row as Int
+        cell.textLabel!.textColor = UIColor.white
+        cell.textLabel!.text = autoLocationList[index]
+        
+        // Returning the cell
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath as IndexPath)!
+        
+        txtLocation.text = selectedCell.textLabel!.text!
+        self.tableView.isHidden = true
+        
+    }
+    
+    
 }
