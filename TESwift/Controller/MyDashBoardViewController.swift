@@ -267,8 +267,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-            }, completion: {(isCompleted) -> Void in
-                self.isSwipedUp = true
+        }, completion: {(isCompleted) -> Void in
+            self.isSwipedUp = true
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
@@ -292,8 +292,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-            }, completion: {(isCompleted) -> Void in
-                self.isSwipedUp = false
+        }, completion: {(isCompleted) -> Void in
+            self.isSwipedUp = false
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
@@ -333,12 +333,12 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         if currentButtonIndex == 0 {
             tableView.rowHeight = 60.0
             return notificationToShowArray.count
-           
+            
         }else if currentButtonIndex == 1
         {
             tableView.rowHeight = 139.0
             return hypetoShowArray.count
-      
+            
         }else
         {
             tableView.rowHeight = 139.0
@@ -370,6 +370,27 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         
         return cell
     }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
+    {
+        if currentButtonIndex == 0 {
+            
+            return UITableViewAutomaticDimension
+            
+        }else
+        {
+            return 139.0
+            
+        }
+    }
+    
+    func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
+        
+        cell.preservesSuperviewLayoutMargins = false
+        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
+    }
+    
     
     func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
         
@@ -416,7 +437,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
         cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game")
         cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue")
-        cell.dateLbl.text = hypeInfo.stringValueForKey(key: "startDate")
+        cell.dateLbl.text = self.getLocaleDateStringFromString(dateString: hypeInfo.stringValueForKey(key: "startDate"))
         
         return cell
     }
@@ -463,10 +484,10 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
             cell.progressBar.stopAnimating()
             cell.hypeBgImg.image = UIImage(named: "Default")
         }
-        cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name")
+        cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name").uppercased()
         cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game")
         cell.locationLbl.text = tournaInfo.stringValueForKey(key: "venue")
-        cell.dateLbl.text = tournaInfo.stringValueForKey(key: "startDate")
+        cell.dateLbl.text = self.getFormattedDateString(info: tournaInfo, indexPath: indexPath, format: "yyyy")
         
         
         return cell
@@ -475,10 +496,38 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
     func  configureNotificationCell(tableView:UITableView, indexPath:IndexPath) -> NotificationTableViewCell {
         
         let cell:NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
+        tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+        tableView.separatorColor = UIColor.darkGray
         
         let notificationInfo:NSDictionary = self.parseResponse(responseObject: notificationToShowArray.object(at: indexPath.row))
+        var mesage:String = notificationInfo.stringValueForKey(key: "notificationHeader")
         
-        cell.notificationTextView.text = notificationInfo.stringValueForKey(key: "notificationHeader")
+        var originator:String = notificationInfo.stringValueForKey(key: "originator").lowercased()
+        
+        mesage = mesage.replacingOccurrences(of: originator, with: String.init(format: "@%@", originator))
+        
+        originator = String.init(format: "@%@", originator)
+        
+        
+        let nsText = mesage as NSString
+        let textRange = NSMakeRange(0, nsText.length)
+        let attributedString = NSMutableAttributedString(string: mesage, attributes: [NSForegroundColorAttributeName : UIColor.lightGray])
+        
+        nsText.enumerateSubstrings(in: textRange, options: .byWords, using: {
+            (substring, substringRange, _, _) in
+            let str = "@" + substring!
+            if (str == originator) {
+                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0), range: substringRange)
+                attributedString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 15), range: substringRange)
+            }
+        })
+        
+        
+        cell.notificationTextView.text = nil
+        cell.notificationTextView.attributedText = nil
+        cell.notificationTextView.attributedText = attributedString
+        
+        
         
         return cell
     }

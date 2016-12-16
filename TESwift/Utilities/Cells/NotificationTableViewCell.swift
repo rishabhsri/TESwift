@@ -10,7 +10,7 @@ import UIKit
 
 class NotificationTableViewCell: UITableViewCell {
 
-    @IBOutlet var notificationTextView: UITextField!
+    @IBOutlet var notificationTextView: UITextView!
     
     override func awakeFromNib() {
         super.awakeFromNib()

@@ -272,10 +272,11 @@ class ServiceCall: NSObject {
         let manager:AFHTTPSessionManager = AFHTTPSessionManager()
         self.imageDownloadManager.requestSerializer = AFHTTPRequestSerializer()
         self.imageDownloadManager.responseSerializer = AFHTTPResponseSerializer()
+
         
         
-        manager.post(strURL, parameters: nil, constructingBodyWith:{(fromData) in
-            fromData.appendPart(withFileData: imageData, name: "file", fileName: "image.jpg", mimeType: "image/jpeg")
+        manager.post(strURL, parameters: nil, constructingBodyWith:{(formData: AFMultipartFormData) in
+            formData.appendPart(withFileData: imageData, name: "file", fileName: "image.jpg", mimeType: "image/jpeg")
         }, progress: nil,
            success:{(task, responseObject) in
             
