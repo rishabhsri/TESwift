@@ -40,9 +40,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         // Set Style Guide
         self.styleGuide()
-        
-        //setup picker
-        imagePicker.delegate = self
+    
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -403,17 +401,17 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any])
     {
-        if let pickedImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            self.profilePicBtn.setBackgroundImage(pickedImage, for: UIControlState.normal)
+        if let pickerImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            self.profilePicBtn.setBackgroundImage(pickerImage, for: UIControlState.normal)
             self.profilePicBtn.layer.cornerRadius = self.profilePicBtn.frame.size.height/2
             self.profilePicBtn.layer.masksToBounds = true;
             isImageAdded = true
         }
         
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
     
      func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
-        dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true, completion: nil)
     }
 }

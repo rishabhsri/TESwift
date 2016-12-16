@@ -50,7 +50,7 @@ class LeftMenuViewController: BaseViewController {
         {
             self.tournamentYPos.constant = 25
             verticalSpacing = 20
-        }else if DeviceType.IS_IPHONE_6P
+        }else if (DeviceType.IS_IPHONE_6P || IS_IPAD)
         {
             self.tournamentYPos.constant = 35
             verticalSpacing = 30
