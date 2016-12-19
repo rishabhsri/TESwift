@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UIScrollViewDelegate {
+class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!

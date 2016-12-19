@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LogInViewController: SocialConnectViewController, UITextFieldDelegate {
+class LogInViewController: SocialConnectViewController {
     
     @IBOutlet weak var txtUsernameTop: NSLayoutConstraint!
     @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
