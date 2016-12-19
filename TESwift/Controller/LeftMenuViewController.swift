@@ -22,7 +22,7 @@ class LeftMenuViewController: BaseViewController {
     @IBOutlet weak var tournamentYPos: NSLayoutConstraint!
     
     @IBOutlet var yPositions: [NSLayoutConstraint]!
-   
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()

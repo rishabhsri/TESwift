@@ -49,6 +49,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         
         self.setupMenu()
         
+        tableView.estimatedRowHeight = 139.0
+        
         self.setupData()
         
         self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
@@ -169,9 +171,9 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         }
         
         // Service call for get user profile data (Hypes, upcomings, person, followers)
-       // ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
+        // ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
         
-
+        
     }
     
     func getUserProfileData(){
@@ -330,20 +332,30 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
+        var count:Int = 0
         if currentButtonIndex == 0 {
-            tableView.rowHeight = 60.0
-            return notificationToShowArray.count
+            count = notificationToShowArray.count
             
         }else if currentButtonIndex == 1
         {
-            tableView.rowHeight = 139.0
-            return hypetoShowArray.count
+            count = hypetoShowArray.count
             
         }else
         {
-            tableView.rowHeight = 139.0
-            return tournamentsToShowArray.count
+            count = tournamentsToShowArray.count
         }
+        
+        if count == 0{
+            let noDataLabel:UILabel  = UILabel.init(frame: CGRect(x:0,y:0,width:tableView.bounds.size.width,height:tableView.bounds.size.height))
+            noDataLabel.text = "No data available";
+            noDataLabel.textColor = UIColor.lightGray
+            noDataLabel.textAlignment = NSTextAlignment.center;
+            tableView.backgroundView = noDataLabel;
+        }
+        else{
+            tableView.backgroundView   = nil;
+        }
+        return count
     }
     
     
@@ -352,10 +364,13 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         
         // create a new cell if needed or reuse an old one
         
+        tableView.rowHeight = 139.0
+        
         let cell:UITableViewCell
         if currentButtonIndex == 0 {
             
             cell = self.configureNotificationCell(tableView: tableView, indexPath: indexPath)
+            tableView.rowHeight = 50.0
             
         }else if currentButtonIndex == 1
         {
@@ -370,19 +385,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         
         return cell
     }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat
-    {
-        if currentButtonIndex == 0 {
-            
-            return UITableViewAutomaticDimension
-            
-        }else
-        {
-            return 139.0
-            
-        }
-    }
+
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
