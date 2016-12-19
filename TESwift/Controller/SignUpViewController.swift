@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate, UITextFieldDelegate,UITableViewDataSource, UITableViewDelegate{
+class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate,UITableViewDataSource{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var txtUsername: UITextField!
@@ -43,6 +43,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.backgroundColor = UIColor.black
         // Set Style Guide
         self.styleGuide()
     
@@ -131,21 +132,29 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             
             // Falure call implementation
             print(responseDict)
+           
             if let arr:NSArray = responseDict.value(forKey: "errorMessages") as! NSArray?
             {
                 let str:String = arr.firstObject as! String
-                let str1:String = "An email has been sent for account activation."
                 let alertController = UIAlertController(title: kMessage, message: str, preferredStyle: .alert)
                 let OKAction = UIAlertAction(title: "OK", style: .default) {
                     (action: UIAlertAction) in
-                    if str1 == str
+                    if KSignUpActivate == str
                     {
                         _ = self.navigationController?.popViewController(animated: true)
                     }
+                    
+                   else if KEmailExists == str
+                    {
+                    }
+                   
                 }
                 alertController.addAction(OKAction)
                 self.present(alertController, animated: true, completion: nil)
+                
+                
             }
+            
             
         }
         
@@ -327,9 +336,10 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     // became first responder
     func textFieldDidBeginEditing(_ textField: UITextField){
-        
         addDismisskeyboardTapGesture()
-        
+        if textField == self.txtLocation{
+            self.scrollData.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat(150)), animated: true)
+        }
         if IS_IPAD {
             
             if (textField == txtPassword || textField == txtConfirmPassword){
@@ -352,9 +362,28 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
     func textFieldDidEndEditing(_ textField: UITextField){
+        if textField == txtUsername {
+            if commonSetting.isInternetAvailable {
+            if !(commonSetting.isEmptySting(self.txtUsername.text!))
+            {
+            self.showHUD()
+            fetchUsernameExistCheck()
+            }
+         }
+        }
         
+        else if textField == txtEmailId {
+            if commonSetting.isInternetAvailable {
+            if !(commonSetting.isEmptySting(self.txtEmailId.text!))
+            {
+                self.showHUD()
+                fetchEmailIdExistCheck()
+            }
+        }
     }
+}
     
+
     // return NO to not change text
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
         
@@ -439,7 +468,28 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     
     func keyboardWasShown(_ aNotification: Notification){
-        
+        if IS_IPAD {
+            
+        }
+        else {
+          let info = aNotification.userInfo!
+          let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+          var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+           
+            if DeviceType.IS_IPHONE_5{
+                contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize?.height)! - 150.0, 0.0)
+            }
+            if DeviceType.IS_IPHONE_6{
+                contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize?.height)! - 100.0, 0.0)
+            }
+            if DeviceType.IS_IPHONE_6P{
+                contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize?.height)! - 50.0, 0.0)
+            }
+            
+            self.scrollData.contentInset = contentInsets
+            self.scrollData.scrollIndicatorInsets = contentInsets;
+
+        }
     }
     
     func keyboardWillBeHidden(_ aNotification: Notification) {
@@ -447,6 +497,15 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             self.scrollData.contentSize = CGSize(width: CGFloat(320), height: CGFloat(400))
             self.scrollData.setContentOffset(CGPoint.zero, animated: true)
         }
+        else{
+           let info = aNotification.userInfo!
+            let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+            let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0,keyboardSize!.height, 0.0)
+            self.scrollData.contentInset = contentInsets
+            self.scrollData.scrollIndicatorInsets = contentInsets
+            self.view.endEditing(true)
+        }
+        
     }
     
     
@@ -517,6 +576,98 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
         print("Error while updating location " + error.localizedDescription)
     }
+    
+    
+    // Username existing check for username field
+    
+    func fetchEmailIdExistCheck() {
+        let dicInfo = NSMutableDictionary()
+        dicInfo.setValue(self.txtEmailId.text!, forKey: "email")
+        //On Success Call
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+        }
+        
+        //On Failure Call
+        let failure:falureHandler = {error,responseMessage,requestType in
+            let errResponse: String = String(data: (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)!
+            print(errResponse)
+            let responseDict = self.parseResponse(responseObject: errResponse as Any)
+            
+            // Falure call implementation
+            print(responseDict)
+            self.hideHUD()
+            if let arr:NSArray = responseDict.value(forKey: "errorMessages") as! NSArray?
+            {
+                let str:String = arr.firstObject as! String
+                let alertController = UIAlertController(title: kMessage, message: str, preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default) {
+                    (action: UIAlertAction) in
+                    if KEmailExists == str
+                    {
+                        
+                    }
+                    
+                }
+                alertController.addAction(OKAction)
+                self.present(alertController, animated: true, completion: nil)
+               
+            }
+            
+        }
+        print(dicInfo)
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: dicInfo, urlType: RequestedUrlType.CheckEmailIdExists, method: "GET", successCall: success, falureCall: failure)
+        
+    }
+
+    
+    // Username existing check for Email field
+   
+    func fetchUsernameExistCheck() {
+        let dicInfo = NSMutableDictionary()
+        dicInfo.setValue(self.txtUsername.text!, forKey: "username")
+        //On Success Call
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+        }
+        
+        //On Failure Call
+        let failure:falureHandler = {error,responseMessage,requestType in
+            let errResponse: String = String(data: (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)!
+            print(errResponse)
+            let responseDict = self.parseResponse(responseObject: errResponse as Any)
+            
+            // Falure call implementation
+            print(responseDict)
+            self.hideHUD()
+            if let arr:NSArray = responseDict.value(forKey: "errorMessages") as! NSArray?
+            {
+                let str:String = arr.firstObject as! String
+                let alertController = UIAlertController(title: kMessage, message: str, preferredStyle: .alert)
+                let OKAction = UIAlertAction(title: "OK", style: .default) {
+                    (action: UIAlertAction) in
+                    if KUserExists == str
+                    {
+                    }
+                }
+                alertController.addAction(OKAction)
+                self.present(alertController, animated: true, completion: nil)
+            }
+
+        }
+        print(dicInfo)
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: dicInfo, urlType: RequestedUrlType.CheckUserNameExists, method: "GET", successCall: success, falureCall: failure)
+        
+    }
+
+    
+    
     
     //  Location search on location textfield method
     

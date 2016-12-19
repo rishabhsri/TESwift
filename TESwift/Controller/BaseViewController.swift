@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BaseViewController: UIViewController, UITextFieldDelegate{
+class BaseViewController: UIViewController, UITableViewDelegate,UITextFieldDelegate{
     
     var context:NSManagedObjectContext? = nil
     var dateFormatter:DateFormatter? = nil
