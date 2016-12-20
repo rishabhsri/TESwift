@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate,UITableViewDataSource{
+class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate,UITableViewDataSource,UITextFieldDelegate{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var txtUsername: UITextField!
@@ -40,10 +40,9 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         //Add Dismiss Keyboard Tap Gesture
         self.addDismisskeyboardTapGesture()
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = UIColor.black
+       
+        self.configureLocationTableView()
+       
         // Set Style Guide
         self.styleGuide()
         
@@ -360,7 +359,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     
     // return NO to not change text
-    public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
+     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
         
         let length = txtUsername.text!.characters.count
         
@@ -454,10 +453,10 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             if DeviceType.IS_IPHONE_5{
                 contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize?.height)! - 150.0, 0.0)
             }
-            if DeviceType.IS_IPHONE_6{
+            else if DeviceType.IS_IPHONE_6{
                 contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize?.height)! - 100.0, 0.0)
             }
-            if DeviceType.IS_IPHONE_6P{
+            else if DeviceType.IS_IPHONE_6P{
                 contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize?.height)! - 50.0, 0.0)
             }
             
@@ -553,7 +552,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     }
     
     
-    // Username existing check for username field
+    // Username existing check for Email field
     
     func isEmailIdExists(emailID:String) {
         
@@ -564,6 +563,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             // Success call implementation
             self.hideHUD()
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            self.hideHUD()
             print(responseDict)
         }
         
@@ -590,6 +590,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             // Success call implementation
             self.hideHUD()
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
+             self.hideHUD()
             print(responseDict)
         }
         
@@ -657,7 +658,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         return cell
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    private func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath as IndexPath)!
         
@@ -666,5 +667,36 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
     }
     
+    func configureLocationTableView (){
+      
+        var topDistance = CGFloat()
+        var yCoordinate = Float()
+        
+        if DeviceType.IS_IPHONE_5{
+           topDistance = (self.scrollData.frame.origin.y + 20.0)
+        }
+        else if DeviceType.IS_IPHONE_6{
+          topDistance = (self.scrollData.frame.origin.y + 80.0)
+        }
+        else if DeviceType.IS_IPHONE_6P{
+          topDistance = (self.scrollData.frame.origin.y + 80.0)
+        }
+        yCoordinate = Float(topDistance)
+        var width: CGFloat = 268.0
+        
+        if IS_IPAD {
+            width = 350.0
+        }
+        else{
+            width = ScreenSize.SCREEN_WIDTH - 52.0
+        }
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.backgroundColor = UIColor.black
+        tableView.layer.cornerRadius = 0.5
+        
+
+    }
     
 }
