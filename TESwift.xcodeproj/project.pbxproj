@@ -72,6 +72,7 @@
 		18EF23971E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF238F1E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift */; };
 		18F05B661E09169F0090F57C /* Futura-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F05B641E09169F0090F57C /* Futura-Bold.ttf */; };
 		18F05B671E09169F0090F57C /* Futura.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F05B651E09169F0090F57C /* Futura.ttf */; };
+		18F05B6A1E095B450090F57C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F05B691E095B450090F57C /* NSDate+Utilities.m */; };
 		88FFFDA670937AC39853BFEA /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */; };
 		A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */; };
 		A1F7E8D01E02B903007E842D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7E8CF1E02B903007E842D /* CoreLocation.framework */; };
@@ -168,6 +169,8 @@
 		18EF238F1E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TETournamentList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18F05B641E09169F0090F57C /* Futura-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-Bold.ttf"; sourceTree = "<group>"; };
 		18F05B651E09169F0090F57C /* Futura.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Futura.ttf; sourceTree = "<group>"; };
+		18F05B681E095B450090F57C /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
+		18F05B691E095B450090F57C /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
 		A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = TESwift/Controller/SignUpViewController.swift; sourceTree = SOURCE_ROOT; };
 		A1F7E8CF1E02B903007E842D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -342,6 +345,8 @@
 		1888E95E1E000D5100AC5575 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				18F05B681E095B450090F57C /* NSDate+Utilities.h */,
+				18F05B691E095B450090F57C /* NSDate+Utilities.m */,
 				180EDA271E01765D0065BF6B /* UIImage */,
 				1888E95F1E000D6500AC5575 /* String+Utilities.swift */,
 				1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */,
@@ -593,6 +598,7 @@
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
 				180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */,
 				188163D61E02779E00AB2E74 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
+				18F05B6A1E095B450090F57C /* NSDate+Utilities.m in Sources */,
 				188163D21E02779E00AB2E74 /* PKHUDProgressView.swift in Sources */,
 				188163D81E02779E00AB2E74 /* PKHUDWideBaseView.swift in Sources */,
 				188163D31E02779E00AB2E74 /* PKHUDRotatingImageView.swift in Sources */,

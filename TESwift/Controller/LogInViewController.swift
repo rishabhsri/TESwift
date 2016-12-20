@@ -117,7 +117,6 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
     override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         commonSetting.userLoginInfo = userInfo
-        self.hideHUD()
         let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
         let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
         self.navigationController?.pushViewController(dbController, animated:true)

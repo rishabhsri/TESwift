@@ -21,7 +21,9 @@ enum RequestedUrlType {
     case GetMyProfile
     case CheckUserNameExists
     case CheckEmailIdExists
+    case GetCurrentAndUpcomingTournament
 }
+
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
 let Main_Header = ServerURL + "main"
 let File_Header = ServerURL + "file"
@@ -101,12 +103,15 @@ class ServiceCall: NSObject {
             break
             
         case .CheckUserNameExists:
-            urlString = String(format: "%@unauthenticated/find/user/%@",ServerURL,parameter.value(forKey: "username") as! String)
+            urlString = String(format: "%@unauthenticated/find/user/%@",ServerURL,parameter.stringValueForKey(key: "username"))
             break
         case .CheckEmailIdExists:
-            urlString = String(format: "%@unauthenticated/find/email/%@",ServerURL,parameter.value(forKey: "email") as! String)
+            urlString = String(format: "%@unauthenticated/find/email/%@",ServerURL,parameter.stringValueForKey(key: "email"))
             break
-            
+        case .GetCurrentAndUpcomingTournament:
+            urlString = String(format: "%@/tournament/state/active/%@",Main_Header,parameter.stringValueForKey(key: "userID"))
+            break
+    
         }
         
         return urlString
@@ -132,6 +137,12 @@ class ServiceCall: NSObject {
         let defaults = UserDefaults.standard
         if defaults.value(forKey: "authkey") != nil {
             authKey = defaults.value(forKey: "authkey") as! String
+        }
+        
+        if urlType == .GetCurrentAndUpcomingTournament
+        {
+            manager.requestSerializer.setValue("10", forHTTPHeaderField: "pagesize")
+            manager.requestSerializer.setValue(parameters.stringValueForKey(key: "pagenumber"), forHTTPHeaderField: "pagenumber")
         }
         
         if method == "GET" {
@@ -298,9 +309,11 @@ class ServiceCall: NSObject {
         if let errResponse: String = String(data: (errorObj.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)
         {
             let responseDict = BaseViewController().parseResponse(responseObject: errResponse as Any)
-            if let errorMessage:String = (responseDict.value(forKey: "errorMessages") as! NSArray).firstObject as! String?
-            {
-                return errorMessage
+            if let array:NSArray = responseDict.value(forKey: "errorMessages") as? NSArray {
+                if let errorMessage:String = array.firstObject as? String
+                {
+                    return errorMessage
+                }
             }
         }
         return ""
