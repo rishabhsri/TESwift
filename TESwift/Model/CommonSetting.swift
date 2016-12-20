@@ -58,6 +58,15 @@ class CommonSetting: NSObject {
         return false
     }
     
+    func isEmptySting(_ text: String) -> Bool {
+        
+        if text.isEmpty{
+            return true
+        }
+        return false
+    }
+
+    
     func animateProfileImage(imageView:UIImageView) {
         
         let estimateCorner:CGFloat = imageView.bounds.size.width / 2

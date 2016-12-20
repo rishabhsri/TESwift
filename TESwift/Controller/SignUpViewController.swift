@@ -258,7 +258,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         var flag:Bool = true
         
-        if (commonSetting.isEmptySting(self.txtUsername.text!))
+        if (commonSetting.isEmptyStingOrWithBlankSpace(self.txtUsername.text!))
         {
             self.showAlert(title: kError, message: kEnterUsername, tag: 0)
             flag = false
@@ -266,7 +266,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         {
             self.showAlert(title: kError, message: kEnterDisplayname, tag: 0)
             flag = false
-        }else if(commonSetting.isEmptySting(self.txtPassword.text!))
+        }else if(commonSetting.isEmptyStingOrWithBlankSpace(self.txtPassword.text!))
         {
             self.showAlert(title: kError, message: kEnterPassword, tag: 0)
             flag = false
@@ -274,7 +274,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         {
             self.showAlert(title: kError, message: kPasswordRulesMessage, tag: 0)
             flag = false
-        }else if(commonSetting.isEmptySting(self.txtConfirmPassword.text!))
+        }else if(commonSetting.isEmptyStingOrWithBlankSpace(self.txtConfirmPassword.text!))
         {
             self.showAlert(title: kError, message: kEnterConfirmPassword, tag: 0)
             flag = false
@@ -282,7 +282,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         {
             self.showAlert(title: kError, message: kEnterSamePassword, tag: 0)
             flag = false
-        }else if(commonSetting.isEmptySting(self.txtEmailId.text!))
+        }else if(commonSetting.isEmptyStingOrWithBlankSpace(self.txtEmailId.text!))
         {
             self.showAlert(title: kError, message: kEnterEmail, tag: 0)
             flag = false

@@ -78,7 +78,7 @@ class LogInViewController: SocialConnectViewController {
         
         if commonSetting.isEmptyStingOrWithBlankSpace(txtUsername.text!) || commonSetting.isEmptyStingOrWithBlankSpace(txtPassword.text!) {
             
-            self.showAlert(title: "Message", message: "Username or password either null or consist blanks.", tag: 100)
+            self.showAlert(title: kMessage, message: UserName_Pwd_ErrorMsg, tag: 100)
             return false
         }
         

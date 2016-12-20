@@ -326,7 +326,7 @@ class ServiceCall: NSObject {
         if !commonSetting.isInternetAvailable {
             let error:NSError = NSError();
             falureCall(error,kNoInternetConnect)
-        }else if commonSetting.isEmptySting(imageKey) {
+        }else if commonSetting.isEmptyStingOrWithBlankSpace(imageKey) {
             let error:NSError = NSError();
             falureCall(error,"Invalid Parameter")
         }
@@ -379,7 +379,7 @@ class ServiceCall: NSObject {
     
     func getImageForKey(imageKey:String) -> UIImage?{
         
-        if commonSetting.isEmptySting(imageKey)
+        if commonSetting.isEmptyStingOrWithBlankSpace(imageKey)
         {
             return nil
         }else
