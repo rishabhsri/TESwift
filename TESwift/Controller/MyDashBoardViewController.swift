@@ -530,6 +530,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             attributedStringMessage = NSMutableAttributedString(string: message, attributes: [NSForegroundColorAttributeName : UIColor.white])
             attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
             attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+            attributedStringMessage.addAttribute("clickOnUser", value: true, range: range)
         }
         
         if !tournamentInfo.stringValueForKey(key: "name").isEmpty {
@@ -537,6 +538,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             let range = (message as NSString).range(of:name)
             attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
             attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+            attributedStringMessage.addAttribute("clickOnTournament", value: true, range: range)
         }
         
         if !seasonInfo.stringValueForKey(key: "name").isEmpty {
@@ -544,6 +546,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             let range = (message as NSString).range(of:name)
             attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
             attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+            attributedStringMessage.addAttribute("clickOnSeason", value: true, range: range)
         }
         
         if !eventInfo.stringValueForKey(key: "name").isEmpty {
@@ -551,14 +554,55 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             let range = (message as NSString).range(of:name)
             attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
             attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+            attributedStringMessage.addAttribute("clickOnEvent", value: true, range: range)
         }
         
         cell.notificationTextView.text = nil
         cell.notificationTextView.attributedText = nil
         cell.notificationTextView.attributedText = attributedStringMessage
         
+        let tapGesture:UITapGestureRecognizer = UITapGestureRecognizer.init(target: self, action: #selector(MyDashBoardViewController.textTapped(recognizer:)))
+        cell.notificationTextView.addGestureRecognizer(tapGesture)
+        
         return cell
     }
+    
+    func textTapped(recognizer:UITapGestureRecognizer) {
+        
+        let textView:UITextView = recognizer.view as! UITextView
+        
+        // Location of the tap in text-container coordinates
+        let layoutManager:NSLayoutManager = textView.layoutManager
+        var location:CGPoint = recognizer.location(in: textView)
+        location.x -= textView.textContainerInset.left
+        location.y -= textView.textContainerInset.top
+        
+        // Find the character that's been tapped on
+        let characterIndex:Int = layoutManager.characterIndex(for: location, in: textView.textContainer, fractionOfDistanceBetweenInsertionPoints: nil)
+        
+        if characterIndex < textView.textStorage.length {
+            
+            var range:NSRange? = NSMakeRange(0, 1)
+            if let value:Bool = textView.attributedText.attribute("clickOnUser", at: characterIndex, effectiveRange: &range!) as! Bool?
+            {
+                self.showAlert(title: kMessage, message: "Tapped on user")
+            }
+            if let value:Bool = textView.attributedText.attribute("clickOnTournament", at: characterIndex, effectiveRange: &range!) as! Bool?
+            {
+                self.showAlert(title: kMessage, message: "Tapped on Tournament")
+            }
+            if let value:Bool = textView.attributedText.attribute("clickOnSeason", at: characterIndex, effectiveRange: &range!) as! Bool?
+            {
+                self.showAlert(title: kMessage, message: "Tapped on Season")
+            }
+            if let value:Bool = textView.attributedText.attribute("clickOnEvent", at: characterIndex, effectiveRange: &range!) as! Bool?
+            {
+                self.showAlert(title: kMessage, message: "Tapped on Event")
+            }
+        }
+        
+    }
+
     
     func getNotificationMapInfo(notification:NSDictionary, key:String) -> NSDictionary {
         if let tournamentInfo:NSArray = notification.value(forKey: key) as? NSArray
