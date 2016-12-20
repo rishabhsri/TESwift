@@ -105,7 +105,6 @@ class LogInViewController: SocialConnectViewController {
         let falure:falureHandler = {error,responseMessage,requestType in
             self.hideHUD()
             // Falure call implementation
-            
             print(responseMessage)
             self.onLogInFailure(responseMessage)
         }

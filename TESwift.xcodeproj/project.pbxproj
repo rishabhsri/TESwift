@@ -70,6 +70,8 @@
 		18EF23951E03E31D00BE6F00 /* TEMyProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF238D1E03E31D00BE6F00 /* TEMyProfile+CoreDataProperties.swift */; };
 		18EF23961E03E31D00BE6F00 /* TETournamentList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF238E1E03E31D00BE6F00 /* TETournamentList+CoreDataClass.swift */; };
 		18EF23971E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18EF238F1E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift */; };
+		18F05B661E09169F0090F57C /* Futura-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F05B641E09169F0090F57C /* Futura-Bold.ttf */; };
+		18F05B671E09169F0090F57C /* Futura.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F05B651E09169F0090F57C /* Futura.ttf */; };
 		88FFFDA670937AC39853BFEA /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */; };
 		A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */; };
 		A1F7E8D01E02B903007E842D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7E8CF1E02B903007E842D /* CoreLocation.framework */; };
@@ -164,6 +166,8 @@
 		18EF238D1E03E31D00BE6F00 /* TEMyProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEMyProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		18EF238E1E03E31D00BE6F00 /* TETournamentList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TETournamentList+CoreDataClass.swift"; sourceTree = "<group>"; };
 		18EF238F1E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TETournamentList+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		18F05B641E09169F0090F57C /* Futura-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-Bold.ttf"; sourceTree = "<group>"; };
+		18F05B651E09169F0090F57C /* Futura.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Futura.ttf; sourceTree = "<group>"; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
 		A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = TESwift/Controller/SignUpViewController.swift; sourceTree = SOURCE_ROOT; };
 		A1F7E8CF1E02B903007E842D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
@@ -292,6 +296,7 @@
 		188163B01E0275CF00AB2E74 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				18F05B631E09169F0090F57C /* Font */,
 				188163DB1E02BE4D00AB2E74 /* Cells */,
 				188163B31E02764500AB2E74 /* StyleGuide.swift */,
 				188163B11E0275CF00AB2E74 /* Constant.swift */,
@@ -402,6 +407,15 @@
 			path = "UIKit+AFNetworking";
 			sourceTree = "<group>";
 		};
+		18F05B631E09169F0090F57C /* Font */ = {
+			isa = PBXGroup;
+			children = (
+				18F05B641E09169F0090F57C /* Futura-Bold.ttf */,
+				18F05B651E09169F0090F57C /* Futura.ttf */,
+			);
+			path = Font;
+			sourceTree = "<group>";
+		};
 		212A20BA2F8D1EE10C6B4E00 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -485,10 +499,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				18F05B661E09169F0090F57C /* Futura-Bold.ttf in Resources */,
 				1878C8241DF9491C00DAC10E /* Main.storyboard in Resources */,
 				188163CB1E02779E00AB2E74 /* Images.xcassets in Resources */,
 				188163CC1E02779E00AB2E74 /* Info.plist in Resources */,
 				188FEAA91DFEB4ED00C8A181 /* Storyboard.storyboard in Resources */,
+				18F05B671E09169F0090F57C /* Futura.ttf in Resources */,
 				186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */,
 				1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */,
 			);

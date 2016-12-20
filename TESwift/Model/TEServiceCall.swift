@@ -155,7 +155,14 @@ class ServiceCall: NSObject {
                             
             }, failure: {(task,error) in
                 
-                falureCall(error as NSError,error.localizedDescription,urlType)
+                let errorMessage:String = self.parseErrorMessage(error: error)
+                if !errorMessage.isEmpty
+                {
+                    falureCall(error as NSError,errorMessage,urlType)
+                }else
+                {
+                    falureCall(error as NSError,error.localizedDescription,urlType)
+                }
                 
             })
             
@@ -205,7 +212,14 @@ class ServiceCall: NSObject {
                             
             }, failure: {(task, error) in
                 
-                falureCall(error as NSError,error.localizedDescription,urlType)
+                let errorMessage:String = self.parseErrorMessage(error: error)
+                if !errorMessage.isEmpty
+                {
+                    falureCall(error as NSError,errorMessage,urlType)
+                }else
+                {
+                    falureCall(error as NSError,error.localizedDescription,urlType)
+                }
             })
             
             
@@ -234,7 +248,14 @@ class ServiceCall: NSObject {
                                 
                 }, failure: {(task, error) in
                     
-                    falureCall(error as NSError,error.localizedDescription,urlType)
+                    let errorMessage:String = self.parseErrorMessage(error: error)
+                    if !errorMessage.isEmpty
+                    {
+                        falureCall(error as NSError,errorMessage,urlType)
+                    }else
+                    {
+                        falureCall(error as NSError,error.localizedDescription,urlType)
+                    }
                 })
                 
             }else
@@ -258,11 +279,31 @@ class ServiceCall: NSObject {
                                 
                 }, failure: {(task, error) in
                     
-                    falureCall(error as NSError,error.localizedDescription,urlType)
+                    let errorMessage:String = self.parseErrorMessage(error: error)
+                    if !errorMessage.isEmpty
+                    {
+                        falureCall(error as NSError,errorMessage,urlType)
+                    }else
+                    {
+                        falureCall(error as NSError,error.localizedDescription,urlType)
+                    }
                 })
-                
             }
         }
+    }
+    
+    func parseErrorMessage(error:Error) -> String {
+        
+        let errorObj:NSError = error as NSError
+        if let errResponse: String = String(data: (errorObj.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)
+        {
+            let responseDict = BaseViewController().parseResponse(responseObject: errResponse as Any)
+            if let errorMessage:String = (responseDict.value(forKey: "errorMessages") as! NSArray).firstObject as! String?
+            {
+                return errorMessage
+            }
+        }
+        return ""
     }
     
     func uploadImage(image:UIImage?,urlType:RequestedUrlType,successCall:@escaping uploadImageSuccess,falureCall:@escaping uploadImageFailed){
@@ -316,7 +357,14 @@ class ServiceCall: NSObject {
             
         }, failure: {(task, error) in
             
-            falureCall(error as NSError,error.localizedDescription)
+            let errorMessage:String = self.parseErrorMessage(error: error)
+            if !errorMessage.isEmpty
+            {
+                falureCall(error as NSError,errorMessage)
+            }else
+            {
+                falureCall(error as NSError,error.localizedDescription)
+            }
         })
         
     }
@@ -371,7 +419,14 @@ class ServiceCall: NSObject {
                             
             }, failure: {(task,error) in
                 
-                falureCall(error as NSError,error.localizedDescription)
+                let errorMessage:String = self.parseErrorMessage(error: error)
+                if !errorMessage.isEmpty
+                {
+                    falureCall(error as NSError,errorMessage)
+                }else
+                {
+                    falureCall(error as NSError,error.localizedDescription)
+                }
                 
             })
         }

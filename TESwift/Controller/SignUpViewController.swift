@@ -126,36 +126,13 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         //On Failure Call
         let falure:falureHandler = {error,responseMessage,requestType in
             
-            let errResponse: String = String(data: (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)!
-            print(errResponse)
-            let responseDict = self.parseResponse(responseObject: errResponse as Any)
-            
-            // Falure call implementation
-            print(responseDict)
-           
-            if let arr:NSArray = responseDict.value(forKey: "errorMessages") as! NSArray?
-            {
-                let str:String = arr.firstObject as! String
-                let alertController = UIAlertController(title: kMessage, message: str, preferredStyle: .alert)
-                let OKAction = UIAlertAction(title: "OK", style: .default) {
-                    (action: UIAlertAction) in
-                    if KSignUpActivate == str
-                    {
-                        _ = self.navigationController?.popViewController(animated: true)
-                    }
-                    
-                   else if KEmailExists == str
-                    {
-                    }
-                   
+            self.showAlert(title: kMessage, message: responseMessage, tag: 0, actionHandler: {
+                let str1:String = "An email has been sent for account activation."
+                if str1 == responseMessage
+                {
+                    _ = self.navigationController?.popViewController(animated: true)
                 }
-                alertController.addAction(OKAction)
-                self.present(alertController, animated: true, completion: nil)
-                
-                
-            }
-            
-            
+            })
         }
         
         print(userInfo)
@@ -171,13 +148,13 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         if self.isValid() {
             print("everything is fine!!")
             self.getUserSignup(self.getSignUpParameters(imageKey: ""))
-
-//            if isImageAdded {
-//                self.uploadImage()
-//            }else
-//            {
-//                self.getUserSignup(self.getSignUpParameters(imageKey: ""))
-//            }
+            
+            //            if isImageAdded {
+            //                self.uploadImage()
+            //            }else
+            //            {
+            //                self.getUserSignup(self.getSignUpParameters(imageKey: ""))
+            //            }
         }
     }
     
