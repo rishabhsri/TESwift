@@ -19,6 +19,8 @@ enum RequestedUrlType {
     case GetUserSignUp
     case GetUnAuthSearchedLocation
     case GetMyProfile
+    case CheckUserNameExists
+    case CheckEmailIdExists
 }
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
 let Main_Header = ServerURL + "main"
@@ -44,7 +46,6 @@ class ServiceCall: NSObject {
     //Local Variables
     var sessionManager:AFHTTPSessionManager
     var imageDownloadManager:AFHTTPSessionManager
-    
     //Methods
     class var sharedInstance: ServiceCall {
         struct Singleton {
@@ -97,6 +98,13 @@ class ServiceCall: NSObject {
             break
         case .GetMyProfile:
             urlString = String(format: "%@/user/profile",Network_Header)
+            break
+            
+        case .CheckUserNameExists:
+            urlString = String(format: "%@unauthenticated/find/user/%@",ServerURL,parameter.value(forKey: "username") as! String)
+            break
+        case .CheckEmailIdExists:
+            urlString = String(format: "%@unauthenticated/find/email/%@",ServerURL,parameter.value(forKey: "email") as! String)
             break
             
         }
@@ -488,6 +496,6 @@ class ServiceCall: NSObject {
         }
         return imageDirectoryPath
     }
-    
+
 }
 

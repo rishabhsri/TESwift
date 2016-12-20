@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UIScrollViewDelegate {
+class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -109,7 +109,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource, UISc
         self.emaillbl.text = userInfo.stringValueForKey(key: "email")
         let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
         
-        if !commonSetting.isEmptySting(imagekey)
+        if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
         {
             // For storing temporary imageKey for using in MenuViewController
             

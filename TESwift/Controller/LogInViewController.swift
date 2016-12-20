@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LogInViewController: SocialConnectViewController, UITextFieldDelegate {
+class LogInViewController: SocialConnectViewController {
     
     @IBOutlet weak var txtUsernameTop: NSLayoutConstraint!
     @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
@@ -76,7 +76,7 @@ class LogInViewController: SocialConnectViewController, UITextFieldDelegate {
     
     func validate() -> Bool {
         
-        if commonSetting.isEmptySting(txtUsername.text!) || commonSetting.isEmptySting(txtPassword.text!) {
+        if commonSetting.isEmptyStingOrWithBlankSpace(txtUsername.text!) || commonSetting.isEmptyStingOrWithBlankSpace(txtPassword.text!) {
             
             self.showAlert(title: "Message", message: "Username or password either null or consist blanks.", tag: 100)
             return false

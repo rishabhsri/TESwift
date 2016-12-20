@@ -749,7 +749,7 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" returnKeyType="next"/>
+                                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="TD4-YS-hV1" id="n2p-ka-J42"/>
                                                 </connections>
@@ -841,7 +841,9 @@
                             <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wmh-pH-f1T">
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="ArM-zH-BQI"/>
+                                    <constraint firstAttribute="width" constant="250" id="ArM-zH-BQI">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="250"/>
+                                    </constraint>
                                     <constraint firstAttribute="height" constant="142" id="X0M-6c-fJ2"/>
                                 </constraints>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1016,12 +1018,16 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Wmh-pH-f1T" firstAttribute="leading" secondItem="bFK-Jd-BQD" secondAttribute="leadingMargin" constant="40" id="5Jc-A5-5PD"/>
+                            <constraint firstItem="Wmh-pH-f1T" firstAttribute="leading" secondItem="bFK-Jd-BQD" secondAttribute="leadingMargin" constant="40" id="5Jc-A5-5PD">
+                                <variation key="heightClass=regular-widthClass=regular" constant="550"/>
+                            </constraint>
                             <constraint firstItem="16X-z1-bHg" firstAttribute="leading" secondItem="bFK-Jd-BQD" secondAttribute="leading" id="BmB-VW-NPu"/>
                             <constraint firstAttribute="trailing" secondItem="ogF-Sd-4t9" secondAttribute="trailing" id="EB6-A4-fwo"/>
                             <constraint firstAttribute="trailing" secondItem="95U-nz-T08" secondAttribute="trailing" id="Fhd-mZ-twC"/>
                             <constraint firstAttribute="trailing" secondItem="16X-z1-bHg" secondAttribute="trailing" id="HUn-1V-Giy"/>
-                            <constraint firstItem="Wmh-pH-f1T" firstAttribute="top" secondItem="ogF-Sd-4t9" secondAttribute="bottom" constant="25" id="IWd-Qi-XDZ"/>
+                            <constraint firstItem="Wmh-pH-f1T" firstAttribute="top" secondItem="ogF-Sd-4t9" secondAttribute="bottom" constant="25" id="IWd-Qi-XDZ">
+                                <variation key="heightClass=regular-widthClass=regular" constant="-40"/>
+                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="MIy-Lp-j67" secondAttribute="trailing" constant="132" id="JqK-Us-Te6"/>
                             <constraint firstItem="O4O-04-GpR" firstAttribute="leading" secondItem="16X-z1-bHg" secondAttribute="leading" id="LE9-Cu-0x8"/>
                             <constraint firstAttribute="bottom" secondItem="O4O-04-GpR" secondAttribute="bottom" id="OZt-h9-Fps"/>

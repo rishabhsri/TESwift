@@ -47,7 +47,7 @@ class CommonSetting: NSObject {
         }
     }
     
-    func isEmptySting(_ text: String) -> Bool {
+    func isEmptyStingOrWithBlankSpace(_ text: String) -> Bool {
         
         if text.isEmpty{
             return true
