@@ -109,7 +109,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         self.emaillbl.text = userInfo.stringValueForKey(key: "email")
         let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
         
-        if !commonSetting.isEmptySting(imagekey)
+        if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
         {
             // For storing temporary imageKey for using in MenuViewController
             

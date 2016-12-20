@@ -135,10 +135,10 @@ class BaseViewController: UIViewController, UITableViewDelegate,UITextFieldDeleg
         var endKeyName:String = "endDateTime"
         
         
-        if commonSetting.isEmptySting(info.stringValueForKey(key: startKeyName)) {
+        if commonSetting.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: startKeyName)) {
             startKeyName = "startDate"
         }
-        if commonSetting.isEmptySting(info.stringValueForKey(key: endKeyName)) {
+        if commonSetting.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: endKeyName)) {
             endKeyName = "endDate"
         }
         

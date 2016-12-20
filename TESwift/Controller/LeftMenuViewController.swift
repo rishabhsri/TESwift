@@ -69,7 +69,7 @@ class LeftMenuViewController: BaseViewController {
         
         let imageKey = commonSetting.imageKeyProfile
         
-        if !commonSetting.isEmptySting(imageKey!)
+        if !commonSetting.isEmptyStingOrWithBlankSpace(imageKey!)
         {
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
