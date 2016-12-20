@@ -49,7 +49,7 @@ class BaseViewController: UIViewController, UITableViewDelegate,UITextFieldDeleg
     func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-    func showAlert(title: String, message: String,tag: NSInteger) -> Void {
+    func showAlert(title: String, message: String) -> Void {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default) {
@@ -59,7 +59,7 @@ class BaseViewController: UIViewController, UITableViewDelegate,UITextFieldDeleg
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func showAlert(title: String, message: String,tag: NSInteger,actionHandler:@escaping alertActionHandler) -> Void {
+    func showAlert(title: String, message: String,actionHandler:@escaping alertActionHandler) -> Void {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default) {

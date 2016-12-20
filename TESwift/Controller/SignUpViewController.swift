@@ -126,7 +126,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         //On Failure Call
         let falure:falureHandler = {error,responseMessage,requestType in
             
-            self.showAlert(title: kMessage, message: responseMessage, tag: 0, actionHandler: {
+            self.showAlert(title: kMessage, message: responseMessage, actionHandler: {
                 let str1:String = "An email has been sent for account activation."
                 if str1 == responseMessage
                 {
@@ -237,39 +237,39 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         if (commonSetting.isEmptySting(self.txtUsername.text!))
         {
-            self.showAlert(title: kError, message: kEnterUsername, tag: 0)
+            self.showAlert(title: kError, message: kEnterUsername)
             flag = false
         }else if(commonSetting.isEmptySting(self.txtDisplayname.text!))
         {
-            self.showAlert(title: kError, message: kEnterDisplayname, tag: 0)
+            self.showAlert(title: kError, message: kEnterDisplayname)
             flag = false
         }else if(commonSetting.isEmptySting(self.txtPassword.text!))
         {
-            self.showAlert(title: kError, message: kEnterPassword, tag: 0)
+            self.showAlert(title: kError, message: kEnterPassword)
             flag = false
         }else if(!commonSetting.validatePassword(password: self.txtPassword.text!))
         {
-            self.showAlert(title: kError, message: kPasswordRulesMessage, tag: 0)
+            self.showAlert(title: kError, message: kPasswordRulesMessage)
             flag = false
         }else if(commonSetting.isEmptySting(self.txtConfirmPassword.text!))
         {
-            self.showAlert(title: kError, message: kEnterConfirmPassword, tag: 0)
+            self.showAlert(title: kError, message: kEnterConfirmPassword)
             flag = false
         }else if(self.txtPassword.text != self.txtConfirmPassword.text)
         {
-            self.showAlert(title: kError, message: kEnterSamePassword, tag: 0)
+            self.showAlert(title: kError, message: kEnterSamePassword)
             flag = false
         }else if(commonSetting.isEmptySting(self.txtEmailId.text!))
         {
-            self.showAlert(title: kError, message: kEnterEmail, tag: 0)
+            self.showAlert(title: kError, message: kEnterEmail)
             flag = false
         }else if(!commonSetting.validateEmailID(emailID: self.txtEmailId.text!))
         {
-            self.showAlert(title: kError, message: kInvalidEmail, tag: 0)
+            self.showAlert(title: kError, message: kInvalidEmail)
             flag = false
         }else if(self.txtLocation.text?.isEmpty)!
         {
-            self.showAlert(title: kError, message: kEnterLocation, tag: 0)
+            self.showAlert(title: kError, message: kEnterLocation)
             flag = false
         }
         return flag
@@ -303,7 +303,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     }
     func onLogInFailure(_ userInfo: String) -> Void {
         self.hideHUD()
-        self.showAlert(title: "Error", message: userInfo, tag: 200)
+        self.showAlert(title: "Error", message: userInfo)
     }
     
     //MARK:- Textfield delegate
@@ -342,27 +342,23 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
     func textFieldDidEndEditing(_ textField: UITextField){
         if textField == txtUsername {
-            if commonSetting.isInternetAvailable {
             if !(commonSetting.isEmptySting(self.txtUsername.text!))
             {
-            self.showHUD()
-            fetchUsernameExistCheck()
-            }
-         }
-        }
-        
-        else if textField == txtEmailId {
-            if commonSetting.isInternetAvailable {
-            if !(commonSetting.isEmptySting(self.txtEmailId.text!))
-            {
                 self.showHUD()
-                fetchEmailIdExistCheck()
+                self.isUsernameExists(username: self.txtUsername.text!)
+            }
+        }else if textField == txtEmailId {
+            if commonSetting.isInternetAvailable {
+                if !(commonSetting.isEmptySting(self.txtEmailId.text!))
+                {
+                    self.showHUD()
+                    self.isEmailIdExists(emailID: self.txtEmailId.text!)
+                }
             }
         }
     }
-}
     
-
+    
     // return NO to not change text
     public func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
         
@@ -451,10 +447,10 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             
         }
         else {
-          let info = aNotification.userInfo!
-          let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-          var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
-           
+            let info = aNotification.userInfo!
+            let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+            var contentInsets: UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0, keyboardSize!.height, 0.0)
+            
             if DeviceType.IS_IPHONE_5{
                 contentInsets = UIEdgeInsetsMake(0.0, 0.0, (keyboardSize?.height)! - 150.0, 0.0)
             }
@@ -467,7 +463,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             
             self.scrollData.contentInset = contentInsets
             self.scrollData.scrollIndicatorInsets = contentInsets;
-
+            
         }
     }
     
@@ -477,7 +473,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             self.scrollData.setContentOffset(CGPoint.zero, animated: true)
         }
         else{
-           let info = aNotification.userInfo!
+            let info = aNotification.userInfo!
             let keyboardSize = (info[UIKeyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
             let contentInsets : UIEdgeInsets = UIEdgeInsetsMake(0.0, 0.0,keyboardSize!.height, 0.0)
             self.scrollData.contentInset = contentInsets
@@ -559,98 +555,58 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     // Username existing check for username field
     
-    func fetchEmailIdExistCheck() {
+    func isEmailIdExists(emailID:String) {
+        
         let dicInfo = NSMutableDictionary()
-        dicInfo.setValue(self.txtEmailId.text!, forKey: "email")
+        dicInfo.setValue(emailID, forKey: "email")
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
+            self.hideHUD()
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
         }
         
         //On Failure Call
         let failure:falureHandler = {error,responseMessage,requestType in
-            let errResponse: String = String(data: (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)!
-            print(errResponse)
-            let responseDict = self.parseResponse(responseObject: errResponse as Any)
-            
-            // Falure call implementation
-            print(responseDict)
             self.hideHUD()
-            if let arr:NSArray = responseDict.value(forKey: "errorMessages") as! NSArray?
-            {
-                let str:String = arr.firstObject as! String
-                let alertController = UIAlertController(title: kMessage, message: str, preferredStyle: .alert)
-                let OKAction = UIAlertAction(title: "OK", style: .default) {
-                    (action: UIAlertAction) in
-                    if KEmailExists == str
-                    {
-                        
-                    }
-                    
-                }
-                alertController.addAction(OKAction)
-                self.present(alertController, animated: true, completion: nil)
-               
-            }
-            
+            self.showAlert(title: kError, message: responseMessage)
         }
-        print(dicInfo)
         
         ServiceCall.sharedInstance.sendRequest(parameters: dicInfo, urlType: RequestedUrlType.CheckEmailIdExists, method: "GET", successCall: success, falureCall: failure)
         
     }
-
+    
     
     // Username existing check for Email field
-   
-    func fetchUsernameExistCheck() {
+    
+    func isUsernameExists(username:String) {
+        
         let dicInfo = NSMutableDictionary()
-        dicInfo.setValue(self.txtUsername.text!, forKey: "username")
+        dicInfo.setValue(username, forKey: "username")
+        
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
+            self.hideHUD()
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
         }
         
         //On Failure Call
         let failure:falureHandler = {error,responseMessage,requestType in
-            let errResponse: String = String(data: (error.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)!
-            print(errResponse)
-            let responseDict = self.parseResponse(responseObject: errResponse as Any)
-            
-            // Falure call implementation
-            print(responseDict)
             self.hideHUD()
-            if let arr:NSArray = responseDict.value(forKey: "errorMessages") as! NSArray?
-            {
-                let str:String = arr.firstObject as! String
-                let alertController = UIAlertController(title: kMessage, message: str, preferredStyle: .alert)
-                let OKAction = UIAlertAction(title: "OK", style: .default) {
-                    (action: UIAlertAction) in
-                    if KUserExists == str
-                    {
-                    }
-                }
-                alertController.addAction(OKAction)
-                self.present(alertController, animated: true, completion: nil)
-            }
-
+            self.showAlert(title: kError, message: responseMessage)
         }
-        print(dicInfo)
         
         ServiceCall.sharedInstance.sendRequest(parameters: dicInfo, urlType: RequestedUrlType.CheckUserNameExists, method: "GET", successCall: success, falureCall: failure)
         
     }
-
-    
-    
     
     //  Location search on location textfield method
     
     func fetchAutocompleteLocation(keyword: String) {
+        
         let dicInfo = NSMutableDictionary()
         dicInfo.setValue(keyword, forKey: "locationText")
         //On Success Call
@@ -678,8 +634,6 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             // Falure call implementation
             print(responseMessage)
         }
-        print(dicInfo)
-        
         ServiceCall.sharedInstance.sendRequest(parameters: dicInfo, urlType: RequestedUrlType.GetUnAuthSearchedLocation, method: "GET", successCall: success, falureCall: failure)
         
     }

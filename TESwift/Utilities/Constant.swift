@@ -79,6 +79,7 @@ let kEnterSamePassword = "Password and Confirm Password should be the same"
 let kCameraNotAvailableMessage = "Camera is not available."
 let kNoInternetConnect = "No Internet Connectivity.Please try again later."
 let KSignUpActivate = "An email has been sent for account activation."
+
 let KEmailExists = "User with same e-mail already exists"
 let KUserExists = "User with same Username already exists"
 
