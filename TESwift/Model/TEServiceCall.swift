@@ -157,7 +157,9 @@ class ServiceCall: NSObject {
                             
                             if task.state == URLSessionTask.State.completed
                             {
-                                successCall(responseObject,urlType)
+                                DispatchQueue.main.async {
+                                  successCall(responseObject,urlType)
+                                }
                             }else
                             {
                                 let error:NSError = NSError();
@@ -214,7 +216,9 @@ class ServiceCall: NSObject {
                                     }
                                 }
                                 
-                                successCall(responseObject,urlType)
+                                DispatchQueue.main.async {
+                                    successCall(responseObject,urlType)
+                                }
                             }else
                             {
                                 let error:NSError = NSError();
@@ -250,7 +254,9 @@ class ServiceCall: NSObject {
                                 
                                 if task.state == URLSessionTask.State.completed
                                 {
-                                    successCall(responseObject,urlType)
+                                    DispatchQueue.main.async {
+                                        successCall(responseObject,urlType)
+                                    }
                                 }else
                                 {
                                     let error:NSError = NSError();
@@ -281,7 +287,9 @@ class ServiceCall: NSObject {
                                 
                                 if task.state == URLSessionTask.State.completed
                                 {
-                                    successCall(responseObject,urlType)
+                                    DispatchQueue.main.async {
+                                        successCall(responseObject,urlType)
+                                    }
                                 }else
                                 {
                                     let error:NSError = NSError();

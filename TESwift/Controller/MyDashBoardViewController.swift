@@ -102,7 +102,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         self.getUserProfileData()
         
         saveUserDetails(loginInfo: commonSetting.userLoginInfo)
-
+        
     }
     
     func resetLoadMore() {
@@ -392,7 +392,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetAllNotification, method: "GET", successCall: success, falureCall: failure)
         
     }
-
+    
     func getTournaments() {
         //On success
         let success: successHandler = {responseObject, responseType in
