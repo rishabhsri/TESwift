@@ -13,6 +13,8 @@ class BaseViewController: UIViewController{
     var context:NSManagedObjectContext? = nil
     var dateFormatter:DateFormatter? = nil
     
+    typealias alertActionHandler = () -> Void
+    
     
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
@@ -52,6 +54,17 @@ class BaseViewController: UIViewController{
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default) {
             (action: UIAlertAction) in print("Youve pressed OK Button")
+        }
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showAlert(title: String, message: String,tag: NSInteger,actionHandler:@escaping alertActionHandler) -> Void {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) {
+            (action: UIAlertAction) in
+            actionHandler()
         }
         alertController.addAction(OKAction)
         self.present(alertController, animated: true, completion: nil)

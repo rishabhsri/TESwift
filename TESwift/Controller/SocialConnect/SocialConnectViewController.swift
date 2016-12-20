@@ -120,7 +120,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     func didSocialLoginFailed(errorString:String,connectType:SocialConnectType)
     {
         self.hideHUD()
-        if !commonSetting.isEmptySting(errorString) {
+        if !errorString.isEmpty {
             let deadlineTime = DispatchTime.now() + .seconds(1)
             DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
                 self.showAlert(title: kError, message: errorString, tag: 0)

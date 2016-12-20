@@ -44,6 +44,8 @@ struct DeviceType
     static let IS_IPHONE_6P = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
 }
 
+let kLightBlueColor:UIColor = UIColor(colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
+
 let kPasswordRegex = "^.{6,}$"
 
 let ProfileImageBorder:CGFloat = 3.5

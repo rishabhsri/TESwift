@@ -14,7 +14,13 @@ class NotificationTableViewCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        
+        if (IS_IPHONE) {
+            self.notificationTextView.font = StyleGuide.fontFutaraRegular(withFontSize: 16)
+        }
+        else{
+            self.notificationTextView.font = StyleGuide.fontFutaraRegular(withFontSize: 21)
+        }
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {
