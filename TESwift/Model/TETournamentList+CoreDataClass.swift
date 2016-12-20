@@ -10,6 +10,6 @@ import Foundation
 import CoreData
 
 
-public class TETournamentList: NSManagedObject {
+public class TETournamentList: TESwiftModel {
 
 }

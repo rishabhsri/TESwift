@@ -12,11 +12,17 @@ extension NSDictionary {
     
     func stringValueForKey(key:String) -> String {
         
+        
         var strValue:String = ""
         
         if let value:String = self.value(forKey: key) as? String
         {
+            if value == "<null>" {
+                strValue = ""
+            }
+            else{
             strValue = value
+            }
             
         }else if let value:NSNumber = self.value(forKey: key) as? NSNumber
         {
@@ -24,8 +30,10 @@ extension NSDictionary {
             
         }
         
+        
         return strValue
     }
+
     
     func intValueForKey(key:String) -> Int {
         
