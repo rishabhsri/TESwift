@@ -1,4 +1,116 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <elements/>
+    <entity name="TEMyProfile" representedClassName=".TEMyProfile" syncable="YES">
+        <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="discordname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="emailid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="follow" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="gender" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="mailSetting" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="messageSetting" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notify_approved_player" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="notify_followers" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="notify_match_admin" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="notify_match_palyer" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="notify_topurnament_player" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="player_Added_to_tournament" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="showTeamIcon" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="subscriptionType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamIconUrl" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tournament_started" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="socialdetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UserSocialDetail" inverseName="myprofile" inverseEntity="UserSocialDetail" syncable="YES"/>
+        <relationship name="tournament" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TETournamentList" inverseName="myProfile" inverseEntity="TETournamentList" syncable="YES"/>
+    </entity>
+    <entity name="TETournamentList" representedClassName=".TETournamentList" syncable="YES">
+        <attribute name="acceptAttachments" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="allowUserScoreSubmission" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="autoApprovalTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="checkInTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="completed" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="considerLocation" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="considerTeam" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="createdAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creatorDisplayName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creatorImageKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creatorUserId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="creatorUserName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="cretorImageKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="discordChannel" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="endDateTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventImageKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="eventName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameDiscription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="hype" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="imageKay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isCompleteData" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="isDummyTE" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="lastUpdatedAt" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="latLong" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="maxPlayersInEachBracket" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="notificationMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="openSignup" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="paidTournament" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="poolCount" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="poolName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preRegister" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="preRegistrationCharge" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="preRegistrationEndDate" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="privateTournament" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rankedBy" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="remarks" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrPtsForGamebye" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrPtsForGameTie" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrPtsForGameWin" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrPtsForMatchTie" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="rrPtsForMatchWin" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seasonId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seasonImageKay" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seasonName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sequentialpairings" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shareDateTime" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="shareURL" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="showRounds" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="started" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="teamBasedTE" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="tournamentDesciption" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tournamentID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tournamentName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tournamentTypeID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tournamentTypeName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tournamenTypeDescription" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twitterHandle" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twitterLink" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="twitterMessage" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userHype" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="webURL" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="myProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TEMyProfile" inverseName="tournament" inverseEntity="TEMyProfile" syncable="YES"/>
+    </entity>
+    <entity name="UserSocialDetail" representedClassName=".UserSocialDetail" syncable="YES">
+        <attribute name="connectType" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="emailId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="link" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="myprofile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TEMyProfile" inverseName="socialdetails" inverseEntity="TEMyProfile" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="TEMyProfile" positionX="-63" positionY="-18" width="128" height="465"/>
+        <element name="TETournamentList" positionX="-54" positionY="144" width="128" height="1035"/>
+        <element name="UserSocialDetail" positionX="-36" positionY="153" width="128" height="165"/>
+    </elements>
 </model>
