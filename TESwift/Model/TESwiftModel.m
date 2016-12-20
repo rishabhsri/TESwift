@@ -47,9 +47,10 @@
     if (context == nil) {
         return nil;
     }
-    
+    NSArray *arr = [NSStringFromClass([self class]) componentsSeparatedByString:@"."];
+    NSString *str =  arr[1];
     NSParameterAssert(context);
-    return [NSEntityDescription insertNewObjectForEntityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
+    return [NSEntityDescription insertNewObjectForEntityForName:str inManagedObjectContext:context];
 }
 
 + (void)saveContext:(NSManagedObjectContext*)managedObjectContext {
@@ -65,7 +66,9 @@
 + (void) deleteAllFromEntityInManageObjectContext:(NSManagedObjectContext*)managedObjectContext {
     
     NSFetchRequest * allRecords = [[NSFetchRequest alloc] init];
-    [allRecords setEntity:[NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:managedObjectContext]];
+    NSArray *arr = [NSStringFromClass([self class]) componentsSeparatedByString:@"."];
+    NSString *str =  arr[1];
+    [allRecords setEntity:[NSEntityDescription entityForName:str inManagedObjectContext:managedObjectContext]];
     [allRecords setIncludesPropertyValues:NO];
     NSError * error = nil;
     NSArray * result = [managedObjectContext executeFetchRequest:allRecords error:&error];

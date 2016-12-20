@@ -18,7 +18,7 @@ public class UserSocialDetail: TESwiftModel {
         
         if socialMediaType == "FACEBOOK" {
             
-            userSocialDetail.emailId = info.stringValueForKey(key: "mail")
+            userSocialDetail.emailId = info.stringValueForKey(key: "email")
             userSocialDetail.name = info.stringValueForKey(key: "name")
             userSocialDetail.userName = info.stringValueForKey(key: "username")
             userSocialDetail.imageKey = info.stringValueForKey(key: "imageKey")
