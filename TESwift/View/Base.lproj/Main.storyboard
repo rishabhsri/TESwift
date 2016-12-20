@@ -685,7 +685,7 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="next"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="TD4-YS-hV1" id="I9L-DN-hzo"/>
                                                 </connections>
@@ -701,7 +701,7 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="next"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="TD4-YS-hV1" id="Rek-Qn-23D"/>
                                                 </connections>
@@ -717,7 +717,7 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="next" secureTextEntry="YES"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="TD4-YS-hV1" id="Yj7-QY-zdb"/>
                                                 </connections>
@@ -733,7 +733,7 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next" secureTextEntry="YES"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="next" secureTextEntry="YES"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="TD4-YS-hV1" id="Usn-me-JYe"/>
                                                 </connections>
@@ -749,7 +749,7 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="next"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="next"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="TD4-YS-hV1" id="n2p-ka-J42"/>
                                                 </connections>
@@ -765,7 +765,7 @@
                                                 </constraints>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                                <textInputTraits key="textInputTraits" returnKeyType="done"/>
+                                                <textInputTraits key="textInputTraits" keyboardAppearance="alert" returnKeyType="done"/>
                                                 <connections>
                                                     <outlet property="delegate" destination="TD4-YS-hV1" id="wEw-qt-VT5"/>
                                                 </connections>
@@ -838,21 +838,17 @@
                                     <constraint firstItem="FxW-MG-9TS" firstAttribute="top" secondItem="f8r-xp-Lxh" secondAttribute="top" id="u2v-yq-McL"/>
                                 </constraints>
                             </scrollView>
-                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wmh-pH-f1T">
+                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Wmh-pH-f1T">
+                                <frame key="frameInset" minX="56" minY="245" width="250" height="120"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="ArM-zH-BQI">
-                                        <variation key="heightClass=regular-widthClass=regular" constant="250"/>
-                                    </constraint>
-                                    <constraint firstAttribute="height" constant="142" id="X0M-6c-fJ2"/>
-                                </constraints>
                                 <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" id="DBo-VP-96j">
                                         <rect key="frame" x="0.0" y="28" width="250" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="DBo-VP-96j" id="p5l-0m-eYd">
-                                            <frame key="frameInset" width="250" height="43"/>
+                                            <frame key="frameInset" width="250" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
@@ -1018,16 +1014,10 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="Wmh-pH-f1T" firstAttribute="leading" secondItem="bFK-Jd-BQD" secondAttribute="leadingMargin" constant="40" id="5Jc-A5-5PD">
-                                <variation key="heightClass=regular-widthClass=regular" constant="550"/>
-                            </constraint>
                             <constraint firstItem="16X-z1-bHg" firstAttribute="leading" secondItem="bFK-Jd-BQD" secondAttribute="leading" id="BmB-VW-NPu"/>
                             <constraint firstAttribute="trailing" secondItem="ogF-Sd-4t9" secondAttribute="trailing" id="EB6-A4-fwo"/>
                             <constraint firstAttribute="trailing" secondItem="95U-nz-T08" secondAttribute="trailing" id="Fhd-mZ-twC"/>
                             <constraint firstAttribute="trailing" secondItem="16X-z1-bHg" secondAttribute="trailing" id="HUn-1V-Giy"/>
-                            <constraint firstItem="Wmh-pH-f1T" firstAttribute="top" secondItem="ogF-Sd-4t9" secondAttribute="bottom" constant="25" id="IWd-Qi-XDZ">
-                                <variation key="heightClass=regular-widthClass=regular" constant="-40"/>
-                            </constraint>
                             <constraint firstAttribute="trailing" secondItem="MIy-Lp-j67" secondAttribute="trailing" constant="132" id="JqK-Us-Te6"/>
                             <constraint firstItem="O4O-04-GpR" firstAttribute="leading" secondItem="16X-z1-bHg" secondAttribute="leading" id="LE9-Cu-0x8"/>
                             <constraint firstAttribute="bottom" secondItem="O4O-04-GpR" secondAttribute="bottom" id="OZt-h9-Fps"/>
@@ -1049,7 +1039,6 @@
                             <constraint firstItem="95U-nz-T08" firstAttribute="leading" secondItem="bFK-Jd-BQD" secondAttribute="leading" id="s4G-np-P9r"/>
                             <constraint firstAttribute="trailing" secondItem="f8r-xp-Lxh" secondAttribute="trailing" id="sfN-7O-6tf"/>
                             <constraint firstItem="f8r-xp-Lxh" firstAttribute="top" secondItem="ogF-Sd-4t9" secondAttribute="bottom" id="uj6-s4-skJ"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Wmh-pH-f1T" secondAttribute="trailing" constant="53" id="vZR-aF-c6u"/>
                             <constraint firstItem="Lda-1K-LBQ" firstAttribute="top" secondItem="MIy-Lp-j67" secondAttribute="bottom" constant="62" id="zjg-fn-CWH">
                                 <variation key="heightClass=regular-widthClass=regular" constant="62"/>
                             </constraint>
