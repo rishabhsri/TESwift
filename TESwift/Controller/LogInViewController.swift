@@ -78,7 +78,7 @@ class LogInViewController: SocialConnectViewController {
         
         if commonSetting.isEmptyStingOrWithBlankSpace(txtUsername.text!) || commonSetting.isEmptyStingOrWithBlankSpace(txtPassword.text!) {
             
-            self.showAlert(title: kMessage, message: UserName_Pwd_ErrorMsg, tag: 100)
+            self.showAlert(title: kMessage, message: UserName_Pwd_ErrorMsg)
             return false
         }
         
@@ -125,7 +125,7 @@ class LogInViewController: SocialConnectViewController {
     
     func onLogInFailure(_ userInfo: String) -> Void {
         self.hideHUD()
-        self.showAlert(title: "Error", message: userInfo, tag: 200)
+        self.showAlert(title: "Error", message: userInfo)
     }
     
     
