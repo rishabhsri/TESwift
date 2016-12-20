@@ -8,7 +8,7 @@
 
 import UIKit
 
-class LogInViewController: SocialConnectViewController {
+class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
     
     @IBOutlet weak var txtUsernameTop: NSLayoutConstraint!
     @IBOutlet weak var socialConnectHieght: NSLayoutConstraint!
@@ -177,8 +177,8 @@ class LogInViewController: SocialConnectViewController {
         }
         else{
             textField.resignFirstResponder()
+            self.loginAction(self)
         }
-        
         return true
     }
     
@@ -190,9 +190,7 @@ class LogInViewController: SocialConnectViewController {
     
     // became first responder
     func textFieldDidBeginEditing(_ textField: UITextField){
-        
         addDismisskeyboardTapGesture()
-        
         if IS_IPAD {
             if (textField == txtUsername){
                 let scrollPoint = CGPoint(x: CGFloat(0), y: CGFloat(255 - 200))
