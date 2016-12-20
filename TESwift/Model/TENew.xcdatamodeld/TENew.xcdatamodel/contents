@@ -109,8 +109,8 @@
         <relationship name="myprofile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TEMyProfile" inverseName="socialdetails" inverseEntity="TEMyProfile" syncable="YES"/>
     </entity>
     <elements>
-        <element name="TEMyProfile" positionX="-776" positionY="27" width="164" height="465"/>
-        <element name="TETournamentList" positionX="-486" positionY="180" width="153" height="58"/>
-        <element name="UserSocialDetail" positionX="-567" positionY="-3" width="128" height="163"/>
+        <element name="TEMyProfile" positionX="-63" positionY="-18" width="128" height="465"/>
+        <element name="TETournamentList" positionX="-54" positionY="144" width="128" height="1035"/>
+        <element name="UserSocialDetail" positionX="-36" positionY="153" width="128" height="165"/>
     </elements>
 </model>

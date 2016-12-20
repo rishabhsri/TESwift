@@ -47,12 +47,20 @@ class CommonSetting: NSObject {
         }
     }
     
-    func isEmptySting(_ text: String) -> Bool {
+    func isEmptyStingOrWithBlankSpace(_ text: String) -> Bool {
         
         if text.isEmpty{
             return true
         }
         if (text.rangeOfCharacter(from: NSCharacterSet.whitespacesAndNewlines) != nil) {
+            return true
+        }
+        return false
+    }
+    
+    func isEmptySting(_ text: String) -> Bool {
+        
+        if text.isEmpty{
             return true
         }
         return false

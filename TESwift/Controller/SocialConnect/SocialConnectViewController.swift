@@ -110,7 +110,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
         let falure:falureHandler = {error,responseMessage,requestType in
             
             // Falure call implementation
-            self.showAlert(title: kError, message: responseMessage, tag: 0)
+            self.showAlert(title: kError, message: responseMessage)
             
         }
         
@@ -120,10 +120,10 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     func didSocialLoginFailed(errorString:String,connectType:SocialConnectType)
     {
         self.hideHUD()
-        if !commonSetting.isEmptySting(errorString) {
+        if !errorString.isEmpty {
             let deadlineTime = DispatchTime.now() + .seconds(1)
             DispatchQueue.main.asyncAfter(deadline: deadlineTime) {
-                self.showAlert(title: kError, message: errorString, tag: 0)
+                self.showAlert(title: kError, message: errorString)
             }
         }
     }

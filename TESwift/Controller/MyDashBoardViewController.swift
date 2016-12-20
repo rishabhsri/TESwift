@@ -45,6 +45,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.showHUD()
+        
         self.setUpStyleGuide()
         
         self.setupMenu()
@@ -54,8 +56,6 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         self.setupData()
         
         self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
-        
-        self.getMyProfile()
         
     }
     
@@ -109,7 +109,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         self.emaillbl.text = userInfo.stringValueForKey(key: "email")
         let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
         
-        if !commonSetting.isEmptySting(imagekey)
+        if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
         {
             // For storing temporary imageKey for using in MenuViewController
             
@@ -149,7 +149,6 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             }
             
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-            
         }
     }
     
@@ -208,10 +207,12 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
                     self.notificationToShowArray = array
                 }
             }
+            self.hideHUD()
             
         }
         let failure: falureHandler = {error, responseString, responseType in
             
+            self.hideHUD()
             print(responseString)
         }
         
@@ -385,7 +386,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         
         return cell
     }
-
+    
     
     func tableView(tableView: UITableView, willDisplayCell cell: UITableViewCell, forRowAtIndexPath indexPath: NSIndexPath) {
         
@@ -503,36 +504,69 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         tableView.separatorColor = UIColor.darkGray
         
         let notificationInfo:NSDictionary = self.parseResponse(responseObject: notificationToShowArray.object(at: indexPath.row))
-        var mesage:String = notificationInfo.stringValueForKey(key: "notificationHeader")
         
-        var originator:String = notificationInfo.stringValueForKey(key: "originator").lowercased()
+        var message:String = notificationInfo.stringValueForKey(key: "notificationHeader")
         
-        mesage = mesage.replacingOccurrences(of: originator, with: String.init(format: "@%@", originator))
+        var attributedStringMessage = NSMutableAttributedString(string: message, attributes: [NSForegroundColorAttributeName : UIColor.white])
         
-        originator = String.init(format: "@%@", originator)
+        let map:NSDictionary = self.parseResponse(responseObject: notificationInfo.value(forKey: "map") as Any)
         
+        let tournamentInfo:NSDictionary = self.getNotificationMapInfo(notification: map, key: "tournamentinfo")
+        let eventInfo:NSDictionary = self.getNotificationMapInfo(notification: map, key: "eventinfo")
+        let seasonInfo:NSDictionary = self.getNotificationMapInfo(notification: map, key: "seasoninfo")
+        let userInfo:NSDictionary = self.getNotificationMapInfo(notification: map, key: "userinfo")
         
-        let nsText = mesage as NSString
-        let textRange = NSMakeRange(0, nsText.length)
-        let attributedString = NSMutableAttributedString(string: mesage, attributes: [NSForegroundColorAttributeName : UIColor.lightGray])
+        var fontForHeighlight:UIFont = StyleGuide.fontFutaraBold(withFontSize: 14)
+        if IS_IPAD {
+            fontForHeighlight = StyleGuide.fontFutaraBold(withFontSize: 18)
+        }
         
-        nsText.enumerateSubstrings(in: textRange, options: .byWords, using: {
-            (substring, substringRange, _, _) in
-            let str = "@" + substring!
-            if (str == originator) {
-                attributedString.addAttribute(NSForegroundColorAttributeName, value: UIColor(colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0), range: substringRange)
-                attributedString.addAttribute(NSFontAttributeName, value: UIFont.boldSystemFont(ofSize: 15), range: substringRange)
-            }
-        })
+        if !userInfo.stringValueForKey(key: "name").isEmpty {
+            var name = userInfo.stringValueForKey(key: "name")
+            message = message.replacingOccurrences(of: name, with: String.init(format: "@%@", name))
+            name = String.init(format: "@%@", name)
+            let range = (message as NSString).range(of:name)
+            
+            attributedStringMessage = NSMutableAttributedString(string: message, attributes: [NSForegroundColorAttributeName : UIColor.white])
+            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
+            attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+        }
         
+        if !tournamentInfo.stringValueForKey(key: "name").isEmpty {
+            let name = tournamentInfo.stringValueForKey(key: "name")
+            let range = (message as NSString).range(of:name)
+            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
+            attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+        }
+        
+        if !seasonInfo.stringValueForKey(key: "name").isEmpty {
+            let name = seasonInfo.stringValueForKey(key: "name")
+            let range = (message as NSString).range(of:name)
+            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
+            attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+        }
+        
+        if !eventInfo.stringValueForKey(key: "name").isEmpty {
+            let name = eventInfo.stringValueForKey(key: "name")
+            let range = (message as NSString).range(of:name)
+            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
+            attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+        }
         
         cell.notificationTextView.text = nil
         cell.notificationTextView.attributedText = nil
-        cell.notificationTextView.attributedText = attributedString
-        
-        
+        cell.notificationTextView.attributedText = attributedStringMessage
         
         return cell
+    }
+    
+    func getNotificationMapInfo(notification:NSDictionary, key:String) -> NSDictionary {
+        if let tournamentInfo:NSArray = notification.value(forKey: key) as? NSArray
+        {
+            let dictionary:NSDictionary = self.parseResponse(responseObject: tournamentInfo.firstObject as Any)
+            return dictionary
+        }
+        return NSDictionary()
     }
     
 }

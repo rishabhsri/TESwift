@@ -44,6 +44,8 @@ struct DeviceType
     static let IS_IPHONE_6P = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
 }
 
+let kLightBlueColor:UIColor = UIColor(colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
+
 let kPasswordRegex = "^.{6,}$"
 
 let ProfileImageBorder:CGFloat = 3.5
@@ -77,6 +79,7 @@ let kEnterSamePassword = "Password and Confirm Password should be the same"
 let kCameraNotAvailableMessage = "Camera is not available."
 let kNoInternetConnect = "No Internet Connectivity.Please try again later."
 let KSignUpActivate = "An email has been sent for account activation."
+
 let KEmailExists = "User with same e-mail already exists"
 let KUserExists = "User with same Username already exists"
 

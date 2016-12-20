@@ -76,9 +76,9 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
     
     func validate() -> Bool {
         
-        if commonSetting.isEmptySting(txtUsername.text!) || commonSetting.isEmptySting(txtPassword.text!) {
+        if commonSetting.isEmptyStingOrWithBlankSpace(txtUsername.text!) || commonSetting.isEmptyStingOrWithBlankSpace(txtPassword.text!) {
             
-            self.showAlert(title: "Message", message: "Username or password either null or consist blanks.", tag: 100)
+            self.showAlert(title: kMessage, message: UserName_Pwd_ErrorMsg)
             return false
         }
         
@@ -105,7 +105,6 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
         let falure:falureHandler = {error,responseMessage,requestType in
             self.hideHUD()
             // Falure call implementation
-            
             print(responseMessage)
             self.onLogInFailure(responseMessage)
         }
@@ -126,7 +125,7 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
     
     func onLogInFailure(_ userInfo: String) -> Void {
         self.hideHUD()
-        self.showAlert(title: "Error", message: userInfo, tag: 200)
+        self.showAlert(title: "Error", message: userInfo)
     }
     
     

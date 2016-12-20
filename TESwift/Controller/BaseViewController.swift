@@ -13,6 +13,8 @@ class BaseViewController: UIViewController, UITableViewDelegate{
     var context:NSManagedObjectContext? = nil
     var dateFormatter:DateFormatter? = nil
     
+    typealias alertActionHandler = () -> Void
+    
     
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
@@ -47,11 +49,22 @@ class BaseViewController: UIViewController, UITableViewDelegate{
     func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
         view.endEditing(true)
     }
-    func showAlert(title: String, message: String,tag: NSInteger) -> Void {
+    func showAlert(title: String, message: String) -> Void {
         
         let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
         let OKAction = UIAlertAction(title: "OK", style: .default) {
             (action: UIAlertAction) in print("Youve pressed OK Button")
+        }
+        alertController.addAction(OKAction)
+        self.present(alertController, animated: true, completion: nil)
+    }
+    
+    func showAlert(title: String, message: String,actionHandler:@escaping alertActionHandler) -> Void {
+        
+        let alertController = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        let OKAction = UIAlertAction(title: "OK", style: .default) {
+            (action: UIAlertAction) in
+            actionHandler()
         }
         alertController.addAction(OKAction)
         self.present(alertController, animated: true, completion: nil)
@@ -135,10 +148,10 @@ class BaseViewController: UIViewController, UITableViewDelegate{
         var endKeyName:String = "endDateTime"
         
         
-        if commonSetting.isEmptySting(info.stringValueForKey(key: startKeyName)) {
+        if commonSetting.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: startKeyName)) {
             startKeyName = "startDate"
         }
-        if commonSetting.isEmptySting(info.stringValueForKey(key: endKeyName)) {
+        if commonSetting.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: endKeyName)) {
             endKeyName = "endDate"
         }
         
