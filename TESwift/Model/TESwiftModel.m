@@ -16,10 +16,11 @@
     if (context == nil) {
         return nil;
     }
-    
+    NSArray *arr = [NSStringFromClass([self class]) componentsSeparatedByString:@"."];
+    NSString *str =  arr[1];
     NSParameterAssert(context);
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    request.entity = [NSEntityDescription entityForName:NSStringFromClass([self class]) inManagedObjectContext:context];
+    request.entity = [NSEntityDescription entityForName:str inManagedObjectContext:context];
     return request;
 }
 

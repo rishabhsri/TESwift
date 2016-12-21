@@ -43,6 +43,8 @@
 		1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E95F1E000D6500AC5575 /* String+Utilities.swift */; };
 		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
 		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
+		188AB3461E0978BA0022DE73 /* UserDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188AB3441E0978BA0022DE73 /* UserDetails+CoreDataClass.swift */; };
+		188AB3471E0978BA0022DE73 /* UserDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188AB3451E0978BA0022DE73 /* UserDetails+CoreDataProperties.swift */; };
 		188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */; };
 		188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E941DF979C300C2D52E /* AFNetworkReachabilityManager.m */; };
 		188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */ = {isa = PBXBuildFile; fileRef = 188C8E961DF979C300C2D52E /* AFSecurityPolicy.m */; };
@@ -119,6 +121,8 @@
 		1888E95F1E000D6500AC5575 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
 		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
+		188AB3441E0978BA0022DE73 /* UserDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
+		188AB3451E0978BA0022DE73 /* UserDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UserDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		188C8E901DF979C300C2D52E /* AFHTTPSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFHTTPSessionManager.h; sourceTree = "<group>"; };
 		188C8E911DF979C300C2D52E /* AFHTTPSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AFHTTPSessionManager.m; sourceTree = "<group>"; };
 		188C8E921DF979C300C2D52E /* AFNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AFNetworking.h; sourceTree = "<group>"; };
@@ -271,6 +275,8 @@
 				18EF238D1E03E31D00BE6F00 /* TEMyProfile+CoreDataProperties.swift */,
 				18EF238E1E03E31D00BE6F00 /* TETournamentList+CoreDataClass.swift */,
 				18EF238F1E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift */,
+				188AB3441E0978BA0022DE73 /* UserDetails+CoreDataClass.swift */,
+				188AB3451E0978BA0022DE73 /* UserDetails+CoreDataProperties.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -588,6 +594,7 @@
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
 				180B4EF81E0922D200CBCF4D /* TENew.xcdatamodeld in Sources */,
 				18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */,
+				188AB3471E0978BA0022DE73 /* UserDetails+CoreDataProperties.swift in Sources */,
 				184C42591DFA983F001B576A /* LogInViewController.swift in Sources */,
 				18E7AD3C1E01386F00E1FC58 /* TESwiftModel.m in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
@@ -612,6 +619,7 @@
 				180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */,
 				18EF23921E03E31D00BE6F00 /* UserSocialDetail+CoreDataClass.swift in Sources */,
 				188C8EB61DF979C300C2D52E /* AFURLResponseSerialization.m in Sources */,
+				188AB3461E0978BA0022DE73 /* UserDetails+CoreDataClass.swift in Sources */,
 				1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */,
 				188163D11E02779E00AB2E74 /* PKHUDErrorView.swift in Sources */,
 				180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */,

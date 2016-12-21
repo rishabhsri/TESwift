@@ -57,6 +57,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         
         self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
         
+        self.getMyProfile()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -87,20 +89,21 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     func saveUserDetails(loginInfo: NSDictionary) -> Void {
         
-        //                let userInfo:NSMutableDictionary = NSMutableDictionary()
-        //
-        //                userInfo.setValue(loginInfo.value(forKey: "name"), forKey: "name")
-        //                userInfo.setValue(loginInfo.value(forKey: "email"), forKey: "email")
-        //                userInfo.setValue(loginInfo.value(forKey: "userID"), forKey: "userID")
-        //                userInfo.setValue(loginInfo.value(forKey: "username"), forKey: "username")
-        //                userInfo.setValue(loginInfo.value(forKey: "userSubscription") as! Bool, forKey: "userSubscription")
-        //
-        //                _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
-        //                UserDetails.save(self.manageObjectContext())
-        //
-        //                let predi = NSPredicate(format: "age = %d", 33)
-        //                let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
-        //                print(user)
+        let userInfo:NSMutableDictionary = NSMutableDictionary()
+        
+        userInfo.setValue(loginInfo.stringValueForKey(key: "name"), forKey: "name")
+        userInfo.setValue(loginInfo.stringValueForKey(key: "email"), forKey: "email")
+        userInfo.setValue(loginInfo.stringValueForKey(key: "userID"), forKey: "userID")
+        userInfo.setValue(loginInfo.stringValueForKey(key: "username"), forKey: "username")
+        userInfo.setValue(loginInfo.intValueForKey(key: "userSubscription"), forKey: "userSubscription")
+        
+        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
+                        UserDetails.save(self.manageObjectContext())
+        
+       let predi = NSPredicate(format: "userName == %@", loginInfo.stringValueForKey(key: "username"))
+       let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
+        
+        print(user.emailId!, user.name!, user.userName!, user.userId!, user.userSubscription)
     }
     
     func setProfileData(userInfo:NSDictionary) {
@@ -170,7 +173,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         }
         
         // Service call for get user profile data (Hypes, upcomings, person, followers)
-        // ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
+         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
         
         
     }
