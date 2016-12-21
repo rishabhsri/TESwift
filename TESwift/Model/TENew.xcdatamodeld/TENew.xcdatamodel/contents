@@ -98,6 +98,14 @@
         <attribute name="webURL" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="myProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TEMyProfile" inverseName="tournament" inverseEntity="TEMyProfile" syncable="YES"/>
     </entity>
+    <entity name="UserDetails" representedClassName=".UserDetails" syncable="YES">
+        <attribute name="emailId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="guestUSer" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userSubscription" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+    </entity>
     <entity name="UserSocialDetail" representedClassName=".UserSocialDetail" syncable="YES">
         <attribute name="connectType" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="emailId" optional="YES" attributeType="String" syncable="YES"/>
@@ -112,5 +120,6 @@
         <element name="TEMyProfile" positionX="-63" positionY="-18" width="128" height="465"/>
         <element name="TETournamentList" positionX="-54" positionY="144" width="128" height="1035"/>
         <element name="UserSocialDetail" positionX="-36" positionY="153" width="128" height="165"/>
+        <element name="UserDetails" positionX="-45" positionY="144" width="128" height="135"/>
     </elements>
 </model>
