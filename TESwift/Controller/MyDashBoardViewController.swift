@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
+class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITableViewDelegate {
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -33,25 +33,28 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     
     //Local Variables
     var isSwipedUp = false
+    var isResponseReceived = false
+    var isTournamentLoadMore = false
+    var isHypeLoadMore = false
+    var isNotificationLoadMore = false
+    var tournamentPageIndex:NSInteger = 0
+    var hypePageIndex:NSInteger = 0
+    var notificationPageIndex:NSInteger = 0
     var currentButtonIndex:NSInteger = 0
     
     //Arrays for Hype, tournaments and notifications
-    var hypetoShowArray:NSArray = NSArray()
-    var tournamentsToShowArray:NSArray = NSArray()
-    var notificationToShowArray:NSArray = NSArray()
+    var hypetoShowArray:NSMutableArray = NSMutableArray()
+    var tournamentsToShowArray:NSMutableArray = NSMutableArray()
+    var notificationToShowArray:NSMutableArray = NSMutableArray()
     var userProfileInfo:NSMutableDictionary = NSMutableDictionary()
     
     //MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.showHUD()
-        
         self.setUpStyleGuide()
         
         self.setupMenu()
-        
-        tableView.estimatedRowHeight = 139.0
         
         self.setupData()
         
@@ -69,21 +72,59 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     // MARK: - Utilities
     
     func setUpStyleGuide() -> Void {
-        self.notificationBtn.alpha = 0.25
-        self.hypBtn.alpha = 1.0
-        self.tournamentsBtn.alpha = 0.25
-        currentButtonIndex = 1
+        
+        var fontSize:CGFloat = 17  //for iPad
+        
+        if IS_IPHONE {
+            if DeviceType.IS_IPHONE_5 {
+                fontSize = 12
+            }else if DeviceType.IS_IPHONE_4_OR_LESS
+            {
+                fontSize = 10
+            }else
+            {
+                fontSize = 15
+            }
+            self.notificationBtn.titleLabel?.font = StyleGuide.fontFutaraBold(withFontSize: fontSize)
+            self.hypBtn.titleLabel?.font = StyleGuide.fontFutaraBold(withFontSize: fontSize)
+            self.tournamentsBtn.titleLabel?.font = StyleGuide.fontFutaraBold(withFontSize: fontSize)
+        }
     }
     
     func setupData() -> Void {
         
         self.addSwipeGesture()
         
+        self.resetLoadMore()
+        
+        self.setupTableView()
+        
         self.setProfileData(userInfo: commonSetting.userLoginInfo)
         
         self.getUserProfileData()
         
         saveUserDetails(loginInfo: commonSetting.userLoginInfo)
+        
+    }
+    
+    func resetLoadMore() {
+        self.isTournamentLoadMore = false
+        self.isHypeLoadMore = false
+        self.isNotificationLoadMore = false
+        self.tournamentPageIndex = 0
+        self.hypePageIndex = 0
+        self.notificationPageIndex = 0
+        self.currentButtonIndex = 0
+    }
+    
+    func setupTableView() {
+        self.notificationBtn.alpha = 0.25
+        self.hypBtn.alpha = 1.0
+        self.tournamentsBtn.alpha = 0.25
+        self.currentButtonIndex = 1
+        self.tableView.estimatedRowHeight = 44;
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.tableFooterView = UIView()
         
     }
     
@@ -178,61 +219,11 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         
     }
     
-    func getUserProfileData(){
-        
-        //On success
-        let success: successHandler = {responseObject, responseType in
-            
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
-            print(responseDict)
-            
-            if responseType == RequestedUrlType.GetUserProfileData {
-                
-                //initialize hype list
-                if let array:NSArray =  responseDict.object(forKey: "hypes") as? NSArray
-                {
-                    self.hypetoShowArray = array
-                }
-                //initialize tournament list
-                if let array:NSArray =  responseDict.object(forKey: "upcoming") as? NSArray
-                {
-                    self.tournamentsToShowArray = array
-                }
-                
-                //Parse User Data
-                self.parseUserInfo(userInfo: responseDict.object(forKey: "person") as! NSDictionary)
-                
-            }else if responseType == RequestedUrlType.GetAllNotification
-            {
-                //initialize hype list
-                if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
-                {
-                    self.notificationToShowArray = array
-                }
-            }
-            self.hideHUD()
-            
-        }
-        let failure: falureHandler = {error, responseString, responseType in
-            
-            self.hideHUD()
-            print(responseString)
-        }
-        
-        // Service call for get user profile data (Hypes, upcomings, person, followers)
-        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetUserProfileData, method: "GET", successCall: success, falureCall: failure)
-        
-        // Service call for notifications
-        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetAllNotification, method: "GET", successCall: success, falureCall: failure)
-        
-    }
-    
     func parseUserInfo(userInfo:NSDictionary) {
         
         self.userProfileInfo.setDictionary(userInfo as! [AnyHashable : Any])
         self.userProfileInfo.addEntries(from: commonSetting.userLoginInfo as! [AnyHashable : Any])
         self.setProfileData(userInfo: self.userProfileInfo)
-        self.tableView.reloadData()
         
     }
     
@@ -332,6 +323,175 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         self.tableView.reloadData()
     }
     
+    //MARK:- Service Calls for data
+    
+    func getUserProfileData(){
+        
+        //On success
+        let success: successHandler = {responseObject, responseType in
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            self.isResponseReceived = true
+            if responseType == RequestedUrlType.GetUserProfileData {
+                
+                //initialize hype list
+                if let array:NSArray =  responseDict.object(forKey: "hypes") as? NSArray
+                {
+                    self.hypetoShowArray = NSMutableArray.init(array: array)
+                    if self.hypetoShowArray.count < 10 {
+                        self.isHypeLoadMore = false
+                    }else
+                    {
+                        self.isHypeLoadMore = true
+                        self.hypePageIndex = 1
+                    }
+                    
+                }
+                //initialize tournament list
+                if let array:NSArray =  responseDict.object(forKey: "upcoming") as? NSArray
+                {
+                    self.tournamentsToShowArray = NSMutableArray.init(array: array)
+                    if self.tournamentsToShowArray.count < 10 {
+                        self.isTournamentLoadMore = false
+                    }else
+                    {
+                        self.isTournamentLoadMore = true
+                        self.tournamentPageIndex = 1
+                    }
+                }
+                
+                //Parse User Data
+                self.parseUserInfo(userInfo: responseDict.object(forKey: "person") as! NSDictionary)
+                
+            }else if responseType == RequestedUrlType.GetAllNotification
+            {
+                //initialize hype list
+                if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
+                {
+                    self.notificationToShowArray = NSMutableArray.init(array: array)
+                    if self.notificationToShowArray.count < 10 {
+                        self.isNotificationLoadMore = false
+                    }else
+                    {
+                        self.isNotificationLoadMore = true
+                        self.notificationPageIndex = 1
+                    }
+                }
+            }
+            self.tableView.reloadData()
+            self.hideHUD()
+            
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            self.isResponseReceived = true
+            self.hideHUD()
+            print(responseString)
+        }
+        
+        // Service call for get user profile data (Hypes, upcomings, person, followers)
+        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetUserProfileData, method: "GET", successCall: success, falureCall: failure)
+        
+        // Service call for notifications
+        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetAllNotification, method: "GET", successCall: success, falureCall: failure)
+        
+    }
+    
+    func getTournaments() {
+        //On success
+        let success: successHandler = {responseObject, responseType in
+            
+            self.hideHUD()
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            if responseType == RequestedUrlType.GetCurrentAndUpcomingTournament {
+                
+                //initialize hype list
+                if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
+                {
+                    if array.count < 10 {
+                        self.isTournamentLoadMore = false
+                    }else
+                    {
+                        self.isTournamentLoadMore = true
+                    }
+                    self.tournamentsToShowArray.addObjects(from: array as! [Any])
+                    self.tableView.reloadData()
+                }
+                
+            }
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            self.hideHUD()
+            print(responseString)
+        }
+        
+        self.showHUD()
+        
+        let requestDict:NSMutableDictionary = NSMutableDictionary()
+        requestDict.setValue(self.userProfileInfo.stringValueForKey(key: "userID"), forKey: "userID")
+        requestDict.setValue("\(self.tournamentPageIndex)", forKey: "pagenumber")
+        // Service call for get user profile data (Hypes, upcomings, person, followers)
+        ServiceCall.sharedInstance.sendRequest(parameters: requestDict, urlType: RequestedUrlType.GetCurrentAndUpcomingTournament, method: "GET", successCall: success, falureCall: failure)
+    }
+    
+    func getNotifications() {
+        
+    }
+    
+    func getHypeTournaments() {
+        
+    }
+    
+    //MARK:- ScrollView Delegates
+    
+    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+        
+        if commonSetting.isInternetAvailable {
+            if currentButtonIndex == 1 || currentButtonIndex == 2 {
+                var endScrolling = 0.0
+                var dimension = 0.0
+                
+                if IS_IPHONE {
+                    endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
+                    dimension = Double(scrollView.contentSize.height)
+                }else
+                {
+                    endScrolling = Double(scrollView.contentOffset.x) + Double(scrollView.frame.size.width)
+                    dimension = Double(scrollView.contentSize.width)
+                }
+                
+                if endScrolling >= dimension {
+                    
+                    if currentButtonIndex == 2 && self.isTournamentLoadMore {
+                        self.tournamentPageIndex += 1
+                        self.isTournamentLoadMore = false
+                        self.getTournaments()
+                    }else if currentButtonIndex == 2 && self.isHypeLoadMore
+                    {
+                        self.hypePageIndex += 1
+                        self.isHypeLoadMore = false
+                        self.getHypeTournaments()
+                    }
+                }
+            }else
+            {
+                var endScrolling = 0.0
+                var dimension = 0.0
+                
+                endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
+                dimension = Double(scrollView.contentSize.height)
+                
+                if endScrolling >= dimension {
+                    
+                    if  self.isNotificationLoadMore {
+                        self.notificationPageIndex += 1
+                        self.isNotificationLoadMore = false
+                        self.getNotifications()
+                    }
+                }
+            }
+        }
+    }
+    
     // MARK: - TableView Delegate
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -344,20 +504,25 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         {
             count = hypetoShowArray.count
             
-        }else
+        }else if currentButtonIndex == 2
         {
             count = tournamentsToShowArray.count
         }
         
         if count == 0{
             let noDataLabel:UILabel  = UILabel.init(frame: CGRect(x:0,y:0,width:tableView.bounds.size.width,height:tableView.bounds.size.height))
-            noDataLabel.text = "No data available";
+            if self.isResponseReceived {
+                noDataLabel.text = "No data available"
+            }else
+            {
+                noDataLabel.text = "Loading..."
+            }
             noDataLabel.textColor = UIColor.lightGray
-            noDataLabel.textAlignment = NSTextAlignment.center;
-            tableView.backgroundView = noDataLabel;
+            noDataLabel.textAlignment = NSTextAlignment.center
+            tableView.backgroundView = noDataLabel
         }
         else{
-            tableView.backgroundView   = nil;
+            tableView.backgroundView   = nil
         }
         return count
     }
@@ -368,23 +533,23 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         
         // create a new cell if needed or reuse an old one
         
-        tableView.rowHeight = 139.0
-        
         let cell:UITableViewCell
         if currentButtonIndex == 0 {
             
             cell = self.configureNotificationCell(tableView: tableView, indexPath: indexPath)
-            tableView.rowHeight = 50.0
+            tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
             
         }else if currentButtonIndex == 1
         {
             cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
+            tableView.separatorStyle = UITableViewCellSeparatorStyle.none
             
         }else
         {
             cell = self.configureTournamentCell(tableView: tableView, indexPath: indexPath)
+            tableView.separatorStyle = UITableViewCellSeparatorStyle.none
         }
-        
+        tableView.separatorColor = UIColor.darkGray
         cell.backgroundColor = UIColor.clear
         
         return cell
@@ -396,6 +561,16 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
         cell.preservesSuperviewLayoutMargins = false
         cell.separatorInset = UIEdgeInsets.zero
         cell.layoutMargins = UIEdgeInsets.zero
+    }
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
+        if (currentButtonIndex == 0) {
+            return UITableViewAutomaticDimension
+        }
+        else{
+            return 139.0
+        }
     }
     
     
@@ -503,14 +678,25 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
     func  configureNotificationCell(tableView:UITableView, indexPath:IndexPath) -> NotificationTableViewCell {
         
         let cell:NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
-        tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
-        tableView.separatorColor = UIColor.darkGray
         
         let notificationInfo:NSDictionary = self.parseResponse(responseObject: notificationToShowArray.object(at: indexPath.row))
         
         var message:String = notificationInfo.stringValueForKey(key: "notificationHeader")
         
-        var attributedStringMessage = NSMutableAttributedString(string: message, attributes: [NSForegroundColorAttributeName : UIColor.white])
+        let receivedDate:Date = self.getLocaleDateFromString(dateString: notificationInfo.value(forKey: "date") as! String)
+        let timeDifference:String = NSDate.getTimeDiff(since: receivedDate)
+        if !timeDifference.isEmpty
+        {
+            message = message.appendingFormat("  %@", timeDifference)
+        }
+        
+        var fontForHeader:UIFont = StyleGuide.fontFutaraRegular(withFontSize: 16)
+        if IS_IPAD {
+            fontForHeader = StyleGuide.fontFutaraRegular(withFontSize: 21)
+        }
+        
+        let attributesForHeaderString:[String : Any] = [NSForegroundColorAttributeName : UIColor.white,NSFontAttributeName : fontForHeader]
+        var attributedStringMessage = NSMutableAttributedString(string: message, attributes: attributesForHeaderString)
         
         let map:NSDictionary = self.parseResponse(responseObject: notificationInfo.value(forKey: "map") as Any)
         
@@ -530,10 +716,17 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
             name = String.init(format: "@%@", name)
             let range = (message as NSString).range(of:name)
             
-            attributedStringMessage = NSMutableAttributedString(string: message, attributes: [NSForegroundColorAttributeName : UIColor.white])
+            attributedStringMessage = NSMutableAttributedString(string: message, attributes: attributesForHeaderString)
             attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
             attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
             attributedStringMessage.addAttribute("clickOnUser", value: true, range: range)
+        }
+        
+        if !timeDifference.isEmpty {
+            
+            let range = (message as NSString).range(of:timeDifference)
+            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGray , range: range)
+            attributedStringMessage.addAttribute(NSFontAttributeName, value: StyleGuide.fontFutaraRegular(withFontSize: 10), range: range)
         }
         
         if !tournamentInfo.stringValueForKey(key: "name").isEmpty {
@@ -603,9 +796,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource {
                 self.showAlert(title: kMessage, message: "Tapped on Event")
             }
         }
-        
     }
-
     
     func getNotificationMapInfo(notification:NSDictionary, key:String) -> NSDictionary {
         if let tournamentInfo:NSArray = notification.value(forKey: key) as? NSArray

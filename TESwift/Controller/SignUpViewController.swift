@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate,UITableViewDataSource,UITextFieldDelegate{
+class SignUpViewController: SocialConnectViewController ,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate,UITableViewDataSource,UITextFieldDelegate,UITableViewDelegate{
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var txtUsername: UITextField!
@@ -315,9 +315,6 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     // became first responder
     func textFieldDidBeginEditing(_ textField: UITextField){
         addDismisskeyboardTapGesture()
-        if textField == self.txtLocation{
-            self.scrollData.setContentOffset(CGPoint(x: CGFloat(0), y: CGFloat(150)), animated: true)
-        }
         if IS_IPAD {
             
             if (textField == txtPassword || textField == txtConfirmPassword){
@@ -386,9 +383,11 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         if txtLocation.text?.characters.count == 0{
             self.tableView.isHidden = true
+            self.addDismisskeyboardTapGesture()
         }
         if txtLocation.text!.characters.count > 2 {
             self.fetchAutocompleteLocation(keyword: self.txtLocation.text!)
+            self.removeDismisskeyboardTapGesture()
             self.tableView.isHidden = false
         }
     }
@@ -552,7 +551,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     }
     
     
-    // Username existing check for Email field
+    //MARK:- Username existing check for Email and Username field.
     
     func isEmailIdExists(emailID:String) {
         
@@ -561,7 +560,6 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            self.hideHUD()
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             self.hideHUD()
             print(responseDict)
@@ -588,7 +586,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            self.hideHUD()
+    
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
              self.hideHUD()
             print(responseDict)
@@ -604,13 +602,14 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
     }
     
-    //  Location search on location textfield method
+    //MARK:- Location search on location textfield method
     
     func fetchAutocompleteLocation(keyword: String) {
         
         let dicInfo = NSMutableDictionary()
-        dicInfo.setValue(keyword, forKey: "locationText")
-        //On Success Call
+        let str:String = keyword.replacingOccurrences(of: ",", with: "")
+        dicInfo.setValue(str.replacingOccurrences(of: " ", with: ""), forKey: "locationText")
+
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
@@ -635,6 +634,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             // Falure call implementation
             print(responseMessage)
         }
+        
         ServiceCall.sharedInstance.sendRequest(parameters: dicInfo, urlType: RequestedUrlType.GetUnAuthSearchedLocation, method: "GET", successCall: success, falureCall: failure)
         
     }
@@ -658,45 +658,18 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         return cell
     }
     
-    private func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath as IndexPath)!
-        
         txtLocation.text = selectedCell.textLabel!.text!
         self.tableView.isHidden = true
+        self.addDismisskeyboardTapGesture()
         
     }
     
     func configureLocationTableView (){
-      
-        var topDistance = CGFloat()
-        var yCoordinate = Float()
-        
-        if DeviceType.IS_IPHONE_5{
-           topDistance = (self.scrollData.frame.origin.y + 20.0)
-        }
-        else if DeviceType.IS_IPHONE_6{
-          topDistance = (self.scrollData.frame.origin.y + 80.0)
-        }
-        else if DeviceType.IS_IPHONE_6P{
-          topDistance = (self.scrollData.frame.origin.y + 80.0)
-        }
-        yCoordinate = Float(topDistance)
-        var width: CGFloat = 268.0
-        
-        if IS_IPAD {
-            width = 350.0
-        }
-        else{
-            width = ScreenSize.SCREEN_WIDTH - 52.0
-        }
-        
-        tableView.delegate = self
-        tableView.dataSource = self
-        tableView.backgroundColor = UIColor.black
-        tableView.layer.cornerRadius = 0.5
-        
-
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.backgroundColor = UIColor.black
+        self.tableView.layer.cornerRadius = 5.0
     }
-    
 }

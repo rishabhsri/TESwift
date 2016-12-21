@@ -8,11 +8,11 @@
 
 import UIKit
 
-class BaseViewController: UIViewController, UITableViewDelegate{
+class BaseViewController: UIViewController{
     
     var context:NSManagedObjectContext? = nil
     var dateFormatter:DateFormatter? = nil
-    
+    var tap: UITapGestureRecognizer!
     typealias alertActionHandler = () -> Void
     
     
@@ -41,9 +41,14 @@ class BaseViewController: UIViewController, UITableViewDelegate{
     //MARK:- Utility methods
     func addDismisskeyboardTapGesture()->Void{
         
-        let tap:UITapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(handleTap))
+        if tap == nil{
+            tap = UITapGestureRecognizer(target: self, action: #selector(BaseViewController.handleTap(_:)))
+        }
         self.view.addGestureRecognizer(tap)
-        
+    }
+    
+    func removeDismisskeyboardTapGesture()->Void {
+        self.view.removeGestureRecognizer(tap)
     }
     
     func handleTap(_ gestureRecognizer: UITapGestureRecognizer) {
