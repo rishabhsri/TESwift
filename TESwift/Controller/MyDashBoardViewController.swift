@@ -54,7 +54,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         self.setUpStyleGuide()
         
-        self.setupMenu()
+        self.setupMenu(menuButton: menuButton)
         
         self.setupData()
         
@@ -181,20 +181,6 @@ class MyDashBoardViewController: UniversalSearchViewController{
     }
     
     
-    func setupMenu() -> Void {
-        if  revealViewController() != nil {
-            menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
-            if DeviceType.IS_IPHONE_5
-            {
-                self.revealViewController().rearViewRevealWidth = 250
-            }else
-            {
-                self.revealViewController().rearViewRevealWidth = 300
-            }
-            
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
-    }
     
     
     func getMyProfile() {

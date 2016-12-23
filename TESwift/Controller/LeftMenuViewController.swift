@@ -96,7 +96,11 @@ class LeftMenuViewController: BaseViewController {
     
     // MARK: - IBActions
     
-    @IBAction func tournamentAction(_ sender: AnyObject) {
+    @IBAction func tournamentAction(_ sender: AnyObject)
+    {
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let tournamentListVC:TournamentListViewController = storyBoard.instantiateViewController(withIdentifier: "TournamentListViewControllerID") as! TournamentListViewController
+        self.setFrontVC(frontVC: tournamentListVC)
     }
     
     @IBAction func seasonAction(_ sender: AnyObject) {
