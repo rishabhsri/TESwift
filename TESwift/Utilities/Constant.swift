@@ -52,6 +52,9 @@ let ProfileImageBorder:CGFloat = 3.5
 
 let commonSetting:CommonSetting = CommonSetting.sharedInstance
 
+let PAGE_SIZE = 10
+let HYPE_PAGE_LIMIT = IS_IPAD ? 9 : 5
+
 //MARK: - Error messages
 
 let UserName_Pwd_ErrorMsg = "Username or password either null or consist blanks."

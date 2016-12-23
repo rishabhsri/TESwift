@@ -13,7 +13,6 @@ import UIKit
 enum RequestedUrlType {
     case GetUserLogin
     case GetUserProfileData
-    case GetAllNotification
     case DownloadImage
     case UploadImage
     case GetUserSignUp
@@ -22,6 +21,8 @@ enum RequestedUrlType {
     case CheckUserNameExists
     case CheckEmailIdExists
     case GetCurrentAndUpcomingTournament
+    case HypeSearch
+    case GetNotificationList
 }
 
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
@@ -29,6 +30,7 @@ let Main_Header = ServerURL + "main"
 let File_Header = ServerURL + "file"
 let Admin_Header = ServerURL + "admin"
 let Network_Header = ServerURL + "network"
+let Hype_Header = ServerURL + "hype"
 
 let imageDownloadURL = "https://s3.amazonaws.com/vgroup-tournament"
 
@@ -82,7 +84,7 @@ class ServiceCall: NSObject {
             urlString = String(format: "%@/user/profile/web", Network_Header)
             break
             
-        case .GetAllNotification:
+        case .GetNotificationList:
             urlString = String(format: "%@/notifications", Main_Header)
             break
         case .DownloadImage:
@@ -94,9 +96,9 @@ class ServiceCall: NSObject {
         case .GetUserSignUp:
             urlString = String(format: "%@/user/register",Network_Header)
             break
-        
+            
         case .GetUnAuthSearchedLocation:
-             urlString = String(format: "%@unauthenticated/search/location?query=%@",ServerURL,parameter.value(forKey: "locationText") as! String)
+            urlString = String(format: "%@unauthenticated/search/location?query=%@",ServerURL,parameter.value(forKey: "locationText") as! String)
             break
         case .GetMyProfile:
             urlString = String(format: "%@/user/profile",Network_Header)
@@ -111,7 +113,9 @@ class ServiceCall: NSObject {
         case .GetCurrentAndUpcomingTournament:
             urlString = String(format: "%@/tournament/state/active/%@",Main_Header,parameter.stringValueForKey(key: "userID"))
             break
-    
+        case .HypeSearch:
+            urlString = String(format: "%@/search",Hype_Header)
+            break
         }
         
         return urlString
@@ -141,7 +145,11 @@ class ServiceCall: NSObject {
         
         if urlType == .GetCurrentAndUpcomingTournament
         {
-            manager.requestSerializer.setValue("10", forHTTPHeaderField: "pagesize")
+            manager.requestSerializer.setValue("\(PAGE_SIZE)", forHTTPHeaderField: "pagesize")
+            manager.requestSerializer.setValue(parameters.stringValueForKey(key: "pagenumber"), forHTTPHeaderField: "pagenumber")
+        }else if urlType == .HypeSearch
+        {
+            manager.requestSerializer.setValue("\(HYPE_PAGE_LIMIT)", forHTTPHeaderField: "pagesize")
             manager.requestSerializer.setValue(parameters.stringValueForKey(key: "pagenumber"), forHTTPHeaderField: "pagenumber")
         }
         
@@ -158,7 +166,7 @@ class ServiceCall: NSObject {
                             if task.state == URLSessionTask.State.completed
                             {
                                 DispatchQueue.main.async {
-                                  successCall(responseObject,urlType)
+                                    successCall(responseObject,urlType)
                                 }
                             }else
                             {
@@ -314,13 +322,16 @@ class ServiceCall: NSObject {
     func parseErrorMessage(error:Error) -> String {
         
         let errorObj:NSError = error as NSError
-        if let errResponse: String = String(data: (errorObj.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as! NSData) as Data, encoding: String.Encoding.utf8)
+        if let infoData:Data =  errorObj.userInfo[AFNetworkingOperationFailingURLResponseDataErrorKey] as? Data
         {
-            let responseDict = BaseViewController().parseResponse(responseObject: errResponse as Any)
-            if let array:NSArray = responseDict.value(forKey: "errorMessages") as? NSArray {
-                if let errorMessage:String = array.firstObject as? String
-                {
-                    return errorMessage
+            if let errResponse: String = String(data:infoData, encoding: String.Encoding.utf8)
+            {
+                let responseDict = BaseViewController().parseResponse(responseObject: errResponse as Any)
+                if let array:NSArray = responseDict.value(forKey: "errorMessages") as? NSArray {
+                    if let errorMessage:String = array.firstObject as? String
+                    {
+                        return errorMessage
+                    }
                 }
             }
         }
@@ -346,7 +357,7 @@ class ServiceCall: NSObject {
         let manager:AFHTTPSessionManager = AFHTTPSessionManager()
         self.imageDownloadManager.requestSerializer = AFHTTPRequestSerializer()
         self.imageDownloadManager.responseSerializer = AFHTTPResponseSerializer()
-
+        
         
         
         manager.post(strURL, parameters: nil, constructingBodyWith:{(formData: AFMultipartFormData) in
@@ -517,6 +528,6 @@ class ServiceCall: NSObject {
         }
         return imageDirectoryPath
     }
-
+    
 }
 

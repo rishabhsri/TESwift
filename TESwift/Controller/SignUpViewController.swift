@@ -656,10 +656,12 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         txtLocation.text = selectedCell.textLabel!.text!
         self.tableView.isHidden = true
         self.addDismisskeyboardTapGesture()
-        
     }
     
-    func configureLocationTableView (){
+
+    
+    func configureLocationTableView ()
+    {
         self.tableView.delegate = self
         self.tableView.dataSource = self
         self.tableView.backgroundColor = UIColor.black
