@@ -247,21 +247,22 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
             if let dict:NSDictionary = array.object(at: indexPath.row) as? NSDictionary
             {
                 let id:String = dict.stringValueForKey(key: "id")
+                let name:String = dict.stringValueForKey(key: "name")
                 if key == "Tournaments"
                 {
-                    
+                    self.showAlert(title: "", message: "Tournament : \(name)")
                 }else if key == "Seasons"
                 {
-                    
+                    self.showAlert(title: "", message: "Season : \(name)")
                 }else if key == "Events"
                 {
-                    
+                    self.showAlert(title: "", message: "Event : \(name)")
                 }else if key == "Teams"
                 {
-                    
+                    self.showAlert(title: "", message: "Team : \(name)")
                 }else if key == "Persons"
                 {
-                    
+                    self.showAlert(title: "", message: "Person : \(name)")
                 }
             }
         }
