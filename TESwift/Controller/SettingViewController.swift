@@ -17,10 +17,8 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
     @IBOutlet weak var txtAge: UITextField!
     @IBOutlet weak var txtGender: UITextField!
     @IBOutlet weak var txtLocation: UITextField!
-    
     @IBOutlet weak var lblNotifySettingTitle: UILabel!
     @IBOutlet weak var lblSocialConnectTitle: UILabel!
-    
     @IBOutlet weak var lblTeamPicturetitle: UILabel!
     @IBOutlet weak var lblBrainTreeAccTitle: UIButton!
     @IBOutlet weak var lblSubscriber: UILabel!

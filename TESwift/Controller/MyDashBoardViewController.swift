@@ -346,6 +346,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
     //MARK:- Searchbar Utilities
     override func hideSearchBar()
     {
+        self.universalSearchBar.resignFirstResponder()
         self.removeSwipeGestureFromSearchContainer()
         self.addSwipeGestureOnDashboard()
         self.universalSearchContainerView.isHidden = true

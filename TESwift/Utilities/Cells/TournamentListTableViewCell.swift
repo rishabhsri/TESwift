@@ -11,13 +11,9 @@ import UIKit
 class TournamentListTableViewCell: UITableViewCell {
     
     @IBOutlet weak var backGroundImage: UIImageView!
-    
     @IBOutlet weak var borderImage: UIImageView!
-    
     @IBOutlet weak var tournmentName: UILabel!
-
     @IBOutlet weak var yearLabel: UILabel!
-    
     
     override func awakeFromNib() {
         super.awakeFromNib()

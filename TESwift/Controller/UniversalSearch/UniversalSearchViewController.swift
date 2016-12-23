@@ -135,13 +135,6 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
         
         self.universalSearchBar.showsCancelButton = true
         
-        
-        //        if IS_IPHONE {
-        //            self.setBlurImageOnView(view: self.universalSearchContainerView)
-        //        }else
-        //        {
-        //            self.universalSearchContainerView.backgroundColor = kContainerColor
-        //        }
     }
     
     //MARK:- Parser

@@ -12,15 +12,10 @@ class LeftMenuViewController: BaseViewController {
     
     // Outlets for UI elements
     @IBOutlet weak var backGround_BG: UIImageView!
-    
     @IBOutlet weak var userProImage: UIImageView!
-    
     @IBOutlet weak var displayNameLbl: UILabel!
-    
     @IBOutlet weak var userNameLbl: UILabel!
-    
     @IBOutlet weak var tournamentYPos: NSLayoutConstraint!
-    
     @IBOutlet var yPositions: [NSLayoutConstraint]!
     
     
