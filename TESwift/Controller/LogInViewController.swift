@@ -38,6 +38,9 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
         // Set Style Guide
         self.styleGuide()
         
+        self.txtUsername.text = "adilmo"
+        self.txtPassword.text = "adil123"
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -117,9 +120,7 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
     override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         commonSetting.userLoginInfo = userInfo
-        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
-        let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
-        self.navigationController?.pushViewController(dbController, animated:true)
+        appDelegate.configureMenuViewController(navigationCont: self.navigationController!)
     }
     
     func onLogInFailure(_ userInfo: String) -> Void {

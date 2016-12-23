@@ -13,8 +13,8 @@ import CoreData
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var navController: UINavigationController?
     var loginviewController:LogInViewController?
+    var menuController:SWRevealViewController?
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -125,6 +125,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func internetReachabilityStopMonitoring() {
         
         AFNetworkReachabilityManager.shared().stopMonitoring()
+    }
+    
+    
+    //MARK:- Configure MenuController
+    
+    func configureMenuViewController(navigationCont:UINavigationController)
+    {
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        self.menuController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as? SWRevealViewController
+        let dashBoardVC:MyDashBoardViewController = storyBoard.instantiateViewController(withIdentifier: "MyDashBoardViewControllerID") as! MyDashBoardViewController
+        
+        let navigationController:UINavigationController = UINavigationController.init(rootViewController: dashBoardVC)
+        navigationController.navigationBar.isHidden = true
+        
+        self.menuController?.setFront(navigationController, animated: true)
+        
+        navigationCont.pushViewController(self.menuController!, animated: true)
     }
 
 }

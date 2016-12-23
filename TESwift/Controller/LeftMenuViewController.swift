@@ -119,6 +119,20 @@ class LeftMenuViewController: BaseViewController {
         _ =  self.navigationController?.popToRootViewController(animated: true)
     }
     
-    @IBAction func syncToSerAction(_ sender: AnyObject) {
+    @IBAction func syncToSerAction(_ sender: AnyObject)
+    {
+    }
+    @IBAction func profileAction(_ sender: Any)
+    {
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let dashBoardVC:MyDashBoardViewController = storyBoard.instantiateViewController(withIdentifier: "MyDashBoardViewControllerID") as! MyDashBoardViewController
+        self.setFrontVC(frontVC: dashBoardVC)
+    }
+    
+    func setFrontVC(frontVC:UIViewController) {
+        let navigationController:UINavigationController = UINavigationController.init(rootViewController: frontVC)
+        navigationController.navigationBar.isHidden = true
+        appDelegate.menuController?.setFront(navigationController, animated: true)
+        appDelegate.menuController?.revealToggle(self)
     }
 }

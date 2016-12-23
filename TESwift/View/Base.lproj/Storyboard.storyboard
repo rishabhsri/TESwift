@@ -22,7 +22,7 @@
         <!--My Dash Board View Controller-->
         <scene sceneID="HDF-4C-5YM">
             <objects>
-                <viewController storyboardIdentifier="MyDashBoardViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RtA-ju-zw8" customClass="MyDashBoardViewController" customModule="TESwift" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="MyDashBoardViewControllerID" useStoryboardIdentifierAsRestorationIdentifier="YES" id="RtA-ju-zw8" customClass="MyDashBoardViewController" customModule="TESwift" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="ial-Xf-hY9"/>
                         <viewControllerLayoutGuide type="bottom" id="huK-lf-klO"/>
@@ -371,7 +371,7 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Login_BG" translatesAutoresizingMaskIntoConstraints="NO" id="JRz-Jj-ir5">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                             </imageView>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="3BB13BB0-7185-4635-8784-E8AAB84BDC97" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-iP-Wev">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="780AA98D-0E9F-4380-93E0-AFA410259F6B" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-iP-Wev">
                                 <rect key="frame" x="0.0" y="0.0" width="375" height="64"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="DDc-ai-ARo"/>
@@ -614,15 +614,23 @@
                                             <action selector="syncToSerAction:" destination="hNY-ao-Wxf" eventType="touchUpInside" id="WSM-98-RSK"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ja9-yj-nDw">
+                                        <rect key="frame" x="117" y="45" width="90" height="90"/>
+                                        <connections>
+                                            <action selector="profileAction:" destination="hNY-ao-Wxf" eventType="touchUpInside" id="wRE-6y-b0K"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="jCH-SW-OhV" firstAttribute="top" secondItem="95q-n5-Q3w" secondAttribute="bottom" constant="4" id="0b3-4l-uZL"/>
+                                    <constraint firstItem="ja9-yj-nDw" firstAttribute="centerX" secondItem="iun-Gk-6Yz" secondAttribute="centerX" id="0oR-wf-E3c"/>
                                     <constraint firstItem="dxf-Yo-xWM" firstAttribute="top" secondItem="Ybn-Qz-J4n" secondAttribute="bottom" constant="10" id="1hd-Rh-UJM"/>
                                     <constraint firstItem="5hm-M9-r2k" firstAttribute="top" secondItem="nSy-ET-Efh" secondAttribute="bottom" constant="15" id="2fH-Mb-5CV"/>
                                     <constraint firstItem="kMh-Mj-doB" firstAttribute="height" secondItem="5hm-M9-r2k" secondAttribute="height" id="3Kh-6O-LqS"/>
                                     <constraint firstAttribute="bottom" secondItem="Ok6-Zx-2Lg" secondAttribute="bottom" id="5Xf-Jm-yMU"/>
                                     <constraint firstItem="0Kp-Mo-QVi" firstAttribute="leading" secondItem="lPt-ec-V3f" secondAttribute="leading" id="8Ih-9z-2Wn"/>
+                                    <constraint firstItem="ja9-yj-nDw" firstAttribute="height" secondItem="iun-Gk-6Yz" secondAttribute="height" id="8fq-pb-ECZ"/>
                                     <constraint firstItem="jCH-SW-OhV" firstAttribute="leading" secondItem="95q-n5-Q3w" secondAttribute="leading" id="AOO-VW-IeX"/>
                                     <constraint firstItem="nSy-ET-Efh" firstAttribute="top" secondItem="jCH-SW-OhV" secondAttribute="bottom" constant="24" id="BWR-Gf-yQy"/>
                                     <constraint firstItem="ED0-ri-1RR" firstAttribute="bottom" secondItem="Ok6-Zx-2Lg" secondAttribute="bottom" id="CBR-Tx-Xxz"/>
@@ -643,6 +651,7 @@
                                     <constraint firstItem="Ybn-Qz-J4n" firstAttribute="top" secondItem="HbM-MG-jcQ" secondAttribute="bottom" constant="10" id="WOB-gg-4Yg"/>
                                     <constraint firstItem="lPt-ec-V3f" firstAttribute="leading" secondItem="dxf-Yo-xWM" secondAttribute="leading" id="Ytm-lG-Lcb"/>
                                     <constraint firstItem="kMh-Mj-doB" firstAttribute="trailing" secondItem="5hm-M9-r2k" secondAttribute="trailing" id="bY2-44-js4"/>
+                                    <constraint firstItem="ja9-yj-nDw" firstAttribute="centerY" secondItem="iun-Gk-6Yz" secondAttribute="centerY" id="cn5-eQ-yIn"/>
                                     <constraint firstItem="iun-Gk-6Yz" firstAttribute="centerX" secondItem="95q-n5-Q3w" secondAttribute="centerX" id="fE3-ca-nTV"/>
                                     <constraint firstItem="kMh-Mj-doB" firstAttribute="leading" secondItem="5hm-M9-r2k" secondAttribute="leading" id="gAP-7b-Vxa"/>
                                     <constraint firstItem="HbM-MG-jcQ" firstAttribute="trailing" secondItem="kMh-Mj-doB" secondAttribute="trailing" id="gC9-QT-Y1D"/>
@@ -651,6 +660,7 @@
                                     <constraint firstAttribute="trailing" secondItem="Ok6-Zx-2Lg" secondAttribute="trailing" id="hhS-he-XHj"/>
                                     <constraint firstItem="HbM-MG-jcQ" firstAttribute="top" secondItem="kMh-Mj-doB" secondAttribute="bottom" constant="10" id="hkz-fa-iyE"/>
                                     <constraint firstItem="95q-n5-Q3w" firstAttribute="leading" secondItem="DGV-SK-Dys" secondAttribute="leading" constant="28" id="ipC-FX-uOS"/>
+                                    <constraint firstItem="ja9-yj-nDw" firstAttribute="width" secondItem="iun-Gk-6Yz" secondAttribute="width" id="jVh-eQ-rz6"/>
                                     <constraint firstItem="lPt-ec-V3f" firstAttribute="height" secondItem="dxf-Yo-xWM" secondAttribute="height" id="jYd-9z-y4I"/>
                                     <constraint firstItem="HbM-MG-jcQ" firstAttribute="leading" secondItem="kMh-Mj-doB" secondAttribute="leading" id="mfR-dd-6qp"/>
                                     <constraint firstItem="Ybn-Qz-J4n" firstAttribute="height" secondItem="HbM-MG-jcQ" secondAttribute="height" id="pPK-SX-ESt"/>
@@ -708,35 +718,15 @@
                     </view>
                     <connections>
                         <segue destination="hNY-ao-Wxf" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="Crs-7m-ppj"/>
-                        <segue destination="8Kz-df-UE0" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="mPi-5D-xi2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="el9-1d-mck" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-134" y="-468"/>
         </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="R1r-Ev-B1R">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" navigationBarHidden="YES" id="8Kz-df-UE0" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <nil key="simulatedTopBarMetrics"/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" misplaced="YES" id="LtQ-M2-XGC">
-                        <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="RtA-ju-zw8" kind="relationship" relationship="rootViewController" id="B6m-yR-6EA"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="nf4-aX-HSD" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="744.79999999999995" y="-589.65517241379314"/>
-        </scene>
     </scenes>
     <resources>
-        <image name="3BB13BB0-7185-4635-8784-E8AAB84BDC97" width="720" height="146">
+        <image name="780AA98D-0E9F-4380-93E0-AFA410259F6B" width="720" height="146">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

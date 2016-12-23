@@ -52,6 +52,8 @@ let ProfileImageBorder:CGFloat = 3.5
 
 let searchBarHeight = 44
 
+let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+
 let commonSetting:CommonSetting = CommonSetting.sharedInstance
 
 let PAGE_SIZE = 10

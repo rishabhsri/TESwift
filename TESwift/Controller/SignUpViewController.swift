@@ -295,9 +295,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         commonSetting.userLoginInfo = userInfo
         self.hideHUD()
-        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
-        let dbController = storyBoard.instantiateViewController(withIdentifier: "SWRevealViewControllerID") as! SWRevealViewController
-        self.navigationController?.pushViewController(dbController, animated:true)
+        appDelegate.configureMenuViewController(navigationCont: self.navigationController!)
     }
     func onLogInFailure(_ userInfo: String) -> Void {
         self.hideHUD()
