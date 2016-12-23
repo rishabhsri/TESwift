@@ -97,7 +97,7 @@ let KSignUpActivate = "An email has been sent for account activation."
 
 let KEmailExists = "User with same e-mail already exists"
 let KUserExists = "User with same Username already exists"
-
+let kEnterValidAge = "Please select valid age."
 //MARK:- Titles
 
 let kOK = "OK"

@@ -13,6 +13,7 @@ class BaseViewController: UIViewController{
     var context:NSManagedObjectContext? = nil
     var dateFormatter:DateFormatter? = nil
     var tap: UITapGestureRecognizer!
+    var statusBarHidden:Bool = true
     typealias alertActionHandler = () -> Void
     
     
@@ -197,13 +198,6 @@ class BaseViewController: UIViewController{
         }
     }
     
-    func setSearchBarAppearanceSetting() -> Void {
-        
-        let font:UIFont = StyleGuide.fontFutaraRegular(withFontSize: IS_IPHONE ? 16 : 18)
-       
-    }
-    
-    
     // MARK: - TextFields Delegate
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
@@ -232,5 +226,27 @@ class BaseViewController: UIViewController{
     
     func hideHUD(){
         PKHUD.sharedHUD.hide()
+    }
+    
+    override var prefersStatusBarHidden: Bool {
+        return statusBarHidden
+    }
+    //MARK:- Set Default Colors on Cell
+    
+    func setDefaultImages(cell:Any,indexPath:IndexPath) {
+        
+        let listColors:[String] = commonSetting.listViewColors
+        if listColors.count == 0
+        {
+            return
+        }
+        
+        if cell is HypeTableViewCell
+        {
+            let hypeTableCell:HypeTableViewCell = cell as! HypeTableViewCell
+            hypeTableCell.colorString = listColors[indexPath.row%listColors.count]
+            hypeTableCell.hypeBgImg.backgroundColor = UIColor.init(hexString: hypeTableCell.colorString!)
+            
+        }
     }
 }
