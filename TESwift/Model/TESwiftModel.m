@@ -16,8 +16,7 @@
     if (context == nil) {
         return nil;
     }
-    NSArray *arr = [NSStringFromClass([self class]) componentsSeparatedByString:@"."];
-    NSString *str =  arr[1];
+    NSString *str = [self getClassName:NSStringFromClass([self class])];
     NSParameterAssert(context);
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     request.entity = [NSEntityDescription entityForName:str inManagedObjectContext:context];
@@ -48,8 +47,8 @@
     if (context == nil) {
         return nil;
     }
-    NSArray *arr = [NSStringFromClass([self class]) componentsSeparatedByString:@"."];
-    NSString *str =  arr[1];
+
+    NSString *str = [self getClassName:NSStringFromClass([self class])];
     NSParameterAssert(context);
     return [NSEntityDescription insertNewObjectForEntityForName:str inManagedObjectContext:context];
 }
@@ -94,7 +93,18 @@
         NSLog(@"saveError %@",[saveError localizedDescription]);
 }
 
-
++(NSString*)getClassName:(NSString*)class
+{
+    NSArray *array = [NSArray new];
+    NSString *className;
+    if ((array = [class componentsSeparatedByString:@"."])) {
+        className = array[1];
+    }else
+    {
+        className = class;
+    }
+    return className;
+}
 
 
 @end

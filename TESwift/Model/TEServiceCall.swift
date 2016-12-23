@@ -21,6 +21,7 @@ enum RequestedUrlType {
     case CheckUserNameExists
     case CheckEmailIdExists
     case GetCurrentAndUpcomingTournament
+    case GetTournamentById
     case HypeSearch
     case GetNotificationList
     case UniversalSearch
@@ -128,6 +129,10 @@ class ServiceCall: NSObject {
         case .UniversalSearch:
             urlString = String(format: "%@/search?q=%@",Main_Header,parameter.stringValueForKey(key: "searchText"))
             break
+        case .GetTournamentById:
+            urlString = String(format: "%@/tournament/%d",Main_Header,parameter.intValueForKey(key: "tournamentID"))
+            break
+    
         }
         
         return urlString

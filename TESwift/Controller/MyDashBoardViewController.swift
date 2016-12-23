@@ -103,9 +103,9 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         self.getUserProfileData()
         
-        saveUserDetails(loginInfo: commonSetting.userLoginInfo)
+        self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
         
-    }
+}
     
     func resetLoadMore() {
         self.isTournamentLoadMore = false
@@ -205,8 +205,8 @@ class MyDashBoardViewController: UniversalSearchViewController{
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
-            TEMyProfile.parsetMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
-            
+            TEMyProfile.insertMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
+                        
         }
         let failure: falureHandler = {error, responseString, responseType in
             
@@ -217,6 +217,27 @@ class MyDashBoardViewController: UniversalSearchViewController{
         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
         
         
+    }
+    
+    func getTournamentById(tournamentID:Int) -> Void {
+        
+        let tournamentDict:NSMutableDictionary = NSMutableDictionary()
+        tournamentDict.setValue(tournamentID, forKey: "tournamentID")
+        
+        let success:successHandler = {responceObject, responseType in
+           
+            let responseDict = self.parseResponse(responseObject: responceObject as Any)
+            print(responseDict)
+            let tournamentList:TETournamentList = TETournamentList.insertTournamentDetails(info: responseDict, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
+            print(tournamentList.checkInTime!, tournamentList.completed)
+        }
+        
+        let failure:falureHandler = {error, responseString, responseType in
+           print(responseString)
+        
+        }
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: tournamentDict, urlType: RequestedUrlType.GetTournamentById, method: "GET", successCall: success, falureCall: failure)
     }
     
     func parseUserInfo(userInfo:NSDictionary) {
@@ -672,6 +693,14 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        if self.currentButtonIndex == 2{
+            let tournament:NSDictionary = self.tournamentsToShowArray.object(at: indexPath.row) as! NSDictionary
+            let tournId:Int = tournament.intValueForKey(key: "tournamentID")
+            self.getTournamentById(tournamentID: tournId)
+        }
+    }
     
     func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
         

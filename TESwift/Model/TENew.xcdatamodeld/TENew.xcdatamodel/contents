@@ -30,6 +30,83 @@
         <relationship name="socialdetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UserSocialDetail" inverseName="myprofile" inverseEntity="UserSocialDetail" syncable="YES"/>
         <relationship name="tournament" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TETournamentList" inverseName="myProfile" inverseEntity="TETournamentList" syncable="YES"/>
     </entity>
+    <entity name="TEPlayerDetails" representedClassName=".TEPlayerDetails" syncable="YES">
+        <attribute name="approved" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="byes" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="checkedIn" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="isBulkPlayer" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockFlag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lost" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="matchPlayed" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="matchPoints" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="matchRemaining" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ptsdiff" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seed" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="setTies" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="setWins" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="tb" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="teamIcon" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="ties" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userId" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="win" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tournament" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TETournamentList" inverseName="player" inverseEntity="TETournamentList" syncable="YES"/>
+    </entity>
+    <entity name="TEStaffDetail" representedClassName=".TEStaffDetail" syncable="YES">
+        <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="country" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="email" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="imageKey" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="location" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="lockFlag" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="phoneNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="place" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seed" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="state" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="tournament" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TETournamentList" inverseName="staff" inverseEntity="TETournamentList" syncable="YES"/>
+    </entity>
+    <entity name="TETournamentBracket" representedClassName=".TETournamentBracket" syncable="YES">
+        <attribute name="bracketID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bracketSize" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="parentBracketID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="poolName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="poolNameWithRound" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="poolRoundEnum" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="winnerBracket" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="bracketSpot" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TETournamentBracketSpots" inverseName="bracket" inverseEntity="TETournamentBracketSpots" syncable="YES"/>
+        <relationship name="list" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TETournamentList" inverseName="bracket" inverseEntity="TETournamentList" syncable="YES"/>
+    </entity>
+    <entity name="TETournamentBracketSpots" representedClassName=".TETournamentBracketSpots" syncable="YES">
+        <attribute name="bracketSpotID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="bye" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="matchNumber" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="poolname" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="round" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="score" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="seed" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="sortOrder" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="spotText" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="submitted" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <attribute name="totalWins" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="userName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="winner" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
+        <relationship name="bracket" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TETournamentBracket" inverseName="bracketSpot" inverseEntity="TETournamentBracket" syncable="YES"/>
+    </entity>
     <entity name="TETournamentList" representedClassName=".TETournamentList" syncable="YES">
         <attribute name="acceptAttachments" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="allowUserScoreSubmission" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -96,7 +173,10 @@
         <attribute name="userHype" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="venue" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="webURL" optional="YES" attributeType="String" syncable="YES"/>
+        <relationship name="bracket" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TETournamentBracket" inverseName="list" inverseEntity="TETournamentBracket" syncable="YES"/>
         <relationship name="myProfile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TEMyProfile" inverseName="tournament" inverseEntity="TEMyProfile" syncable="YES"/>
+        <relationship name="player" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TEPlayerDetails" inverseName="tournament" inverseEntity="TEPlayerDetails" syncable="YES"/>
+        <relationship name="staff" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TEStaffDetail" inverseName="tournament" inverseEntity="TEStaffDetail" syncable="YES"/>
     </entity>
     <entity name="UserDetails" representedClassName=".UserDetails" syncable="YES">
         <attribute name="emailId" optional="YES" attributeType="String" syncable="YES"/>
@@ -118,8 +198,12 @@
     </entity>
     <elements>
         <element name="TEMyProfile" positionX="-63" positionY="-18" width="128" height="465"/>
-        <element name="TETournamentList" positionX="-54" positionY="144" width="128" height="1035"/>
-        <element name="UserSocialDetail" positionX="-36" positionY="153" width="128" height="165"/>
+        <element name="TETournamentList" positionX="-54" positionY="144" width="128" height="1080"/>
         <element name="UserDetails" positionX="-45" positionY="144" width="128" height="135"/>
+        <element name="UserSocialDetail" positionX="-36" positionY="153" width="128" height="165"/>
+        <element name="TEPlayerDetails" positionX="-54" positionY="135" width="128" height="495"/>
+        <element name="TEStaffDetail" positionX="-45" positionY="144" width="128" height="255"/>
+        <element name="TETournamentBracket" positionX="-36" positionY="153" width="128" height="180"/>
+        <element name="TETournamentBracketSpots" positionX="-18" positionY="162" width="128" height="285"/>
     </elements>
 </model>
