@@ -18,10 +18,12 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     //class Variables
     var tournamentsArray:NSMutableArray = NSMutableArray()
     
+    //MARK:- Lifecycle Methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.setStyleGuide()
+        
         self.getUsersTournament()
         // Do any additional setup after loading the view.
     }
@@ -42,6 +44,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         let success: successHandler = {responseObject, responseType in
             
+            self.hideHUD()
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             if let array:NSArray = responseDict.object(forKey: "list") as? NSArray
@@ -52,28 +55,27 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
             
         }
         let failure: falureHandler = {error, responseString, responseType in
-            
+            self.hideHUD()
             print(responseString)
         }
         
+        self.showHUD()
         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetUsersTournament, method: "GET", successCall: success, falureCall: failure)
     }
     
     
     // MARK:- TableView Delegate
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        return tournamentsArray.count
+        return self.tournamentsArray.count
     }
-    
     
     // create a cell for each table view row
     func  tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // create a new cell if needed or reuse an old one
         let cell:TournamentListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "tournamentCell", for: indexPath) as! TournamentListTableViewCell
-        let tournaDict:NSDictionary = self.parseResponse(responseObject: tournamentsArray.object(at: indexPath.row))
+        let tournaDict:NSDictionary = self.parseResponse(responseObject: self.tournamentsArray.object(at: indexPath.row))
         cell.tournmentName.text = tournaDict.stringValueForKey(key: "name").uppercased()
         cell.yearLabel.text = self.getFormattedDateString(info: tournaDict, indexPath: indexPath, format: "yyyy")
         
