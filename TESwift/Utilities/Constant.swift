@@ -50,10 +50,20 @@ let kPasswordRegex = "^.{6,}$"
 
 let ProfileImageBorder:CGFloat = 3.5
 
+let searchBarHeight = 44
+
 let commonSetting:CommonSetting = CommonSetting.sharedInstance
 
 let PAGE_SIZE = 10
 let HYPE_PAGE_LIMIT = IS_IPAD ? 9 : 5
+
+//MARK:- SearchBar appearance
+
+let kSearchBarBarTintColor:UIColor = UIColor.black
+let kSearchBarTintColor:UIColor = UIColor.init(colorLiteralRed: 245.0/255.0, green: 245.0/255.0, blue: 245.0/255.0, alpha: 0.55)
+let kSearchBarBackgroundColor:UIColor = UIColor.init(colorLiteralRed: 255.0/255.0, green: 255.0/255.0, blue: 255.0/255.0, alpha: 0.1)
+let kSearchBartextColor = UIColor.white
+let kContainerColor = UIColor.black
 
 //MARK: - Error messages
 

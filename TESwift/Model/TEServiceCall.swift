@@ -21,8 +21,10 @@ enum RequestedUrlType {
     case CheckUserNameExists
     case CheckEmailIdExists
     case GetCurrentAndUpcomingTournament
+    case GetTournamentById
     case HypeSearch
     case GetNotificationList
+    case UniversalSearch
 }
 
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
@@ -39,6 +41,9 @@ let imageDownloadURL = "https://s3.amazonaws.com/vgroup-tournament"
 typealias successHandler = (Any?,RequestedUrlType) -> Void
 typealias falureHandler = (NSError, String ,RequestedUrlType) -> Void
 
+typealias searchSuccessHandler = (Any?,RequestedUrlType) -> Void
+typealias searchFalureHandler = (NSError, String ,RequestedUrlType) -> Void
+
 typealias uploadImageSuccess = (String) -> Void
 typealias uploadImageFailed = (NSError, String) -> Void
 
@@ -50,6 +55,7 @@ class ServiceCall: NSObject {
     //Local Variables
     var sessionManager:AFHTTPSessionManager
     var imageDownloadManager:AFHTTPSessionManager
+    var searchManager:AFHTTPSessionManager
     //Methods
     class var sharedInstance: ServiceCall {
         struct Singleton {
@@ -67,6 +73,10 @@ class ServiceCall: NSObject {
         self.imageDownloadManager = AFHTTPSessionManager()
         self.imageDownloadManager.requestSerializer = AFJSONRequestSerializer()
         self.imageDownloadManager.responseSerializer = AFHTTPResponseSerializer()
+        
+        self.searchManager = AFHTTPSessionManager()
+        self.searchManager.requestSerializer = AFJSONRequestSerializer()
+        self.searchManager.responseSerializer = AFHTTPResponseSerializer()
         
     }
     
@@ -116,6 +126,13 @@ class ServiceCall: NSObject {
         case .HypeSearch:
             urlString = String(format: "%@/search",Hype_Header)
             break
+        case .UniversalSearch:
+            urlString = String(format: "%@/search?q=%@",Main_Header,parameter.stringValueForKey(key: "searchText"))
+            break
+        case .GetTournamentById:
+            urlString = String(format: "%@/tournament/%d",Main_Header,parameter.intValueForKey(key: "tournamentID"))
+            break
+    
         }
         
         return urlString
@@ -463,6 +480,70 @@ class ServiceCall: NSObject {
             })
         }
     }
+    
+    func sendSearchRequest(searchText:String ,urlType:RequestedUrlType,pageNumber:String,successCall:@escaping searchSuccessHandler,falureCall:@escaping searchFalureHandler) -> Void
+    {
+        
+        let parameter:NSMutableDictionary = NSMutableDictionary()
+        parameter.setValue(searchText, forKey: "searchText")
+        
+        let strURL = getRequestUrl(urlType: urlType, parameter: parameter)
+        
+        let manager:AFHTTPSessionManager = self.sessionManager
+        
+        self.cancleAllSearchRequests()
+        
+        //            manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Accept")
+        //            manager.requestSerializer.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        
+        var authKey:String = ""
+        
+        let defaults = UserDefaults.standard
+        if defaults.value(forKey: "authkey") != nil {
+            authKey = defaults.value(forKey: "authkey") as! String
+        }
+        
+        manager.requestSerializer.setValue("\(PAGE_SIZE)", forHTTPHeaderField: "pagesize")
+        manager.requestSerializer.setValue(pageNumber, forHTTPHeaderField: "pagenumber")
+        
+        
+        manager.get(strURL, parameters: parameter, progress: nil,
+                    success:{(task,responseObject) in
+                        
+                        if task.state == URLSessionTask.State.canceling || task.state == URLSessionTask.State.suspended
+                        {
+                            return
+                        }
+                        
+                        if task.state == URLSessionTask.State.completed
+                        {
+                            DispatchQueue.main.async {
+                                successCall(responseObject,urlType)
+                            }
+                        }else
+                        {
+                            let error:NSError = NSError();
+                            falureCall(error,"request failed",urlType)
+                        }
+                        
+        }, failure: {(task,error) in
+            
+            let errorMessage:String = self.parseErrorMessage(error: error)
+            if !errorMessage.isEmpty
+            {
+                falureCall(error as NSError,errorMessage,urlType)
+            }else
+            {
+                falureCall(error as NSError,error.localizedDescription,urlType)
+            }
+            
+        })
+    }
+    
+    func cancleAllSearchRequests() {
+        self.searchManager.operationQueue.cancelAllOperations()
+    }
+    
     
     func getImageForKey(imageKey:String) -> UIImage?{
         

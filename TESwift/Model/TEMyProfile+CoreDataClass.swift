@@ -18,7 +18,7 @@ public class TEMyProfile: TESwiftModel {
         TEMyProfile.deleteAllFromEntity(inManage: context)
     }
     
-    static func parsetMyProfileDetail(myProfileInfo:NSDictionary, context: NSManagedObjectContext) {
+    static func insertMyProfileDetail(myProfileInfo:NSDictionary, context: NSManagedObjectContext) {
         
         let personInfo:NSDictionary? = myProfileInfo.object(forKey: "person") as! NSDictionary?
         
