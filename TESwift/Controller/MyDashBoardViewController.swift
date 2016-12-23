@@ -359,7 +359,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
                 if let array:NSArray =  responseDict.object(forKey: "hypes") as? NSArray
                 {
                     self.hypetoShowArray = NSMutableArray.init(array: array)
-                    if self.hypetoShowArray.count < 10 {
+                    let limit:NSInteger = HYPE_PAGE_LIMIT
+                    if self.hypetoShowArray.count < limit {
                         self.isHypeLoadMore = false
                     }else
                     {
@@ -372,7 +373,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
                 if let array:NSArray =  responseDict.object(forKey: "upcoming") as? NSArray
                 {
                     self.tournamentsToShowArray = NSMutableArray.init(array: array)
-                    if self.tournamentsToShowArray.count < 10 {
+                    if self.tournamentsToShowArray.count < PAGE_SIZE {
                         self.isTournamentLoadMore = false
                     }else
                     {
@@ -384,13 +385,13 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
                 //Parse User Data
                 self.parseUserInfo(userInfo: responseDict.object(forKey: "person") as! NSDictionary)
                 
-            }else if responseType == RequestedUrlType.GetAllNotification
+            }else if responseType == RequestedUrlType.GetNotificationList
             {
                 //initialize hype list
                 if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
                 {
                     self.notificationToShowArray = NSMutableArray.init(array: array)
-                    if self.notificationToShowArray.count < 10 {
+                    if self.notificationToShowArray.count < PAGE_SIZE {
                         self.isNotificationLoadMore = false
                     }else
                     {
@@ -413,7 +414,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetUserProfileData, method: "GET", successCall: success, falureCall: failure)
         
         // Service call for notifications
-        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetAllNotification, method: "GET", successCall: success, falureCall: failure)
+        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetNotificationList, method: "GET", successCall: success, falureCall: failure)
         
     }
     
@@ -428,7 +429,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
                 //initialize hype list
                 if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
                 {
-                    if array.count < 10 {
+                    if array.count < PAGE_SIZE {
                         self.isTournamentLoadMore = false
                     }else
                     {
@@ -455,11 +456,76 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
     }
     
     func getNotifications() {
+        //On success
+        let success: successHandler = {responseObject, responseType in
+            
+            self.hideHUD()
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            if responseType == RequestedUrlType.GetNotificationList {
+                
+                //initialize hype list
+                if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
+                {
+                    if array.count < PAGE_SIZE {
+                        self.isNotificationLoadMore = false
+                    }else
+                    {
+                        self.isNotificationLoadMore = true
+                    }
+                    self.notificationToShowArray.addObjects(from: array as! [Any])
+                    self.tableView.reloadData()
+                }
+                
+            }
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            self.hideHUD()
+            print(responseString)
+        }
         
+        self.showHUD()
+        
+        let requestDict:NSMutableDictionary = NSMutableDictionary()
+        requestDict.setValue("", forKey: "deviceToken")
+        requestDict.setValue("\(self.notificationPageIndex)", forKey: "pagenumber")
+        // Service call for get user profile data (Hypes, upcomings, person, followers)
+        ServiceCall.sharedInstance.sendRequest(parameters: requestDict, urlType: RequestedUrlType.GetNotificationList, method: "GET", successCall: success, falureCall: failure)
     }
     
     func getHypeTournaments() {
+        //On success
+        let success: successHandler = {responseObject, responseType in
+            
+            self.hideHUD()
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            if responseType == RequestedUrlType.HypeSearch {
+                
+                //initialize hype list
+                if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
+                {
+                    let limit:NSInteger = HYPE_PAGE_LIMIT
+                    if array.count < limit {
+                        self.isHypeLoadMore = false
+                    }else
+                    {
+                        self.isHypeLoadMore = true
+                    }
+                    self.hypetoShowArray.addObjects(from: array as! [Any])
+                    self.tableView.reloadData()
+                }
+                
+            }
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            self.hideHUD()
+            print(responseString)
+        }
         
+        self.showHUD()
+        
+        let requestDict:NSMutableDictionary = NSMutableDictionary()
+        requestDict.setValue("\(self.hypePageIndex)", forKey: "pagenumber")
+        ServiceCall.sharedInstance.sendRequest(parameters: requestDict, urlType: RequestedUrlType.HypeSearch, method: "GET", successCall: success, falureCall: failure)
     }
     
     //MARK:- ScrollView Delegates
@@ -486,7 +552,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
                         self.tournamentPageIndex += 1
                         self.isTournamentLoadMore = false
                         self.getTournaments()
-                    }else if currentButtonIndex == 2 && self.isHypeLoadMore
+                    }else if currentButtonIndex == 1 && self.isHypeLoadMore
                     {
                         self.hypePageIndex += 1
                         self.isHypeLoadMore = false
@@ -724,31 +790,72 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
             fontForHeader = StyleGuide.fontFutaraRegular(withFontSize: 21)
         }
         
-        let attributesForHeaderString:[String : Any] = [NSForegroundColorAttributeName : UIColor.white,NSFontAttributeName : fontForHeader]
-        var attributedStringMessage = NSMutableAttributedString(string: message, attributes: attributesForHeaderString)
-        
-        let map:NSDictionary = self.parseResponse(responseObject: notificationInfo.value(forKey: "map") as Any)
-        
-        let tournamentInfo:NSDictionary = self.getNotificationMapInfo(notification: map, key: "tournamentinfo")
-        let eventInfo:NSDictionary = self.getNotificationMapInfo(notification: map, key: "eventinfo")
-        let seasonInfo:NSDictionary = self.getNotificationMapInfo(notification: map, key: "seasoninfo")
-        let userInfo:NSDictionary = self.getNotificationMapInfo(notification: map, key: "userinfo")
-        
         var fontForHeighlight:UIFont = StyleGuide.fontFutaraBold(withFontSize: 14)
         if IS_IPAD {
             fontForHeighlight = StyleGuide.fontFutaraBold(withFontSize: 18)
         }
         
-        if !userInfo.stringValueForKey(key: "name").isEmpty {
-            var name = userInfo.stringValueForKey(key: "name")
-            message = message.replacingOccurrences(of: name, with: String.init(format: "@%@", name))
-            name = String.init(format: "@%@", name)
-            let range = (message as NSString).range(of:name)
-            
-            attributedStringMessage = NSMutableAttributedString(string: message, attributes: attributesForHeaderString)
-            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
-            attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
-            attributedStringMessage.addAttribute("clickOnUser", value: true, range: range)
+        let attributesForHeaderString:[String : Any] = [NSForegroundColorAttributeName : UIColor.white,NSFontAttributeName : fontForHeader]
+        var attributedStringMessage = NSMutableAttributedString(string: message, attributes: attributesForHeaderString)
+        
+        let map:NSDictionary = self.parseResponse(responseObject: notificationInfo.value(forKey: "map") as Any)
+        
+        if let userInfoArr:NSArray = map.value(forKey: "userinfo") as? NSArray
+        {
+            for dictionary:NSDictionary in userInfoArr as! [NSDictionary]{
+                
+                if !dictionary.stringValueForKey(key: "name").isEmpty {
+                    var name = dictionary.stringValueForKey(key: "name")
+                    message = message.replacingOccurrences(of: name, with: String.init(format: "@%@", name))
+                    name = String.init(format: "@%@", name)
+                    let range = (message as NSString).range(of:name)
+                    
+                    attributedStringMessage = NSMutableAttributedString(string: message, attributes: attributesForHeaderString)
+                    attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
+                    attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+                    attributedStringMessage.addAttribute("clickOnUser", value: true, range: range)
+                }
+            }
+        }
+        
+        if let tournamentInfoArr:NSArray = map.value(forKey: "tournamentinfo") as? NSArray
+        {
+            for dictionary:NSDictionary in tournamentInfoArr as! [NSDictionary]{
+                if !dictionary.stringValueForKey(key: "name").isEmpty {
+                    let name = dictionary.stringValueForKey(key: "name")
+                    let range = (message as NSString).range(of:name)
+                    attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
+                    attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+                    attributedStringMessage.addAttribute("clickOnTournament", value: true, range: range)
+                }
+            }
+        }
+        
+        if let seasonInfoArr:NSArray = map.value(forKey: "seasoninfo") as? NSArray
+        {
+            for dictionary:NSDictionary in seasonInfoArr as! [NSDictionary]{
+                if !dictionary.stringValueForKey(key: "name").isEmpty {
+                    let name = dictionary.stringValueForKey(key: "name")
+                    let range = (message as NSString).range(of:name)
+                    attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
+                    attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+                    attributedStringMessage.addAttribute("clickOnSeason", value: true, range: range)
+                }
+            }
+        }
+        
+        if let eventInfoArr:NSArray = map.value(forKey: "eventinfo") as? NSArray
+        {
+            for dictionary:NSDictionary in eventInfoArr as! [NSDictionary]{
+                if !dictionary.stringValueForKey(key: "name").isEmpty {
+                    let name = dictionary.stringValueForKey(key: "name")
+                    let range = (message as NSString).range(of:name)
+                    attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
+                    attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
+                    attributedStringMessage.addAttribute("clickOnEvent", value: true, range: range)
+                }
+
+            }
         }
         
         if !timeDifference.isEmpty {
@@ -756,30 +863,6 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
             let range = (message as NSString).range(of:timeDifference)
             attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: UIColor.lightGray , range: range)
             attributedStringMessage.addAttribute(NSFontAttributeName, value: StyleGuide.fontFutaraRegular(withFontSize: 10), range: range)
-        }
-        
-        if !tournamentInfo.stringValueForKey(key: "name").isEmpty {
-            let name = tournamentInfo.stringValueForKey(key: "name")
-            let range = (message as NSString).range(of:name)
-            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
-            attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
-            attributedStringMessage.addAttribute("clickOnTournament", value: true, range: range)
-        }
-        
-        if !seasonInfo.stringValueForKey(key: "name").isEmpty {
-            let name = seasonInfo.stringValueForKey(key: "name")
-            let range = (message as NSString).range(of:name)
-            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
-            attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
-            attributedStringMessage.addAttribute("clickOnSeason", value: true, range: range)
-        }
-        
-        if !eventInfo.stringValueForKey(key: "name").isEmpty {
-            let name = eventInfo.stringValueForKey(key: "name")
-            let range = (message as NSString).range(of:name)
-            attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: kLightBlueColor , range: range)
-            attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
-            attributedStringMessage.addAttribute("clickOnEvent", value: true, range: range)
         }
         
         cell.notificationTextView.text = nil
