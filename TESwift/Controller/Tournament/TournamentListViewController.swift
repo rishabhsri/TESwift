@@ -25,6 +25,9 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.setStyleGuide()
         
         self.getUsersTournament()
+        
+        self.setupMenu()
+        
         // Do any additional setup after loading the view.
     }
     
@@ -33,15 +36,16 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         // Dispose of any resources that can be recreated.
     }
     
-    func setStyleGuide() {
+    func setStyleGuide()
+    {
         self.tableView.contentInset = UIEdgeInsets(top: 60,left: 0,bottom: 0,right: 0)
         self.tounamentEmptyView.isHidden = true
     }
     
     // MARK:- Uitlity
     
-    func getUsersTournament(){
-        
+    func getUsersTournament()
+    {
         let success: successHandler = {responseObject, responseType in
             
             self.hideHUD()
@@ -52,7 +56,6 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
                 self.tournamentsArray = NSMutableArray.init(array: array)
                 self.tableView.reloadData()
             }
-            
         }
         let failure: falureHandler = {error, responseString, responseType in
             self.hideHUD()

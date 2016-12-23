@@ -65,6 +65,8 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         self.getMyProfile()
         
+        self.setupMenu()
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -771,16 +773,16 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         //Download Image
         let imageKey = hypeInfo.stringValueForKey(key: "imageKey")
-        weak var weakCell:HypeTableViewCell? = cell
+        
         let sucess:downloadImageSuccess = {image, imageKey in
             
-            weakCell!.hypeBgImg.image = image
-            weakCell!.progressBar.stopAnimating()
+            cell.hypeBgImg.image = image
+            cell.progressBar.stopAnimating()
         }
         
         let failure:downloadImageFailed = {error, responseString in
             
-            weakCell!.progressBar.stopAnimating()
+            cell.progressBar.stopAnimating()
         }
         
         if imageKey != "" {

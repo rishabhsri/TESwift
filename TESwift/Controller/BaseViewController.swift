@@ -22,8 +22,7 @@ class BaseViewController: UIViewController{
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        self.setupMenu()
+    
         // Do any additional setup after loading the view.
     }
     
@@ -88,7 +87,8 @@ class BaseViewController: UIViewController{
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func setupMenu() -> Void {
+    func setupMenu() -> Void
+    {
         if  revealViewController() != nil {
             menuButton?.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
             if DeviceType.IS_IPHONE_5

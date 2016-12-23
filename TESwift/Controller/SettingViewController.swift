@@ -51,6 +51,9 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
         self.configurePickerViewDta()
        
         self.styleGuide()
+        
+        self.setupMenu()
+        
         self.configurePickerView()
             //Add Dismiss Keyboard Tap Gesture
         self.addDismisskeyboardTapGesture()
