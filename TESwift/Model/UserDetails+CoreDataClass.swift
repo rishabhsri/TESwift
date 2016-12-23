@@ -1,6 +1,6 @@
 //
 //  UserDetails+CoreDataClass.swift
-//  
+//
 //
 //  Created by Apple on 20/12/16.
 //
@@ -11,7 +11,7 @@ import CoreData
 
 
 public class UserDetails: TESwiftModel {
-
+    
     static func insertUserDetails(info:NSDictionary, context:NSManagedObjectContext) -> UserDetails {
         
         let userDetail:UserDetails
@@ -23,7 +23,7 @@ public class UserDetails: TESwiftModel {
     static  func fetchUserDetailsFor(context:NSManagedObjectContext, predicate:NSPredicate) -> UserDetails {
         
         // let fetchRequest2:NSPersistentStoreRequestType = UserDetails.newFetchRequest(in: context)
-       
+        
         let fetchRequest:NSFetchRequest = UserDetails.newFetchRequest(in: context)
         fetchRequest.predicate = predicate
         
@@ -37,9 +37,9 @@ public class UserDetails: TESwiftModel {
         
     }
     
-//    func makeIterator() -> UserDetails.Iterator {
-//        print(UserDetails.Iterator)
-//    }
+    //    func makeIterator() -> UserDetails.Iterator {
+    //        print(UserDetails.Iterator)
+    //    }
     
     static func updateUserDetails(userDetail:UserDetails, info:NSDictionary) -> Void {
         
@@ -50,6 +50,6 @@ public class UserDetails: TESwiftModel {
         userDetail.userSubscription = info.value(forKey: "userSubscription") as! Bool
         
     }
-
+    
     
 }
