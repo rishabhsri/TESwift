@@ -16,12 +16,14 @@ class BaseViewController: UIViewController{
     var statusBarHidden:Bool = true
     typealias alertActionHandler = () -> Void
     
+    @IBOutlet weak var menuButton: UIButton!
+    
     
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
+        self.setupMenu()
         // Do any additional setup after loading the view.
     }
     
@@ -86,9 +88,9 @@ class BaseViewController: UIViewController{
         self.present(alertController, animated: true, completion: nil)
     }
     
-    func setupMenu(menuButton:UIButton) -> Void {
+    func setupMenu() -> Void {
         if  revealViewController() != nil {
-            menuButton.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
+            menuButton?.addTarget(revealViewController(), action:#selector(SWRevealViewController.revealToggle(_:)), for: UIControlEvents.touchUpInside)
             if DeviceType.IS_IPHONE_5
             {
                 self.revealViewController().rearViewRevealWidth = 250
@@ -247,6 +249,12 @@ class BaseViewController: UIViewController{
             hypeTableCell.colorString = listColors[indexPath.row%listColors.count]
             hypeTableCell.hypeBgImg.backgroundColor = UIColor.init(hexString: hypeTableCell.colorString!)
             
+        }else if cell is TournamentListTableViewCell
+        {
+            let tournamentTableCell:TournamentListTableViewCell = cell as! TournamentListTableViewCell
+            tournamentTableCell.colorString = listColors[indexPath.row%listColors.count]
+            tournamentTableCell.backGroundImage.backgroundColor = UIColor.init(hexString: tournamentTableCell.colorString!)
         }
+        
     }
 }
