@@ -69,6 +69,8 @@ class LeftMenuViewController: BaseViewController {
         
         let imageKey = commonSetting.imageKeyProfile
         
+        self.userProImage.image = UIImage(named:"UserDefaultImage")
+        
         if !(commonSetting.isEmptyStingOrWithBlankSpace(imageKey!))
         {
             //On Success Call
