@@ -32,7 +32,8 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     var textField = UITextField()
     let imagePicker = UIImagePickerController()
     var locationManager = CLLocationManager()
-    var autoLocationList = [String]()
+    var autoLocationList:NSArray = NSArray()
+  
     //MARK:- Life Cycle Methods
     
     override func viewDidLoad() {
@@ -40,9 +41,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         //Add Dismiss Keyboard Tap Gesture
         self.addDismisskeyboardTapGesture()
-       
         self.configureLocationTableView()
-       
         // Set Style Guide
         self.styleGuide()
         
@@ -614,16 +613,10 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
             // Success call implementation
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
-            
-            let listItems = responseDict["list"] as! NSArray
-            self.autoLocationList.removeAll()
-            
-            for i in 0 ..< (listItems.count)     {
-                let dicValue = listItems.object(at: i) as! NSDictionary
-                let address = dicValue.value(forKey: "formatted_address") as! String
-                print(address)
-                self.autoLocationList.append(address)
-            }
+            self.autoLocationList = responseDict["list"] as! NSArray
+//            var myNewName = NSMutableArray(array:self.autoLocationList)
+//            myNewName.removeAllObjects()
+
             self.tableView.reloadData()
             
         }
@@ -649,11 +642,11 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let dict:NSDictionary =  self.autoLocationList.object(at: indexPath.row) as! NSDictionary
         
-        let index = indexPath.row as Int
+//        let index = indexPath.row as Int
         cell.textLabel!.textColor = UIColor.white
-        cell.textLabel!.text = autoLocationList[index]
-        
+        cell.textLabel!.text = dict.stringValueForKey(key: "formatted_address")
         // Returning the cell
         return cell
     }
