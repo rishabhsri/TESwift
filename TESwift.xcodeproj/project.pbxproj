@@ -666,13 +666,10 @@
 				1847F2D21E0BEC2A0088E19D /* TETournamentBracketSpots+CoreDataProperties.swift in Sources */,
 				1847F2BA1E0BE9940088E19D /* TESwiftModel.m in Sources */,
 				188163D91E02779E00AB2E74 /* Window.swift in Sources */,
-<<<<<<< HEAD
-=======
 				18EF23941E03E31D00BE6F00 /* TEMyProfile+CoreDataClass.swift in Sources */,
 				18EF23971E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift in Sources */,
 				A1461EDC1E0D064000E5D289 /* SettingViewController.swift in Sources */,
 				187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */,
->>>>>>> 0657ea0ba4e14d4a630a4b8428bd3e0eab1ac719
 				188C8EB91DF979C300C2D52E /* AFImageDownloader.m in Sources */,
 				1847F2CB1E0BEC2A0088E19D /* TETournamentList+CoreDataClass.swift in Sources */,
 				188C8EBB1DF979C300C2D52E /* UIActivityIndicatorView+AFNetworking.m in Sources */,
