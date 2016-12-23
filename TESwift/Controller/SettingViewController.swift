@@ -12,7 +12,6 @@ class SettingViewController: BaseViewController {
    
     override func viewDidLoad() {
         super.viewDidLoad()
-         self.setupMenu()
 
         // Do any additional setup after loading the view.
     }

@@ -32,6 +32,7 @@
 		1847F2D31E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2C91E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift */; };
 		1847F2D41E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2CA1E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
+		185D036E1E0D127B00578DCE /* UniversalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
 		1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C81F1DF9491C00DAC10E /* LaunchScreen.storyboard */; };
@@ -118,6 +119,7 @@
 		1847F2C91E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEPlayerDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1847F2CA1E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEPlayerDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalSearchViewController.swift; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		186A23B71DF9431E005E78D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -234,6 +236,14 @@
 			path = UIImage;
 			sourceTree = "<group>";
 		};
+		185D036C1E0D127B00578DCE /* UniversalSearch */ = {
+			isa = PBXGroup;
+			children = (
+				185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */,
+			);
+			path = UniversalSearch;
+			sourceTree = "<group>";
+		};
 		186A23A11DF9431E005E78D2 = {
 			isa = PBXGroup;
 			children = (
@@ -272,6 +282,7 @@
 		1878C8161DF948B100DAC10E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				185D036C1E0D127B00578DCE /* UniversalSearch */,
 				A1461EDB1E0D064000E5D289 /* SettingViewController.swift */,
 				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
@@ -662,14 +673,12 @@
 				188163D11E02779E00AB2E74 /* PKHUDErrorView.swift in Sources */,
 				180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */,
 				1847F2D31E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift in Sources */,
+				185D036E1E0D127B00578DCE /* UniversalSearchViewController.swift in Sources */,
 				188C8EB21DF979C300C2D52E /* AFHTTPSessionManager.m in Sources */,
 				1847F2D21E0BEC2A0088E19D /* TETournamentBracketSpots+CoreDataProperties.swift in Sources */,
 				1847F2BA1E0BE9940088E19D /* TESwiftModel.m in Sources */,
 				188163D91E02779E00AB2E74 /* Window.swift in Sources */,
-				18EF23941E03E31D00BE6F00 /* TEMyProfile+CoreDataClass.swift in Sources */,
-				18EF23971E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift in Sources */,
 				A1461EDC1E0D064000E5D289 /* SettingViewController.swift in Sources */,
-				187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */,
 				188C8EB91DF979C300C2D52E /* AFImageDownloader.m in Sources */,
 				1847F2CB1E0BEC2A0088E19D /* TETournamentList+CoreDataClass.swift in Sources */,
 				188C8EBB1DF979C300C2D52E /* UIActivityIndicatorView+AFNetworking.m in Sources */,
