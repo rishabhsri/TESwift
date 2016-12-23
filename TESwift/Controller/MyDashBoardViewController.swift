@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITableViewDelegate {
+class MyDashBoardViewController: UniversalSearchViewController{
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -139,10 +139,10 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
         userInfo.setValue(loginInfo.intValueForKey(key: "userSubscription"), forKey: "userSubscription")
         
         _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
-                        UserDetails.save(self.manageObjectContext())
+        UserDetails.save(self.manageObjectContext())
         
-       let predi = NSPredicate(format: "userName == %@", loginInfo.stringValueForKey(key: "username"))
-       let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
+        let predi = NSPredicate(format: "userName == %@", loginInfo.stringValueForKey(key: "username"))
+        let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
         
         print(user.emailId!, user.name!, user.userName!, user.userId!, user.userSubscription)
     }
@@ -214,7 +214,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
         }
         
         // Service call for get user profile data (Hypes, upcomings, person, followers)
-         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
+        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
         
         
     }
@@ -274,6 +274,8 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
     func swipeDownHandler(sender:UISwipeGestureRecognizer){
         
         if !self.isSwipedUp {
+            
+            self.universalSearchContainerView.isHidden = false
             return
         }
         
@@ -509,116 +511,141 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
     
     //MARK:- ScrollView Delegates
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+    override func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        if commonSetting.isInternetAvailable {
-            if currentButtonIndex == 1 || currentButtonIndex == 2 {
-                var endScrolling = 0.0
-                var dimension = 0.0
-                
-                if IS_IPHONE {
-                    endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
-                    dimension = Double(scrollView.contentSize.height)
+        if scrollView == self.universalSearchTableView
+        {
+            super.scrollViewDidEndDecelerating(scrollView)
+        }else
+        {
+            if commonSetting.isInternetAvailable {
+                if currentButtonIndex == 1 || currentButtonIndex == 2 {
+                    var endScrolling = 0.0
+                    var dimension = 0.0
+                    
+                    if IS_IPHONE {
+                        endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
+                        dimension = Double(scrollView.contentSize.height)
+                    }else
+                    {
+                        endScrolling = Double(scrollView.contentOffset.x) + Double(scrollView.frame.size.width)
+                        dimension = Double(scrollView.contentSize.width)
+                    }
+                    
+                    if endScrolling >= dimension {
+                        
+                        if currentButtonIndex == 2 && self.isTournamentLoadMore {
+                            self.tournamentPageIndex += 1
+                            self.isTournamentLoadMore = false
+                            self.getTournaments()
+                        }else if currentButtonIndex == 1 && self.isHypeLoadMore
+                        {
+                            self.hypePageIndex += 1
+                            self.isHypeLoadMore = false
+                            self.getHypeTournaments()
+                        }
+                    }
                 }else
                 {
-                    endScrolling = Double(scrollView.contentOffset.x) + Double(scrollView.frame.size.width)
-                    dimension = Double(scrollView.contentSize.width)
-                }
-                
-                if endScrolling >= dimension {
+                    var endScrolling = 0.0
+                    var dimension = 0.0
                     
-                    if currentButtonIndex == 2 && self.isTournamentLoadMore {
-                        self.tournamentPageIndex += 1
-                        self.isTournamentLoadMore = false
-                        self.getTournaments()
-                    }else if currentButtonIndex == 1 && self.isHypeLoadMore
-                    {
-                        self.hypePageIndex += 1
-                        self.isHypeLoadMore = false
-                        self.getHypeTournaments()
-                    }
-                }
-            }else
-            {
-                var endScrolling = 0.0
-                var dimension = 0.0
-                
-                endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
-                dimension = Double(scrollView.contentSize.height)
-                
-                if endScrolling >= dimension {
+                    endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
+                    dimension = Double(scrollView.contentSize.height)
                     
-                    if  self.isNotificationLoadMore {
-                        self.notificationPageIndex += 1
-                        self.isNotificationLoadMore = false
-                        self.getNotifications()
+                    if endScrolling >= dimension {
+                        
+                        if  self.isNotificationLoadMore {
+                            self.notificationPageIndex += 1
+                            self.isNotificationLoadMore = false
+                            self.getNotifications()
+                        }
                     }
                 }
             }
+            
         }
     }
     
     // MARK: - TableView Delegate
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        
-        var count:Int = 0
-        if currentButtonIndex == 0 {
-            count = notificationToShowArray.count
-            
-        }else if currentButtonIndex == 1
-        {
-            count = hypetoShowArray.count
-            
-        }else if currentButtonIndex == 2
-        {
-            count = tournamentsToShowArray.count
+    override func numberOfSections(in tableView: UITableView) -> Int
+    {
+        if tableView == self.universalSearchTableView {
+            return super.numberOfSections(in: tableView)
         }
+        return 1
+    }
+    
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if count == 0{
-            let noDataLabel:UILabel  = UILabel.init(frame: CGRect(x:0,y:0,width:tableView.bounds.size.width,height:tableView.bounds.size.height))
-            if self.isResponseReceived {
-                noDataLabel.text = "No data available"
-            }else
+        if tableView == self.universalSearchTableView {
+            return super.tableView(tableView, numberOfRowsInSection: section)
+        }else
+        {
+            var count:Int = 0
+            if currentButtonIndex == 0 {
+                count = notificationToShowArray.count
+                
+            }else if currentButtonIndex == 1
             {
-                noDataLabel.text = "Loading..."
+                count = hypetoShowArray.count
+                
+            }else if currentButtonIndex == 2
+            {
+                count = tournamentsToShowArray.count
             }
-            noDataLabel.textColor = UIColor.lightGray
-            noDataLabel.textAlignment = NSTextAlignment.center
-            tableView.backgroundView = noDataLabel
+            
+            if count == 0{
+                let noDataLabel:UILabel  = UILabel.init(frame: CGRect(x:0,y:0,width:tableView.bounds.size.width,height:tableView.bounds.size.height))
+                if self.isResponseReceived {
+                    noDataLabel.text = "No data available"
+                }else
+                {
+                    noDataLabel.text = "Loading..."
+                }
+                noDataLabel.textColor = UIColor.lightGray
+                noDataLabel.textAlignment = NSTextAlignment.center
+                tableView.backgroundView = noDataLabel
+            }
+            else{
+                tableView.backgroundView   = nil
+            }
+            return count
         }
-        else{
-            tableView.backgroundView   = nil
-        }
-        return count
     }
     
     
     // create a cell for each table view row
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    override func  tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // create a new cell if needed or reuse an old one
-        
-        let cell:UITableViewCell
-        if currentButtonIndex == 0 {
-            
-            cell = self.configureNotificationCell(tableView: tableView, indexPath: indexPath)
-            tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
-            
-        }else if currentButtonIndex == 1
-        {
-            cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
-            tableView.separatorStyle = UITableViewCellSeparatorStyle.none
-            
+        if tableView == self.universalSearchTableView {
+            return super.tableView(tableView, cellForRowAt: indexPath)
         }else
         {
-            cell = self.configureTournamentCell(tableView: tableView, indexPath: indexPath)
-            tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+            let cell:UITableViewCell
+            if currentButtonIndex == 0 {
+                
+                cell = self.configureNotificationCell(tableView: tableView, indexPath: indexPath)
+                tableView.separatorStyle = UITableViewCellSeparatorStyle.singleLine
+                
+            }else if currentButtonIndex == 1
+            {
+                cell = self.configureHypeCell(tableView: tableView, indexPath: indexPath)
+                tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+                
+            }else
+            {
+                cell = self.configureTournamentCell(tableView: tableView, indexPath: indexPath)
+                tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+            }
+            tableView.separatorColor = UIColor.darkGray
+            cell.backgroundColor = UIColor.clear
+            
+            return cell
+            
         }
-        tableView.separatorColor = UIColor.darkGray
-        cell.backgroundColor = UIColor.clear
-        
-        return cell
     }
     
     
@@ -629,14 +656,20 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
         cell.layoutMargins = UIEdgeInsets.zero
     }
     
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         
-        if (currentButtonIndex == 0) {
-            return UITableViewAutomaticDimension
+        if tableView == self.universalSearchTableView {
+            return super.tableView(tableView, heightForRowAt: indexPath)
+        }else
+        {
+            if (currentButtonIndex == 0) {
+                return UITableViewAutomaticDimension
+            }
+            else{
+                return 139.0
+            }
         }
-        else{
-            return 139.0
-        }
+        
     }
     
     
@@ -825,7 +858,7 @@ class MyDashBoardViewController: BaseViewController, UITableViewDataSource,UITab
                     attributedStringMessage.addAttribute(NSFontAttributeName, value: fontForHeighlight, range: range)
                     attributedStringMessage.addAttribute("clickOnEvent", value: true, range: range)
                 }
-
+                
             }
         }
         

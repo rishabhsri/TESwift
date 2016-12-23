@@ -112,6 +112,17 @@ class BaseViewController: UIViewController{
         imageView.layer.opacity = 0.45
     }
     
+    func setBlurImageOnView(view:UIView) {
+        
+        view.backgroundColor = UIColor.clear
+        let toolBar:UIToolbar = UIToolbar.init(frame: view.bounds)
+        toolBar.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        toolBar.barTintColor = nil
+        toolBar.isTranslucent = true
+        toolBar.barStyle = .black
+        view.addSubview(toolBar)
+    }
+    
     func getLocaleDateFromString(dateString:String) -> Date {
         
         if self.dateFormatter == nil {
@@ -170,6 +181,13 @@ class BaseViewController: UIViewController{
             return String.init(format: "%@ - %@", targetStartDate,targetEndDate)
         }
     }
+    
+    func setSearchBarAppearanceSetting() -> Void {
+        
+        let font:UIFont = StyleGuide.fontFutaraRegular(withFontSize: IS_IPHONE ? 16 : 18)
+       
+    }
+    
     
     // MARK: - TextFields Delegate
     

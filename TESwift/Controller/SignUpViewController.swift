@@ -649,12 +649,9 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
-        
         let index = indexPath.row as Int
         cell.textLabel!.textColor = UIColor.white
         cell.textLabel!.text = autoLocationList[index]
-        
-        // Returning the cell
         return cell
     }
     
