@@ -8,10 +8,11 @@
 
 import UIKit
 
-class SettingViewController: UIViewController {
-
+class SettingViewController: BaseViewController {
+   
     override func viewDidLoad() {
         super.viewDidLoad()
+         self.setupMenu()
 
         // Do any additional setup after loading the view.
     }
@@ -21,7 +22,8 @@ class SettingViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-
+    
+    
     /*
     // MARK: - Navigation
 

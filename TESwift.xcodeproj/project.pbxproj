@@ -76,6 +76,7 @@
 		18F05B671E09169F0090F57C /* Futura.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F05B651E09169F0090F57C /* Futura.ttf */; };
 		18F05B6A1E095B450090F57C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F05B691E095B450090F57C /* NSDate+Utilities.m */; };
 		88FFFDA670937AC39853BFEA /* libPods-TESwift.a in Frameworks */ = {isa = PBXBuildFile; fileRef = AD878D8ACA7E8A4137C7D891 /* libPods-TESwift.a */; };
+		A1461EDC1E0D064000E5D289 /* SettingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1461EDB1E0D064000E5D289 /* SettingViewController.swift */; };
 		A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */; };
 		A1F7E8D01E02B903007E842D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7E8CF1E02B903007E842D /* CoreLocation.framework */; };
 		A1F7E8D21E02B92A007E842D /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A1F7E8D11E02B92A007E842D /* CoreFoundation.framework */; };
@@ -176,6 +177,7 @@
 		18F05B681E095B450090F57C /* NSDate+Utilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDate+Utilities.h"; sourceTree = "<group>"; };
 		18F05B691E095B450090F57C /* NSDate+Utilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDate+Utilities.m"; sourceTree = "<group>"; };
 		6BB637C563D0A7632130E645 /* Pods-TESwift.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TESwift.release.xcconfig"; path = "Pods/Target Support Files/Pods-TESwift/Pods-TESwift.release.xcconfig"; sourceTree = "<group>"; };
+		A1461EDB1E0D064000E5D289 /* SettingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingViewController.swift; sourceTree = "<group>"; };
 		A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SignUpViewController.swift; path = TESwift/Controller/SignUpViewController.swift; sourceTree = SOURCE_ROOT; };
 		A1F7E8CF1E02B903007E842D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		A1F7E8D11E02B92A007E842D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -254,6 +256,7 @@
 		1878C8161DF948B100DAC10E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				A1461EDB1E0D064000E5D289 /* SettingViewController.swift */,
 				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
 				184C42581DFA983F001B576A /* LogInViewController.swift */,
@@ -633,6 +636,7 @@
 				188163D91E02779E00AB2E74 /* Window.swift in Sources */,
 				18EF23941E03E31D00BE6F00 /* TEMyProfile+CoreDataClass.swift in Sources */,
 				18EF23971E03E31D00BE6F00 /* TETournamentList+CoreDataProperties.swift in Sources */,
+				A1461EDC1E0D064000E5D289 /* SettingViewController.swift in Sources */,
 				187E7D871DFEC75D00896C18 /* CommonSetting.swift in Sources */,
 				188C8EB91DF979C300C2D52E /* AFImageDownloader.m in Sources */,
 				188C8EBB1DF979C300C2D52E /* UIActivityIndicatorView+AFNetworking.m in Sources */,
