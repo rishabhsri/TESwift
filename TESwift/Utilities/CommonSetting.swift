@@ -13,6 +13,7 @@ class CommonSetting: NSObject {
     var userLoginInfo:NSDictionary = NSDictionary()
     var imageKeyProfile:String?
     var isInternetAvailable:Bool = false
+    var listViewColors:[String] = [String]()
     
     //Methods
     class var sharedInstance: CommonSetting {
@@ -20,6 +21,9 @@ class CommonSetting: NSObject {
             static let instance = CommonSetting()
         }
         return Singleton.instance
+    }
+    override init() {
+        self.listViewColors = ["#2F363C","#50373B","#5E4D3B","#313B33","#4E504B","#314F5B","#4C555C","#385253","#4E4946","#1D4657","#5D6C73","#A28F6E"]
     }
     
     func validatePassword(password:String) -> Bool {
