@@ -28,6 +28,8 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
     var items:NSMutableDictionary = NSMutableDictionary()
     var searchResults:NSMutableArray = NSMutableArray()
     
+    //MARK:- Lifecycle Methods
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -44,20 +46,16 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
         // Dispose of any resources that can be recreated.
     }
     
-    func getController() -> UniversalSearchViewController {
-        return self
-    }
-    
     //MARK:- ScrollView Delegates
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
         if commonSetting.isInternetAvailable {
-            var endScrolling = 0.0
-            var dimension = 0.0
+            var endScrolling = 0
+            var dimension = 0
             
-            endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
-            dimension = Double(scrollView.contentSize.height)
+            endScrolling = Int(scrollView.contentOffset.y) + Int(scrollView.frame.size.height)
+            dimension = Int(scrollView.contentSize.height)
             
             if endScrolling >= dimension {
                 
@@ -97,14 +95,16 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
                 
                 if self.searchResults.count > 0 {
                     self.parseSearchResult(result: self.searchResults)
+                    self.showTableData()
+                }else
+                {
+                    self.hideTableData()
                 }
-                self.universalSearchTableView.reloadData()
             }
-            print(responseDict)
         }
         let failure: searchFalureHandler = {error, responseString, responseType in
             self.hideHUD()
-            print(responseString)
+            self.hideTableData()
         }
         self.showHUD()
         ServiceCall.sharedInstance.sendSearchRequest(searchText: searchText, urlType: .UniversalSearch, pageNumber: "\(self.pageNumber)", successCall: success, falureCall: failure)
@@ -132,6 +132,9 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
             txfSearchField.attributedPlaceholder = NSAttributedString.init(string: "SEARCH                        ", attributes: [NSFontAttributeName:StyleGuide.fontFutaraRegular(withFontSize: 12)])
             //txfSearchField.delegate = self
         }
+        
+        self.universalSearchBar.showsCancelButton = true
+        
         
         //        if IS_IPHONE {
         //            self.setBlurImageOnView(view: self.universalSearchContainerView)
@@ -224,7 +227,7 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // create a new cell if needed or reuse an old one
-        let cell:UITableViewCell = tableView.dequeueReusableCell(withIdentifier: "searchResultCell", for: indexPath)
+        let cell:SearchTableViewCell = tableView.dequeueReusableCell(withIdentifier: "searchResultCell", for: indexPath) as! SearchTableViewCell
         var name:String = ""
         let key:String = self.keys[indexPath.section]
         if let array:NSArray = self.items.value(forKey: key) as! NSArray? {
@@ -233,9 +236,35 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
                 name = dict.stringValueForKey(key: "name")
             }
         }
-        cell.textLabel?.textColor = UIColor.white
-        cell.textLabel?.text = name.uppercased()
+        cell.lblTitle.text = name.uppercased()
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        let key:String = self.keys[indexPath.section]
+        if let array:NSArray = self.items.value(forKey: key) as! NSArray? {
+            if let dict:NSDictionary = array.object(at: indexPath.row) as? NSDictionary
+            {
+                let id:String = dict.stringValueForKey(key: "id")
+                if key == "Tournaments"
+                {
+                    
+                }else if key == "Seasons"
+                {
+                    
+                }else if key == "Events"
+                {
+                    
+                }else if key == "Teams"
+                {
+                    
+                }else if key == "Persons"
+                {
+                    
+                }
+            }
+        }
     }
     
     
@@ -258,70 +287,51 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
     public func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String)
     {
         if (searchBar.text?.characters.count)! >= 2{
-            self.isSearchEnabled = true
             self.pageNumber = 0
             self.filterSearchForText(searchText: searchText)
         }else{
-            self.clearData()
+            self.hideTableData()
+            ServiceCall.sharedInstance.cancleAllSearchRequests()
         }
     }
     
-    func clearData() {
+    func hideTableData() {
         self.isSearchEnabled = false
-        ServiceCall.sharedInstance.cancleAllSearchRequests()
         self.searchResults.removeAllObjects()
         self.universalSearchTableView.reloadData()
+        self.universalSearchTableView.isHidden = true
     }
     
-    public func searchBar(_ searchBar: UISearchBar, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool
-    {
-        return true
-    }// called before text changes
+    func showTableData() {
+        self.isSearchEnabled = true
+        self.universalSearchTableView.reloadData()
+        self.universalSearchTableView.isHidden = false
+    }
     
     public func searchBarSearchButtonClicked(_ searchBar: UISearchBar)
     {
-        
+        self.universalSearchBar.resignFirstResponder()
     }// called when keyboard search button pressed
     
     public func searchBarCancelButtonClicked(_ searchBar: UISearchBar)
     {
+        self.universalSearchBar.resignFirstResponder()
+        self.universalSearchBar.text = ""
+        self.hideTableData()
+        self.hideSearchBar()
         
     }// called when cancel button pressed
     
     
-    //MARK:- TextField Delegate
-    func textFieldShouldClear(_ textField: UITextField) -> Bool {
-        
-        self.clearData()
-        return true
-    }
-    
-    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
-        return true
-    }
-    
-    
-    // became first responder
-    func textFieldDidBeginEditing(_ textField: UITextField){
-        
-    }
-    
-    // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool{
-        return true
-    }
-    
-    // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
-    func textFieldDidEndEditing(_ textField: UITextField)
+    //MARK:- Searchbar Utilities
+    func hideSearchBar()
     {
-        
+        //overrided in child
     }
     
-    
-    // return NO to not change text
-    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
-        
-        return true
+    func showSearchBar()
+    {
+        //overrided in child
     }
     
 }

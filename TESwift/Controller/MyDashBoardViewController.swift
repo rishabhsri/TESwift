@@ -31,6 +31,11 @@ class MyDashBoardViewController: UniversalSearchViewController{
     @IBOutlet weak var profileImageTop: NSLayoutConstraint!//40
     @IBOutlet weak var emailTop: NSLayoutConstraint!// 5
     
+    //Gestures
+    
+    var swipeUpGesture:UISwipeGestureRecognizer?
+    var swipeDownGesture:UISwipeGestureRecognizer?
+    
     //Local Variables
     var isSwipedUp = false
     var isResponseReceived = false
@@ -93,7 +98,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
     
     func setupData() -> Void {
         
-        self.addSwipeGesture()
+        self.configureSwipeGestures()
         
         self.resetLoadMore()
         
@@ -105,7 +110,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
         
-}
+    }
     
     func resetLoadMore() {
         self.isTournamentLoadMore = false
@@ -206,7 +211,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
             print(responseDict)
             TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
             TEMyProfile.insertMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
-                        
+            
         }
         let failure: falureHandler = {error, responseString, responseType in
             
@@ -225,7 +230,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         tournamentDict.setValue(tournamentID, forKey: "tournamentID")
         
         let success:successHandler = {responceObject, responseType in
-           
+            
             let responseDict = self.parseResponse(responseObject: responceObject as Any)
             print(responseDict)
             let tournamentList:TETournamentList = TETournamentList.insertTournamentDetails(info: responseDict, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
@@ -233,8 +238,8 @@ class MyDashBoardViewController: UniversalSearchViewController{
         }
         
         let failure:falureHandler = {error, responseString, responseType in
-           print(responseString)
-        
+            print(responseString)
+            
         }
         
         ServiceCall.sharedInstance.sendRequest(parameters: tournamentDict, urlType: RequestedUrlType.GetTournamentById, method: "GET", successCall: success, falureCall: failure)
@@ -255,16 +260,46 @@ class MyDashBoardViewController: UniversalSearchViewController{
     
     //MARK:- SwipeGesture methods
     
-    func addSwipeGesture(){
+    func configureSwipeGestures()
+    {
         
-        let swipeUpGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(MyDashBoardViewController.swipeUpHandler(sender:)))
-        swipeUpGesture.direction = UISwipeGestureRecognizerDirection.up
+        self.swipeUpGesture = UISwipeGestureRecognizer()
+        self.swipeUpGesture?.direction = UISwipeGestureRecognizerDirection.up
         
-        let swipeDownGesture:UISwipeGestureRecognizer = UISwipeGestureRecognizer(target: self, action: #selector(MyDashBoardViewController.swipeDownHandler(sender:)))
-        swipeDownGesture.direction = UISwipeGestureRecognizerDirection.down
+        self.swipeDownGesture = UISwipeGestureRecognizer()
+        self.swipeDownGesture?.direction = UISwipeGestureRecognizerDirection.down
         
-        self.topViewBGImg.addGestureRecognizer(swipeUpGesture)
-        self.topViewBGImg.addGestureRecognizer(swipeDownGesture)
+        self.addSwipeGestureOnDashboard()
+    }
+    
+    func addSwipeGestureOnDashboard()
+    {
+        self.swipeUpGesture?.addTarget(self, action: #selector(MyDashBoardViewController.swipeUpHandler(sender:)))
+        self.swipeDownGesture?.addTarget(self, action: #selector(MyDashBoardViewController.swipeDownHandler(sender:)))
+        
+        self.topViewBGImg.addGestureRecognizer(self.swipeUpGesture!)
+        self.topViewBGImg.addGestureRecognizer(self.swipeDownGesture!)
+    }
+    
+    func removeSwipeGestureFromDashBoard()
+    {
+        self.swipeUpGesture?.removeTarget(self, action: #selector(MyDashBoardViewController.swipeUpHandler(sender:)))
+        self.swipeDownGesture?.removeTarget(self, action: #selector(MyDashBoardViewController.swipeDownHandler(sender:)))
+        
+        self.topViewBGImg.removeGestureRecognizer(self.swipeUpGesture!)
+        self.topViewBGImg.removeGestureRecognizer(self.swipeDownGesture!)
+    }
+    
+    func addSwipeGestureOnSearchBarContainer()
+    {
+        self.swipeUpGesture?.addTarget(self, action: #selector(MyDashBoardViewController.searchContainerSwipeUp(sender:)))
+        self.universalSearchContainerView.addGestureRecognizer(self.swipeUpGesture!)
+    }
+    
+    func removeSwipeGestureFromSearchContainer()
+    {
+        self.swipeUpGesture?.removeTarget(self, action: #selector(MyDashBoardViewController.searchContainerSwipeUp(sender:)))
+        self.universalSearchContainerView.removeGestureRecognizer(self.swipeUpGesture!)
     }
     
     func swipeUpHandler(sender:UISwipeGestureRecognizer){
@@ -295,8 +330,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
     func swipeDownHandler(sender:UISwipeGestureRecognizer){
         
         if !self.isSwipedUp {
-            
-            self.universalSearchContainerView.isHidden = false
+            self.showSearchBar()
             return
         }
         
@@ -317,6 +351,26 @@ class MyDashBoardViewController: UniversalSearchViewController{
         })
         
         commonSetting.animateProfileImage(imageView: self.userProImage)
+    }
+    
+    func searchContainerSwipeUp(sender:UISwipeGestureRecognizer){
+        self.hideSearchBar()
+    }
+    
+    //MARK:- Searchbar Utilities
+    override func hideSearchBar()
+    {
+        self.removeSwipeGestureFromSearchContainer()
+        self.addSwipeGestureOnDashboard()
+        self.universalSearchContainerView.isHidden = true
+    }
+    
+    override func showSearchBar()
+    {
+        self.removeSwipeGestureFromDashBoard()
+        self.addSwipeGestureOnSearchBarContainer()
+        self.universalSearchContainerView.isHidden = false
+        self.universalSearchBar.becomeFirstResponder()
     }
     
     // MARK: - IBOutlet Actions
@@ -541,16 +595,16 @@ class MyDashBoardViewController: UniversalSearchViewController{
         {
             if commonSetting.isInternetAvailable {
                 if currentButtonIndex == 1 || currentButtonIndex == 2 {
-                    var endScrolling = 0.0
-                    var dimension = 0.0
+                    var endScrolling = 0
+                    var dimension = 0
                     
                     if IS_IPHONE {
-                        endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
-                        dimension = Double(scrollView.contentSize.height)
+                        endScrolling = Int(scrollView.contentOffset.y) + Int(scrollView.frame.size.height)
+                        dimension = Int(scrollView.contentSize.height)
                     }else
                     {
-                        endScrolling = Double(scrollView.contentOffset.x) + Double(scrollView.frame.size.width)
-                        dimension = Double(scrollView.contentSize.width)
+                        endScrolling = Int(scrollView.contentOffset.x) + Int(scrollView.frame.size.width)
+                        dimension = Int(scrollView.contentSize.width)
                     }
                     
                     if endScrolling >= dimension {
@@ -568,11 +622,11 @@ class MyDashBoardViewController: UniversalSearchViewController{
                     }
                 }else
                 {
-                    var endScrolling = 0.0
-                    var dimension = 0.0
+                    var endScrolling = 0
+                    var dimension = 0
                     
-                    endScrolling = Double(scrollView.contentOffset.y) + Double(scrollView.frame.size.height)
-                    dimension = Double(scrollView.contentSize.height)
+                    endScrolling = Int(scrollView.contentOffset.y) + Int(scrollView.frame.size.height)
+                    dimension = Int(scrollView.contentSize.height)
                     
                     if endScrolling >= dimension {
                         
@@ -693,23 +747,27 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
     }
     
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
-        if self.currentButtonIndex == 2{
-            let tournament:NSDictionary = self.tournamentsToShowArray.object(at: indexPath.row) as! NSDictionary
-            let tournId:Int = tournament.intValueForKey(key: "tournamentID")
-            self.getTournamentById(tournamentID: tournId)
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        if tableView == self.universalSearchTableView {
+            return super.tableView(tableView, didSelectRowAt: indexPath)
+        }else
+        {
+            if self.currentButtonIndex == 2{
+                let tournament:NSDictionary = self.tournamentsToShowArray.object(at: indexPath.row) as! NSDictionary
+                let tournId:Int = tournament.intValueForKey(key: "tournamentID")
+                self.getTournamentById(tournamentID: tournId)
+            }
         }
     }
     
-    func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
+    func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> HypeTableViewCell {
         
-        let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
+        let cell:HypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HypeTableViewCell", for: indexPath) as! HypeTableViewCell
         
         let hypeInfo:NSDictionary = self.parseResponse(responseObject: hypetoShowArray.object(at: indexPath.row))
         
-        
-        // SETUP HYPE BORDER IMAGE
+        // Set Border Image
         if hypeInfo.stringValueForKey(key: "hypableType") == "TOURNAMENT" {
             cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
         }else
@@ -717,65 +775,63 @@ class MyDashBoardViewController: UniversalSearchViewController{
             cell.hypeBorderImg.image = UIImage(named: "EventCellHyped")
         }
         cell.hypeBgImg.image = nil
+        
+        cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name").uppercased()
+        cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game").uppercased()
+        cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue").uppercased()
+        cell.dateLbl.text = self.getLocaleDateStringFromString(dateString: hypeInfo.stringValueForKey(key: "startDate"))
+        
+        //Set Default Image
+        self.setDefaultImages(cell: cell, indexPath: indexPath)
+        
+        //Download Image
         let imageKey = hypeInfo.stringValueForKey(key: "imageKey")
-        
-        weak var weakCell:hypeTableViewCell? = cell
-        
+        weak var weakCell:HypeTableViewCell? = cell
         let sucess:downloadImageSuccess = {image, imageKey in
             
             weakCell!.hypeBgImg.image = image
             weakCell!.progressBar.stopAnimating()
-            
         }
         
         let failure:downloadImageFailed = {error, responseString in
             
-            // On failure implementation
+            weakCell!.progressBar.stopAnimating()
         }
         
-        // CAll api if image key available..
         if imageKey != "" {
             cell.progressBar.startAnimating()
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
-        }else
-        {
-            // set default image if image key is not available..
-            cell.progressBar.stopAnimating()
-            cell.hypeBgImg.image = UIImage(named: "Default")
         }
-        
-        cell.hypNameLbl.text = hypeInfo.stringValueForKey(key: "name")
-        cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game")
-        cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue")
-        cell.dateLbl.text = self.getLocaleDateStringFromString(dateString: hypeInfo.stringValueForKey(key: "startDate"))
-        
         return cell
     }
     
     
-    func  configureTournamentCell(tableView:UITableView, indexPath:IndexPath) -> hypeTableViewCell {
+    func  configureTournamentCell(tableView:UITableView, indexPath:IndexPath) -> HypeTableViewCell {
         
-        let cell:hypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "hypeTableViewCell", for: indexPath) as! hypeTableViewCell
+        let cell:HypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HypeTableViewCell", for: indexPath) as! HypeTableViewCell
         
         let tournaInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
         
         let val = tournaInfo.value(forKey: "hype") as! NSNumber
-        
         if val == 0 {
             cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
         }else
         {
             cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
         }
-        
         cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
-        
         cell.hypeBgImg.image = nil
+        cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name").uppercased()
+        cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game").uppercased()
+        cell.locationLbl.text = tournaInfo.stringValueForKey(key: "venue").uppercased()
+        cell.dateLbl.text = self.getFormattedDateString(info: tournaInfo, indexPath: indexPath, format: "yyyy")
         
+        //Set Default Image
+        self.setDefaultImages(cell: cell, indexPath: indexPath)
+        
+        //Download Image
         let imageKey = tournaInfo.stringValueForKey(key: "imageKey")
-        
-        weak var weakCell:hypeTableViewCell? = cell
-        
+        weak var weakCell:HypeTableViewCell? = cell
         let sucess:downloadImageSuccess = {image, imageKey in
             
             weakCell!.hypeBgImg.image = image
@@ -784,21 +840,13 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         let failure:downloadImageFailed = {error, responseString in
             
-            // On failure implementation
+            weakCell!.progressBar.stopAnimating()
         }
+        
         if imageKey != "" {
             cell.progressBar.startAnimating()
             ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
-        }else
-        {
-            cell.progressBar.stopAnimating()
-            cell.hypeBgImg.image = UIImage(named: "Default")
         }
-        cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name").uppercased()
-        cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game")
-        cell.locationLbl.text = tournaInfo.stringValueForKey(key: "venue")
-        cell.dateLbl.text = self.getFormattedDateString(info: tournaInfo, indexPath: indexPath, format: "yyyy")
-        
         
         return cell
     }
