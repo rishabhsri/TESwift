@@ -69,7 +69,7 @@ class LeftMenuViewController: BaseViewController {
         
         let imageKey = commonSetting.imageKeyProfile
         
-        if !commonSetting.isEmptyStingOrWithBlankSpace(imageKey!)
+        if !(commonSetting.isEmptyStingOrWithBlankSpace(imageKey!))
         {
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
@@ -112,6 +112,10 @@ class LeftMenuViewController: BaseViewController {
     }
     
     @IBAction func settingAction(_ sender: AnyObject) {
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        let settingVC:SettingViewController = storyBoard.instantiateViewController(withIdentifier: "SettingViewControllerID") as! SettingViewController
+        self.setFrontVC(frontVC: settingVC)
+        
     }
     
     @IBAction func logoutAction(_ sender: AnyObject) {

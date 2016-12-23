@@ -34,6 +34,12 @@ class CommonSetting: NSObject {
         }
     }
     
+    func validateNumber(_ number: String) -> Bool {
+        let usernameRegEx = "^[0-9]+$"
+        let usernameValidator = NSPredicate(format: "SELF MATCHES %@", usernameRegEx)
+        return usernameValidator.evaluate(with: number)
+    }
+
     func validateEmailID(emailID:String) -> Bool {
         
         let emailString = emailID.replacingOccurrences(of: " ", with: "")
