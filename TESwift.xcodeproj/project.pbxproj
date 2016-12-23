@@ -256,13 +256,13 @@
 		1878C8161DF948B100DAC10E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				A1461EDB1E0D064000E5D289 /* SettingViewController.swift */,
 				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				188C8EC31DF97D6900C2D52E /* BaseViewController.swift */,
 				184C42581DFA983F001B576A /* LogInViewController.swift */,
 				A1D555D71DFAFED60077EF4E /* SignUpViewController.swift */,
 				188FEAAA1DFEB52F00C8A181 /* MyDashBoardViewController.swift */,
 				18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */,
+				A1461EDB1E0D064000E5D289 /* SettingViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
