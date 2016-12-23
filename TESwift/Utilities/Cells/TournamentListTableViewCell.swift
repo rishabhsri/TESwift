@@ -15,6 +15,10 @@ class TournamentListTableViewCell: UITableViewCell {
     @IBOutlet weak var tournmentName: UILabel!
     @IBOutlet weak var yearLabel: UILabel!
     
+    @IBOutlet weak var progressBar: UIActivityIndicatorView!
+    
+    var colorString:String?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

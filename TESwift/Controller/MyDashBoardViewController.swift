@@ -21,7 +21,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
     @IBOutlet weak var hypBtn: UIButton!
     @IBOutlet weak var tournamentsBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var menuButton: UIButton!
+ 
     
     //autolayout constants                              // Actual values
     @IBOutlet weak var menuBtnTop: NSLayoutConstraint!  // 30
@@ -58,8 +58,6 @@ class MyDashBoardViewController: UniversalSearchViewController{
         super.viewDidLoad()
         
         self.setUpStyleGuide()
-        
-        self.setupMenu(menuButton: menuButton)
         
         self.setupData()
         

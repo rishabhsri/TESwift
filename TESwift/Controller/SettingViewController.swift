@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPickerViewDelegate {
+class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPickerViewDelegate,UITextFieldDelegate {
    
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
@@ -25,6 +25,7 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
     @IBOutlet weak var lblTermsConditionTitle: UIButton!
     @IBOutlet weak var lblPrivacyPolicyTitle: UIButton!
     
+    var activeTextField = UITextField()
     var locationManager = CLLocationManager()
     var aryAge:NSMutableArray = NSMutableArray()
     var aryGender:NSMutableArray = NSMutableArray()
@@ -47,6 +48,7 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.configurePickerViewDta()
        
         self.styleGuide()
         self.configurePickerView()
@@ -187,41 +189,28 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
         
         toolBar.backgroundColor = UIColor.black
         
-        
-        let defaultButton = UIBarButtonItem(title: "Default", style: UIBarButtonItemStyle.plain, target: self, action: #selector(SettingViewController.tappedToolBarBtn))
-        
         let doneButton = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.done, target: self, action: #selector(SettingViewController.donePressed))
         
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.flexibleSpace, target: self, action: nil)
         
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: self.view.frame.size.width / 3, height: self.view.frame.size.height))
-        
-        label.font = UIFont(name: "Futura", size: 12)
-        
-        label.backgroundColor = UIColor.clear
-        
-        label.textColor = UIColor.white
-        
-        label.text = "Pick one number"
-        
-        label.textAlignment = NSTextAlignment.center
-        
-        let textBtn = UIBarButtonItem(customView: label)
-        
-        toolBar.setItems([defaultButton,flexSpace,textBtn,flexSpace,doneButton], animated: true)
+        toolBar.setItems([flexSpace,flexSpace,doneButton], animated: true)
         
         self.txtAge.inputAccessoryView = toolBar
 
     }
     
-    func configurePickerViewDta() -> NSArray {
-        if self.aryAge == nil {
-            self.aryAge = NSMutableArray()
-            for i in 10..<100 {
-                self.aryAge.add(i)
-            }
+    func configurePickerViewDta()
+    {
+        if(self.activeTextField == self.txtAge)
+        {
+       self.aryAge = NSMutableArray()
+       for i in 10..<100 {
+        self.aryAge.add(String(format: "%d",i))
+      }
+    }
+        else{
+    
         }
-        return self.aryAge
     }
     
     
@@ -235,7 +224,7 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
         
         self.txtAge.text = "10"
         
-       self.txtAge.resignFirstResponder()
+     self.txtAge.resignFirstResponder()
     }
     
     func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -247,15 +236,18 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
     }
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        
         return self.aryAge.count
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return self.aryAge[row] as? String
+        
+        let title: String = self.aryAge.object(at: row) as! String
+        return title
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.txtAge.text = self.aryAge[row] as? String
+        self.txtAge.text = self.aryAge.object(at: row) as? String
 
     }
 
