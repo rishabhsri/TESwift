@@ -9,24 +9,23 @@
 import UIKit
 
 class TournamentListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource {
-
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tounamentEmptyView: UIView!
     @IBOutlet weak var navigationBlurView: UIVisualEffectView!
     @IBOutlet weak var tournamentTitleLbl: UILabel!
     
-
     //class Variables
     var tournamentsArray:NSMutableArray = NSMutableArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         self.setStyleGuide()
         self.getUsersTournament()
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -37,8 +36,8 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.tounamentEmptyView.isHidden = true
     }
     
-    // MARK: - Uitlity
-
+    // MARK:- Uitlity
+    
     func getUsersTournament(){
         
         let success: successHandler = {responseObject, responseType in
@@ -47,8 +46,8 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
             print(responseDict)
             if let array:NSArray = responseDict.object(forKey: "list") as? NSArray
             {
-               self.tournamentsArray = NSMutableArray.init(array: array)
-               self.tableView.reloadData()
+                self.tournamentsArray = NSMutableArray.init(array: array)
+                self.tableView.reloadData()
             }
             
         }
@@ -56,30 +55,21 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
             
             print(responseString)
         }
-
+        
         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetUsersTournament, method: "GET", successCall: success, falureCall: failure)
     }
     
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
-    // MARK: - TableView Delegate
     
-     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-     
+    // MARK:- TableView Delegate
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return tournamentsArray.count
     }
     
     
     // create a cell for each table view row
-     func  tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func  tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         // create a new cell if needed or reuse an old one
         let cell:TournamentListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "tournamentCell", for: indexPath) as! TournamentListTableViewCell
@@ -90,7 +80,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.setDefaultImages(cell: cell, indexPath: indexPath)
         
         let imagekey:String = tournaDict.stringValueForKey(key: "imageKey")
-         weak var weakCell:TournamentListTableViewCell? = cell
+        weak var weakCell:TournamentListTableViewCell? = cell
         let sucess:downloadImageSuccess = {image, imageKey in
             
             weakCell!.backGroundImage.image = image
@@ -106,12 +96,10 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
             cell.progressBar.startAnimating()
             ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }
-
         
-            return cell
-            
-        }
+        return cell
     }
+}
 
-    
+
 
