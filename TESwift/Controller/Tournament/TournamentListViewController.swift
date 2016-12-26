@@ -110,6 +110,8 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.searchBar.isHidden = false
         self.toolBar.isHidden = false
         self.menuButton.isHidden = true
+        self.searchBtnOutlet.isHidden = true
+        self.plusIcon.isHidden = true
         self.tableView.alpha = 0.5
         self.tournamentTitleLbl.isHidden = true
     }
@@ -121,6 +123,9 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.searchBar.isHidden = true
         self.toolBar.isHidden = true
         self.menuButton.isHidden = false
+        self.searchBtnOutlet.isHidden = false
+        self.plusIcon.isHidden = false
+
         self.tableView.alpha = 1.0
         self.tournamentTitleLbl.isHidden = false
         self.searchBar.text = ""
