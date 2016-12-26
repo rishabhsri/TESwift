@@ -66,29 +66,32 @@ class LeftMenuViewController: BaseViewController {
         
         self.userProImage.image = UIImage(named:"UserDefaultImage")
         
-        if !(commonSetting.isEmptyStingOrWithBlankSpace(imageKey!))
-        {
-            //On Success Call
-            let success:downloadImageSuccess = {image,imageKey in
-                // Success call implementation
+        if imageKey != nil {
+            if !(commonSetting.isEmptyStingOrWithBlankSpace(imageKey!))
+            {
+                //On Success Call
+                let success:downloadImageSuccess = {image,imageKey in
+                    // Success call implementation
+                    
+                    self.userProImage.setRoundedImage(image: image, borderWidth: 0, imageWidth: self.userProImage.frame.size.width)
+                    
+                    self.backGround_BG.image = image
+                    
+                    self.setBlurImage(imageView: self.backGround_BG)
+                    
+                }
                 
-                self.userProImage.setRoundedImage(image: image, borderWidth: 0, imageWidth: self.userProImage.frame.size.width)
+                //On Falure Call
+                let falure:downloadImageFailed = {error,responseMessage in
+                    
+                    // Falure call implementation
+                    
+                }
                 
-                self.backGround_BG.image = image
-                
-                self.setBlurImage(imageView: self.backGround_BG)
-                
+                ServiceCall.sharedInstance.downloadImage(imageKey: imageKey!, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
             }
-            
-            //On Falure Call
-            let falure:downloadImageFailed = {error,responseMessage in
-                
-                // Falure call implementation
-                
-            }
-            
-            ServiceCall.sharedInstance.downloadImage(imageKey: imageKey!, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
         }
+        
     }
     
     // MARK: - IBActions

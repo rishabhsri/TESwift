@@ -26,6 +26,7 @@ enum RequestedUrlType {
     case GetNotificationList
     case UniversalSearch
     case GetUsersTournament
+    case SearchTournament
 }
 
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
@@ -136,6 +137,9 @@ class ServiceCall: NSObject {
         case .GetUsersTournament:
             urlString = String(format: "%@/tournament/administeredbyme",Main_Header)
             break
+        case .SearchTournament:
+            urlString = String(format: "%@/tournament?name=%@",Main_Header,parameter.stringValueForKey(key: "searchText"))
+            break
     
         }
         
@@ -171,6 +175,10 @@ class ServiceCall: NSObject {
         }else if urlType == .HypeSearch
         {
             manager.requestSerializer.setValue("\(HYPE_PAGE_LIMIT)", forHTTPHeaderField: "pagesize")
+            manager.requestSerializer.setValue(parameters.stringValueForKey(key: "pagenumber"), forHTTPHeaderField: "pagenumber")
+        }else if urlType == .GetUsersTournament
+        {
+            manager.requestSerializer.setValue("\(PAGE_SIZE)", forHTTPHeaderField: "pagesize")
             manager.requestSerializer.setValue(parameters.stringValueForKey(key: "pagenumber"), forHTTPHeaderField: "pagenumber")
         }
         
