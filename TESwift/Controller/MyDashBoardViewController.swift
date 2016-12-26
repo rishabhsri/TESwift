@@ -30,6 +30,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
     @IBOutlet weak var headerViewHeight: NSLayoutConstraint!//317
     @IBOutlet weak var profileImageTop: NSLayoutConstraint!//40
     @IBOutlet weak var emailTop: NSLayoutConstraint!// 5
+    @IBOutlet weak var searchBarTop: NSLayoutConstraint! // -44
     
     //Gestures
     
@@ -350,6 +351,10 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.removeSwipeGestureFromSearchContainer()
         self.addSwipeGestureOnDashboard()
         self.universalSearchContainerView.isHidden = true
+        
+        self.searchBarTop.constant = -44
+        self.view.setNeedsLayout()
+        self.view.layoutIfNeeded()
     }
     
     override func showSearchBar()
@@ -357,7 +362,16 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.removeSwipeGestureFromDashBoard()
         self.addSwipeGestureOnSearchBarContainer()
         self.universalSearchContainerView.isHidden = false
-        self.universalSearchBar.becomeFirstResponder()
+        
+        UIView.animate(withDuration: 0.4, animations: {() -> Void in
+            
+            self.searchBarTop.constant = 0
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+            
+        }, completion: {(isCompleted) -> Void in
+            self.universalSearchBar.becomeFirstResponder()
+        })
     }
     
     // MARK: - IBOutlet Actions
@@ -818,16 +832,16 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         //Download Image
         let imageKey = tournaInfo.stringValueForKey(key: "imageKey")
-        weak var weakCell:HypeTableViewCell? = cell
+
         let sucess:downloadImageSuccess = {image, imageKey in
             
-            weakCell!.hypeBgImg.image = image
-            weakCell!.progressBar.stopAnimating()
+            cell.hypeBgImg.image = image
+            cell.progressBar.stopAnimating()
         }
         
         let failure:downloadImageFailed = {error, responseString in
             
-            weakCell!.progressBar.stopAnimating()
+            cell.progressBar.stopAnimating()
         }
         
         if imageKey != "" {
