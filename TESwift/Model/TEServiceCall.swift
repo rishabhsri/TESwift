@@ -28,6 +28,7 @@ enum RequestedUrlType {
     case GetUsersTournament
     case SearchTournament
     case UpdateUserProfile
+    case GetGameList
 }
 
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
@@ -140,6 +141,8 @@ class ServiceCall: NSObject {
             break
         case .SearchTournament:
             urlString = String(format: "%@/tournament?name=%@",Main_Header,parameter.stringValueForKey(key: "searchText"))
+        case .GetGameList:
+            urlString = String(format: "%@/games",Main_Header)
             break
         case .UpdateUserProfile:
             urlString = String(format: "%@/user/update/profile",Network_Header)

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TournamentListTableViewCell: UITableViewCell {
+class TournamentListTableViewCell: SWTableViewCell {
     
     @IBOutlet weak var backGroundImage: UIImageView!
     @IBOutlet weak var borderImage: UIImageView!

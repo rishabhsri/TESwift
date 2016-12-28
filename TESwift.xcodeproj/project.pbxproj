@@ -14,6 +14,8 @@
 		180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */; };
 		182742BF1E0D2AAF00F00EDB /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182742BE1E0D2AAE00F00EDB /* TournamentListViewController.swift */; };
 		182742C11E0D326600F00EDB /* TournamentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */; };
+		182D29E81E125AE800998277 /* CreateTournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D29E71E125AE800998277 /* CreateTournamentViewController.swift */; };
+		182FB2421E13F4FE007361AD /* GameListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */; };
 		1847F2B61E0BE9940088E19D /* TEMyProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2AB1E0BE9930088E19D /* TEMyProfile+CoreDataClass.swift */; };
 		1847F2B71E0BE9940088E19D /* TEMyProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2AC1E0BE9930088E19D /* TEMyProfile+CoreDataProperties.swift */; };
 		1847F2B91E0BE9940088E19D /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2AF1E0BE9940088E19D /* TEServiceCall.swift */; };
@@ -103,6 +105,8 @@
 		180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
 		182742BE1E0D2AAE00F00EDB /* TournamentListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
 		182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TournamentListTableViewCell.swift; sourceTree = "<group>"; };
+		182D29E71E125AE800998277 /* CreateTournamentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTournamentViewController.swift; sourceTree = "<group>"; };
+		182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameListTableViewCell.swift; sourceTree = "<group>"; };
 		1847F2AB1E0BE9930088E19D /* TEMyProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEMyProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1847F2AC1E0BE9930088E19D /* TEMyProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEMyProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1847F2AF1E0BE9940088E19D /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
@@ -245,6 +249,7 @@
 		182742BD1E0D2A5800F00EDB /* Tournament */ = {
 			isa = PBXGroup;
 			children = (
+				182D29E71E125AE800998277 /* CreateTournamentViewController.swift */,
 				182742BE1E0D2AAE00F00EDB /* TournamentListViewController.swift */,
 			);
 			name = Tournament;
@@ -400,6 +405,7 @@
 				188163DD1E02BE4D00AB2E74 /* NotificationTableViewCell.swift */,
 				182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */,
 				185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */,
+				182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -607,7 +613,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		A12A13A836F2D72B5C8EF887 /* [CP] Copy Pods Resources */ = {
@@ -667,6 +673,7 @@
 				188163D81E02779E00AB2E74 /* PKHUDWideBaseView.swift in Sources */,
 				188163D31E02779E00AB2E74 /* PKHUDRotatingImageView.swift in Sources */,
 				182742BF1E0D2AAF00F00EDB /* TournamentListViewController.swift in Sources */,
+				182FB2421E13F4FE007361AD /* GameListTableViewCell.swift in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
 				180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */,
@@ -686,6 +693,7 @@
 				188163B41E02764500AB2E74 /* StyleGuide.swift in Sources */,
 				1847F2CE1E0BEC2A0088E19D /* TEStaffDetail+CoreDataProperties.swift in Sources */,
 				1847F2BE1E0BE9940088E19D /* UserSocialDetail+CoreDataProperties.swift in Sources */,
+				182D29E81E125AE800998277 /* CreateTournamentViewController.swift in Sources */,
 				188C8EBA1DF979C300C2D52E /* AFNetworkActivityIndicatorManager.m in Sources */,
 				180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */,
 				188C8EB61DF979C300C2D52E /* AFURLResponseSerialization.m in Sources */,
