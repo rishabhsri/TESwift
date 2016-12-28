@@ -9,8 +9,30 @@
 import UIKit
 import CoreLocation
 
-class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPickerViewDelegate,UITextFieldDelegate {
-   
+enum SwitchType : Int {
+    case MAILSWITCH = 0
+    case MESSAGINGSWITCH
+    case LOCATIONSWITCH
+}
+
+class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate, UIPickerViewDelegate,UITextFieldDelegate {
+    
+     var userID = ""
+     var msgSettingTag:Int = 0
+     var noOfOFFMsgSettings = 0
+     var profileImageKey = ""
+     var teamIconImageKey = ""
+     var heightAdj: Float = 0.0
+     var linkAccountHeight: Float = 0.0
+    
+    @IBOutlet weak var lblNotifySettingTop: NSLayoutConstraint!
+    @IBOutlet weak var lblBrainTreeTop: NSLayoutConstraint!
+    @IBOutlet weak var messagingViewHeight: NSLayoutConstraint!
+    @IBOutlet weak var btnLocation: UIButton!
+    @IBOutlet weak var btnSubscriber: UIButton!
+    @IBOutlet weak var lblSubscriberValue: UILabel!
+    @IBOutlet weak var notifySettingYConstant: NSLayoutConstraint!
+    @IBOutlet weak var lblNotificationSetting: UILabel!
     @IBOutlet weak var txtName: UITextField!
     @IBOutlet weak var txtEmail: UITextField!
     @IBOutlet weak var txtPhoneNumber: UITextField!
@@ -19,33 +41,40 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
     @IBOutlet weak var txtLocation: UITextField!
     @IBOutlet weak var lblNotifySettingTitle: UILabel!
     @IBOutlet weak var lblSocialConnectTitle: UILabel!
+    @IBOutlet weak var lblTeamPicture: UILabel!
+    @IBOutlet weak var btnTeamPicture: UIButton!
     @IBOutlet weak var lblTeamPicturetitle: UILabel!
     @IBOutlet weak var lblBrainTreeAccTitle: UIButton!
     @IBOutlet weak var lblSubscriber: UILabel!
     @IBOutlet weak var lblTermsConditionTitle: UIButton!
     @IBOutlet weak var lblPrivacyPolicyTitle: UIButton!
+    @IBOutlet weak var profilePicButton: UIButton!
+    
+    
+    
+    @IBOutlet weak var mailSwitch: UISwitch!
+    @IBOutlet weak var messagingSwitch: UISwitch!
+    @IBOutlet weak var switchFollow: UISwitch!
+    @IBOutlet weak var switchNotify_Approved_Player: UISwitch!
+    @IBOutlet weak var switchNotify_Followers: UISwitch!
+    @IBOutlet weak var switchNotify_Match_Admin: UISwitch!
+    @IBOutlet weak var SwitchNotify_Match_Player: UISwitch!
+    @IBOutlet weak var switchNotify_Tournament_Players: UISwitch!
+    @IBOutlet weak var switchPlayer_Added_To_Tournament: UISwitch!
+    @IBOutlet weak var switchTournament_Started: UISwitch!
+   
+    @IBOutlet weak var messagingCategoryView: UIView!
+    
+    @IBOutlet weak var ContainerViewHieght: NSLayoutConstraint!
+    
     
     var activeTextField = UITextField()
+    let imagePicker = UIImagePickerController()
     var locationManager = CLLocationManager()
     var aryAge:NSMutableArray = NSMutableArray()
     var aryGender:NSMutableArray = NSMutableArray()
     
-    
-    @IBAction func getUserLocation(_ sender: AnyObject) {
-        self.showHUD()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-
-    }
-    
-    @IBAction func btnDoneClicked(_ sender: AnyObject) {
-        if isValid() {
-          
-        }
-        
-    }
+   
     override func viewDidLoad() {
         super.viewDidLoad()
         self.configurePickerViewDta()
@@ -54,6 +83,8 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
         
         self.setupMenu()
         
+        self.updateSettingDetails()
+        self.linkAccountHeight = 0.0
         self.configurePickerView()
             //Add Dismiss Keyboard Tap Gesture
         self.addDismisskeyboardTapGesture()
@@ -65,6 +96,7 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
    
     //MARK:- Utility Methods
     func styleGuide()->Void {
@@ -93,7 +125,7 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
         
         var flag:Bool = true
         
-        if (commonSetting.isEmptyStingOrWithBlankSpace(self.txtName.text!))
+        if (self.txtName.text!.isEmpty)
         {
             self.showAlert(title: kError, message: kEnterUsername)
             flag = false
@@ -122,6 +154,300 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
 
         return flag
     }
+    
+    func isCasualSubscriber() -> Bool {
+        if commonSetting.myProfile.showTeamIcon.hashValue == 1 {
+            return true
+        }
+        return false
+    }
+    
+    func updateSettingDetails()  {
+        let predicate = NSPredicate(format: "username == %@", (commonSetting.userLoginInfo.stringValueForKey(key: "username")))
+        commonSetting.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
+       
+        if self.isCasualSubscriber(){
+            self.lblTeamPicture.isHidden = false
+            self.btnTeamPicture.isHidden = false
+             self.lblNotifySettingTop.constant = 106
+//            self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant + 106
+        }
+        else{
+            lblTeamPicture.isHidden = true
+            btnTeamPicture.isHidden = true
+            self.lblNotifySettingTop.constant = 0
+            self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant - 106
+        }
+        
+        self.txtName.text = commonSetting.myProfile.name
+        self.txtEmail.text = commonSetting.myProfile.emailid
+        self.txtPhoneNumber.text = commonSetting.myProfile.phoneNumber
+        self.txtLocation.text = commonSetting.myProfile.location
+        
+        self.userID = commonSetting.myProfile.userid!
+        self.txtAge.text = String(format: "%d",commonSetting.myProfile.age)
+        self.txtGender.text = commonSetting.myProfile.gender
+        
+        self.messagingSwitch.isOn = commonSetting.myProfile.messageSetting
+        self.mailSwitch.isOn = commonSetting.myProfile.mailSetting
+        
+        if (commonSetting.myProfile.messageSetting) {
+            self.switchFollow.isOn = commonSetting.myProfile.follow
+            self.switchNotify_Followers.isOn = commonSetting.myProfile.notify_followers
+            self.switchNotify_Approved_Player.isOn = commonSetting.myProfile.notify_approved_player
+            self.switchNotify_Tournament_Players.isOn = commonSetting.myProfile.notify_topurnament_player
+            self.switchNotify_Match_Admin.isOn = commonSetting.myProfile.notify_match_admin
+            self.switchPlayer_Added_To_Tournament.isOn = commonSetting.myProfile.player_Added_to_tournament
+            self.SwitchNotify_Match_Player.isOn = commonSetting.myProfile.notify_match_palyer
+            self.switchTournament_Started.isOn = commonSetting.myProfile.tournament_started
+            self.messagingCategoryView.isHidden = false
+            
+        }
+        else{
+            self.messagingCategoryView.isHidden = true
+                
+                
+        }
+        
+        self.updateSubscriptionDetials()
+        
+    }
+    
+    
+    func updateSubscriptionDetials() -> Void {
+
+//        if (commonSetting.isEmptyStingOrWithBlankSpace(commonSetting.myProfile.subscriptionType!)) {
+//            self.lblSubscriberValue.text = ""
+//            self.btnSubscriber.setBackgroundImage( UIImage(named: "hype_transparent_small")!, for: UIControlState.normal)
+//        }
+//        else{
+//            self.lblSubscriberValue.text = commonSetting.myProfile.subscriptionType?.capitalized
+//           self.btnSubscriber.setBackgroundImage(UIImage(named: "hype_completed")!,for: UIControlState.normal)
+//            
+//        }
+    }
+    
+    
+    //MARK:- IBAction Methods
+    
+    @IBAction func switchValuesChanged(_ sender: Any) {
+         let settingSwitch = (sender as! UISwitch)
+         msgSettingTag = settingSwitch.tag
+        
+        switch msgSettingTag {
+        
+        case SwitchType.MESSAGINGSWITCH.rawValue :
+            
+            if self.messagingSwitch.isOn {
+                self.switchFollow.isOn = commonSetting.myProfile.follow
+                self.switchNotify_Followers.isOn = commonSetting.myProfile.notify_followers
+                self.switchNotify_Approved_Player.isOn = commonSetting.myProfile.notify_approved_player
+                self.switchNotify_Tournament_Players.isOn = commonSetting.myProfile.notify_topurnament_player
+                self.switchNotify_Match_Admin.isOn = commonSetting.myProfile.notify_match_admin
+                self.switchPlayer_Added_To_Tournament.isOn = commonSetting.myProfile.player_Added_to_tournament
+                self.SwitchNotify_Match_Player.isOn = commonSetting.myProfile.notify_match_palyer
+                self.switchTournament_Started.isOn = commonSetting.myProfile.tournament_started
+                self.messagingCategoryView.isHidden = false
+                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant + 323
+                 self.lblBrainTreeTop.constant = 70
+  
+            }
+            else{
+                self.switchFollow.isOn = false
+                self.switchNotify_Followers.isOn = false
+                self.switchNotify_Approved_Player.isOn = false
+                self.switchNotify_Tournament_Players.isOn = false
+                self.switchNotify_Match_Admin.isOn = false
+                self.switchPlayer_Added_To_Tournament.isOn = false
+                self.SwitchNotify_Match_Player.isOn = false
+                self.switchTournament_Started.isOn = false
+                self.messagingCategoryView.isHidden = true
+                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - 323
+                self.lblBrainTreeTop.constant = -270
+            }
+        break
+        
+        case SwitchType.MAILSWITCH.rawValue:
+            break
+            
+        case SwitchType.LOCATIONSWITCH.rawValue:
+            if settingSwitch.isOn {
+                self.btnLocation.isEnabled = true
+                self.txtLocation.isEnabled = true
+            }
+            else{
+                self.btnLocation.isEnabled = false
+                self.txtLocation.isEnabled = false
+            }
+          break
+            
+        default:
+            break
+        }
+
+    }
+    
+//    func checksForMsgSettingSwitches() -> Void {
+//        var noOfDisabledSwitches :NSInteger = 0
+//        
+//        for view :UIView in messagingCategoryView.subviews {
+//            if view.isKind(of: UISwitch()) {
+//               var setting = view as! UISwitch
+//                if !(setting.isOn) {
+//                    noOfDisabledSwitches += 1
+//                }
+//            }
+//        }
+//        
+//    }
+//
+    @IBAction func getUserLocation(_ sender: AnyObject) {
+        self.showHUD()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+    }
+    
+    @IBAction func btnDoneClicked(_ sender: AnyObject) {
+        if isValid() {
+            
+            self.rightButtonClickAction()
+            
+        }
+        
+    }
+    
+   
+    func rightButtonClickAction()  {
+       
+        self.updateUserDetails()
+    }
+   
+    func updateUserDetails() ->Void  {
+       
+        self.getUserDetails(self.createUpdateProfileRequest() as! NSMutableDictionary)
+    }
+    
+    func createUpdateProfileRequest()->NSDictionary {
+        
+        let userInfo = NSMutableDictionary()
+        userInfo.setValue(self.txtPhoneNumber.text, forKey:"phoneNumber")
+        userInfo.setValue(self.txtName.text, forKey:"name")
+         userInfo.setValue(self.txtEmail.text, forKey:"email")
+        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtAge.text!))
+        {
+           userInfo.setValue(NSNumber.init(value: Int(self.txtAge.text!)!), forKey: "age")
+        }
+        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtGender.text!)) {
+            userInfo.setValue(self.txtGender.text, forKey: "sex")
+
+        }
+        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtLocation.text!)) {
+            userInfo.setValue(self.txtLocation.text, forKey: "location")
+            
+        }
+        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.profileImageKey)) {
+            userInfo.setValue(self.profileImageKey, forKey: "imageKey")
+        }
+        else{
+           userInfo.setValue(commonSetting.myProfile.imageKey, forKey: "imageKey")
+        }
+        
+        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.teamIconImageKey)) {
+            userInfo.setValue(self.teamIconImageKey, forKey: "teamIcon")
+        }
+        else{
+            userInfo.setValue(commonSetting.myProfile.teamIconUrl, forKey: "teamIcon")
+        }
+        
+        userInfo.setValue(NSNumber.init(value: Int(self.userID)!), forKey: "userID")
+        userInfo.setValue(NSNumber.init(value: self.mailSwitch.isOn), forKey: "mailSetting")
+        userInfo.setValue(NSNumber.init(value: self.messagingSwitch.isOn), forKey: "messagingSetting")
+        
+       var arySettings:NSMutableArray = NSMutableArray()
+    
+       
+                arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchFollow.isOn))), forKey: "FOLLOW" as NSCopying))
+        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchNotify_Approved_Player.isOn))), forKey: "NOTIFY_APPROVED_PLAYER" as NSCopying))
+        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchNotify_Followers.isOn))), forKey: "NOTIFY_FOLLOWERS" as NSCopying))
+        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchNotify_Match_Admin.isOn))), forKey: "NOTIFY_MATCH_ADMIN" as NSCopying))
+         arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.SwitchNotify_Match_Player.isOn))), forKey: "NOTIFY_MATCH_PLAYER" as NSCopying))
+         arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchNotify_Tournament_Players.isOn))), forKey: "NOTIFY_TOURNAMENT_PLAYERS" as NSCopying))
+        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchPlayer_Added_To_Tournament.isOn))), forKey: "PLAYER_ADDED_TO_TOURNAMENT" as NSCopying))
+        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchTournament_Started.isOn))), forKey: "TOURNAMENT_STARTED" as NSCopying))
+        print(arySettings)
+       
+//       let dicReq = NSMutableDictionary.init(object: userInfo, forKey: "person" as NSCopying)
+        let dicReq = NSMutableDictionary.init(objects: [userInfo,arySettings], forKeys: ["person" as NSCopying,"settings" as NSCopying])
+       return  dicReq
+    }
+    
+    func getUserDetails(_ userInfo: NSMutableDictionary) -> Void {
+        
+        //On Success Call
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+        }
+        
+        //On Failure Call
+        let falure:falureHandler = {error,responseMessage,requestType in
+            
+                   }
+        print(userInfo)
+        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.UpdateUserProfile, method: "PUT", successCall: success, falureCall: falure)
+        
+    }
+
+    
+    
+    @IBAction func actionOnProfilePic(_ sender: Any) {
+        let optionMenu = UIAlertController(title: nil, message: "Add Photo", preferredStyle: .actionSheet)
+        
+        let addAction = UIAlertAction(title: "Take a photo", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            if UIImagePickerController.isSourceTypeAvailable(UIImagePickerControllerSourceType.camera)
+            {
+                self.imagePicker.delegate=self;
+                self.imagePicker.allowsEditing = true
+                self.imagePicker.sourceType = UIImagePickerControllerSourceType.camera
+                self.present(self.imagePicker, animated: true, completion: nil)
+            }else
+            {
+                let alert = UIAlertController(title: "Message", message: kCameraNotAvailableMessage, preferredStyle: UIAlertControllerStyle.alert)
+                alert.addAction(UIAlertAction(title: "OK", style: UIAlertActionStyle.cancel, handler: nil))
+                self.present(alert, animated: true, completion: nil)
+            }
+        })
+        
+        let takeAction = UIAlertAction(title: "Choose from gallery", style: .default, handler: {
+            (alert: UIAlertAction!) -> Void in
+            
+            self.imagePicker.delegate=self;
+            self.imagePicker.allowsEditing = true
+            
+            self.imagePicker.sourceType = UIImagePickerControllerSourceType.photoLibrary
+            self.present(self.imagePicker, animated: true, completion: nil)
+            
+        })
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: .cancel, handler: {
+            (alert: UIAlertAction!) -> Void in
+            optionMenu.dismiss(animated: true, completion: nil)
+        })
+        
+        optionMenu.addAction(addAction)
+        optionMenu.addAction(takeAction)
+        optionMenu.addAction(cancelAction)
+        
+        self.present(optionMenu, animated: true, completion: nil)
+        
+        
+    }
+
     
     // MARK:- CLLocation button Methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
@@ -204,18 +530,12 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
     
     func configurePickerViewDta()
     {
-        if(self.activeTextField == self.txtAge)
-        {
+       
        self.aryAge = NSMutableArray()
        for i in 10..<100 {
         self.aryAge.add(String(format: "%d",i))
       }
-    }
-        else{
-    
-        }
-    }
-    
+  }
     
     func donePressed(sender: UIBarButtonItem) {
         
@@ -252,6 +572,24 @@ class SettingViewController: BaseViewController,CLLocationManagerDelegate, UIPic
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.txtAge.text = self.aryAge.object(at: row) as? String
 
+    }
+    
+    // MARK: - UIImagePickerControllerDelegate Methods
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any])
+    {
+        if let pickerImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
+            self.profilePicButton.setBackgroundImage(pickerImage, for: UIControlState.normal)
+            self.profilePicButton.layer.cornerRadius = self.profilePicButton.frame.size.height/2
+            self.profilePicButton.layer.masksToBounds = true;
+//            isImageAdded = true
+        }
+        
+        self.dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.dismiss(animated: true, completion: nil)
     }
 
 

@@ -101,6 +101,21 @@ public class TEMyProfile: TESwiftModel {
         TEMyProfile.save(context)
     }
     
+    static func fetchMyProfileDetail(context:NSManagedObjectContext, predicate:NSPredicate) -> TEMyProfile
+    {
+        let fetchRequest:NSFetchRequest = TEMyProfile.newFetchRequest(in: context)
+        fetchRequest.predicate = predicate
+        
+        var fetchedObjects:NSArray = NSArray()
+        do {
+            fetchedObjects = try context.fetch(fetchRequest) as NSArray
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        return fetchedObjects.firstObject as! TEMyProfile
+        
+    }
+    
     static func notificationTypeValue(_ settings: NSArray, type: String) -> Bool {
            var arry = settings.filtered(using: NSPredicate(format: "setting == %@", type))
            if arry.count == 1 {
