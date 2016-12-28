@@ -7,8 +7,9 @@
 //
 
 import UIKit
+import CoreLocation
 
-class CreateTournamentViewController: BaseViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate {
+class CreateTournamentViewController: SocialConnectViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource{
 
     // Navigation Outlet
     @IBOutlet weak var topNavLbl: UILabel!
@@ -26,10 +27,12 @@ class CreateTournamentViewController: BaseViewController, UIImagePickerControlle
     @IBOutlet weak var doubleBtnOutlet: UIButton!
     @IBOutlet weak var swissBtnOutlet: UIButton!
     @IBOutlet weak var roundRobinBtnOutlet: UIButton!
+    @IBOutlet weak var rankByTFBotttomImg: UIImageView!
     
     @IBOutlet weak var tounamentNameTF: UITextField!
     @IBOutlet weak var chooseGameTF: UITextField!
     @IBOutlet weak var uploadPhotoBtn: UIButton!
+    @IBOutlet weak var chooseGameTableView: UITableView!
     
     @IBOutlet weak var scoreView: UIView!
     @IBOutlet weak var matchPerWinTF: UITextField!
@@ -44,6 +47,11 @@ class CreateTournamentViewController: BaseViewController, UIImagePickerControlle
     @IBOutlet weak var startDateTF: UITextField!
     @IBOutlet weak var endDateTF: UITextField!
     @IBOutlet weak var locationTF: UITextField!
+    
+    @IBOutlet weak var tournamentDescTxtView: UITextView!
+    @IBOutlet weak var twitterMesTextView: UITextView!
+    @IBOutlet weak var notificationMsgtextView: UITextView!
+    
     
     @IBOutlet weak var registerSwitch: UISwitch!
     @IBOutlet weak var teamBasedSwitch: UISwitch!
@@ -60,19 +68,25 @@ class CreateTournamentViewController: BaseViewController, UIImagePickerControlle
     // Constraints Outlet
     @IBOutlet weak var scoreViewHightCons: NSLayoutConstraint!
     @IBOutlet weak var rankByTfHeightCOns: NSLayoutConstraint!
+    @IBOutlet weak var rankByTFBtmLineHightCons: NSLayoutConstraint!
     
     let imagePicker = UIImagePickerController()
     var pickerView = UIPickerView()
-    var gameList = NSMutableArray()
+    var gameList = NSArray()
     var rankByArray = NSMutableArray()
     var advanceTimerArray = NSMutableArray()
     var checkInTimeArray = NSMutableArray()
     var activeTextField = UITextField()
+    var locationManager = CLLocationManager()
+    var toolBar = UIToolbar()
+    var gameListArray = NSArray()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.setStyleGuide()
+        self.setUpLayout()
         self.setUpPickerView()
+        self.getGameList()
         // Do any additional setup after loading the view.
     }
 
@@ -83,32 +97,70 @@ class CreateTournamentViewController: BaseViewController, UIImagePickerControlle
     
     // MARK: - Utility
     
+    func setUpLayout() {
+        
+        self.addDismisskeyboardTapGesture()
+        
+        self.scoreViewHightCons.constant = 0.0
+        self.rankByTfHeightCOns.constant = 0.0
+        self.rankByTFBtmLineHightCons.constant = 0.0
+        self.singleBtnOutlet.alpha = 1.0
+        self.doubleBtnOutlet.alpha = 0.4
+        self.swissBtnOutlet.alpha = 0.4
+        self.roundRobinBtnOutlet.alpha = 0.4
+        self.twitterMesTextView.text = kdefaultTwitterMsg
+        self.notificationMsgtextView.text = kDefaultNotificationMsg
+        self.advanceTimerTF.layer.cornerRadius = 12
+        self.advanceTimerTF.layer.borderColor = UIColor.white.cgColor
+        self.advanceTimerTF.layer.borderWidth = 1.0
+        self.checkInTimeTF1.layer.cornerRadius = 12
+        self.checkInTimeTF1.layer.borderColor = UIColor.white.cgColor
+        self.checkInTimeTF1.layer.borderWidth = 1.0
+        
+        self.toolBar = UIToolbar.init(frame: CGRect(x: 0, y: 0, width: 375, height: 30))
+        self.toolBar.backgroundColor = UIColor.black
+        self.toolBar.barTintColor = UIColor.black
+        self.toolBar.tintColor = UIColor.white
+        var items = [UIBarButtonItem]()
+        items.append(
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: #selector(CreateTournamentViewController.onClickedToolbeltButton(_:)))
+        )
+        items.append(
+            UIBarButtonItem(barButtonSystemItem: .flexibleSpace, target: self, action: #selector(CreateTournamentViewController.onClickedToolbeltButton(_:)))
+        )
+        items.append(
+            UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(CreateTournamentViewController.onClickedToolbeltButton(_:)))
+        )
+        self.toolBar.items = items
+
+    }
+    
     func setUpPickerView() {
+        
         pickerView = UIPickerView.init(frame: CGRect(x: 0, y: 467, width: 375, height: 200))
         pickerView.backgroundColor = UIColor.black
         pickerView.delegate = self
-        self.chooseGameTF.inputView = pickerView
+
         self.rankByTF.inputView = pickerView
         self.advanceTimerTF.inputView = pickerView
         self.checkInTimeTF1.inputView = pickerView
+        self.rankByTF.inputAccessoryView = toolBar
+        self.advanceTimerTF.inputAccessoryView = toolBar
+        self.checkInTimeTF1.inputAccessoryView = toolBar
+
         rankByArray = ["Match Wins", "Game Wins", "Points Scored", "Points Difference", "Custom"]
-        gameList = ["Cricket", "Football", "Footsal", "Badminton", "Squash", "Rugby"]
+        //gameList = ["Cricket", "Football", "Footsal", "Badminton", "Squash", "Rugby"]
         advanceTimerArray = ["None", "5 Min", "10 Min", "15 Min", "30 Min", "1 hour"]
         checkInTimeArray = ["Off", "15 min", "30 min", "1 hour", "2 hours", "3 hours", "6 hours", "1 day"]
     }
     
     func setStyleGuide() {
         
-        self.addDismisskeyboardTapGesture()
-        self.scoreViewHightCons.constant = 0.0
-        self.rankByTfHeightCOns.constant = 0.0
-
-
+        self.chooseGameTableView.isHidden = true
+        
         tounamentNameTF.attributedPlaceholder = NSAttributedString(string:"Tournament Name",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         chooseGameTF.attributedPlaceholder = NSAttributedString(string:"-Choose Game-",
-                                                                   attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
-        rankByTF.attributedPlaceholder = NSAttributedString(string:"Rank By",
                                                                    attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         endDateTF.attributedPlaceholder = NSAttributedString(string:"End Date",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
@@ -116,6 +168,32 @@ class CreateTournamentViewController: BaseViewController, UIImagePickerControlle
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         preRegistraionChargeTF.attributedPlaceholder = NSAttributedString(string:"0.00",
                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+    }
+    
+    func onClickedToolbeltButton(_ sender: Any) {
+        self.activeTextField.resignFirstResponder()
+    }
+    
+
+    func getGameList() {
+        
+        let success: successHandler = {responseObject, responseType in
+            
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            if let array:NSArray = responseDict.object(forKey: "list") as? NSArray
+            {
+              self.gameListArray = array
+            }
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            
+            print(responseString)
+        }
+        
+        // Service call for get user profile data (Hypes, upcomings, person, followers)
+        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetGameList, method: "GET", successCall: success, falureCall: failure)
+
     }
     
     // MARK: - IBactions
@@ -165,8 +243,14 @@ class CreateTournamentViewController: BaseViewController, UIImagePickerControlle
         
     }
     
+    @IBAction func actionOnTwitter(_ sender: AnyObject) {
+        
+        self.showAlert(title: "", message: kTwitterHelp)
+    }
+    
     @IBAction func backButtonAction(_ sender: AnyObject) {
         
+        self.navigationController?.popViewController(animated: true)
     }
     
     @IBAction func rightBtnAction(_ sender: AnyObject) {
@@ -174,18 +258,114 @@ class CreateTournamentViewController: BaseViewController, UIImagePickerControlle
     }
 
     @IBAction func locationAction(_ sender: AnyObject) {
+        
+        locationTF.resignFirstResponder()
+        self.showHUD()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+
     }
     
     @IBAction func singleAction(_ sender: AnyObject) {
+        
+        UIView.animate(withDuration: 0.25, animations: {() -> Void in
+            
+            self.scoreView.isHidden = true
+            self.scoreViewHightCons.constant = 0
+            self.swissBtnOutlet.alpha = 0.4
+            self.singleBtnOutlet.alpha = 1.0
+            self.doubleBtnOutlet.alpha = 0.4
+            self.roundRobinBtnOutlet.alpha = 0.4
+            
+            self.rankByTF.isHidden = true
+            self.rankByTfHeightCOns.constant = 0
+            self.rankByTFBotttomImg.isHidden = true
+            self.rankByTfHeightCOns.constant = 0.0
+            
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+            }, completion: {(isCompleted) -> Void in
+                // self.isSwipedUp = true
+        })
+
     }
     
     @IBAction func doubleAction(_ sender: AnyObject) {
+        
+        UIView.animate(withDuration: 0.25, animations: {() -> Void in
+            
+            self.scoreView.isHidden = true
+            self.scoreViewHightCons.constant = 0
+            self.swissBtnOutlet.alpha = 0.4
+            self.singleBtnOutlet.alpha = 0.4
+            self.doubleBtnOutlet.alpha = 1.0
+            self.roundRobinBtnOutlet.alpha = 0.4
+            
+            self.rankByTF.isHidden = true
+            self.rankByTfHeightCOns.constant = 0
+            self.rankByTFBotttomImg.isHidden = true
+            self.rankByTfHeightCOns.constant = 0.0
+            
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+            }, completion: {(isCompleted) -> Void in
+                // self.isSwipedUp = true
+        })
+
     }
     
     @IBAction func swissAction(_ sender: AnyObject) {
+        UIView.animate(withDuration: 0.25, animations: {() -> Void in
+            
+            self.scoreView.isHidden = false
+            self.scoreViewHightCons.constant = 150
+            self.swissBtnOutlet.alpha = 1.0
+            self.singleBtnOutlet.alpha = 0.4
+            self.doubleBtnOutlet.alpha = 0.4
+            self.roundRobinBtnOutlet.alpha = 0.4
+
+            self.rankByTF.isHidden = true
+            self.rankByTfHeightCOns.constant = 0
+            self.rankByTFBotttomImg.isHidden = true
+            self.rankByTfHeightCOns.constant = 0.0
+
+            
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+            }, completion: {(isCompleted) -> Void in
+               // self.isSwipedUp = true
+        })
+
     }
     
     @IBAction func roundRobinAction(_ sender: AnyObject) {
+        
+        UIView.animate(withDuration: 0.25, animations: {() -> Void in
+            
+            self.scoreView.isHidden = true
+            self.scoreViewHightCons.constant = 0
+            self.swissBtnOutlet.alpha = 0.4
+            self.singleBtnOutlet.alpha = 0.4
+            self.doubleBtnOutlet.alpha = 0.4
+            self.roundRobinBtnOutlet.alpha = 1.0
+            
+            self.rankByTF.isHidden = false
+            self.rankByTfHeightCOns.constant = 30
+            self.rankByTFBotttomImg.isHidden = false
+            self.rankByTFBtmLineHightCons.constant = 1.0
+            self.rankByTF.text = ""
+            self.rankByTF.attributedPlaceholder = NSAttributedString(string:"Rank By",
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+            self.view.setNeedsLayout()
+            self.view.layoutIfNeeded()
+            }, completion: {(isCompleted) -> Void in
+                // self.isSwipedUp = true
+        })
+
     }
 
     // MARK: - imagePickerController Delegate
@@ -308,11 +488,117 @@ class CreateTournamentViewController: BaseViewController, UIImagePickerControlle
         return true
     }
     
-    func textFieldDidBeginEditing(_ textField: UITextField) {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        if textField == self.chooseGameTF {
+            self.chooseGameTableView.isHidden = true
+        }
+       }
+    
+    override func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        if textField == self.tounamentNameTF {
+            self.chooseGameTF.becomeFirstResponder()
+        }
+        else if textField == self.chooseGameTF
+        {
+          self.chooseGameTF.resignFirstResponder()
+        }
+        else if textField == self.locationTF
+        {
+           self.locationTF.resignFirstResponder()
+        }
+        else{
+           textField.resignFirstResponder()
+        }
+        return true
+    }
+    
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
+        if textField == self.chooseGameTF {
+            if (self.chooseGameTF.text?.characters.count)!>1 {
+              let predi = NSPredicate(format: "name contains[c] %@", textField.text!)
+              self.gameList =  self.gameListArray.filtered(using: predi) as NSArray
+              self.chooseGameTableView.isHidden = false
+              self.chooseGameTableView.reloadData()
+              self.removeDismisskeyboardTapGesture()
+            } else{
+            self.chooseGameTableView.isHidden = true
+            self.addDismisskeyboardTapGesture()
+            }
+        }
+        return true
+    }
+    
+    // MARK:- TableView Delegate
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return gameList.count
+    }
+    
+    // create a cell for each table view row
+    func  tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+        // create a new cell if needed or reuse an old one
+        let cell:GameListTableViewCell = chooseGameTableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameListTableViewCell
+        let dict:NSDictionary = self.gameList[indexPath.row] as! NSDictionary
+        cell.gameLbl.text = dict.stringValueForKey(key: "name")
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let dict:NSDictionary = self.gameList[indexPath.row] as! NSDictionary
+        self.chooseGameTF.text = dict.stringValueForKey(key: "name")
+        self.chooseGameTableView.isHidden = true
+        self.addDismisskeyboardTapGesture()
+    }
+    
+    // MARK:- CLLocation button Methods
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
+        
+        let userLocation : CLLocation = locations[0] as CLLocation
+        manager.stopUpdatingLocation()
+        
+        print("user latitude = \(userLocation.coordinate.latitude)")
+        print("user longitude = \(userLocation.coordinate.longitude)")
+        
+        let geocoder = CLGeocoder()
+        geocoder.reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
+            
+            var placemark:CLPlacemark!
+            
+            if error == nil && (placemarks?.count)! > 0 {
+                placemark = (placemarks?[0])! as CLPlacemark
+                
+                var addressString : String = ""
+                
+                if placemark.isoCountryCode == "TW" {
+                    if placemark.country != nil {
+                        addressString = placemark.country!
+                    }
+                    
+                    if placemark.locality != nil {
+                        addressString = addressString + placemark.locality!
+                    }
+                    
+                } else {
+                    if placemark.locality != nil {
+                        addressString = addressString + placemark.locality! + ", "
+                    }
+                    
+                    if placemark.country != nil {
+                        addressString = addressString + placemark.country!
+                    }
+                }
+                print(addressString)
+                self.locationTF.text = addressString
+                self.hideHUD()
+            }
+            
+        })
         
     }
-   
+    
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
+        print("Error while updating location " + error.localizedDescription)
+    }
 
     
     /*

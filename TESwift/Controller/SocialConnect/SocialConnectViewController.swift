@@ -13,14 +13,27 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     @IBOutlet weak var facebookBtn: UIButton!
     @IBOutlet weak var googlePlusBtn: UIButton!
     @IBOutlet weak var twitchBtn: UIButton!
-    
+    @IBOutlet weak var twitterConnectBtn: UIButton!
+     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        if self.facebookBtn != nil {
         self.facebookBtn.addTarget(self, action:#selector(SocialConnectViewController.socialLoginViaFacebook(_:)), for: UIControlEvents.touchUpInside)
+        }
+        
+        if self.googlePlusBtn != nil {
         self.googlePlusBtn.addTarget(self, action:#selector(SocialConnectViewController.socialLoginViaGooglePlus(_:)), for: UIControlEvents.touchUpInside)
+        }
+        
+        if self.twitchBtn != nil {
         self.twitchBtn.addTarget(self, action:#selector(SocialConnectViewController.socialLoginViaTwitch(_:)), for: UIControlEvents.touchUpInside)
+        }
 
+        if (self.twitterConnectBtn != nil)
+        {
+            self.twitterConnectBtn.addTarget(self, action:#selector(SocialConnectViewController.socialLoginViaTwitter(_:)), for: UIControlEvents.touchUpInside)
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -71,6 +84,21 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
         socialLoginController.delegate = self
         self.navigationController?.present(socialLoginController, animated: true, completion: nil)
     }
+    
+    //MARK: Twitch Login
+    func socialLoginViaTwitter(_ sender: Any)
+    {
+        if !commonSetting.isInternetAvailable {
+            self.showNoInternetAlert()
+            return
+        }
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let socialLoginController = storyBoard.instantiateViewController(withIdentifier: "SocialLoginViewControllerID") as! SocialLoginViewController
+        socialLoginController.socialConnectType = .TWITTER
+        socialLoginController.delegate = self
+        self.navigationController?.present(socialLoginController, animated: true, completion: nil)
+    }
+
     
     //MARK:- SocialLoginViewController Delegates
     

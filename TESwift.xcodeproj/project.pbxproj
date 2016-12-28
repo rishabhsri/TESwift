@@ -15,6 +15,7 @@
 		182742BF1E0D2AAF00F00EDB /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182742BE1E0D2AAE00F00EDB /* TournamentListViewController.swift */; };
 		182742C11E0D326600F00EDB /* TournamentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */; };
 		182D29E81E125AE800998277 /* CreateTournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D29E71E125AE800998277 /* CreateTournamentViewController.swift */; };
+		182FB2421E13F4FE007361AD /* GameListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */; };
 		1847F2B61E0BE9940088E19D /* TEMyProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2AB1E0BE9930088E19D /* TEMyProfile+CoreDataClass.swift */; };
 		1847F2B71E0BE9940088E19D /* TEMyProfile+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2AC1E0BE9930088E19D /* TEMyProfile+CoreDataProperties.swift */; };
 		1847F2B91E0BE9940088E19D /* TEServiceCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2AF1E0BE9940088E19D /* TEServiceCall.swift */; };
@@ -105,6 +106,7 @@
 		182742BE1E0D2AAE00F00EDB /* TournamentListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
 		182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TournamentListTableViewCell.swift; sourceTree = "<group>"; };
 		182D29E71E125AE800998277 /* CreateTournamentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTournamentViewController.swift; sourceTree = "<group>"; };
+		182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameListTableViewCell.swift; sourceTree = "<group>"; };
 		1847F2AB1E0BE9930088E19D /* TEMyProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEMyProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1847F2AC1E0BE9930088E19D /* TEMyProfile+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEMyProfile+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		1847F2AF1E0BE9940088E19D /* TEServiceCall.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TEServiceCall.swift; sourceTree = "<group>"; };
@@ -403,6 +405,7 @@
 				188163DD1E02BE4D00AB2E74 /* NotificationTableViewCell.swift */,
 				182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */,
 				185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */,
+				182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -670,6 +673,7 @@
 				188163D81E02779E00AB2E74 /* PKHUDWideBaseView.swift in Sources */,
 				188163D31E02779E00AB2E74 /* PKHUDRotatingImageView.swift in Sources */,
 				182742BF1E0D2AAF00F00EDB /* TournamentListViewController.swift in Sources */,
+				182FB2421E13F4FE007361AD /* GameListTableViewCell.swift in Sources */,
 				188C8EB81DF979C300C2D52E /* AFAutoPurgingImageCache.m in Sources */,
 				188C8EB41DF979C300C2D52E /* AFSecurityPolicy.m in Sources */,
 				180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */,
