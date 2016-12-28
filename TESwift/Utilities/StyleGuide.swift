@@ -27,4 +27,17 @@ public class StyleGuide
     public static func fontFutaraBold(withFontSize fontsize: CGFloat) -> UIFont {
         return UIFont(name: "Futura-Bold", size: fontsize)!
     }
+    
+    public static func tableViewRightView() -> UIColor
+    {
+        if IS_IPAD {
+            return UIColor.clear
+        }
+        else
+        {
+        return UIColor.init(colorLiteralRed: 47.0/255.0, green: 88.0/255.0, blue: 105.0/255.0, alpha: 1)
+        }
+    }
+    
 }
+

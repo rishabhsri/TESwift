@@ -7,5 +7,6 @@ target 'TESwift' do
 
   pod 'TYBlurImage'
   pod 'SWRevealViewController', '~> 2.3'
+  pod 'SWTableViewCell', '~> 0.3.7'
 
 end

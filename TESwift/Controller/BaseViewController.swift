@@ -22,7 +22,7 @@ class BaseViewController: UIViewController{
     //MARK:- Lifecycle methods
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        self.statusBarHidden = false
         // Do any additional setup after loading the view.
     }
     
@@ -99,7 +99,7 @@ class BaseViewController: UIViewController{
                 self.revealViewController().rearViewRevealWidth = 300
             }
             
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+           // view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
     }
 

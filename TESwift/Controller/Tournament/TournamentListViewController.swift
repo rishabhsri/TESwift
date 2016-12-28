@@ -8,7 +8,7 @@
 
 import UIKit
 
-class TournamentListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate {
+class TournamentListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate, SWTableViewCellDelegate {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tounamentEmptyView: UIView!
@@ -90,7 +90,9 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     }
     
     @IBAction func actionOnPlusIcon(_ sender: AnyObject) {
-        
+        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+        let tournamentListVC:UIViewController = storyBoard.instantiateViewController(withIdentifier: "CreateTournamentViewControllerID")
+        self.navigationController?.pushViewController(tournamentListVC, animated: true)
     }
     
     // MARK:- Uitlity
@@ -367,6 +369,13 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         // create a new cell if needed or reuse an old one
         let cell:TournamentListTableViewCell = tableView.dequeueReusableCell(withIdentifier: "tournamentCell", for: indexPath) as! TournamentListTableViewCell
         
+        let rightUtilityButton:NSMutableArray = NSMutableArray()
+        rightUtilityButton.sw_addUtilityButton(with: StyleGuide.tableViewRightView(), icon: UIImage(named: "CloseCellPanel"))
+        
+        let leftUtilityButton:NSMutableArray = NSMutableArray()
+        leftUtilityButton.sw_addUtilityButton(with: StyleGuide.tableViewRightView(), icon: UIImage(named: "HypeImage"))
+
+        
         var tournaDict:NSDictionary = NSDictionary()
         
         if isSearchEnabled {
@@ -399,8 +408,31 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
             cell.progressBar.startAnimating()
             ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }
-        
+       // let swiftAray:NSArray = rightUtilityButton as NSArray
+        cell.rightUtilityButtons = rightUtilityButton.reversed()
+        cell.leftUtilityButtons = leftUtilityButton.reversed()
+        cell.delegate = self
         return cell
+    }
+    
+    //MARK: - Swipable Table view cell delegate
+    
+    func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerRightUtilityButtonWith index: Int) {
+        switch index {
+        case 0:
+            print("Im pressed at right")
+        default: break
+            
+        }
+    }
+    
+    func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerLeftUtilityButtonWith index: Int) {
+        switch index {
+        case 0:
+            print("Im pressed at left")
+        default: break
+            
+        }
     }
 }
 
