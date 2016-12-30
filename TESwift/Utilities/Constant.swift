@@ -14,6 +14,7 @@ enum SocialConnectType{
    case GOOGLEPLUS
    case TWITCH
    case TWITTER
+   case NON
 }
 
 //MARK: - Screens size---
@@ -114,7 +115,7 @@ let kCancel = "Cancel"
 let kMessage = "Message"
 let kYes = "Yes"
 let kNo = "No"
-
+let kDisconnect = "Are you sure you want to disconnect?"
 
 //Import class
 

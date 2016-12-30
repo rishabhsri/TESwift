@@ -291,7 +291,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
     }
     
-    override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+    override func onLogInSuccess(_ userInfo: NSDictionary,connectType:SocialConnectType) -> Void {
         
         commonSetting.userLoginInfo = userInfo
         self.hideHUD()

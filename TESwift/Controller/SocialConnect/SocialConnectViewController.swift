@@ -112,11 +112,11 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
         let parameters:NSMutableDictionary = NSMutableDictionary()
         parameters.setValue(sessionKey, forKey: "key")
         
-        self.proceedLogin(parameters)
+        self.proceedLogin(parameters,connectType: connectType)
         
     }
     
-    func proceedLogin(_ userInfo: NSMutableDictionary) {
+    func proceedLogin(_ userInfo: NSMutableDictionary,connectType:SocialConnectType) {
         //On Success Call
         
         let success:successHandler = {responseObject,requestType in
@@ -126,7 +126,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
             if responseDict.intValueForKey(key: "validUserName") == 1
             {
                 if responseDict.boolValueForKey(key: "loggedIn") {
-                    self.onLogInSuccess(responseDict)
+                    self.onLogInSuccess(responseDict,connectType: connectType)
                 }
             }else
             {
@@ -156,7 +156,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
         }
     }
     
-    func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+    func onLogInSuccess(_ userInfo: NSDictionary,connectType:SocialConnectType) -> Void {
         
         //overrided in child
     }

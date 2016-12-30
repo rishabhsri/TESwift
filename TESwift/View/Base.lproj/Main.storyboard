@@ -1399,6 +1399,9 @@
                                                         <state key="normal" backgroundImage="SM_Facebook">
                                                             <color key="titleShadowColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="socialConnectViaFacebook:" destination="Ddj-fK-ru1" eventType="touchUpInside" id="khq-if-jXV"/>
+                                                        </connections>
                                                     </button>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedSocialConnect" translatesAutoresizingMaskIntoConstraints="NO" id="EYZ-I5-hlX">
                                                         <rect key="frame" x="35" y="0.0" width="50" height="50"/>
@@ -1406,6 +1409,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X7j-Rq-dg0">
                                                         <rect key="frame" x="120" y="0.0" width="50" height="50"/>
                                                         <state key="normal" backgroundImage="SM_Twitter"/>
+                                                        <connections>
+                                                            <action selector="socialConnectViaTwitter:" destination="Ddj-fK-ru1" eventType="touchUpInside" id="v5c-iV-GH3"/>
+                                                        </connections>
                                                     </button>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedSocialConnect" translatesAutoresizingMaskIntoConstraints="NO" id="AbN-Pw-dda">
                                                         <rect key="frame" x="120" y="0.0" width="50" height="50"/>
@@ -1413,6 +1419,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lfY-Vk-Vs6">
                                                         <rect key="frame" x="210" y="0.0" width="50" height="50"/>
                                                         <state key="normal" backgroundImage="SM_Google"/>
+                                                        <connections>
+                                                            <action selector="socialConnectViaGoogle:" destination="Ddj-fK-ru1" eventType="touchUpInside" id="NVS-0H-GPL"/>
+                                                        </connections>
                                                     </button>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedSocialConnect" translatesAutoresizingMaskIntoConstraints="NO" id="WwW-eS-ftf">
                                                         <rect key="frame" x="210" y="0.0" width="50" height="50"/>
@@ -1420,6 +1429,9 @@
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="45N-Lh-kGf">
                                                         <rect key="frame" x="290" y="0.0" width="50" height="50"/>
                                                         <state key="normal" backgroundImage="SM_Twitch"/>
+                                                        <connections>
+                                                            <action selector="socialConnectViaTwitch:" destination="Ddj-fK-ru1" eventType="touchUpInside" id="BBd-vF-CMQ"/>
+                                                        </connections>
                                                     </button>
                                                     <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="selectedSocialConnect" translatesAutoresizingMaskIntoConstraints="NO" id="FVK-D4-yK8">
                                                         <rect key="frame" x="290" y="0.0" width="50" height="50"/>
@@ -1499,6 +1511,23 @@
                                                     <constraint firstItem="9QM-RC-JPK" firstAttribute="top" secondItem="39V-TU-Opm" secondAttribute="top" constant="7" id="xlK-FB-46z"/>
                                                 </constraints>
                                             </view>
+                                            <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="20" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="NIr-y7-39F">
+                                                <rect key="frame" x="78" y="326" width="246" height="89"/>
+                                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                                <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                <color key="separatorColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                <prototypes>
+                                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="Cell" rowHeight="20" id="Jau-N9-oPs">
+                                                        <rect key="frame" x="0.0" y="28" width="246" height="20"/>
+                                                        <autoresizingMask key="autoresizingMask"/>
+                                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Jau-N9-oPs" id="h5S-5p-lra">
+                                                            <rect key="frame" x="0.0" y="0.0" width="246" height="19"/>
+                                                            <autoresizingMask key="autoresizingMask"/>
+                                                        </tableViewCellContentView>
+                                                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                                    </tableViewCell>
+                                                </prototypes>
+                                            </tableView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="TEAM PICTURE" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CwO-v4-QVF">
                                                 <rect key="frame" x="25" y="523" width="134" height="21"/>
                                                 <constraints>
@@ -1904,6 +1933,10 @@
                         <outlet property="btnLocation" destination="sxn-Lr-hku" id="O6M-Nm-iTG"/>
                         <outlet property="btnSubscriber" destination="9QM-RC-JPK" id="cFg-5z-uO0"/>
                         <outlet property="btnTeamPicture" destination="aue-OR-uXg" id="bLk-h1-q5P"/>
+                        <outlet property="imgFBConnected" destination="EYZ-I5-hlX" id="Iyg-rt-Og9"/>
+                        <outlet property="imgGoogleConnected" destination="WwW-eS-ftf" id="nnX-0B-ilu"/>
+                        <outlet property="imgTwitchConnected" destination="FVK-D4-yK8" id="cMh-TC-yE6"/>
+                        <outlet property="imgTwitterConnected" destination="AbN-Pw-dda" id="yaP-bw-HWK"/>
                         <outlet property="lblBrainTreeAccTitle" destination="eDG-kU-wuf" id="bdb-Ol-Duf"/>
                         <outlet property="lblBrainTreeTop" destination="5If-B6-HgO" id="ip5-Gg-Nkd"/>
                         <outlet property="lblNotificationSetting" destination="Eej-zo-CSr" id="LuI-Kl-RRW"/>
@@ -1923,6 +1956,7 @@
                         <outlet property="messagingViewHeight" destination="6Nc-SP-2yR" id="5kl-VU-Vo3"/>
                         <outlet property="notifySettingYConstant" destination="WmP-HL-Yts" id="YCK-fe-WAB"/>
                         <outlet property="profilePicButton" destination="LK9-ZB-4AJ" id="FDA-Xd-1Dc"/>
+                        <outlet property="scrollView" destination="OIr-zB-7n2" id="tXE-Nw-sNl"/>
                         <outlet property="switchFollow" destination="9yM-AO-gr2" id="Qt8-nE-On4"/>
                         <outlet property="switchNotify_Approved_Player" destination="IGP-Zz-QkA" id="uYP-IJ-bgc"/>
                         <outlet property="switchNotify_Followers" destination="P7B-sK-RJ1" id="4ef-fJ-XJY"/>
@@ -1930,6 +1964,7 @@
                         <outlet property="switchNotify_Tournament_Players" destination="PsP-rz-a9M" id="fRm-lK-uXD"/>
                         <outlet property="switchPlayer_Added_To_Tournament" destination="hEm-aT-I91" id="vzF-JZ-WMw"/>
                         <outlet property="switchTournament_Started" destination="tx2-Nc-Jnf" id="rID-po-myo"/>
+                        <outlet property="tableView" destination="NIr-y7-39F" id="d9F-J5-Zg2"/>
                         <outlet property="txtAge" destination="u4H-Bz-4Qs" id="iN4-OH-x1H"/>
                         <outlet property="txtEmail" destination="OwR-J0-pXL" id="W2u-ff-7L8"/>
                         <outlet property="txtGender" destination="CLO-27-qVL" id="Hbq-O3-zxY"/>
@@ -1940,7 +1975,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="X7f-oG-VBr" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-394.39999999999998" y="341.82908545727139"/>
+            <point key="canvasLocation" x="2549.5999999999999" y="369.71514242878561"/>
         </scene>
     </scenes>
     <resources>

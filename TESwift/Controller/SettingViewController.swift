@@ -15,16 +15,22 @@ enum SwitchType : Int {
     case LOCATIONSWITCH
 }
 
-class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate, UIPickerViewDelegate,UITextFieldDelegate {
+class SettingViewController: SocialConnectViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate, UIPickerViewDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource {
     
-     var userID = ""
-     var msgSettingTag:Int = 0
-     var noOfOFFMsgSettings = 0
-     var profileImageKey = ""
-     var teamIconImageKey = ""
-     var heightAdj: Float = 0.0
-     var linkAccountHeight: Float = 0.0
+    var userID = ""
+    var msgSettingTag:Int = 0
+    var noOfOFFMsgSettings = 0
+    var profileImageKey = ""
+    var teamIconImageKey = ""
+    var heightAdj: Float = 0.0
+    var linkAccountHeight: Float = 0.0
     
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var imgTwitchConnected: UIImageView!
+    @IBOutlet weak var imgGoogleConnected: UIImageView!
+    @IBOutlet weak var imgTwitterConnected: UIImageView!
+    @IBOutlet weak var imgFBConnected: UIImageView!
     @IBOutlet weak var lblNotifySettingTop: NSLayoutConstraint!
     @IBOutlet weak var lblBrainTreeTop: NSLayoutConstraint!
     @IBOutlet weak var messagingViewHeight: NSLayoutConstraint!
@@ -62,7 +68,7 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
     @IBOutlet weak var switchNotify_Tournament_Players: UISwitch!
     @IBOutlet weak var switchPlayer_Added_To_Tournament: UISwitch!
     @IBOutlet weak var switchTournament_Started: UISwitch!
-   
+    
     @IBOutlet weak var messagingCategoryView: UIView!
     
     @IBOutlet weak var ContainerViewHieght: NSLayoutConstraint!
@@ -73,46 +79,43 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
     var locationManager = CLLocationManager()
     var aryAge:NSMutableArray = NSMutableArray()
     var aryGender:NSMutableArray = NSMutableArray()
+     var autoLocationList:NSArray = NSArray()
     
-   
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         self.configurePickerViewDta()
-       
         self.styleGuide()
         
         self.setupMenu()
         
         self.updateSettingDetails()
-        self.linkAccountHeight = 0.0
+        self.configureLocationTableView()
         self.configurePickerView()
-            //Add Dismiss Keyboard Tap Gesture
+        //Add Dismiss Keyboard Tap Gesture
         self.addDismisskeyboardTapGesture()
     }
-
-    
-    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-   
+    
     //MARK:- Utility Methods
     func styleGuide()->Void {
         
         self.txtName.attributedPlaceholder = NSAttributedString(string:"Name",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         self.txtEmail.attributedPlaceholder = NSAttributedString(string:"EmailID",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+                                                                 attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         self.txtPhoneNumber.attributedPlaceholder = NSAttributedString(string:"Phone Number",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+                                                                       attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         self.txtAge.attributedPlaceholder = NSAttributedString(string:"Age",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         self.txtGender.attributedPlaceholder = NSAttributedString(string:"Gender",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+                                                                  attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         self.txtLocation.attributedPlaceholder = NSAttributedString(string:"Enter location Manually",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+                                                                    attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         
         self.lblNotifySettingTitle.textColor = StyleGuide.labelBlueColor()
         self.lblSocialConnectTitle.textColor = StyleGuide.labelBlueColor()
@@ -145,13 +148,13 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
         {
             self.showAlert(title: kError, message: kEnterValidsGender)
             flag = false
-
+            
         }else if(self.txtLocation.text?.isEmpty)!
         {
             self.showAlert(title: kError, message: kEnterLocation)
             flag = false
         }
-
+        
         return flag
     }
     
@@ -165,12 +168,12 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
     func updateSettingDetails()  {
         let predicate = NSPredicate(format: "username == %@", (commonSetting.userLoginInfo.stringValueForKey(key: "username")))
         commonSetting.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
-       
+        
         if self.isCasualSubscriber(){
             self.lblTeamPicture.isHidden = false
             self.btnTeamPicture.isHidden = false
-             self.lblNotifySettingTop.constant = 106
-//            self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant + 106
+            self.lblNotifySettingTop.constant = 106
+            //            self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant + 106
         }
         else{
             lblTeamPicture.isHidden = true
@@ -201,41 +204,65 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
             self.SwitchNotify_Match_Player.isOn = commonSetting.myProfile.notify_match_palyer
             self.switchTournament_Started.isOn = commonSetting.myProfile.tournament_started
             self.messagingCategoryView.isHidden = false
-            
         }
         else{
             self.messagingCategoryView.isHidden = true
-                
-                
         }
-        
         self.updateSubscriptionDetials()
-        
+        self.updateSocialConnection()
+        self.setProfileImage(userInfo: commonSetting.userLoginInfo)
     }
     
     
+    func setProfileImage(userInfo:NSDictionary) {
+        
+      let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
+        
+        if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
+        {
+            // For storing temporary imageKey for using in MenuViewController
+            
+            commonSetting.imageKeyProfile = imagekey
+            //On Success Call
+            let success:downloadImageSuccess = {image,imageKey in
+                // Success call implementation
+                
+                self.profilePicButton.setImage(image, for: UIControlState.normal)
+            }
+            
+            //On Falure Call
+            let falure:downloadImageFailed = {error,responseMessage in
+                
+                // Falure call implementation
+                
+            }
+            
+            ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
+        }
+    }
+    
     func updateSubscriptionDetials() -> Void {
-
-//        if (commonSetting.isEmptyStingOrWithBlankSpace(commonSetting.myProfile.subscriptionType!)) {
-//            self.lblSubscriberValue.text = ""
-//            self.btnSubscriber.setBackgroundImage( UIImage(named: "hype_transparent_small")!, for: UIControlState.normal)
-//        }
-//        else{
-//            self.lblSubscriberValue.text = commonSetting.myProfile.subscriptionType?.capitalized
-//           self.btnSubscriber.setBackgroundImage(UIImage(named: "hype_completed")!,for: UIControlState.normal)
-//            
-//        }
+        if (commonSetting.myProfile.subscriptionType) != nil {
+            self.lblSubscriberValue.text = commonSetting.myProfile.subscriptionType?.capitalized
+            self.btnSubscriber.setBackgroundImage(UIImage(named: "hype_completed")!,for: UIControlState.normal)
+            
+        }
+        else{
+            self.lblSubscriberValue.text = ""
+            self.btnSubscriber.setBackgroundImage( UIImage(named: "hype_transparent_small")!, for: UIControlState.normal)
+            
+        }
     }
     
     
     //MARK:- IBAction Methods
     
     @IBAction func switchValuesChanged(_ sender: Any) {
-         let settingSwitch = (sender as! UISwitch)
-         msgSettingTag = settingSwitch.tag
+        let settingSwitch = (sender as! UISwitch)
+        msgSettingTag = settingSwitch.tag
         
         switch msgSettingTag {
-        
+            
         case SwitchType.MESSAGINGSWITCH.rawValue :
             
             if self.messagingSwitch.isOn {
@@ -249,8 +276,8 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
                 self.switchTournament_Started.isOn = commonSetting.myProfile.tournament_started
                 self.messagingCategoryView.isHidden = false
                 self.ContainerViewHieght.constant = self.ContainerViewHieght.constant + 323
-                 self.lblBrainTreeTop.constant = 70
-  
+                self.lblBrainTreeTop.constant = 70
+                
             }
             else{
                 self.switchFollow.isOn = false
@@ -265,8 +292,8 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
                 self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - 323
                 self.lblBrainTreeTop.constant = -270
             }
-        break
-        
+            break
+            
         case SwitchType.MAILSWITCH.rawValue:
             break
             
@@ -279,28 +306,87 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
                 self.btnLocation.isEnabled = false
                 self.txtLocation.isEnabled = false
             }
-          break
+            break
             
         default:
             break
         }
-
     }
     
-//    func checksForMsgSettingSwitches() -> Void {
-//        var noOfDisabledSwitches :NSInteger = 0
-//        
-//        for view :UIView in messagingCategoryView.subviews {
-//            if view.isKind(of: UISwitch()) {
-//               var setting = view as! UISwitch
-//                if !(setting.isOn) {
-//                    noOfDisabledSwitches += 1
-//                }
-//            }
-//        }
-//        
-//    }
-//
+    //    func checksForMsgSettingSwitches() -> Void {
+    //        var noOfDisabledSwitches :NSInteger = 0
+    //
+    //        for view :UIView in messagingCategoryView.subviews {
+    //            if view.isKind(of: UISwitch()) {
+    //               var setting = view as! UISwitch
+    //                if !(setting.isOn) {
+    //                    noOfDisabledSwitches += 1
+    //                }
+    //            }
+    //        }
+    //
+    //    }
+    //
+    
+    func updateSocialConnection() -> Void {
+        if let socailConnectFB:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: commonSetting.myProfile, with: self.context!, socialType: "FACEBOOK")
+        {
+            commonSetting.isFBConnect = true
+        }
+        else{
+            commonSetting.isFBConnect = false
+        }
+        
+        if let socailConnectTwitter:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: commonSetting.myProfile, with: self.context!, socialType: "TWITTER")
+        {
+            commonSetting.isTwitterConnect = true
+        }
+        else{
+            commonSetting.isTwitterConnect = false
+        }
+        
+        if let socailConnectGoogle:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: commonSetting.myProfile, with: self.context!, socialType: "GOOGLEPLUS")
+        {
+            commonSetting.isGoogleConnect = true
+        }
+        else{
+            commonSetting.isGoogleConnect = false
+        }
+        if let socailConnectTwitch:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: commonSetting.myProfile, with: self.context!, socialType: "TWITCH")
+        {
+            commonSetting.isTwitchConnect = true
+        }
+        else{
+            commonSetting.isTwitchConnect = false
+        }
+        
+        // update selected images of social connect
+        if commonSetting.isFBConnect {
+            self.imgFBConnected.isHidden = false
+        }
+        else{
+            self.imgFBConnected.isHidden = true
+        }
+        if commonSetting.isTwitterConnect {
+            self.imgTwitterConnected.isHidden = false
+        }
+        else{
+            self.imgTwitterConnected.isHidden = true
+        }
+        if commonSetting.isGoogleConnect {
+            self.imgGoogleConnected.isHidden = false
+        }
+        else{
+            self.imgGoogleConnected.isHidden = true
+        }
+        if commonSetting.isTwitchConnect {
+            self.imgTwitchConnected.isHidden = false
+        }
+        else{
+            self.imgTwitchConnected.isHidden = true
+        }
+    }
+    
     @IBAction func getUserLocation(_ sender: AnyObject) {
         self.showHUD()
         locationManager.delegate = self
@@ -312,21 +398,13 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
     
     @IBAction func btnDoneClicked(_ sender: AnyObject) {
         if isValid() {
-            
-            self.rightButtonClickAction()
-            
+            self.updateUserDetails()
         }
-        
     }
     
-   
-    func rightButtonClickAction()  {
-       
-        self.updateUserDetails()
-    }
-   
+
     func updateUserDetails() ->Void  {
-       
+        
         self.getUserDetails(self.createUpdateProfileRequest() as! NSMutableDictionary)
     }
     
@@ -335,14 +413,14 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
         let userInfo = NSMutableDictionary()
         userInfo.setValue(self.txtPhoneNumber.text, forKey:"phoneNumber")
         userInfo.setValue(self.txtName.text, forKey:"name")
-         userInfo.setValue(self.txtEmail.text, forKey:"email")
+        userInfo.setValue(self.txtEmail.text, forKey:"email")
         if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtAge.text!))
         {
-           userInfo.setValue(NSNumber.init(value: Int(self.txtAge.text!)!), forKey: "age")
+            userInfo.setValue(NSNumber.init(value: Int(self.txtAge.text!)!), forKey: "age")
         }
         if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtGender.text!)) {
             userInfo.setValue(self.txtGender.text, forKey: "sex")
-
+            
         }
         if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtLocation.text!)) {
             userInfo.setValue(self.txtLocation.text, forKey: "location")
@@ -352,7 +430,7 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
             userInfo.setValue(self.profileImageKey, forKey: "imageKey")
         }
         else{
-           userInfo.setValue(commonSetting.myProfile.imageKey, forKey: "imageKey")
+            userInfo.setValue(commonSetting.myProfile.imageKey, forKey: "imageKey")
         }
         
         if !(commonSetting.isEmptyStingOrWithBlankSpace(self.teamIconImageKey)) {
@@ -368,20 +446,26 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
         
        var arySettings:NSMutableArray = NSMutableArray()
     
+      arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchFollow.isOn),"FOLLOW"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+      arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Approved_Player.isOn),"NOTIFY_APPROVED_PLAYER"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+     
+      arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Followers.isOn),"NOTIFY_FOLLOWERS"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
        
-                arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchFollow.isOn))), forKey: "FOLLOW" as NSCopying))
-        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchNotify_Approved_Player.isOn))), forKey: "NOTIFY_APPROVED_PLAYER" as NSCopying))
-        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchNotify_Followers.isOn))), forKey: "NOTIFY_FOLLOWERS" as NSCopying))
-        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchNotify_Match_Admin.isOn))), forKey: "NOTIFY_MATCH_ADMIN" as NSCopying))
-         arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.SwitchNotify_Match_Player.isOn))), forKey: "NOTIFY_MATCH_PLAYER" as NSCopying))
-         arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchNotify_Tournament_Players.isOn))), forKey: "NOTIFY_TOURNAMENT_PLAYERS" as NSCopying))
-        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchPlayer_Added_To_Tournament.isOn))), forKey: "PLAYER_ADDED_TO_TOURNAMENT" as NSCopying))
-        arySettings.add(NSDictionary.init(object: NSArray.init(object: (NSNumber.init(value: self.switchTournament_Started.isOn))), forKey: "TOURNAMENT_STARTED" as NSCopying))
-        print(arySettings)
-       
-//       let dicReq = NSMutableDictionary.init(object: userInfo, forKey: "person" as NSCopying)
-        let dicReq = NSMutableDictionary.init(objects: [userInfo,arySettings], forKeys: ["person" as NSCopying,"settings" as NSCopying])
-       return  dicReq
+     arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Match_Admin.isOn),"NOTIFY_MATCH_ADMIN"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        
+    arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.SwitchNotify_Match_Player.isOn),"NOTIFY_MATCH_PLAYER"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        
+     arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Tournament_Players.isOn),"NOTIFY_TOURNAMENT_PLAYERS"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        
+    arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchPlayer_Added_To_Tournament.isOn),"PLAYER_ADDED_TO_TOURNAMENT"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+     
+    arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchTournament_Started.isOn),"TOURNAMENT_STARTED"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+
+
+        
+//               let dicReq = NSMutableDictionary.init(object: userInfo, forKey: "person" as NSCopying)
+       let dicReq = NSMutableDictionary.init(objects: [userInfo,arySettings], forKeys: ["person" as NSCopying,"settings" as NSCopying])
+        return  dicReq
     }
     
     func getUserDetails(_ userInfo: NSMutableDictionary) -> Void {
@@ -390,18 +474,128 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            
+            self.showAlert(title: kMessage, message: "Profile updated successfully")
             print(responseDict)
         }
         
         //On Failure Call
         let falure:falureHandler = {error,responseMessage,requestType in
             
-                   }
+        }
         print(userInfo)
         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.UpdateUserProfile, method: "PUT", successCall: success, falureCall: falure)
         
     }
-
+    
+    @IBAction func socialConnectViaFacebook(_ sender: Any) {
+        
+        if !commonSetting.isInternetAvailable {
+            self.showNoInternetAlert()
+            return
+        }
+        if commonSetting.isFBConnect{
+            
+            let refreshAlert = UIAlertController(title: kMessage, message: kDisconnect, preferredStyle: UIAlertControllerStyle.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: kOK, style: .default, handler: { (action: UIAlertAction!) in
+                
+                commonSetting.isFBConnect = false
+                self.imgFBConnected.isHidden = true
+                 let dicReq = NSMutableDictionary.init(object: "facebook", forKey: "socialType" as NSCopying)
+               
+//                ServiceCall.sharedInstance.sendRequest(parameters: dicReq, urlType: RequestedUrlType.DisconnectSocialLogin, method: "POST", successCall: success, falureCall: falure)
+                
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: kCancel, style: .cancel, handler: { (action: UIAlertAction!) in
+            }))
+            
+            present(refreshAlert, animated: true, completion: nil)
+            
+        }
+        else{
+            super.socialLoginViaFacebook(sender)
+            
+        }
+    }
+    @IBAction func socialConnectViaTwitter(_ sender: Any) {
+        if !commonSetting.isInternetAvailable {
+            self.showNoInternetAlert()
+            return
+        }
+        if commonSetting.isTwitterConnect{
+            
+            let refreshAlert = UIAlertController(title: kMessage, message: kDisconnect, preferredStyle: UIAlertControllerStyle.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: kOK, style: .default, handler: { (action: UIAlertAction!) in
+                
+                commonSetting.isTwitterConnect = false
+                self.imgTwitterConnected.isHidden = true
+                
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: kCancel, style: .cancel, handler: { (action: UIAlertAction!) in
+            }))
+            
+            present(refreshAlert, animated: true, completion: nil)
+            
+        }
+        else{
+            super.socialLoginViaTwitter(sender)
+        }
+    }
+    
+    @IBAction func socialConnectViaGoogle(_ sender: Any) {
+        if !commonSetting.isInternetAvailable {
+            self.showNoInternetAlert()
+            return
+        }
+        if commonSetting.isGoogleConnect{
+            
+            let refreshAlert = UIAlertController(title: kMessage, message: kDisconnect, preferredStyle: UIAlertControllerStyle.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: kOK, style: .default, handler: { (action: UIAlertAction!) in
+                commonSetting.isGoogleConnect = false
+                self.imgGoogleConnected.isHidden = true
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: kCancel, style: .cancel, handler: { (action: UIAlertAction!) in
+            }))
+            
+            present(refreshAlert, animated: true, completion: nil)
+            
+        }
+        else{
+           super.socialLoginViaGooglePlus(sender)        }
+    }
+    @IBAction func socialConnectViaTwitch(_ sender: Any) {
+        
+        if !commonSetting.isInternetAvailable {
+            self.showNoInternetAlert()
+            return
+        }
+        if commonSetting.isTwitchConnect{
+            
+            let refreshAlert = UIAlertController(title: kMessage, message: kDisconnect, preferredStyle: UIAlertControllerStyle.alert)
+            
+            refreshAlert.addAction(UIAlertAction(title: kOK, style: .default, handler: { (action: UIAlertAction!) in
+                
+                commonSetting.isTwitchConnect = false
+                self.imgTwitchConnected.isHidden = true
+            }))
+            
+            refreshAlert.addAction(UIAlertAction(title: kCancel, style: .cancel, handler: { (action: UIAlertAction!) in
+            }))
+            
+            present(refreshAlert, animated: true, completion: nil)
+            
+        }
+        else{
+            super.socialLoginViaTwitch(sender)
+            
+        }
+    }
     
     
     @IBAction func actionOnProfilePic(_ sender: Any) {
@@ -447,7 +641,35 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
         
         
     }
-
+    
+    //MARK:- Social Login response
+    override func onLogInSuccess(_ userInfo: NSDictionary,connectType:SocialConnectType) -> Void {
+        self.hideHUD()
+      
+        if connectType == SocialConnectType.FACEBOOK {
+            commonSetting.isFBConnect = true
+            self.imgFBConnected.isHidden = false
+        }
+        else if connectType == SocialConnectType.TWITTER {
+            commonSetting.isTwitterConnect = true
+            self.imgTwitchConnected.isHidden = false
+        }
+        else if connectType == SocialConnectType.GOOGLEPLUS {
+            commonSetting.isGoogleConnect = true
+            self.imgGoogleConnected.isHidden = false
+        }
+        else if connectType == SocialConnectType.TWITCH {
+            commonSetting.isTwitchConnect = true
+            self.imgTwitchConnected.isHidden = false
+        }
+        
+    }
+    
+    func onLogInFailure(_ userInfo: String) -> Void {
+        self.hideHUD()
+        self.showAlert(title: "Error", message: userInfo)
+    }
+    
     
     // MARK:- CLLocation button Methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
@@ -525,17 +747,17 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
         toolBar.setItems([flexSpace,flexSpace,doneButton], animated: true)
         
         self.txtAge.inputAccessoryView = toolBar
-
+        
     }
     
     func configurePickerViewDta()
     {
-       
-       self.aryAge = NSMutableArray()
-       for i in 10..<100 {
-        self.aryAge.add(String(format: "%d",i))
-      }
-  }
+        
+        self.aryAge = NSMutableArray()
+        for i in 10..<100 {
+            self.aryAge.add(String(format: "%d",i))
+        }
+    }
     
     func donePressed(sender: UIBarButtonItem) {
         
@@ -547,7 +769,7 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
         
         self.txtAge.text = "10"
         
-     self.txtAge.resignFirstResponder()
+        self.txtAge.resignFirstResponder()
     }
     
     func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
@@ -571,7 +793,7 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         self.txtAge.text = self.aryAge.object(at: row) as? String
-
+        
     }
     
     // MARK: - UIImagePickerControllerDelegate Methods
@@ -582,7 +804,7 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
             self.profilePicButton.setBackgroundImage(pickerImage, for: UIControlState.normal)
             self.profilePicButton.layer.cornerRadius = self.profilePicButton.frame.size.height/2
             self.profilePicButton.layer.masksToBounds = true;
-//            isImageAdded = true
+            //            isImageAdded = true
         }
         
         self.dismiss(animated: true, completion: nil)
@@ -591,7 +813,151 @@ class SettingViewController: BaseViewController,UIImagePickerControllerDelegate,
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    
+    //MARK:- Textfield delegate
+    
+    func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
+        return true
+    }
+    
+    
+    // became first responder
+    func textFieldDidBeginEditing(_ textField: UITextField){
+        addDismisskeyboardTapGesture()
+       
+    }
+    
+    // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool{
+        return true
+    }
+    
+    // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
+    func textFieldDidEndEditing(_ textField: UITextField){
+       
+    }
+    
+    
+    // return NO to not change text
+    func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool{
+        
+        let length = txtName.text!.characters.count
+        
+        if textField == txtName && length >= 50 {
+            return false
+        }
+      
+        else if textField == txtEmail && (textField.text?.characters.count)! >= 150{
+            return false
+        }
+        else if textField == txtLocation {
+            self.perform(#selector(SettingViewController.textdidChange), with: self, afterDelay: 2.0)
+        }
+        
+        return true
+    }
+    
+    func textdidChange() -> Void {
+        
+        if txtLocation.text?.characters.count == 0{
+            self.tableView.isHidden = true
+            self.scrollView.isScrollEnabled = true
+            self.addDismisskeyboardTapGesture()
+        }
+        if txtLocation.text!.characters.count > 2 {
+            self.fetchAutocompleteLocation(keyword: self.txtLocation.text!)
+            self.removeDismisskeyboardTapGesture()
+            self.tableView.isHidden = false
+            self.scrollView.isScrollEnabled = false
+        }
+    }
+    
+    
+    // called when clear button pressed. return NO to ignore (no notifications)
+    func textFieldShouldClear(_ textField: UITextField) -> Bool{
+        return true
+    }
+    
+    // called when 'return' key pressed. return NO to ignore.
+    override func textFieldShouldReturn(_ textField: UITextField) -> Bool{
+        if textField == txtName {
+            txtEmail.becomeFirstResponder()
+        }
+               else{
+            textField.resignFirstResponder()
+        }
+        
+        return true
+    }
 
+    
+    //MARK:- Location search on location textfield method
+    
+    func fetchAutocompleteLocation(keyword: String) {
+        
+        let dicInfo = NSMutableDictionary()
+        let str:String = keyword.replacingOccurrences(of: ",", with: "")
+        dicInfo.setValue(str.replacingOccurrences(of: " ", with: ""), forKey: "locationText")
+        
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            self.autoLocationList = responseDict["list"] as! NSArray
+            //            var myNewName = NSMutableArray(array:self.autoLocationList)
+            //            myNewName.removeAllObjects()
+            
+            self.tableView.reloadData()
+            
+        }
+        
+        //On Failure Call
+        let failure:falureHandler = {error,responseMessage,requestType in
+            
+            // Falure call implementation
+            print(responseMessage)
+        }
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: dicInfo, urlType: RequestedUrlType.GetUnAuthSearchedLocation, method: "GET", successCall: success, falureCall: failure)
+        
+    }
+    
 
-
+    //MARK:- TableView Delegate Methods
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
+        return autoLocationList.count
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
+        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let dict:NSDictionary =  self.autoLocationList.object(at: indexPath.row) as! NSDictionary
+        
+        //        let index = indexPath.row as Int
+        cell.textLabel!.textColor = UIColor.white
+        cell.textLabel!.text = dict.stringValueForKey(key: "formatted_address")
+        // Returning the cell
+        return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let selectedCell: UITableViewCell = tableView.cellForRow(at: indexPath as IndexPath)!
+        txtLocation.text = selectedCell.textLabel!.text!
+        self.tableView.isHidden = true
+        self.scrollView.isScrollEnabled = true
+        self.addDismisskeyboardTapGesture()
+    }
+    
+    
+    
+    func configureLocationTableView ()
+    {
+        self.tableView.delegate = self
+        self.tableView.dataSource = self
+        self.tableView.backgroundColor = UIColor.black
+        self.tableView.layer.cornerRadius = 5.0
+    }
 }

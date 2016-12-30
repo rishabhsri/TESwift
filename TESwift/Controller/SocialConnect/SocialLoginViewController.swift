@@ -71,6 +71,9 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
             urlString = String(format: "%@/login/twitter", Network_Header)
             self.titleLabel.text = "Twitter Login"
             break
+        case .NON:
+            return
+
         }
         
         let webRequest:NSMutableURLRequest = NSMutableURLRequest(url: URL(string: urlString)!)

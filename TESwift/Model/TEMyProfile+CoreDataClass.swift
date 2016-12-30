@@ -116,6 +116,19 @@ public class TEMyProfile: TESwiftModel {
         
     }
     
+    static func fetchUserSocailDetails(for profile: TEMyProfile, with context: NSManagedObjectContext, socialType type: String) -> UserSocialDetail? {
+         let predicate = NSPredicate(format: "connectType == %@",type)
+        let filterSet = profile.socialdetails?.filtered(using: predicate)
+        if (filterSet?.count)! > 0
+        {
+            return (filterSet!.first as? UserSocialDetail)!
+        }else
+        {
+          return nil
+        }
+    }
+
+    
     static func notificationTypeValue(_ settings: NSArray, type: String) -> Bool {
            var arry = settings.filtered(using: NSPredicate(format: "setting == %@", type))
            if arry.count == 1 {
