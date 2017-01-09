@@ -101,6 +101,33 @@ public class TEMyProfile: TESwiftModel {
         TEMyProfile.save(context)
     }
     
+    static func fetchMyProfileDetail(context:NSManagedObjectContext, predicate:NSPredicate) -> TEMyProfile
+    {
+        let fetchRequest:NSFetchRequest = TEMyProfile.newFetchRequest(in: context)
+        fetchRequest.predicate = predicate
+        
+        var fetchedObjects:NSArray = NSArray()
+        do {
+            fetchedObjects = try context.fetch(fetchRequest) as NSArray
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        return fetchedObjects.firstObject as! TEMyProfile
+        
+    }
+    
+    static func fetchUserSocailDetails(for profile: TEMyProfile, with context: NSManagedObjectContext, socialType type: String) -> UserSocialDetail? {
+         let predicate = NSPredicate(format: "connectType == %@",type)
+        let filterSet = profile.socialdetails?.filtered(using: predicate)
+        if (filterSet?.count)! > 0
+        {
+            return (filterSet!.first as? UserSocialDetail)!
+        }else
+        {
+          return nil
+        }
+    }
+
     
     static func notificationTypeValue(_ settings: NSArray, type: String) -> Bool {
            var arry = settings.filtered(using: NSPredicate(format: "setting == %@", type))

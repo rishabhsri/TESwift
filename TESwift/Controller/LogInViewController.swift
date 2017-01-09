@@ -100,7 +100,7 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
             print(responseDict)
             
             if responseDict.value(forKey: "userID") != nil {
-                self.onLogInSuccess(responseDict)
+                self.onLogInSuccess(responseDict,connectType: .NON)
             }
         }
         
@@ -116,8 +116,9 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
         ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.GetUserLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
+    
     //MARK:- Social Login response
-    override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+    override func onLogInSuccess(_ userInfo: NSDictionary,connectType:SocialConnectType) -> Void {
         
         commonSetting.userLoginInfo = userInfo
         appDelegate.configureMenuViewController(navigationCont: self.navigationController!)

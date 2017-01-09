@@ -27,6 +27,7 @@ enum RequestedUrlType {
     case UniversalSearch
     case GetUsersTournament
     case SearchTournament
+    case UpdateUserProfile
     case GetGameList
     case CreateNewTournament
 }
@@ -144,8 +145,12 @@ class ServiceCall: NSObject {
         case .GetGameList:
             urlString = String(format: "%@/games",Main_Header)
             break
-        case .CreateNewTournament:
-            urlString = String(format: "%@/tournament",Main_Header)
+        case .UpdateUserProfile:
+            urlString = String(format: "%@/user/update/profile",Network_Header)
+            break
+        
+        case .DisconnectSocialLogin:
+            urlString = String(format: "%@/user/disconnect/socialnetwork/%@",Network_Header,parameter.stringValueForKey(key: "socialType"))
             break
     
         }
