@@ -62,3 +62,20 @@ extension TEMyProfile {
     @NSManaged public func removeFromSocialdetails(_ values: NSSet)
 
 }
+
+// MARK: Generated accessors for tournament
+extension TEMyProfile {
+    
+    @objc(addTournamentObject:)
+    @NSManaged public func addToSocialdetails(_ value: TETournamentList)
+    
+    @objc(removeTournamentObject:)
+    @NSManaged public func removeFromSocialdetails(_ value: TETournamentList)
+    
+    @objc(addTournament:)
+    @NSManaged public func addToTournament(_ values: NSSet)
+    
+    @objc(removeTournament:)
+    @NSManaged public func removeFromTournament(_ values: NSSet)
+    
+}

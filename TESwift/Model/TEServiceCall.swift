@@ -28,6 +28,7 @@ enum RequestedUrlType {
     case GetUsersTournament
     case SearchTournament
     case GetGameList
+    case CreateNewTournament
 }
 
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
@@ -104,7 +105,7 @@ class ServiceCall: NSObject {
             urlString = String(format: "%@/%@",imageDownloadURL,parameter.value(forKey: "imageKey") as! String)
             break
         case .UploadImage:
-            urlString = String(format: "%@",File_Header)
+            urlString = String(format: "%@/json",File_Header)
             break
         case .GetUserSignUp:
             urlString = String(format: "%@/user/register",Network_Header)
@@ -142,6 +143,9 @@ class ServiceCall: NSObject {
             urlString = String(format: "%@/tournament?name=%@",Main_Header,parameter.stringValueForKey(key: "searchText"))
         case .GetGameList:
             urlString = String(format: "%@/games",Main_Header)
+            break
+        case .CreateNewTournament:
+            urlString = String(format: "%@/tournament",Main_Header)
             break
     
         }
@@ -408,8 +412,8 @@ class ServiceCall: NSObject {
                 {
                     if(httpResponse.statusCode == 200)
                     {
-                        if let resosneString:String = responseObject as? String{
-                            successCall(resosneString)
+                        if let resosneDict:NSDictionary = responseObject as? NSDictionary{
+                            successCall(resosneDict.stringValueForKey(key: "response"))
                         }
                     }
                 }

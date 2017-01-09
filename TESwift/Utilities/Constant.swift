@@ -62,6 +62,10 @@ let HYPE_PAGE_LIMIT = IS_IPAD ? 9 : 5
 
 let TWITTER_MAX_CHAR = 140
 
+let NOTIFICATION_MAX_CHAR = 140
+
+let NAME_MAX_CHAR = 50
+
 //MARK:- SearchBar appearance
 
 let kSearchBarBarTintColor:UIColor = UIColor.black
@@ -104,6 +108,8 @@ let kEnterValidAge = "Please select valid age."
 let kdefaultTwitterMsg = "Coming up 'player1' vs 'player2' at (insert event twitter) in (enter hashtag). On (Stream link) via @te_app #TE"
 let kTwitterHelp = "With one press you can tweet out a custom message every time a new match is about to begin. The twitter names of the players/teams will automatically be populated. In the text box is a suggested format but you can write whatever you want! Here is one example... \n\n Coming up, @G4STroy vs @CDMani at @TE_Championships in #mortalkombat . On @twitch.tv/cdjr02 via @te_app #TE"
 let kDefaultNotificationMsg = "match will begin in 5 minutes"
+
+let kDefalutUrl = "te-app.com/"
 
 //MARK:- Titles
 

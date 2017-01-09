@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class CreateTournamentViewController: SocialConnectViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource{
+class CreateTournamentViewController: SocialConnectViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate{
 
     // Navigation Outlet
     @IBOutlet weak var topNavLbl: UILabel!
@@ -72,6 +72,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     
     let imagePicker = UIImagePickerController()
     var pickerView = UIPickerView()
+    var datePicker  = UIDatePicker()
     var gameList = NSArray()
     var rankByArray = NSMutableArray()
     var advanceTimerArray = NSMutableArray()
@@ -80,6 +81,16 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     var locationManager = CLLocationManager()
     var toolBar = UIToolbar()
     var gameListArray = NSArray()
+    var tournamentImageKey = String()
+    var slectedGameType = String()
+    var gameListObj:GameList?
+    var strLattitude = String()
+    var strLaongitude = String()
+    var isTwitterLogIn:Bool = false
+    var isImage:Bool = false
+    var twitterkey = String()
+    var startDate = String()
+    var endDate = String()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -87,6 +98,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.setUpLayout()
         self.setUpPickerView()
         self.getGameList()
+        self.setUpDatePicker()
+        
         // Do any additional setup after loading the view.
     }
 
@@ -154,10 +167,25 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         checkInTimeArray = ["Off", "15 min", "30 min", "1 hour", "2 hours", "3 hours", "6 hours", "1 day"]
     }
     
+    func setUpDatePicker()
+    {
+        datePicker = UIDatePicker.init(frame: CGRect(x: 0, y: 467, width: 375, height: 200))
+        datePicker.backgroundColor = UIColor.black
+        datePicker.tintColor = UIColor.white
+        
+        self.startDateTF.inputAccessoryView = toolBar
+        self.endDateTF.inputAccessoryView = toolBar
+        
+        self.datePicker.datePickerMode = UIDatePickerMode.dateAndTime
+        datePicker.addTarget(self, action:#selector(CreateTournamentViewController.onClickedDatePicker(_:)) , for: UIControlEvents.valueChanged)
+        self.startDateTF.inputView = datePicker
+        self.endDateTF.inputView = datePicker
+    }
+    
     func setStyleGuide() {
         
         self.chooseGameTableView.isHidden = true
-        
+        self.slectedGameType = "SINGLE_ELIMINATION"
         tounamentNameTF.attributedPlaceholder = NSAttributedString(string:"Tournament Name",
                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         chooseGameTF.attributedPlaceholder = NSAttributedString(string:"-Choose Game-",
@@ -174,6 +202,28 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.activeTextField.resignFirstResponder()
     }
     
+    func  onClickedDatePicker(_ sender: Any){
+    
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd"
+        if self.activeTextField == self.startDateTF {
+            self.startDateTF.text = dateFormatter.string(from: datePicker.date)
+        }
+        else
+        {
+            self.endDateTF.text = dateFormatter.string(from: self.datePicker.date)
+        }
+        
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+        dateFormatter.timeZone = TimeZone.init(identifier: "GMT")
+        
+        if activeTextField == self.startDateTF{
+        self.startDate = dateFormatter.string(from: datePicker.date)
+        }else
+        {
+        self.endDate = dateFormatter.string(from: datePicker.date)
+        }
+    }
 
     func getGameList() {
         
@@ -183,7 +233,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             print(responseDict)
             if let array:NSArray = responseDict.object(forKey: "list") as? NSArray
             {
-              self.gameListArray = array
+              GameList.deleteAllFromEntity(inManage: self.manageObjectContext())
+              self.gameListArray = GameList.insertGameList(list: array, context: self.manageObjectContext())
             }
         }
         let failure: falureHandler = {error, responseString, responseType in
@@ -193,6 +244,140 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         // Service call for get user profile data (Hypes, upcomings, person, followers)
         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetGameList, method: "GET", successCall: success, falureCall: failure)
+
+    }
+    
+    func validateInfo() -> Bool
+    {
+        if self.tounamentNameTF.text == "" || (self.tounamentNameTF.text?.characters.count)!<3{
+            self.showAlert(title: kMessage, message: "Tournament name is mandatory with atleast 3 characters")
+            return false
+        }else if self.chooseGameTF.text == ""
+        {
+            self.showAlert(title: kMessage, message: "Please Choose game")
+            return false
+        }else if self.startDateTF.text == "" || self.endDateTF.text == ""
+        {
+            self.showAlert(title: kMessage, message: "Please Start and End date both")
+            return false
+        }
+        return true
+    }
+    
+    func createTournamentRequst(imageKey:NSString) -> NSMutableDictionary {
+        
+        let dicCreateTournament = NSMutableDictionary()
+        
+        if self.slectedGameType != "" {
+            let dicGame:NSMutableDictionary = NSMutableDictionary()
+            dicGame.setCustomObject(object:self.gameListObj?.name, key: "name")
+            dicGame.setCustomObject(object:self.gameListObj?.gameID, key: "gameID")
+            dicGame.setCustomObject(object:self.gameListObj?.gameDescripton, key: "description")
+            dicCreateTournament.setObject(dicGame, forKey: "game" as NSCopying)
+        }else{
+            let dicGame:NSMutableDictionary = NSMutableDictionary()
+            dicGame.setCustomObject(object:self.chooseGameTF.text, key: "name")
+            dicCreateTournament.setObject(dicGame, forKey: "game" as NSCopying)
+        }
+        
+        let dicTournamentType = NSMutableDictionary()
+        dicTournamentType.setCustomObject(object:self.slectedGameType, key: "tournamentTypeName")
+        dicTournamentType.setCustomObject(object:self.slectedGameType, key: "tournamentTypeDescription")
+        
+        if self.slectedGameType == "ROUND_ROBIN" {
+            dicTournamentType.setCustomObject(object:self.rankByTF.text, key: "rankedBy")
+            if self.rankByTF.text == "CUSTOM" {
+                
+            }
+        }else if self.slectedGameType == "ROUND_ROBIN"
+        {
+            dicTournamentType.setCustomObject(object:self.matchPerWinTF.text, key: "rrPtsForMatchWin")
+            dicTournamentType.setCustomObject(object:self.matchPerTieTF.text, key: "rrPtsForMatchTie")
+            dicTournamentType.setCustomObject(object:self.gameSetWin.text, key: "rrPtsForGameWin")
+            dicTournamentType.setCustomObject(object:self.gameSetTieTF.text, key: "rrPtsForGameTie")
+            dicTournamentType.setCustomObject(object:self.perByeTf.text, key: "rrPtsForGameBye")
+        }
+        dicCreateTournament.setObject(dicTournamentType, forKey: "tournamentType" as NSCopying)
+        
+        if imageKey != "" {
+            dicCreateTournament.setCustomObject(object:imageKey, key: "imageKey")
+        }else{
+            dicCreateTournament.setCustomObject(object:imageKey, key: "imageKey")
+        }
+        
+        // Start and end date
+        dicCreateTournament.setCustomObject(object:self.startDate, key: "startDate")
+        dicCreateTournament.setCustomObject(object:self.endDate, key: "endDate")
+        
+        dicCreateTournament.setCustomObject(object:"false", key: "acceptAttachments")
+        dicCreateTournament.setCustomObject(object:"false", key: "sequentialPairings")
+       // dicCreateTournament.setCustomObject(object:registerSwitch.isOn as NSNumber, key: "preRegister")
+        dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.registerSwitch.isOn) , key: "preRegister")
+        dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.discordChannelSwitch.isOn), key: "createDiscordChannel")
+        dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.considerLocationSwitch.isOn), key: "considerLocation")
+        dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.considerTeamSwitch.isOn), key: "considerTeam")
+        dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.teamBasedSwitch.isOn), key: "teamBased")
+        dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.scoreSubmissionSwitch.isOn), key: "allowUserScoreSubmission")
+        
+        dicCreateTournament.setCustomObject(object:"true", key: "openSignup")
+        dicCreateTournament.setCustomObject(object:"false", key: "started")
+        dicCreateTournament.setCustomObject(object:"false", key: "completed")
+        dicCreateTournament.setCustomObject(object:"", key: "remarks")
+        dicCreateTournament.setCustomObject(object:self.tournamentDescTxtView.text, key: "description")
+        dicCreateTournament.setCustomObject(object:self.tounamentNameTF.text, key: "name")
+        
+        var str = self.tournamentUrl.text
+        str = str?.replacingOccurrences(of: kDefalutUrl, with: "")
+        dicCreateTournament.setCustomObject(object:str, key: "webURL")
+        dicCreateTournament.setCustomObject(object:self.twitterMesTextView.text, key: "twitterMessage")
+        dicCreateTournament.setCustomObject(object:self.locationTF.text, key: "venue")
+        dicCreateTournament.setCustomObject(object:commonSetting.userLoginInfo.stringValueForKey(key: "username"), key: "createdBy")
+        dicCreateTournament.setCustomObject(object:self.checkInTimeTF1.text, key: "checkinTime")
+        dicCreateTournament.setCustomObject(object:self.advanceTimerTF.text, key: "autoApprovalTime")
+        dicCreateTournament.setCustomObject(object:self.notificationMsgtextView.text, key: "notificationMessage")
+        
+        if isTwitterLogIn {
+            let dict = NSDictionary()
+            dicCreateTournament.setCustomObject(object:twitterkey, key: "recordId")
+            dicCreateTournament.setObject(dict, forKey: "twitter" as NSCopying)
+        }
+        
+        if !self.strLaongitude.isEmpty || !self.strLaongitude.isEmpty {
+            dicCreateTournament.setCustomObject(object:"\(strLattitude),\(strLaongitude)", key: "latLong")
+        }
+        
+        dicCreateTournament.setCustomObject(object:self.preRegistraionChargeTF.text, key: "price")
+        dicCreateTournament.setCustomObject(object:NSNumber.init(value: self.paidTournamentSwitch.isOn), key: "paid")
+        
+       // var error: NSError?
+        
+        do{
+            let data = try JSONSerialization.data(withJSONObject: dicCreateTournament, options: JSONSerialization.WritingOptions.prettyPrinted)
+            let strData = String.init(data: data, encoding: String.defaultCStringEncoding)
+            
+            print(strData!)
+        }
+        catch
+        {
+          
+        }
+        return dicCreateTournament
+    }
+    
+    func sendCreateTournamentRequest(dict:NSMutableDictionary) {
+        
+        let success:successHandler = {responseObject,requestType in
+            // Success call implementation
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+        }
+        
+        //On Failure Call
+        let falure:falureHandler = {error,responseMessage,requestType in
+            print(responseMessage)
+                }
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: dict, urlType: RequestedUrlType.CreateNewTournament, method: "POST", successCall: success, falureCall: falure)
 
     }
     
@@ -255,6 +440,18 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     
     @IBAction func rightBtnAction(_ sender: AnyObject) {
         
+        if commonSetting.isInternetAvailable {
+            if self.validateInfo() {
+                if isImage {
+                    self.uploadTournamentmage()
+                    
+                }
+                else{
+                    self.sendCreateTournamentRequest(dict: self.createTournamentRequst(imageKey: ""))
+                }
+            }
+        }
+        
     }
 
     @IBAction func locationAction(_ sender: AnyObject) {
@@ -290,6 +487,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             }, completion: {(isCompleted) -> Void in
                 // self.isSwipedUp = true
         })
+        self.slectedGameType = "SINGLE_ELIMINATION"
 
     }
     
@@ -315,7 +513,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             }, completion: {(isCompleted) -> Void in
                 // self.isSwipedUp = true
         })
-
+        self.slectedGameType = "DOUBLE_ELIMINATION"
     }
     
     @IBAction func swissAction(_ sender: AnyObject) {
@@ -339,7 +537,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             }, completion: {(isCompleted) -> Void in
                // self.isSwipedUp = true
         })
-
+       self.slectedGameType = "SWISS"
     }
     
     @IBAction func roundRobinAction(_ sender: AnyObject) {
@@ -365,7 +563,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             }, completion: {(isCompleted) -> Void in
                 // self.isSwipedUp = true
         })
-
+        self.slectedGameType = "ROUND_ROBIN"
     }
 
     // MARK: - imagePickerController Delegate
@@ -374,6 +572,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     {
         if let pickerImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
             self.uploadPhotoBtn.setBackgroundImage(pickerImage, for: UIControlState.normal)
+            self.isImage = true
             self.uploadPhotoBtn.layer.masksToBounds = true;
             //isImageAdded = true
         }
@@ -477,6 +676,19 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         return attributedString
     }
     
+    // MARK: - TextView Delegate
+    
+    func textView(_ textView: UITextView, shouldChangeTextIn range: NSRange, replacementText text: String) -> Bool {
+        if textView == twitterMesTextView || textView == notificationMsgtextView{
+            
+            if textView.text.characters.count > TWITTER_MAX_CHAR {
+                self.showAlert(title: kMessage, message: "You have reached max characters limit.")
+                return false
+            }
+        }
+        return true
+    }
+    
     // MARK: - TextFields Delegate
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
@@ -524,6 +736,10 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.chooseGameTableView.isHidden = true
             self.addDismisskeyboardTapGesture()
             }
+        }else if textField == self.tounamentNameTF || (textField.text?.characters.count)! > NAME_MAX_CHAR
+        {
+          self.showAlert(title: kMessage, message: "You have reached max characters limit.")
+          return false
         }
         return true
     }
@@ -538,17 +754,30 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         // create a new cell if needed or reuse an old one
         let cell:GameListTableViewCell = chooseGameTableView.dequeueReusableCell(withIdentifier: "GameCell", for: indexPath) as! GameListTableViewCell
-        let dict:NSDictionary = self.gameList[indexPath.row] as! NSDictionary
-        cell.gameLbl.text = dict.stringValueForKey(key: "name")
+        let dict:GameList = self.gameList[indexPath.row] as! GameList
+        cell.gameLbl.text = dict.name
         return cell
     }
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let dict:NSDictionary = self.gameList[indexPath.row] as! NSDictionary
-        self.chooseGameTF.text = dict.stringValueForKey(key: "name")
+        
+        gameListObj = self.gameList[indexPath.row] as? GameList
+        self.chooseGameTF.text = gameListObj?.name
         self.chooseGameTableView.isHidden = true
         self.addDismisskeyboardTapGesture()
     }
+    
+    //MARK:- Social Login response
+    override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+        
+        isTwitterLogIn = true
+    }
+    
+    func onLogInFailure(_ userInfo: String) -> Void {
+        self.hideHUD()
+        self.showAlert(title: "Error", message: userInfo)
+    }
+    
     
     // MARK:- CLLocation button Methods
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]){
@@ -558,6 +787,10 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         print("user latitude = \(userLocation.coordinate.latitude)")
         print("user longitude = \(userLocation.coordinate.longitude)")
+        
+
+        self.strLattitude = "\(userLocation.coordinate.latitude)"
+        self.strLaongitude = "\(userLocation.coordinate.longitude)"
         
         let geocoder = CLGeocoder()
         geocoder.reverseGeocodeLocation(userLocation, completionHandler: {(placemarks, error)->Void in
@@ -600,6 +833,26 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         print("Error while updating location " + error.localizedDescription)
     }
 
+     // MARK: - Upload Image
+    
+    func uploadTournamentmage() -> Void {
+        let success:uploadImageSuccess = {imageKey in
+            // Success call implementation
+            print(imageKey)
+            self.tournamentImageKey = imageKey
+            self.sendCreateTournamentRequest(dict: self.createTournamentRequst(imageKey: self.tournamentImageKey as NSString))
+        }
+        
+        //On Falure Call
+        let falure:uploadImageFailed = {error,responseMessage in
+            
+            // Falure call implementation
+            print(responseMessage)
+        }
+        
+        ServiceCall.sharedInstance.uploadImage(image: self.uploadPhotoBtn.currentBackgroundImage, urlType: RequestedUrlType.UploadImage, successCall: success, falureCall: falure)
+    }
+    
     
     /*
     // MARK: - Navigation

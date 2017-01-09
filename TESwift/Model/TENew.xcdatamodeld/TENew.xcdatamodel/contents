@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="GameList" representedClassName=".GameList" syncable="YES">
+        <attribute name="gameDescripton" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="gameID" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
     <entity name="TEMyProfile" representedClassName=".TEMyProfile" syncable="YES">
         <attribute name="age" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="city" optional="YES" attributeType="String" syncable="YES"/>
@@ -198,12 +203,13 @@
     </entity>
     <elements>
         <element name="TEMyProfile" positionX="-63" positionY="-18" width="128" height="465"/>
-        <element name="TETournamentList" positionX="-54" positionY="144" width="128" height="1080"/>
-        <element name="UserDetails" positionX="-45" positionY="144" width="128" height="135"/>
-        <element name="UserSocialDetail" positionX="-36" positionY="153" width="128" height="165"/>
         <element name="TEPlayerDetails" positionX="-54" positionY="135" width="128" height="495"/>
         <element name="TEStaffDetail" positionX="-45" positionY="144" width="128" height="255"/>
         <element name="TETournamentBracket" positionX="-36" positionY="153" width="128" height="180"/>
         <element name="TETournamentBracketSpots" positionX="-18" positionY="162" width="128" height="285"/>
+        <element name="TETournamentList" positionX="-54" positionY="144" width="128" height="1080"/>
+        <element name="UserDetails" positionX="-45" positionY="144" width="128" height="135"/>
+        <element name="UserSocialDetail" positionX="-36" positionY="153" width="128" height="165"/>
+        <element name="GameList" positionX="-45" positionY="135" width="128" height="90"/>
     </elements>
 </model>

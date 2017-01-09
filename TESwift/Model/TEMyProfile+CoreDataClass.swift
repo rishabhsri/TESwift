@@ -101,6 +101,7 @@ public class TEMyProfile: TESwiftModel {
         TEMyProfile.save(context)
     }
     
+    
     static func notificationTypeValue(_ settings: NSArray, type: String) -> Bool {
            var arry = settings.filtered(using: NSPredicate(format: "setting == %@", type))
            if arry.count == 1 {

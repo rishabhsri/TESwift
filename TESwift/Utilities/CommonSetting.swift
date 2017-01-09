@@ -14,6 +14,7 @@ class CommonSetting: NSObject {
     var imageKeyProfile:String?
     var isInternetAvailable:Bool = false
     var listViewColors:[String] = [String]()
+    var myProfile:TEMyProfile?
     
     //Methods
     class var sharedInstance: CommonSetting {
