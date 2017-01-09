@@ -768,10 +768,10 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     }
     
     //MARK:- Social Login response
-    override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
-        
-        isTwitterLogIn = true
-    }
+//    override func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
+//        
+//        isTwitterLogIn = true
+//    }
     
     func onLogInFailure(_ userInfo: String) -> Void {
         self.hideHUD()

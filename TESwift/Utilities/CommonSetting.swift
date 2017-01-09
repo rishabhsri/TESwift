@@ -18,7 +18,6 @@ class CommonSetting: NSObject {
     var isGoogleConnect:Bool = false
     var isTwitterConnect:Bool = false
     var listViewColors:[String] = [String]()
-    var myProfile:TEMyProfile?
     
     //Methods
     class var sharedInstance: CommonSetting {
