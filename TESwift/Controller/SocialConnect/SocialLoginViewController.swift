@@ -68,7 +68,7 @@ class SocialLoginViewController: BaseViewController,UIWebViewDelegate {
             break
             
         case .TWITTER:
-            urlString = String(format: "%@/login/twitter", Network_Header)
+            urlString = String(format: "%@/web/connecttournament/twitter", Network_Header)
             self.titleLabel.text = "Twitter Login"
             break
         case .NON:

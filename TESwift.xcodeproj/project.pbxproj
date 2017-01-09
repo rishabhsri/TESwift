@@ -38,6 +38,8 @@
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
 		185D036E1E0D127B00578DCE /* UniversalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */; };
 		185D03701E0D33D500578DCE /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */; };
+		1865C8F61E15203C00557D56 /* GameList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865C8F41E15203C00557D56 /* GameList+CoreDataClass.swift */; };
+		1865C8F71E15203C00557D56 /* GameList+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865C8F51E15203C00557D56 /* GameList+CoreDataProperties.swift */; };
 		186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 186A23AD1DF9431E005E78D2 /* AppDelegate.swift */; };
 		186A23B81DF9431E005E78D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 186A23B71DF9431E005E78D2 /* Assets.xcassets */; };
 		1878C8231DF9491C00DAC10E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1878C81F1DF9491C00DAC10E /* LaunchScreen.storyboard */; };
@@ -86,6 +88,7 @@
 		188FEAA91DFEB4ED00C8A181 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 188FEAA71DFEB4ED00C8A181 /* Storyboard.storyboard */; };
 		188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188FEAAA1DFEB52F00C8A181 /* MyDashBoardViewController.swift */; };
 		18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */; };
+		18DC99BD1E164CFF00DCF4AC /* NSMutableDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 18DC99BC1E164CFF00DCF4AC /* NSMutableDictionary+Utility.swift */; };
 		18F05B661E09169F0090F57C /* Futura-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F05B641E09169F0090F57C /* Futura-Bold.ttf */; };
 		18F05B671E09169F0090F57C /* Futura.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 18F05B651E09169F0090F57C /* Futura.ttf */; };
 		18F05B6A1E095B450090F57C /* NSDate+Utilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 18F05B691E095B450090F57C /* NSDate+Utilities.m */; };
@@ -130,6 +133,8 @@
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
 		185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalSearchViewController.swift; sourceTree = "<group>"; };
 		185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
+		1865C8F41E15203C00557D56 /* GameList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameList+CoreDataClass.swift"; sourceTree = "<group>"; };
+		1865C8F51E15203C00557D56 /* GameList+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameList+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		186A23AA1DF9431E005E78D2 /* TESwift.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TESwift.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		186A23AD1DF9431E005E78D2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		186A23B71DF9431E005E78D2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -199,6 +204,7 @@
 		188FEAA81DFEB4ED00C8A181 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Storyboard.storyboard; sourceTree = "<group>"; };
 		188FEAAA1DFEB52F00C8A181 /* MyDashBoardViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyDashBoardViewController.swift; sourceTree = "<group>"; };
 		18C7DE451DFEED7A00D635BD /* LeftMenuViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = LeftMenuViewController.swift; path = TESwift/Controller/LeftMenuViewController.swift; sourceTree = SOURCE_ROOT; };
+		18DC99BC1E164CFF00DCF4AC /* NSMutableDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSMutableDictionary+Utility.swift"; sourceTree = "<group>"; };
 		18E37C7F1DF96E1F00E738DA /* TESwift-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TESwift-Bridging-Header.h"; sourceTree = "<group>"; };
 		18F05B641E09169F0090F57C /* Futura-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Futura-Bold.ttf"; sourceTree = "<group>"; };
 		18F05B651E09169F0090F57C /* Futura.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = Futura.ttf; sourceTree = "<group>"; };
@@ -322,6 +328,8 @@
 				1847F2B01E0BE9940088E19D /* TESwiftModel.h */,
 				1847F2B11E0BE9940088E19D /* TESwiftModel.m */,
 				1847F2AF1E0BE9940088E19D /* TEServiceCall.swift */,
+				1865C8F41E15203C00557D56 /* GameList+CoreDataClass.swift */,
+				1865C8F51E15203C00557D56 /* GameList+CoreDataProperties.swift */,
 				1847F2AB1E0BE9930088E19D /* TEMyProfile+CoreDataClass.swift */,
 				1847F2AC1E0BE9930088E19D /* TEMyProfile+CoreDataProperties.swift */,
 				1847F2B21E0BE9940088E19D /* UserDetails+CoreDataClass.swift */,
@@ -419,6 +427,7 @@
 				1888E95F1E000D6500AC5575 /* String+Utilities.swift */,
 				1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */,
 				1888E9651E00139800AC5575 /* UIColor+Utilities.swift */,
+				18DC99BC1E164CFF00DCF4AC /* NSMutableDictionary+Utility.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -516,10 +525,10 @@
 			buildConfigurationList = 186A23BF1DF9431E005E78D2 /* Build configuration list for PBXNativeTarget "TESwift" */;
 			buildPhases = (
 				96D678CD2BFADE8E6BF8B23C /* [CP] Check Pods Manifest.lock */,
+				4F9C705725ADA61884BFA1DD /* [CP] Embed Pods Frameworks */,
 				186A23A61DF9431E005E78D2 /* Sources */,
 				186A23A71DF9431E005E78D2 /* Frameworks */,
 				186A23A81DF9431E005E78D2 /* Resources */,
-				4F9C705725ADA61884BFA1DD /* [CP] Embed Pods Frameworks */,
 				A12A13A836F2D72B5C8EF887 /* [CP] Copy Pods Resources */,
 			);
 			buildRules = (
@@ -655,8 +664,10 @@
 				188FEAAB1DFEB52F00C8A181 /* MyDashBoardViewController.swift in Sources */,
 				188163D01E02779E00AB2E74 /* PKHUDAssets.swift in Sources */,
 				188163D51E02779E00AB2E74 /* PKHUDSuccessView.swift in Sources */,
+				1865C8F71E15203C00557D56 /* GameList+CoreDataProperties.swift in Sources */,
 				188163CD1E02779E00AB2E74 /* PKHUD.swift in Sources */,
 				1847F2BB1E0BE9940088E19D /* UserDetails+CoreDataClass.swift in Sources */,
+				1865C8F61E15203C00557D56 /* GameList+CoreDataClass.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
 				1847F2B91E0BE9940088E19D /* TEServiceCall.swift in Sources */,
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
@@ -664,6 +675,7 @@
 				18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */,
 				184C42591DFA983F001B576A /* LogInViewController.swift in Sources */,
 				188C8EBF1DF979C300C2D52E /* UIRefreshControl+AFNetworking.m in Sources */,
+				18DC99BD1E164CFF00DCF4AC /* NSMutableDictionary+Utility.swift in Sources */,
 				180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */,
 				188163D61E02779E00AB2E74 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
 				18F05B6A1E095B450090F57C /* NSDate+Utilities.m in Sources */,

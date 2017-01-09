@@ -79,7 +79,9 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     var locationManager = CLLocationManager()
     var aryAge:NSMutableArray = NSMutableArray()
     var aryGender:NSMutableArray = NSMutableArray()
-     var autoLocationList:NSArray = NSArray()
+    var autoLocationList:NSArray = NSArray()
+    var myProfile:TEMyProfile = TEMyProfile()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,10 +92,14 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         self.setupMenu()
         
         self.updateSettingDetails()
+        
         self.configureLocationTableView()
+        
         self.configurePickerView()
         //Add Dismiss Keyboard Tap Gesture
         self.addDismisskeyboardTapGesture()
+        
+        
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -159,15 +165,22 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     }
     
     func isCasualSubscriber() -> Bool {
-        if commonSetting.myProfile.showTeamIcon.hashValue == 1 {
+        if self.myProfile.showTeamIcon.hashValue == 1 {
             return true
         }
         return false
     }
     
-    func updateSettingDetails()  {
+    func updateSettingDetails()
+    {
         let predicate = NSPredicate(format: "username == %@", (commonSetting.userLoginInfo.stringValueForKey(key: "username")))
-        commonSetting.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
+        if  let profile:TEMyProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
+        {
+            self.myProfile = profile
+        }else{
+            return
+        }
+        
         
         if self.isCasualSubscriber(){
             self.lblTeamPicture.isHidden = false
@@ -182,27 +195,29 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant - 106
         }
         
-        self.txtName.text = commonSetting.myProfile.name
-        self.txtEmail.text = commonSetting.myProfile.emailid
-        self.txtPhoneNumber.text = commonSetting.myProfile.phoneNumber
-        self.txtLocation.text = commonSetting.myProfile.location
+        self.txtName.text = self.myProfile.name
+        self.txtEmail.text = self.myProfile.emailid
+        self.txtPhoneNumber.text = self.myProfile.phoneNumber
+        self.txtLocation.text = self.myProfile.location
         
-        self.userID = commonSetting.myProfile.userid!
-        self.txtAge.text = String(format: "%d",commonSetting.myProfile.age)
-        self.txtGender.text = commonSetting.myProfile.gender
+        self.userID = self.myProfile.userid!
+        self.txtAge.text = String(format: "%d",self.myProfile.age)
+        self.txtGender.text = self.myProfile.gender
         
-        self.messagingSwitch.isOn = commonSetting.myProfile.messageSetting
-        self.mailSwitch.isOn = commonSetting.myProfile.mailSetting
+        self.messagingSwitch.isOn = self.myProfile.messageSetting
+        self.mailSwitch.isOn = self.myProfile.mailSetting
         
-        if (commonSetting.myProfile.messageSetting) {
-            self.switchFollow.isOn = commonSetting.myProfile.follow
-            self.switchNotify_Followers.isOn = commonSetting.myProfile.notify_followers
-            self.switchNotify_Approved_Player.isOn = commonSetting.myProfile.notify_approved_player
-            self.switchNotify_Tournament_Players.isOn = commonSetting.myProfile.notify_topurnament_player
-            self.switchNotify_Match_Admin.isOn = commonSetting.myProfile.notify_match_admin
-            self.switchPlayer_Added_To_Tournament.isOn = commonSetting.myProfile.player_Added_to_tournament
-            self.SwitchNotify_Match_Player.isOn = commonSetting.myProfile.notify_match_palyer
-            self.switchTournament_Started.isOn = commonSetting.myProfile.tournament_started
+        
+        if self.myProfile.messageSetting
+        {
+            self.switchFollow.isOn = self.myProfile.follow
+            self.switchNotify_Followers.isOn = self.myProfile.notify_followers
+            self.switchNotify_Approved_Player.isOn = self.myProfile.notify_approved_player
+            self.switchNotify_Tournament_Players.isOn = self.myProfile.notify_topurnament_player
+            self.switchNotify_Match_Admin.isOn = self.myProfile.notify_match_admin
+            self.switchPlayer_Added_To_Tournament.isOn = self.myProfile.player_Added_to_tournament
+            self.SwitchNotify_Match_Player.isOn = self.myProfile.notify_match_palyer
+            self.switchTournament_Started.isOn = self.myProfile.tournament_started
             self.messagingCategoryView.isHidden = false
         }
         else{
@@ -216,7 +231,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     func setProfileImage(userInfo:NSDictionary) {
         
-      let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
+        let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
         
         if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
         {
@@ -242,8 +257,8 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     }
     
     func updateSubscriptionDetials() -> Void {
-        if (commonSetting.myProfile.subscriptionType) != nil {
-            self.lblSubscriberValue.text = commonSetting.myProfile.subscriptionType?.capitalized
+        if (self.myProfile.subscriptionType) != nil {
+            self.lblSubscriberValue.text = self.myProfile.subscriptionType?.capitalized
             self.btnSubscriber.setBackgroundImage(UIImage(named: "hype_completed")!,for: UIControlState.normal)
             
         }
@@ -266,14 +281,14 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         case SwitchType.MESSAGINGSWITCH.rawValue :
             
             if self.messagingSwitch.isOn {
-                self.switchFollow.isOn = commonSetting.myProfile.follow
-                self.switchNotify_Followers.isOn = commonSetting.myProfile.notify_followers
-                self.switchNotify_Approved_Player.isOn = commonSetting.myProfile.notify_approved_player
-                self.switchNotify_Tournament_Players.isOn = commonSetting.myProfile.notify_topurnament_player
-                self.switchNotify_Match_Admin.isOn = commonSetting.myProfile.notify_match_admin
-                self.switchPlayer_Added_To_Tournament.isOn = commonSetting.myProfile.player_Added_to_tournament
-                self.SwitchNotify_Match_Player.isOn = commonSetting.myProfile.notify_match_palyer
-                self.switchTournament_Started.isOn = commonSetting.myProfile.tournament_started
+                self.switchFollow.isOn = self.myProfile.follow
+                self.switchNotify_Followers.isOn = self.myProfile.notify_followers
+                self.switchNotify_Approved_Player.isOn = self.myProfile.notify_approved_player
+                self.switchNotify_Tournament_Players.isOn = self.myProfile.notify_topurnament_player
+                self.switchNotify_Match_Admin.isOn = self.myProfile.notify_match_admin
+                self.switchPlayer_Added_To_Tournament.isOn = self.myProfile.player_Added_to_tournament
+                self.SwitchNotify_Match_Player.isOn = self.myProfile.notify_match_palyer
+                self.switchTournament_Started.isOn = self.myProfile.tournament_started
                 self.messagingCategoryView.isHidden = false
                 self.ContainerViewHieght.constant = self.ContainerViewHieght.constant + 323
                 self.lblBrainTreeTop.constant = 70
@@ -329,7 +344,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     //
     
     func updateSocialConnection() -> Void {
-        if let socailConnectFB:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: commonSetting.myProfile, with: self.context!, socialType: "FACEBOOK")
+        if let socailConnectFB:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: self.myProfile, with: self.context!, socialType: "FACEBOOK")
         {
             commonSetting.isFBConnect = true
         }
@@ -337,7 +352,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             commonSetting.isFBConnect = false
         }
         
-        if let socailConnectTwitter:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: commonSetting.myProfile, with: self.context!, socialType: "TWITTER")
+        if let socailConnectTwitter:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: self.myProfile, with: self.context!, socialType: "TWITTER")
         {
             commonSetting.isTwitterConnect = true
         }
@@ -345,14 +360,14 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             commonSetting.isTwitterConnect = false
         }
         
-        if let socailConnectGoogle:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: commonSetting.myProfile, with: self.context!, socialType: "GOOGLEPLUS")
+        if let socailConnectGoogle:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: self.myProfile, with: self.context!, socialType: "GOOGLEPLUS")
         {
             commonSetting.isGoogleConnect = true
         }
         else{
             commonSetting.isGoogleConnect = false
         }
-        if let socailConnectTwitch:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: commonSetting.myProfile, with: self.context!, socialType: "TWITCH")
+        if let socailConnectTwitch:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: self.myProfile, with: self.context!, socialType: "TWITCH")
         {
             commonSetting.isTwitchConnect = true
         }
@@ -402,7 +417,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         }
     }
     
-
+    
     func updateUserDetails() ->Void  {
         
         self.getUserDetails(self.createUpdateProfileRequest() as! NSMutableDictionary)
@@ -430,41 +445,41 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             userInfo.setValue(self.profileImageKey, forKey: "imageKey")
         }
         else{
-            userInfo.setValue(commonSetting.myProfile.imageKey, forKey: "imageKey")
+            userInfo.setValue(self.myProfile.imageKey, forKey: "imageKey")
         }
         
         if !(commonSetting.isEmptyStingOrWithBlankSpace(self.teamIconImageKey)) {
             userInfo.setValue(self.teamIconImageKey, forKey: "teamIcon")
         }
         else{
-            userInfo.setValue(commonSetting.myProfile.teamIconUrl, forKey: "teamIcon")
+            userInfo.setValue(self.myProfile.teamIconUrl, forKey: "teamIcon")
         }
         
         userInfo.setValue(NSNumber.init(value: Int(self.userID)!), forKey: "userID")
         userInfo.setValue(NSNumber.init(value: self.mailSwitch.isOn), forKey: "mailSetting")
         userInfo.setValue(NSNumber.init(value: self.messagingSwitch.isOn), forKey: "messagingSetting")
         
-       let arySettings:NSMutableArray = NSMutableArray()
-    
-      arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchFollow.isOn),"FOLLOW"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
-      arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Approved_Player.isOn),"NOTIFY_APPROVED_PLAYER"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
-     
-      arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Followers.isOn),"NOTIFY_FOLLOWERS"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
-       
-     arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Match_Admin.isOn),"NOTIFY_MATCH_ADMIN"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        var arySettings:NSMutableArray = NSMutableArray()
         
-    arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.SwitchNotify_Match_Player.isOn),"NOTIFY_MATCH_PLAYER"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchFollow.isOn),"FOLLOW"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Approved_Player.isOn),"NOTIFY_APPROVED_PLAYER"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
         
-     arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Tournament_Players.isOn),"NOTIFY_TOURNAMENT_PLAYERS"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Followers.isOn),"NOTIFY_FOLLOWERS"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
         
-    arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchPlayer_Added_To_Tournament.isOn),"PLAYER_ADDED_TO_TOURNAMENT"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
-     
-    arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchTournament_Started.isOn),"TOURNAMENT_STARTED"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
-
-
+        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Match_Admin.isOn),"NOTIFY_MATCH_ADMIN"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
         
-//               let dicReq = NSMutableDictionary.init(object: userInfo, forKey: "person" as NSCopying)
-       let dicReq = NSMutableDictionary.init(objects: [userInfo,arySettings], forKeys: ["person" as NSCopying,"settings" as NSCopying])
+        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.SwitchNotify_Match_Player.isOn),"NOTIFY_MATCH_PLAYER"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        
+        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Tournament_Players.isOn),"NOTIFY_TOURNAMENT_PLAYERS"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        
+        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchPlayer_Added_To_Tournament.isOn),"PLAYER_ADDED_TO_TOURNAMENT"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        
+        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchTournament_Started.isOn),"TOURNAMENT_STARTED"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+        
+        
+        
+        //               let dicReq = NSMutableDictionary.init(object: userInfo, forKey: "person" as NSCopying)
+        let dicReq = NSMutableDictionary.init(objects: [userInfo,arySettings], forKeys: ["person" as NSCopying,"settings" as NSCopying])
         return  dicReq
     }
     
@@ -502,9 +517,9 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
                 
                 commonSetting.isFBConnect = false
                 self.imgFBConnected.isHidden = true
-                 let dicReq = NSMutableDictionary.init(object: "facebook", forKey: "socialType" as NSCopying)
-               
-//                ServiceCall.sharedInstance.sendRequest(parameters: dicReq, urlType: RequestedUrlType.DisconnectSocialLogin, method: "POST", successCall: success, falureCall: falure)
+                let dicReq = NSMutableDictionary.init(object: "facebook", forKey: "socialType" as NSCopying)
+                
+                //                ServiceCall.sharedInstance.sendRequest(parameters: dicReq, urlType: RequestedUrlType.DisconnectSocialLogin, method: "POST", successCall: success, falureCall: falure)
                 
             }))
             
@@ -567,7 +582,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             
         }
         else{
-           super.socialLoginViaGooglePlus(sender)        }
+            super.socialLoginViaGooglePlus(sender)        }
     }
     @IBAction func socialConnectViaTwitch(_ sender: Any) {
         
@@ -645,7 +660,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     //MARK:- Social Login response
     override func onLogInSuccess(_ userInfo: NSDictionary,connectType:SocialConnectType) -> Void {
         self.hideHUD()
-      
+        
         if connectType == SocialConnectType.FACEBOOK {
             commonSetting.isFBConnect = true
             self.imgFBConnected.isHidden = false
@@ -875,7 +890,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     // became first responder
     func textFieldDidBeginEditing(_ textField: UITextField){
         addDismisskeyboardTapGesture()
-       
+        
     }
     
     // return YES to allow editing to stop and to resign first responder status. NO to disallow the editing session to end
@@ -885,7 +900,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
     func textFieldDidEndEditing(_ textField: UITextField){
-       
+        
     }
     
     
@@ -897,7 +912,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         if textField == txtName && length >= 50 {
             return false
         }
-      
+            
         else if textField == txtEmail && (textField.text?.characters.count)! >= 150{
             return false
         }
@@ -934,13 +949,13 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         if textField == txtName {
             txtEmail.becomeFirstResponder()
         }
-               else{
+        else{
             textField.resignFirstResponder()
         }
         
         return true
     }
-
+    
     
     //MARK:- Location search on location textfield method
     
@@ -973,7 +988,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         
     }
     
-
+    
     //MARK:- TableView Delegate Methods
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {

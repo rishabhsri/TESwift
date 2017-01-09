@@ -29,6 +29,7 @@ enum RequestedUrlType {
     case SearchTournament
     case UpdateUserProfile
     case GetGameList
+    case CreateNewTournament
     case DisconnectSocialLogin
 }
 
@@ -106,7 +107,7 @@ class ServiceCall: NSObject {
             urlString = String(format: "%@/%@",imageDownloadURL,parameter.value(forKey: "imageKey") as! String)
             break
         case .UploadImage:
-            urlString = String(format: "%@",File_Header)
+            urlString = String(format: "%@/json",File_Header)
             break
         case .GetUserSignUp:
             urlString = String(format: "%@/user/register",Network_Header)
@@ -152,7 +153,8 @@ class ServiceCall: NSObject {
         case .DisconnectSocialLogin:
             urlString = String(format: "%@/user/disconnect/socialnetwork/%@",Network_Header,parameter.stringValueForKey(key: "socialType"))
             break
-    
+        default: break
+            
         }
         
         return urlString
@@ -417,8 +419,8 @@ class ServiceCall: NSObject {
                 {
                     if(httpResponse.statusCode == 200)
                     {
-                        if let resosneString:String = responseObject as? String{
-                            successCall(resosneString)
+                        if let resosneDict:NSDictionary = responseObject as? NSDictionary{
+                            successCall(resosneDict.stringValueForKey(key: "response"))
                         }
                     }
                 }

@@ -101,7 +101,7 @@ public class TEMyProfile: TESwiftModel {
         TEMyProfile.save(context)
     }
     
-    static func fetchMyProfileDetail(context:NSManagedObjectContext, predicate:NSPredicate) -> TEMyProfile
+    static func fetchMyProfileDetail(context:NSManagedObjectContext, predicate:NSPredicate) -> TEMyProfile?
     {
         let fetchRequest:NSFetchRequest = TEMyProfile.newFetchRequest(in: context)
         fetchRequest.predicate = predicate
@@ -112,8 +112,13 @@ public class TEMyProfile: TESwiftModel {
         } catch let error {
             print(error.localizedDescription)
         }
-        return fetchedObjects.firstObject as! TEMyProfile
-        
+        if fetchedObjects.count > 0
+        {
+           return fetchedObjects.firstObject as? TEMyProfile
+        }else
+        {
+            return nil
+        }
     }
     
     static func fetchUserSocailDetails(for profile: TEMyProfile, with context: NSManagedObjectContext, socialType type: String) -> UserSocialDetail? {
