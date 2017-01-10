@@ -73,7 +73,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     @IBOutlet weak var ContainerViewHieght: NSLayoutConstraint!
     
-    
+    var pickerView = UIPickerView()
     var activeTextField = UITextField()
     let imagePicker = UIImagePickerController()
     var locationManager = CLLocationManager()
@@ -86,8 +86,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.configurePickerViewDta()
-        
+        self.configurePickerViewData()
         self.styleGuide()
         
         self.setupMenu()
@@ -735,11 +734,13 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     // MARK:- Picker View Methods
     
     func configurePickerView() {
-        let pickerView = UIPickerView()
-        
+       
+        pickerView = UIPickerView.init(frame: CGRect(x: 0, y: 467, width: 375, height: 200))
+        pickerView.backgroundColor = UIColor.black
         pickerView.delegate = self
         
         self.txtAge.inputView = pickerView
+        self.txtGender.inputView = pickerView
         
         let toolBar = UIToolbar(frame: CGRect(x: 0, y: self.view.frame.size.height/6, width:self.view.frame.size.width, height: 40))
         
@@ -758,16 +759,20 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         toolBar.setItems([flexSpace,flexSpace,doneButton], animated: true)
         
         self.txtAge.inputAccessoryView = toolBar
+        self.txtGender.inputAccessoryView = toolBar
+
         
     }
     
-    func configurePickerViewDta()
+    func configurePickerViewData()
     {
         
         self.aryAge = NSMutableArray()
         for i in 10..<100 {
             self.aryAge.add(String(format: "%d",i))
         }
+        
+         self.aryGender = ["M", "F"]
     }
     
     func donePressed(sender: UIBarButtonItem) {
@@ -793,19 +798,57 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
         
-        return self.aryAge.count
+        if self.activeTextField == self.txtAge {
+            return self.aryAge.count
+        }else if self.activeTextField == self.txtGender
+        {
+            return self.aryGender.count
+        }
+
+        return 0
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         
+        if self.activeTextField == self.txtAge {
         let title: String = self.aryAge.object(at: row) as! String
         return title
+        }
+        else if self.activeTextField == self.txtGender
+         {
+            let title: String = self.aryGender.object(at: row) as! String
+            return title
+        }
+        return ""
     }
     
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        self.txtAge.text = self.aryAge.object(at: row) as? String
-        
+        if self.activeTextField == self.txtAge {
+             self.txtAge.text = self.aryAge.object(at: row) as? String
+        }
+        else if self.activeTextField == self.txtGender
+        {
+            self.txtGender.text = self.aryGender.object(at: row) as? String
+        }
     }
+    
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        
+        var attributedString = NSAttributedString()
+        if self.activeTextField == self.txtAge {
+            attributedString = NSAttributedString(string: self.aryAge[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.white])
+        }
+        else if self.activeTextField == self.txtGender
+        {
+            attributedString = NSAttributedString(string: self.aryGender[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.white])
+        }
+        
+        return attributedString
+    }
+    
+
+    
+    
     
     // MARK: - UIImagePickerControllerDelegate Methods
     
@@ -829,6 +872,12 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     //MARK:- Textfield delegate
     
     func textFieldShouldBeginEditing(_ textField: UITextField) -> Bool{
+        
+        self.activeTextField = textField
+        if  self.activeTextField == self.txtAge || self.activeTextField == self.txtGender {
+           self.pickerView.isHidden = false
+        }
+        
         return true
     }
     
