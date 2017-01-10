@@ -175,13 +175,8 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     func updateSettingDetails()
     {
         let predicate = NSPredicate(format: "username == %@", (commonSetting.userLoginInfo.stringValueForKey(key: "username")))
-        if  let profile:TEMyProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
-        {
-            self.myProfile = profile
-        }else{
-            return
-        }
         
+        self.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)!
         
         if self.isCasualSubscriber(){
             self.lblTeamPicture.isHidden = false
