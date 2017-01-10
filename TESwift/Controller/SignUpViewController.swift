@@ -293,8 +293,18 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     override func onLogInSuccess(_ userInfo: NSDictionary,connectType:SocialConnectType) -> Void {
         
-        commonSetting.userLoginInfo = userInfo
         self.hideHUD()
+        
+        //reset UserDetail
+        UserDetails.deleteAllFromEntity(inManage: self.manageObjectContext())
+        
+        //Inset freash details
+        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
+        UserDetails.save(self.manageObjectContext())
+        
+        let predicate = NSPredicate(format: "userName == %@", userInfo.stringValueForKey(key: "username"))
+        commonSetting.userDetail = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predicate)
+        //setup left menu
         appDelegate.configureMenuViewController(navigationCont: self.navigationController!)
     }
     func onLogInFailure(_ userInfo: String) -> Void {

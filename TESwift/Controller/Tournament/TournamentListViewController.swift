@@ -114,7 +114,6 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.menuButton.isHidden = true
         self.searchBtnOutlet.isHidden = true
         self.plusIcon.isHidden = true
-        self.tableView.alpha = 0.5
         self.tournamentTitleLbl.isHidden = true
     }
     
@@ -127,8 +126,6 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.menuButton.isHidden = false
         self.searchBtnOutlet.isHidden = false
         self.plusIcon.isHidden = false
-
-        self.tableView.alpha = 1.0
         self.tournamentTitleLbl.isHidden = false
         self.searchBar.text = ""
         
@@ -378,15 +375,21 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         var tournaDict:NSDictionary = NSDictionary()
         
-        if isSearchEnabled {
+        if isSearchEnabled && self.searchResults.count>0
+        {
             tournaDict = self.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
+            cell.tournmentName.textColor = UIColor.lightGray
+            cell.yearLabel.textColor = UIColor.lightGray
+            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: tournaDict.stringValueForKey(key: "name").uppercased(), searchedText: self.searchBar.text!)
         }else
         {
             tournaDict = self.parseResponse(responseObject: self.tournamentsArray.object(at: indexPath.row))
+            cell.tournmentName.textColor = UIColor.white
+            cell.yearLabel.textColor = UIColor.white
+            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: tournaDict.stringValueForKey(key: "name").uppercased(), searchedText: tournaDict.stringValueForKey(key: "name").uppercased())
         }
         
         cell.backGroundImage.image = nil
-        cell.tournmentName.text = tournaDict.stringValueForKey(key: "name").uppercased()
         cell.yearLabel.text = self.getFormattedDateString(info: tournaDict, indexPath: indexPath, format: "yyyy")
         
         self.setDefaultImages(cell: cell, indexPath: indexPath)
@@ -408,19 +411,23 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
             cell.progressBar.startAnimating()
             ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }
+        
        // let swiftAray:NSArray = rightUtilityButton as NSArray
         cell.rightUtilityButtons = rightUtilityButton.reversed()
         cell.leftUtilityButtons = leftUtilityButton.reversed()
         cell.delegate = self
+        cell.hideUtilityButtons(animated: true)
+        
         return cell
     }
     
     //MARK: - Swipable Table view cell delegate
     
     func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerRightUtilityButtonWith index: Int) {
-        switch index {
+        switch index
+        {
         case 0:
-            print("Im pressed at right")
+            break
         default: break
             
         }
@@ -433,6 +440,10 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         default: break
             
         }
+    }
+    
+    func swipeableTableViewCellShouldHideUtilityButtons(onSwipe cell: SWTableViewCell!) -> Bool {
+        return true
     }
 }
 

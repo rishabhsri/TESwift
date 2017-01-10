@@ -173,7 +173,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     func updateSettingDetails()
     {
-        let predicate = NSPredicate(format: "username == %@", (commonSetting.userLoginInfo.stringValueForKey(key: "username")))
+        let predicate = NSPredicate(format: "username == %@", (commonSetting.userDetail?.userName)!)
         
         if let profile:TEMyProfile =  TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
         {
@@ -226,19 +226,17 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         }
         self.updateSubscriptionDetials()
         self.updateSocialConnection()
-        self.setProfileImage(userInfo: commonSetting.userLoginInfo)
+        self.setProfileImage()
     }
     
     
-    func setProfileImage(userInfo:NSDictionary) {
+    func setProfileImage() {
         
-        let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
+        let imagekey:String = (commonSetting.myProfile?.imageKey)!
         
         if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
         {
-            // For storing temporary imageKey for using in MenuViewController
-            
-            commonSetting.imageKeyProfile = imagekey
+        
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
                 // Success call implementation

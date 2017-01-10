@@ -22,8 +22,6 @@ public class UserDetails: TESwiftModel {
     
     static  func fetchUserDetailsFor(context:NSManagedObjectContext, predicate:NSPredicate) -> UserDetails {
         
-        // let fetchRequest2:NSPersistentStoreRequestType = UserDetails.newFetchRequest(in: context)
-        
         let fetchRequest:NSFetchRequest = UserDetails.newFetchRequest(in: context)
         fetchRequest.predicate = predicate
         
@@ -37,19 +35,13 @@ public class UserDetails: TESwiftModel {
         
     }
     
-    //    func makeIterator() -> UserDetails.Iterator {
-    //        print(UserDetails.Iterator)
-    //    }
-    
     static func updateUserDetails(userDetail:UserDetails, info:NSDictionary) -> Void {
         
-        userDetail.userName = info.value(forKey: "username") as! String?
-        userDetail.name = info.value(forKey: "name") as! String?
-        userDetail.userId = info.value(forKey : "userID") as! String?
-        userDetail.emailId = info.value(forKey: "email") as! String?
-        userDetail.userSubscription = info.value(forKey: "userSubscription") as! Bool
+        userDetail.userName = info.stringValueForKey(key: "username")
+        userDetail.name = info.stringValueForKey(key: "name")
+        userDetail.userId = info.stringValueForKey(key: "userID")
+        userDetail.emailId = info.stringValueForKey(key: "email")
+        userDetail.userSubscription = info.boolValueForKey(key: "userSubscription")
         
     }
-    
-    
 }

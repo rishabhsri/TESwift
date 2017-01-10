@@ -21,7 +21,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
     @IBOutlet weak var hypBtn: UIButton!
     @IBOutlet weak var tournamentsBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
- 
+    
     
     //autolayout constants                              // Actual values
     @IBOutlet weak var menuBtnTop: NSLayoutConstraint!  // 30
@@ -55,19 +55,16 @@ class MyDashBoardViewController: UniversalSearchViewController{
     var userProfileInfo:NSMutableDictionary = NSMutableDictionary()
     
     //MARK:- Lifecycle Methods
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
+        self.setupMenu()
         
         self.setUpStyleGuide()
         
         self.setupData()
-        
-        self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
-        
-        self.getMyProfile()
-        
-        self.setupMenu()
-        
+
     }
     
     override func didReceiveMemoryWarning() {
@@ -97,23 +94,26 @@ class MyDashBoardViewController: UniversalSearchViewController{
         }
     }
     
-    func setupData() -> Void {
-        
+    func setupData() -> Void
+    {
         self.configureSwipeGestures()
         
         self.resetLoadMore()
         
         self.setupTableView()
         
-        self.setProfileData(userInfo: commonSetting.userLoginInfo)
+        //set info
+        self.userNameLbl.text = commonSetting.userDetail?.name?.uppercased()
+        self.emaillbl.text = commonSetting.userDetail?.emailId
+
+        self.getMyProfile()
         
         self.getUserProfileData()
         
-        self.saveUserDetails(loginInfo: commonSetting.userLoginInfo)
-        
     }
     
-    func resetLoadMore() {
+    func resetLoadMore()
+    {
         self.isTournamentLoadMore = false
         self.isHypeLoadMore = false
         self.isNotificationLoadMore = false
@@ -123,7 +123,8 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.currentButtonIndex = 0
     }
     
-    func setupTableView() {
+    func setupTableView()
+    {
         self.notificationBtn.alpha = 0.25
         self.hypBtn.alpha = 1.0
         self.tournamentsBtn.alpha = 0.25
@@ -131,39 +132,21 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.tableView.estimatedRowHeight = 44;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.tableFooterView = UIView()
-        
     }
     
-    func saveUserDetails(loginInfo: NSDictionary) -> Void {
+    func setProfileData()
+    {
+        let predicate = NSPredicate(format: "username == %@", (commonSetting.userDetail?.userName)!)
+        commonSetting.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
         
-        let userInfo:NSMutableDictionary = NSMutableDictionary()
+        self.userNameLbl.text = commonSetting.myProfile?.name?.uppercased()
         
-        userInfo.setValue(loginInfo.stringValueForKey(key: "name"), forKey: "name")
-        userInfo.setValue(loginInfo.stringValueForKey(key: "email"), forKey: "email")
-        userInfo.setValue(loginInfo.stringValueForKey(key: "userID"), forKey: "userID")
-        userInfo.setValue(loginInfo.stringValueForKey(key: "username"), forKey: "username")
-        userInfo.setValue(loginInfo.intValueForKey(key: "userSubscription"), forKey: "userSubscription")
+        self.emaillbl.text = commonSetting.myProfile?.emailid
         
-        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
-        UserDetails.save(self.manageObjectContext())
-        
-        let predi = NSPredicate(format: "userName == %@", loginInfo.stringValueForKey(key: "username"))
-        let user = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predi)
-        
-        print(user.emailId!, user.name!, user.userName!, user.userId!, user.userSubscription)
-    }
-    
-    func setProfileData(userInfo:NSDictionary) {
-        
-        self.userNameLbl.text = userInfo.stringValueForKey(key: "name").uppercased()
-        self.emaillbl.text = userInfo.stringValueForKey(key: "email")
-        let imagekey:String = userInfo.stringValueForKey(key: "imageKey")
+        let imagekey:String = (commonSetting.myProfile?.imageKey)!
         
         if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
         {
-            // For storing temporary imageKey for using in MenuViewController
-            
-            commonSetting.imageKeyProfile = imagekey
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
                 // Success call implementation
@@ -171,7 +154,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
                 self.userProImage.setRoundedImage(image: image, borderWidth: ProfileImageBorder, imageWidth: self.profileImageWidth.constant)
                 self.topViewBGImg.image = image
                 
-                self.setBlurImage(imageView: self.topViewBGImg)
+                self.setBlurImage(imageView: self.topViewBGImg,imageKey:imageKey.appending("_myProfile"))
                 
             }
             
@@ -179,77 +162,20 @@ class MyDashBoardViewController: UniversalSearchViewController{
             let falure:downloadImageFailed = {error,responseMessage in
                 
                 // Falure call implementation
-                
             }
             
             ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
         }
     }
     
-    
-    
-    
-    func getMyProfile() {
-        //On success
-        
-        let success: successHandler = {responseObject, responseType in
-            
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
-            print(responseDict)
-            TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
-            TEMyProfile.insertMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
-            
-        }
-        let failure: falureHandler = {error, responseString, responseType in
-            
-            print(responseString)
-        }
-        
-        // Service call for get user profile data (Hypes, upcomings, person, followers)
-        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
-        
-        
-    }
-    
-    func getTournamentById(tournamentID:Int) -> Void {
-        
-        let tournamentDict:NSMutableDictionary = NSMutableDictionary()
-        tournamentDict.setValue(tournamentID, forKey: "tournamentID")
-        
-        let success:successHandler = {responceObject, responseType in
-            
-            let responseDict = self.parseResponse(responseObject: responceObject as Any)
-            print(responseDict)
-            let tournamentList:TETournamentList = TETournamentList.insertTournamentDetails(info: responseDict, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
-            print(tournamentList.checkInTime!, tournamentList.completed)
-        }
-        
-        let failure:falureHandler = {error, responseString, responseType in
-            print(responseString)
-            
-        }
-        
-        ServiceCall.sharedInstance.sendRequest(parameters: tournamentDict, urlType: RequestedUrlType.GetTournamentById, method: "GET", successCall: success, falureCall: failure)
-    }
-    
-    func parseUserInfo(userInfo:NSDictionary) {
-        
-        self.userProfileInfo.setDictionary(userInfo as! [AnyHashable : Any])
-        self.userProfileInfo.addEntries(from: commonSetting.userLoginInfo as! [AnyHashable : Any])
-        self.setProfileData(userInfo: self.userProfileInfo)
-        
-    }
-    
     private func scrollViewWillEndDecelerating(_ scrollView: UIScrollView) {
         scrollView.setContentOffset(scrollView.contentOffset, animated: true)
     }
-    
     
     //MARK:- SwipeGesture methods
     
     func configureSwipeGestures()
     {
-        
         self.swipeUpGesture = UISwipeGestureRecognizer()
         self.swipeUpGesture?.direction = UISwipeGestureRecognizerDirection.up
         
@@ -403,6 +329,51 @@ class MyDashBoardViewController: UniversalSearchViewController{
     
     //MARK:- Service Calls for data
     
+    func getMyProfile() {
+        //On success
+        
+        let success: successHandler = {responseObject, responseType in
+            
+            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            
+            TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
+            TEMyProfile.insertMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
+            
+            self.setProfileData()
+            
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            
+            print(responseString)
+        }
+        
+        // Service call for get user profile data (Hypes, upcomings, person, followers)
+        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
+
+    }
+    
+    func getTournamentById(tournamentID:Int) -> Void {
+        
+        let tournamentDict:NSMutableDictionary = NSMutableDictionary()
+        tournamentDict.setValue(tournamentID, forKey: "tournamentID")
+        
+        let success:successHandler = {responceObject, responseType in
+            
+            let responseDict = self.parseResponse(responseObject: responceObject as Any)
+            print(responseDict)
+            let tournamentList:TETournamentList = TETournamentList.insertTournamentDetails(info: responseDict, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
+            print(tournamentList.checkInTime!, tournamentList.completed)
+        }
+        
+        let failure:falureHandler = {error, responseString, responseType in
+            print(responseString)
+            
+        }
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: tournamentDict, urlType: RequestedUrlType.GetTournamentById, method: "GET", successCall: success, falureCall: failure)
+    }
+    
     func getUserProfileData(){
         
         //On success
@@ -437,11 +408,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
                         self.isTournamentLoadMore = true
                         self.tournamentPageIndex = 1
                     }
-                }
-                
-                //Parse User Data
-                self.parseUserInfo(userInfo: responseDict.object(forKey: "person") as! NSDictionary)
-                
+                } 
             }else if responseType == RequestedUrlType.GetNotificationList
             {
                 //initialize hype list
@@ -832,7 +799,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         //Download Image
         let imageKey = tournaInfo.stringValueForKey(key: "imageKey")
-
+        
         let sucess:downloadImageSuccess = {image, imageKey in
             
             cell.hypeBgImg.image = image
