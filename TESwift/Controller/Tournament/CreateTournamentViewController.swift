@@ -331,7 +331,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         dicCreateTournament.setCustomObject(object:str, key: "webURL")
         dicCreateTournament.setCustomObject(object:self.twitterMesTextView.text, key: "twitterMessage")
         dicCreateTournament.setCustomObject(object:self.locationTF.text, key: "venue")
-        dicCreateTournament.setCustomObject(object:commonSetting.userLoginInfo.stringValueForKey(key: "username"), key: "createdBy")
+        dicCreateTournament.setCustomObject(object:commonSetting.myProfile?.username, key: "createdBy")
         dicCreateTournament.setCustomObject(object:self.checkInTimeTF1.text, key: "checkinTime")
         dicCreateTournament.setCustomObject(object:self.advanceTimerTF.text, key: "autoApprovalTime")
         dicCreateTournament.setCustomObject(object:self.notificationMsgtextView.text, key: "notificationMessage")
