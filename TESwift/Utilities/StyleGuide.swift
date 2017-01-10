@@ -39,5 +39,16 @@ public class StyleGuide
         }
     }
     
+    public static func highlightedSearchedText(name:String, searchedText:String) -> NSMutableAttributedString
+    {
+        if name.isEmpty {
+            return NSMutableAttributedString()
+        }
+        
+        let attributesForHeaderString:[String : Any] = [NSForegroundColorAttributeName : UIColor.lightGray]
+        let attributedStringMessage = NSMutableAttributedString(string: name, attributes: attributesForHeaderString)
+        let range = (name.uppercased() as NSString).range(of:searchedText.uppercased())
+        attributedStringMessage.addAttribute(NSForegroundColorAttributeName, value: UIColor.white , range: range)
+        return attributedStringMessage
+    }
 }
-

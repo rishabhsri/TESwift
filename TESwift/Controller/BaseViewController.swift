@@ -27,7 +27,6 @@ class BaseViewController: UIViewController{
     }
     
     func manageObjectContext() -> NSManagedObjectContext {
-        
         if context == nil {
             let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
             context = appDelegate.persistentContainer.viewContext
@@ -115,16 +114,27 @@ class BaseViewController: UIViewController{
         return NSDictionary()
     }
     
-    func setBlurImage(imageView:UIImageView) {
+    func setBlurImage(imageView:UIImageView,imageKey:String)
+    {
+        var image:UIImage?
         
-        let blurRadius:CGFloat = 80;
-        let saturationDeltaFactor:CGFloat = 1.3;
-        let tintColor:UIColor? = nil
-        var tempimage:UIImage = imageView.image!
-        
-        let size:CGSize = CGSize(width:200, height:150)
-        tempimage = tempimage.withImage(tempimage, scaledTo: size)
-        let image:UIImage = UIImage.ty_imageByApplyingBlur(to: tempimage, withRadius: blurRadius, tintColor: tintColor, saturationDeltaFactor: saturationDeltaFactor, maskImage: nil)!
+        if let cachedImage:UIImage = ServiceCall.sharedInstance.getImageForKey(imageKey: imageKey)
+        {
+            image = cachedImage
+        }else
+        {
+            let blurRadius:CGFloat = 80;
+            let saturationDeltaFactor:CGFloat = 1.3;
+            let tintColor:UIColor? = nil
+            var tempimage:UIImage = imageView.image!
+            
+            let size:CGSize = CGSize(width:200, height:150)
+            tempimage = tempimage.withImage(tempimage, scaledTo: size)
+            image = UIImage.ty_imageByApplyingBlur(to: tempimage, withRadius: blurRadius, tintColor: tintColor, saturationDeltaFactor: saturationDeltaFactor, maskImage: nil)!
+            
+            ServiceCall.sharedInstance.saveImage(imageData: UIImagePNGRepresentation(image!)!, imageKey: imageKey)
+        }
+
         imageView.image = image
         imageView.layer.backgroundColor = UIColor.black.cgColor
         imageView.layer.opacity = 0.45
