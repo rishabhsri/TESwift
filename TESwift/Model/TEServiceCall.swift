@@ -153,6 +153,10 @@ class ServiceCall: NSObject {
         case .DisconnectSocialLogin:
             urlString = String(format: "%@/user/disconnect/socialnetwork/%@",Network_Header,parameter.stringValueForKey(key: "socialType"))
             break
+            
+        case .CreateNewTournament:
+            urlString = String(format: "%@/tournament",Main_Header)
+            break
         default: break
             
         }
