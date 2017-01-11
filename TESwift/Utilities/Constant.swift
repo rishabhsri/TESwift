@@ -54,9 +54,11 @@ let ProfileImageBorder:CGFloat = 3.5
 
 let searchBarHeight = 44
 
-let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
+let APP_DELEGATE:AppDelegate = UIApplication.shared.delegate as! AppDelegate
 
-let commonSetting:CommonSetting = CommonSetting.sharedInstance
+let COMMON_SETTING:CommonSetting = CommonSetting.sharedInstance
+
+let serviceCall:ServiceCall = ServiceCall.sharedInstance
 
 let PAGE_SIZE = 10
 let HYPE_PAGE_LIMIT = IS_IPAD ? 9 : 5

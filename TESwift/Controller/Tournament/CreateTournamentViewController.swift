@@ -271,7 +271,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         let success: successHandler = {responseObject, responseType in
             
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             if let array:NSArray = responseDict.object(forKey: "list") as? NSArray
             {
@@ -373,7 +373,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         dicCreateTournament.setCustomObject(object:str, key: "webURL")
         dicCreateTournament.setCustomObject(object:self.twitterMesTextView.text, key: "twitterMessage")
         dicCreateTournament.setCustomObject(object:self.locationTF.text, key: "venue")
-        dicCreateTournament.setCustomObject(object:commonSetting.myProfile?.username, key: "createdBy")
+        dicCreateTournament.setCustomObject(object:COMMON_SETTING.myProfile?.username, key: "createdBy")
         
         let dictCheckIn:NSDictionary = self.checkInTimeArray.object(at: selectedCheckInTimeIndex) as! NSDictionary
         let CheckInkey:String = dictCheckIn.allKeys.first as! String
@@ -416,7 +416,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
         }
         
@@ -488,7 +488,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     
     @IBAction func rightBtnAction(_ sender: AnyObject) {
         
-        if commonSetting.isInternetAvailable {
+        if COMMON_SETTING.isInternetAvailable {
             if self.validateInfo() {
                 if isImage {
                     self.uploadTournamentmage()

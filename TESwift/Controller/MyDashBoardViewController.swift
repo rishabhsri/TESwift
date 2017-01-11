@@ -103,8 +103,8 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.setupTableView()
         
         //set info
-        self.userNameLbl.text = commonSetting.userDetail?.name?.uppercased()
-        self.emaillbl.text = commonSetting.userDetail?.emailId
+        self.userNameLbl.text = COMMON_SETTING.userDetail?.name?.uppercased()
+        self.emaillbl.text = COMMON_SETTING.userDetail?.emailId
 
         self.getMyProfile()
         
@@ -136,16 +136,16 @@ class MyDashBoardViewController: UniversalSearchViewController{
     
     func setProfileData()
     {
-        let predicate = NSPredicate(format: "username == %@", (commonSetting.userDetail?.userName)!)
-        commonSetting.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
+        let predicate = NSPredicate(format: "username == %@", (COMMON_SETTING.userDetail?.userName)!)
+        COMMON_SETTING.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
         
-        self.userNameLbl.text = commonSetting.myProfile?.name?.uppercased()
+        self.userNameLbl.text = COMMON_SETTING.myProfile?.name?.uppercased()
         
-        self.emaillbl.text = commonSetting.myProfile?.emailid
+        self.emaillbl.text = COMMON_SETTING.myProfile?.emailid
         
-        let imagekey:String = (commonSetting.myProfile?.imageKey)!
+        let imagekey:String = (COMMON_SETTING.myProfile?.imageKey)!
         
-        if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
+        if !COMMON_SETTING.isEmptyStingOrWithBlankSpace(imagekey)
         {
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
@@ -237,7 +237,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
             self.isSwipedUp = true
         })
         
-        commonSetting.animateProfileImage(imageView: self.userProImage)
+        COMMON_SETTING.animateProfileImage(imageView: self.userProImage)
         
     }
     func swipeDownHandler(sender:UISwipeGestureRecognizer){
@@ -263,7 +263,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
             self.isSwipedUp = false
         })
         
-        commonSetting.animateProfileImage(imageView: self.userProImage)
+        COMMON_SETTING.animateProfileImage(imageView: self.userProImage)
     }
     
     func searchContainerSwipeUp(sender:UISwipeGestureRecognizer){
@@ -334,7 +334,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         let success: successHandler = {responseObject, responseType in
             
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             
             TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
@@ -360,7 +360,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         let success:successHandler = {responceObject, responseType in
             
-            let responseDict = self.parseResponse(responseObject: responceObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responceObject as Any)
             print(responseDict)
             let tournamentList:TETournamentList = TETournamentList.insertTournamentDetails(info: responseDict, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
             print(tournamentList.checkInTime!, tournamentList.completed)
@@ -378,7 +378,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         //On success
         let success: successHandler = {responseObject, responseType in
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             self.isResponseReceived = true
             if responseType == RequestedUrlType.GetUserProfileData {
@@ -447,7 +447,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         let success: successHandler = {responseObject, responseType in
             
             self.hideHUD()
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             if responseType == RequestedUrlType.GetCurrentAndUpcomingTournament {
                 
                 //initialize hype list
@@ -484,7 +484,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         let success: successHandler = {responseObject, responseType in
             
             self.hideHUD()
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             if responseType == RequestedUrlType.GetNotificationList {
                 
                 //initialize hype list
@@ -521,7 +521,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         let success: successHandler = {responseObject, responseType in
             
             self.hideHUD()
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             if responseType == RequestedUrlType.HypeSearch {
                 
                 //initialize hype list
@@ -561,7 +561,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
             super.scrollViewDidEndDecelerating(scrollView)
         }else
         {
-            if commonSetting.isInternetAvailable {
+            if COMMON_SETTING.isInternetAvailable {
                 if currentButtonIndex == 1 || currentButtonIndex == 2 {
                     var endScrolling = 0
                     var dimension = 0
@@ -733,7 +733,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         let cell:HypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HypeTableViewCell", for: indexPath) as! HypeTableViewCell
         
-        let hypeInfo:NSDictionary = self.parseResponse(responseObject: hypetoShowArray.object(at: indexPath.row))
+        let hypeInfo:NSDictionary = serviceCall.parseResponse(responseObject: hypetoShowArray.object(at: indexPath.row))
         
         // Set Border Image
         if hypeInfo.stringValueForKey(key: "hypableType") == "TOURNAMENT" {
@@ -778,7 +778,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         let cell:HypeTableViewCell = tableView.dequeueReusableCell(withIdentifier: "HypeTableViewCell", for: indexPath) as! HypeTableViewCell
         
-        let tournaInfo:NSDictionary = self.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
+        let tournaInfo:NSDictionary = serviceCall.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
         
         let val = tournaInfo.value(forKey: "hype") as! NSNumber
         if val == 0 {
@@ -792,7 +792,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         cell.hypNameLbl.text = tournaInfo.stringValueForKey(key: "name").uppercased()
         cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game").uppercased()
         cell.locationLbl.text = tournaInfo.stringValueForKey(key: "venue").uppercased()
-        cell.dateLbl.text = self.getFormattedDateString(info: tournaInfo, indexPath: indexPath, format: "yyyy")
+        cell.dateLbl.text = self.getFormattedDateString(array: tournamentsToShowArray, indexPath: indexPath, format: "yyyy")
         
         //Set Default Image
         self.setDefaultImages(cell: cell, indexPath: indexPath)
@@ -823,7 +823,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         let cell:NotificationTableViewCell = tableView.dequeueReusableCell(withIdentifier: "NotificationTableViewCell", for: indexPath) as! NotificationTableViewCell
         
-        let notificationInfo:NSDictionary = self.parseResponse(responseObject: notificationToShowArray.object(at: indexPath.row))
+        let notificationInfo:NSDictionary = serviceCall.parseResponse(responseObject: notificationToShowArray.object(at: indexPath.row))
         
         var message:String = notificationInfo.stringValueForKey(key: "notificationHeader")
         
@@ -847,7 +847,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         let attributesForHeaderString:[String : Any] = [NSForegroundColorAttributeName : UIColor.white,NSFontAttributeName : fontForHeader]
         var attributedStringMessage = NSMutableAttributedString(string: message, attributes: attributesForHeaderString)
         
-        let map:NSDictionary = self.parseResponse(responseObject: notificationInfo.value(forKey: "map") as Any)
+        let map:NSDictionary = serviceCall.parseResponse(responseObject: notificationInfo.value(forKey: "map") as Any)
         
         if let userInfoArr:NSArray = map.value(forKey: "userinfo") as? NSArray
         {
@@ -962,7 +962,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
     func getNotificationMapInfo(notification:NSDictionary, key:String) -> NSDictionary {
         if let tournamentInfo:NSArray = notification.value(forKey: key) as? NSArray
         {
-            let dictionary:NSDictionary = self.parseResponse(responseObject: tournamentInfo.firstObject as Any)
+            let dictionary:NSDictionary = serviceCall.parseResponse(responseObject: tournamentInfo.firstObject as Any)
             return dictionary
         }
         return NSDictionary()

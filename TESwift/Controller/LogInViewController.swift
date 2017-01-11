@@ -79,7 +79,7 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
     
     func validate() -> Bool {
         
-        if commonSetting.isEmptyStingOrWithBlankSpace(txtUsername.text!) || commonSetting.isEmptyStingOrWithBlankSpace(txtPassword.text!) {
+        if COMMON_SETTING.isEmptyStingOrWithBlankSpace(txtUsername.text!) || COMMON_SETTING.isEmptyStingOrWithBlankSpace(txtPassword.text!) {
             
             self.showAlert(title: kMessage, message: UserName_Pwd_ErrorMsg)
             return false
@@ -95,7 +95,7 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
             
             self.hideHUD()
             // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             
             print(responseDict)
             
@@ -128,9 +128,9 @@ class LogInViewController: SocialConnectViewController,UITextFieldDelegate {
         UserDetails.save(self.manageObjectContext())
         
         let predicate = NSPredicate(format: "userName == %@", userInfo.stringValueForKey(key: "username"))
-        commonSetting.userDetail = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predicate)
+        COMMON_SETTING.userDetail = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predicate)
         //setup left menu
-        appDelegate.configureMenuViewController(navigationCont: self.navigationController!)
+        APP_DELEGATE.configureMenuViewController(navigationCont: self.navigationController!)
     }
     
     func onLogInFailure(_ userInfo: String) -> Void {

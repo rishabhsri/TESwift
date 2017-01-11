@@ -64,7 +64,7 @@ extension TETournamentList {
     @NSManaged public var seasonImageKay: String?
     @NSManaged public var seasonName: String?
     @NSManaged public var sequentialpairings: String?
-    @NSManaged public var shareDateTime: String?
+    @NSManaged public var startDateTime: String?
     @NSManaged public var shareURL: String?
     @NSManaged public var showRounds: String?
     @NSManaged public var started: Bool

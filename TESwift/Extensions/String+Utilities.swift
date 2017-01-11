@@ -69,7 +69,7 @@ extension String {
         dateFormatterList.append("MM/dd/yyyy'T'HH:mm:ss")
         
         
-        if !commonSetting.isEmptySting(sourceString) {
+        if !COMMON_SETTING.isEmptySting(sourceString) {
             let dateFormatter:DateFormatter = DateFormatter()
             
             for dateFormatterString:String in dateFormatterList  {

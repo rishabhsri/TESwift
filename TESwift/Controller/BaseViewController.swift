@@ -28,8 +28,7 @@ class BaseViewController: UIViewController{
     
     func manageObjectContext() -> NSManagedObjectContext {
         if context == nil {
-            let appDelegate:AppDelegate = UIApplication.shared.delegate as! AppDelegate
-            context = appDelegate.persistentContainer.viewContext
+            context = APP_DELEGATE.persistentContainer.viewContext
         }
         return context!
     }
@@ -101,18 +100,6 @@ class BaseViewController: UIViewController{
            // view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
     }
-
-    
-    func parseResponse(responseObject:Any) -> NSDictionary {
-        
-        if let responseDict:NSDictionary = responseObject as? NSDictionary {
-            return responseDict;
-        }else if let responseString:String = responseObject as? String
-        {
-            return responseString.convertToDictionary(text: responseString)
-        }
-        return NSDictionary()
-    }
     
     func setBlurImage(imageView:UIImageView,imageKey:String)
     {
@@ -140,6 +127,7 @@ class BaseViewController: UIViewController{
         imageView.layer.opacity = 0.45
     }
     
+    //MARK: Date Formatter
     func getLocaleDateFromString(dateString:String) -> Date {
         
         if self.dateFormatter == nil {
@@ -175,16 +163,17 @@ class BaseViewController: UIViewController{
         }
     }
     
-    func getFormattedDateString(info:NSDictionary,indexPath:IndexPath,format:String) -> String {
+    func getFormattedDateString(array:NSArray,indexPath:IndexPath,format:String) -> String {
         
         var startKeyName:String = "startDateTime"
         var endKeyName:String = "endDateTime"
         
+        let info:NSDictionary = array.object(at: indexPath.row) as! NSDictionary
         
-        if commonSetting.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: startKeyName)) {
+        if COMMON_SETTING.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: startKeyName)) {
             startKeyName = "startDate"
         }
-        if commonSetting.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: endKeyName)) {
+        if COMMON_SETTING.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: endKeyName)) {
             endKeyName = "endDate"
         }
         
@@ -197,6 +186,30 @@ class BaseViewController: UIViewController{
         {
             return String.init(format: "%@ - %@", targetStartDate,targetEndDate)
         }
+    }
+    
+    func getFormattedDateStringOfTournament(tournament:TETournamentList,format:String) -> String {
+        
+        let targetStartDate:String = String.dateStringFromString(sourceString: tournament.startDateTime!,format: format)
+        let targetEndDate:String = String.dateStringFromString(sourceString:tournament.startDateTime!,format:format)
+        if targetEndDate == targetStartDate
+        {
+            return targetStartDate
+        }else
+        {
+            return String.init(format: "%@ - %@", targetStartDate,targetEndDate)
+        }
+    }
+
+    
+    //MARK: Sorters
+    
+    func sortArrayElements(inputArray:NSArray,key:String,isAscending:Bool) -> NSArray
+    {
+        let sortDiscriptor = NSSortDescriptor.init(key: "lastUpdatedAt", ascending: isAscending)
+        let sortedArray = inputArray.sortedArray(using: [sortDiscriptor])
+        
+        return sortedArray as NSArray
     }
     
     // MARK: - TextFields Delegate
@@ -236,7 +249,7 @@ class BaseViewController: UIViewController{
     
     func setDefaultImages(cell:Any,indexPath:IndexPath) {
         
-        let listColors:[String] = commonSetting.listViewColors
+        let listColors:[String] = COMMON_SETTING.listViewColors
         if listColors.count == 0
         {
             return

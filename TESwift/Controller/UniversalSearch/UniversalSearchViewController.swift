@@ -50,7 +50,7 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        if commonSetting.isInternetAvailable {
+        if COMMON_SETTING.isInternetAvailable {
             var endScrolling = 0
             var dimension = 0
             
@@ -80,7 +80,7 @@ class UniversalSearchViewController: BaseViewController,UISearchBarDelegate,UITa
                 self.searchResults.removeAllObjects()
             }
             
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             
             if let responseObjects:NSArray = responseDict.value(forKey: "docs") as? NSArray {
                 if responseObjects.count < PAGE_SIZE

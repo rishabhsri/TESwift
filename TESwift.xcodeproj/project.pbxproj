@@ -66,6 +66,7 @@
 		188163DA1E02779E00AB2E74 /* WindowRootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163C81E02779E00AB2E74 /* WindowRootViewController.swift */; };
 		188163DE1E02BE4D00AB2E74 /* HypeTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163DC1E02BE4D00AB2E74 /* HypeTableViewCell.swift */; };
 		188163DF1E02BE4D00AB2E74 /* NotificationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 188163DD1E02BE4D00AB2E74 /* NotificationTableViewCell.swift */; };
+		1886DF5E1E26564E00239A18 /* TournamentHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1886DF5D1E26564E00239A18 /* TournamentHelper.swift */; };
 		1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E95F1E000D6500AC5575 /* String+Utilities.swift */; };
 		1888E9621E000D9100AC5575 /* NSDictionary+Utility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */; };
 		1888E9661E00139800AC5575 /* UIColor+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1888E9651E00139800AC5575 /* UIColor+Utilities.swift */; };
@@ -164,6 +165,7 @@
 		188163C81E02779E00AB2E74 /* WindowRootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WindowRootViewController.swift; sourceTree = "<group>"; };
 		188163DC1E02BE4D00AB2E74 /* HypeTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HypeTableViewCell.swift; sourceTree = "<group>"; };
 		188163DD1E02BE4D00AB2E74 /* NotificationTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NotificationTableViewCell.swift; sourceTree = "<group>"; };
+		1886DF5D1E26564E00239A18 /* TournamentHelper.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TournamentHelper.swift; sourceTree = "<group>"; };
 		1888E95F1E000D6500AC5575 /* String+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+Utilities.swift"; sourceTree = "<group>"; };
 		1888E9611E000D9100AC5575 /* NSDictionary+Utility.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "NSDictionary+Utility.swift"; sourceTree = "<group>"; };
 		1888E9651E00139800AC5575 /* UIColor+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIColor+Utilities.swift"; sourceTree = "<group>"; };
@@ -346,6 +348,7 @@
 				1847F2C81E0BEC2A0088E19D /* TETournamentBracketSpots+CoreDataProperties.swift */,
 				1847F2C91E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift */,
 				1847F2CA1E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift */,
+				1886DF5D1E26564E00239A18 /* TournamentHelper.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -709,6 +712,7 @@
 				188C8EBA1DF979C300C2D52E /* AFNetworkActivityIndicatorManager.m in Sources */,
 				180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */,
 				188C8EB61DF979C300C2D52E /* AFURLResponseSerialization.m in Sources */,
+				1886DF5E1E26564E00239A18 /* TournamentHelper.swift in Sources */,
 				1847F2B61E0BE9940088E19D /* TEMyProfile+CoreDataClass.swift in Sources */,
 				1888E9601E000D6500AC5575 /* String+Utilities.swift in Sources */,
 				188163D11E02779E00AB2E74 /* PKHUDErrorView.swift in Sources */,

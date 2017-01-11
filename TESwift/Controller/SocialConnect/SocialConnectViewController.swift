@@ -46,7 +46,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     //MARK: Facebook Login
     func socialLoginViaFacebook(_ sender: Any)
     {
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             self.showNoInternetAlert()
             return
         }
@@ -60,7 +60,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     //MARK: GooglePlus Login
      func socialLoginViaGooglePlus(_ sender: Any)
     {
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             self.showNoInternetAlert()
             return
         }
@@ -74,7 +74,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     //MARK: Twitch Login
      func socialLoginViaTwitch(_ sender: Any)
     {
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             self.showNoInternetAlert()
             return
         }
@@ -88,7 +88,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
     //MARK: Twitch Login
     func socialLoginViaTwitter(_ sender: Any)
     {
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             self.showNoInternetAlert()
             return
         }
@@ -121,7 +121,7 @@ class SocialConnectViewController: BaseViewController,SocialLoginViewControllerD
         
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            let responseDict:NSDictionary = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict:NSDictionary = serviceCall.parseResponse(responseObject: responseObject as Any)
             
             if responseDict.intValueForKey(key: "validUserName") == 1
             {

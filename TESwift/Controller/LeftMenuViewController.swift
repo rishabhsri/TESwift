@@ -71,16 +71,16 @@ class LeftMenuViewController: BaseViewController {
     
     func setUpData() -> Void
     {
-        let predicate = NSPredicate(format: "username == %@", (commonSetting.userDetail?.userName)!)
-        commonSetting.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
+        let predicate = NSPredicate(format: "username == %@", (COMMON_SETTING.userDetail?.userName)!)
+        COMMON_SETTING.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
         
-        self.displayNameLbl.text = commonSetting.myProfile?.name?.uppercased()
+        self.displayNameLbl.text = COMMON_SETTING.myProfile?.name?.uppercased()
         
-        self.userNameLbl.text = commonSetting.myProfile?.username
+        self.userNameLbl.text = COMMON_SETTING.myProfile?.username
         
-        if let imagekey:String = commonSetting.myProfile?.imageKey
+        if let imagekey:String = COMMON_SETTING.myProfile?.imageKey
         {
-            if !(commonSetting.isEmptyStingOrWithBlankSpace(imagekey))
+            if !(COMMON_SETTING.isEmptyStingOrWithBlankSpace(imagekey))
             {
                 //On Success Call
                 let success:downloadImageSuccess = {image,imageKey in
@@ -143,7 +143,7 @@ class LeftMenuViewController: BaseViewController {
     {
         if currentNavVC?.childViewControllers.first is MyDashBoardViewController
         {
-            appDelegate.menuController?.revealToggle(self)
+            APP_DELEGATE.menuController?.revealToggle(self)
         }else
         {
             let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
@@ -155,7 +155,7 @@ class LeftMenuViewController: BaseViewController {
     func setFrontVC(frontVC:UIViewController) {
         currentNavVC = UINavigationController.init(rootViewController: frontVC)
         currentNavVC?.navigationBar.isHidden = true
-        appDelegate.menuController?.setFront(currentNavVC, animated: true)
-        appDelegate.menuController?.revealToggle(self)
+        APP_DELEGATE.menuController?.setFront(currentNavVC, animated: true)
+        APP_DELEGATE.menuController?.revealToggle(self)
     }
 }
