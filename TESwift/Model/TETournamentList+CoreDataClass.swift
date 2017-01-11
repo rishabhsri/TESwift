@@ -368,6 +368,17 @@ public class TETournamentList: TESwiftModel {
         return toournamentList
     }
     
+    static func insertNewTournamentDetail(arrTournamentDetail:NSDictionary, context:NSManagedObjectContext) -> TETournamentList
+    {
+        let tournamentList:TETournamentList = TETournamentList.insertTournamentDetails(info: arrTournamentDetail, context: context, isDummy: false, isUserHype: false)
+        do{
+        try context.save()
+        } catch let Error{
+        print(Error.localizedDescription)
+        }
+        return tournamentList
+    }
+    
     static func fetchTournamentListDetail(predicate:NSPredicate, context:NSManagedObjectContext) -> NSArray
     {
         let fetchRequest:NSFetchRequest = TETournamentList.newFetchRequest(in: context)
