@@ -462,20 +462,4 @@ public class TETournamentList: TESwiftModel {
         }
         return tournamentList
     }
-    
-    static func fetchTournamentListDetail(predicate:NSPredicate, context:NSManagedObjectContext) -> NSArray
-    {
-        let fetchRequest:NSFetchRequest = TETournamentList.newFetchRequest(in: context)
-        fetchRequest.predicate = predicate
-        
-        var fetchedObjects:NSArray = NSArray()
-        do {
-            fetchedObjects = try context.fetch(fetchRequest) as NSArray
-        } catch let error {
-            print(error.localizedDescription)
-        }
-        return fetchedObjects
-    }
-
- 
 }
