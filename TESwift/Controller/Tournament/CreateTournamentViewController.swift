@@ -16,7 +16,7 @@ enum Pushed_From:Int {
 }
 
 class CreateTournamentViewController: SocialConnectViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate{
-
+    
     // Navigation Outlet
     @IBOutlet weak var topNavLbl: UILabel!
     @IBOutlet weak var infoButton: UIButton!
@@ -40,6 +40,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var uploadPhotoBtn: UIButton!
     @IBOutlet weak var chooseGameTableView: UITableView!
     @IBOutlet weak var hypetournamentView: UIView!
+    @IBOutlet weak var scrollView: UIScrollView!
     
     @IBOutlet weak var scoreView: UIView!
     @IBOutlet weak var matchPerWinTF: UITextField!
@@ -78,6 +79,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var rankByTFBtmLineHightCons: NSLayoutConstraint!
     @IBOutlet weak var hypeViewHeightCons: NSLayoutConstraint!
     @IBOutlet weak var hypeViewTopCons: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewHieghtCon: NSLayoutConstraint!
     
     let imagePicker = UIImagePickerController()
     var pickerView = UIPickerView()
@@ -106,7 +108,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setStyleGuide()
+        self.setUpData()
         self.setUpLayout()
         self.setUpPickerView()
         self.getGameList()
@@ -114,7 +116,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         // Do any additional setup after loading the view.
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -157,7 +159,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(CreateTournamentViewController.onClickedToolbeltButton(_:)))
         )
         self.toolBar.items = items
-
+        
     }
     
     func setUpPickerView() {
@@ -165,18 +167,18 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         pickerView = UIPickerView.init(frame: CGRect(x: 0, y: 467, width: 375, height: 200))
         pickerView.backgroundColor = UIColor.black
         pickerView.delegate = self
-
+        
         self.rankByTF.inputView = pickerView
         self.advanceTimerTF.inputView = pickerView
         self.checkInTimeTF1.inputView = pickerView
         self.rankByTF.inputAccessoryView = toolBar
         self.advanceTimerTF.inputAccessoryView = toolBar
         self.checkInTimeTF1.inputAccessoryView = toolBar
-
+        
         rankByArray = ["Match Wins", "Game Wins", "Points Scored", "Points Difference", "Custom"]
         //gameList = ["Cricket", "Football", "Footsal", "Badminton", "Squash", "Rugby"]
         
-     //   self.aryCheckInTime = [[NSMutableArray alloc ]init];
+        //   self.aryCheckInTime = [[NSMutableArray alloc ]init];
         
         self.advanceTimerArray.add(NSDictionary.init(object: "0", forKey: "None" as NSCopying))
         self.advanceTimerArray.add(NSDictionary.init(object: "5", forKey: "5 min" as NSCopying))
@@ -199,8 +201,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     func setUpDatePicker()
     {
         datePicker = UIDatePicker.init(frame: CGRect(x: 0, y: 467, width: 375, height: 200))
-        datePicker.backgroundColor = UIColor.black
-        datePicker.tintColor = UIColor.white
+      //  datePicker.backgroundColor = UIColor.black
+        //datePicker.tintColor = UIColor.white
         
         self.startDateTF.inputAccessoryView = toolBar
         self.endDateTF.inputAccessoryView = toolBar
@@ -211,25 +213,40 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.endDateTF.inputView = datePicker
     }
     
-    func setStyleGuide() {
+    func setUpData() {
         
         self.chooseGameTableView.isHidden = true
         self.advanceTimerTF.isUserInteractionEnabled = false
+        self.advanceTimerTF.alpha = 0.6
+        self.preRegistraionChargeTF.isUserInteractionEnabled = false
         self.slectedGameType = "SINGLE_ELIMINATION"
         self.hypeViewHeightCons.constant = 0
         self.hypeViewTopCons.constant = 0
         self.hypetournamentView.isHidden = true
+        self.tounamentNameTF.text = ""
+        self.chooseGameTF.text = ""
+        self.tournamentUrl.text = ""
+        self.startDateTF.text = ""
+        self.endDateTF.text = ""
+        self.locationTF.text = ""
+        self.tournamentDescTxtView.text = ""
+        self.twitterMesTextView.text = kdefaultTwitterMsg
+        self.notificationMsgtextView.text = kDefaultNotificationMsg
+        self.uploadPhotoBtn.setBackgroundImage(UIImage(named: "UploadImage"), for: UIControlState.normal)
+        self.tournamentUrl.text = kDefalutUrl
         
         tounamentNameTF.attributedPlaceholder = NSAttributedString(string:"Tournament Name",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
-        chooseGameTF.attributedPlaceholder = NSAttributedString(string:"-Choose Game-",
                                                                    attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+        chooseGameTF.attributedPlaceholder = NSAttributedString(string:"-Choose Game-",
+                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+        startDateTF.attributedPlaceholder = NSAttributedString(string:"Start Date",
+                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         endDateTF.attributedPlaceholder = NSAttributedString(string:"End Date",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+                                                             attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         locationTF.attributedPlaceholder = NSAttributedString(string:"Location",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
-        preRegistraionChargeTF.attributedPlaceholder = NSAttributedString(string:"0.00",
                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+        preRegistraionChargeTF.attributedPlaceholder = NSAttributedString(string:"0.00",
+                                                                          attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         self.registerSwitch.isOn = true
         self.teamBasedSwitch.isOn = false
         self.considerTeamSwitch.isOn = false
@@ -238,6 +255,11 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.scoreSubmissionSwitch.isOn = true
         self.paidTournamentSwitch.isOn = false
         
+        self.selectedCheckInTimeIndex = 0
+        self.selectedAutoAdvanceTimeIndex = 0
+        self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - 150
+        scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
+        
     }
     
     func onClickedToolbeltButton(_ sender: Any) {
@@ -245,7 +267,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     }
     
     func  onClickedDatePicker(_ sender: Any){
-    
+        
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd"
         if self.activeTextField == self.startDateTF {
@@ -260,13 +282,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         dateFormatter.timeZone = TimeZone.init(identifier: "GMT")
         
         if activeTextField == self.startDateTF{
-        self.startDate = dateFormatter.string(from: datePicker.date)
+            self.startDate = dateFormatter.string(from: datePicker.date)
         }else
         {
-        self.endDate = dateFormatter.string(from: datePicker.date)
+            self.endDate = dateFormatter.string(from: datePicker.date)
         }
     }
-
+    
     func getGameList() {
         
         let success: successHandler = {responseObject, responseType in
@@ -275,8 +297,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             print(responseDict)
             if let array:NSArray = responseDict.object(forKey: "list") as? NSArray
             {
-              GameList.deleteAllFromEntity(inManage: self.manageObjectContext())
-              self.gameListArray = GameList.insertGameList(list: array, context: self.manageObjectContext())
+                GameList.deleteAllFromEntity(inManage: self.manageObjectContext())
+                self.gameListArray = GameList.insertGameList(list: array, context: self.manageObjectContext())
             }
         }
         let failure: falureHandler = {error, responseString, responseType in
@@ -286,7 +308,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         // Service call for get user profile data (Hypes, upcomings, person, followers)
         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetGameList, method: "GET", successCall: success, falureCall: failure)
-
+        
     }
     
     func validateInfo() -> Bool
@@ -353,7 +375,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         dicCreateTournament.setCustomObject(object:"false", key: "acceptAttachments")
         dicCreateTournament.setCustomObject(object:"false", key: "sequentialPairings")
-       // dicCreateTournament.setCustomObject(object:registerSwitch.isOn as NSNumber, key: "preRegister")
+        // dicCreateTournament.setCustomObject(object:registerSwitch.isOn as NSNumber, key: "preRegister")
         dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.registerSwitch.isOn) , key: "preRegister")
         dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.discordChannelSwitch.isOn), key: "createDiscordChannel")
         dicCreateTournament.setCustomObject(object: NSNumber.init(value: self.considerLocationSwitch.isOn), key: "considerLocation")
@@ -397,18 +419,18 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         dicCreateTournament.setValue(self.preRegistraionChargeTF.text, forKey: "price")
         dicCreateTournament.setCustomObject(object:NSNumber.init(value: self.paidTournamentSwitch.isOn), key: "paid")
         
-       // var error: NSError?
+        // var error: NSError?
         
-//        do{
-//            let data = try JSONSerialization.data(withJSONObject: dicCreateTournament, options: JSONSerialization.WritingOptions.prettyPrinted)
-//            let strData = String.init(data: data, encoding: String.defaultCStringEncoding)
-//            
-//            print(strData!)
-//        }
-//        catch
-//        {
-//          
-//        }
+        //        do{
+        //            let data = try JSONSerialization.data(withJSONObject: dicCreateTournament, options: JSONSerialization.WritingOptions.prettyPrinted)
+        //            let strData = String.init(data: data, encoding: String.defaultCStringEncoding)
+        //
+        //            print(strData!)
+        //        }
+        //        catch
+        //        {
+        //
+        //        }
         return dicCreateTournament
     }
     
@@ -418,15 +440,20 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             // Success call implementation
             let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
+            self.hideHUD()
+            self.showAlert(title:kMessage, message: "Tournament successfully created.")
+            self.setUpData()
+            _ = TETournamentList.insertNewTournamentDetail(arrTournamentDetail: responseDict, context: self.manageObjectContext())
         }
         
         //On Failure Call
         let falure:falureHandler = {error,responseMessage,requestType in
+            self.hideHUD()
             print(responseMessage)
-                }
+        }
         
         ServiceCall.sharedInstance.sendRequest(parameters: dict, urlType: RequestedUrlType.CreateNewTournament, method: "POST", successCall: success, falureCall: falure)
-
+        
     }
     
     // MARK: - IBactions
@@ -472,7 +499,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         optionMenu.addAction(cancelAction)
         
         self.present(optionMenu, animated: true, completion: nil)
-
+        
         
     }
     
@@ -491,16 +518,18 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         if COMMON_SETTING.isInternetAvailable {
             if self.validateInfo() {
                 if isImage {
+                    self.showHUD()
                     self.uploadTournamentmage()
                 }
                 else{
+                    self.showHUD()
                     self.sendCreateTournamentRequest(dict: self.createTournamentRequst(imageKey: ""))
                 }
             }
         }
         
     }
-
+    
     @IBAction func locationAction(_ sender: AnyObject) {
         
         locationTF.resignFirstResponder()
@@ -509,7 +538,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         locationManager.desiredAccuracy = kCLLocationAccuracyBest
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
-
+        
     }
     
     @IBAction func singleAction(_ sender: AnyObject) {
@@ -518,6 +547,9 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.scoreView.isHidden = true
             self.scoreViewHightCons.constant = 0
+            if self.swissBtnOutlet.alpha == 1.0 {
+            self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - 150
+            }
             self.swissBtnOutlet.alpha = 0.4
             self.singleBtnOutlet.alpha = 1.0
             self.doubleBtnOutlet.alpha = 0.4
@@ -535,7 +567,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
                 // self.isSwipedUp = true
         })
         self.slectedGameType = "SINGLE_ELIMINATION"
-
+        
     }
     
     @IBAction func doubleAction(_ sender: AnyObject) {
@@ -544,6 +576,9 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.scoreView.isHidden = true
             self.scoreViewHightCons.constant = 0
+            if self.swissBtnOutlet.alpha == 1.0 {
+                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - 150
+            }
             self.swissBtnOutlet.alpha = 0.4
             self.singleBtnOutlet.alpha = 0.4
             self.doubleBtnOutlet.alpha = 1.0
@@ -568,23 +603,24 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.scoreView.isHidden = false
             self.scoreViewHightCons.constant = 150
+            self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant + 150
             self.swissBtnOutlet.alpha = 1.0
             self.singleBtnOutlet.alpha = 0.4
             self.doubleBtnOutlet.alpha = 0.4
             self.roundRobinBtnOutlet.alpha = 0.4
-
+            
             self.rankByTF.isHidden = true
             self.rankByTfHeightCOns.constant = 0
             self.rankByTFBotttomImg.isHidden = true
             self.rankByTfHeightCOns.constant = 0.0
-
+            
             
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             }, completion: {(isCompleted) -> Void in
-               // self.isSwipedUp = true
+                // self.isSwipedUp = true
         })
-       self.slectedGameType = "SWISS"
+        self.slectedGameType = "SWISS"
     }
     
     @IBAction func roundRobinAction(_ sender: AnyObject) {
@@ -593,6 +629,9 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.scoreView.isHidden = true
             self.scoreViewHightCons.constant = 0
+            if self.swissBtnOutlet.alpha == 1.0 {
+                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - 150
+            }
             self.swissBtnOutlet.alpha = 0.4
             self.singleBtnOutlet.alpha = 0.4
             self.doubleBtnOutlet.alpha = 0.4
@@ -604,7 +643,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.rankByTFBtmLineHightCons.constant = 1.0
             self.rankByTF.text = ""
             self.rankByTF.attributedPlaceholder = NSAttributedString(string:"Rank By",
-                                                                attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
+                                                                     attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             }, completion: {(isCompleted) -> Void in
@@ -616,7 +655,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBAction func hypeTournamentBnAction(_ sender: AnyObject) {
     }
     
-
+    
     @IBAction func teamBasedSwitchAction(_ sender: AnyObject) {
         
         if self.teamBasedSwitch.isOn {
@@ -633,7 +672,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         if self.considerTeamSwitch.isOn
         {
-        self.considerTeamSwitch.isOn = false
+            self.considerTeamSwitch.isOn = false
         }
     }
     
@@ -650,13 +689,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.advanceTimerTF.isUserInteractionEnabled = true
             self.advanceTimerTF.alpha = 1.0
             self.teamBasedSwitch.isOn = false
-
+            
         }else
         {
             self.advanceTimerTF.isUserInteractionEnabled = false
             self.advanceTimerTF.alpha = 0.6
-         }
-     }
+        }
+    }
     
     @IBAction func paidTournamentSwitch(_ sender: AnyObject) {
         if self.paidTournamentSwitch.isOn
@@ -687,7 +726,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     // MARK: - PickerView Delegate
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -726,12 +765,12 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         {
             return advanceTimerArray[row] as? String
         }
-
+            
         else if self.activeTextField == self.checkInTimeTF1
         {
             return checkInTimeArray[row] as? String
         }
-
+        
         return ""
         
     }
@@ -755,7 +794,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.selectedCheckInTimeIndex = row
         }
         self.activeTextField.resignFirstResponder()
-       // self.pickerView.isHidden = true
+        // self.pickerView.isHidden = true
     }
     
     func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
@@ -763,22 +802,22 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         var attributedString = NSAttributedString()
         if self.activeTextField == self.rankByTF
         {
-             attributedString = NSAttributedString(string: rankByArray[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.white])
+            attributedString = NSAttributedString(string: rankByArray[row] as! String, attributes: [NSForegroundColorAttributeName : UIColor.white])
         }
         else if self.activeTextField == self.advanceTimerTF
         {
             let dict:NSDictionary = advanceTimerArray[row] as! NSDictionary
-
+            
             attributedString = NSAttributedString(string: dict.allKeys.first as! String, attributes: [NSForegroundColorAttributeName : UIColor.white])
         }
-
+            
         else if self.activeTextField == self.checkInTimeTF1
         {
             let dict:NSDictionary = checkInTimeArray[row] as! NSDictionary
-
+            
             attributedString = NSAttributedString(string: dict.allKeys.first as! String, attributes: [NSForegroundColorAttributeName : UIColor.white])
         }
-
+        
         return attributedString
     }
     
@@ -810,7 +849,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         if textField == self.chooseGameTF {
             self.chooseGameTableView.isHidden = true
         }
-       }
+    }
     
     override func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         if textField == self.tounamentNameTF {
@@ -818,14 +857,14 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         }
         else if textField == self.chooseGameTF
         {
-          self.chooseGameTF.resignFirstResponder()
+            self.chooseGameTF.resignFirstResponder()
         }
         else if textField == self.locationTF
         {
-           self.locationTF.resignFirstResponder()
+            self.locationTF.resignFirstResponder()
         }
         else{
-           textField.resignFirstResponder()
+            textField.resignFirstResponder()
         }
         return true
     }
@@ -833,19 +872,24 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         if textField == self.chooseGameTF {
             if (self.chooseGameTF.text?.characters.count)!>1 {
-              let predi = NSPredicate(format: "name contains[c] %@", textField.text!)
-              self.gameList =  self.gameListArray.filtered(using: predi) as NSArray
-              self.chooseGameTableView.isHidden = false
-              self.chooseGameTableView.reloadData()
-              self.removeDismisskeyboardTapGesture()
+                let predi = NSPredicate(format: "name contains[c] %@", textField.text!)
+                self.gameList =  self.gameListArray.filtered(using: predi) as NSArray
+                self.chooseGameTableView.isHidden = false
+                self.chooseGameTableView.reloadData()
+                self.removeDismisskeyboardTapGesture()
             } else{
-            self.chooseGameTableView.isHidden = true
-            self.addDismisskeyboardTapGesture()
+                self.chooseGameTableView.isHidden = true
+                self.addDismisskeyboardTapGesture()
             }
         }else if textField == self.tounamentNameTF || (textField.text?.characters.count)! > NAME_MAX_CHAR
         {
-          self.showAlert(title: kMessage, message: "You have reached max characters limit.")
-          return false
+            self.showAlert(title: kMessage, message: "You have reached max characters limit.")
+            return false
+        }else if textField == self.tournamentUrl
+        {
+            if kDefalutUrl.characters.count > range.location  {
+                return false
+            }
         }
         return true
     }
@@ -864,7 +908,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         cell.gameLbl.text = dict.name
         return cell
     }
-
+    
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         gameListObj = self.gameList[indexPath.row] as? GameList
@@ -875,7 +919,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     
     //MARK:- Social Login response
     func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
-    
+        
         isTwitterLogIn = true
     }
     
@@ -894,7 +938,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         print("user latitude = \(userLocation.coordinate.latitude)")
         print("user longitude = \(userLocation.coordinate.longitude)")
         
-
+        
         self.strLattitude = "\(userLocation.coordinate.latitude)"
         self.strLaongitude = "\(userLocation.coordinate.longitude)"
         
@@ -938,8 +982,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error){
         print("Error while updating location " + error.localizedDescription)
     }
-
-     // MARK: - Upload Image
+    
+    // MARK: - Upload Image
     
     func uploadTournamentmage() -> Void {
         let success:uploadImageSuccess = {imageKey in
@@ -954,6 +998,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         let falure:uploadImageFailed = {error,responseMessage in
             
             // Falure call implementation
+            self.hideHUD()
+            self.showAlert(title: kError, message: "Image not uploaded.")
             print(responseMessage)
         }
         
@@ -962,13 +1008,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     
     
     /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+     // MARK: - Navigation
+     
+     // In a storyboard-based application, you will often want to do a little preparation before navigation
+     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+     // Get the new view controller using segue.destinationViewController.
+     // Pass the selected object to the new view controller.
+     }
+     */
+    
 }
