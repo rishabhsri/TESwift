@@ -248,18 +248,10 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     func setProfileImage() {
         
-<<<<<<< HEAD
-        let imagekey:String = (self.myProfile?.imageKey)!
-=======
         let imagekey:String = (COMMON_SETTING.myProfile?.imageKey)!
->>>>>>> 2987698f379fe5ed7c46a528b1fc0dce93ec4d92
         
         if !COMMON_SETTING.isEmptyStingOrWithBlankSpace(imagekey)
         {
-<<<<<<< HEAD
-=======
-        
->>>>>>> 2987698f379fe5ed7c46a528b1fc0dce93ec4d92
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
                 // Success call implementation
@@ -461,7 +453,8 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     }
     
     @IBAction func btnDoneClicked(_ sender: AnyObject) {
-        if isValid() {
+        if isValid()
+        {
             if self.isImagedPicked {
              self.uploadProfileImage()
              self.showHUD()
@@ -515,7 +508,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         userInfo.setValue(NSNumber.init(value: self.messagingSwitch.isOn), forKey: "messagingSetting")
         
         
-        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.profileImageKey)) {
+        if !(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.profileImageKey)) {
 
             userInfo.setValue(self.profileImageKey, forKey: "imageKey")
         }else{
@@ -549,8 +542,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-<<<<<<< HEAD
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             if self.didEmailChanged {
                 self.didEmailChanged = false
                 self.showAlert(title: kMessage, message: "An email has been sent for email verfication.")
@@ -559,9 +551,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             else{
             
             TEMyProfile.deleteAllFormMyProfile(context: self.manageObjectContext())
-=======
             let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
->>>>>>> 2987698f379fe5ed7c46a528b1fc0dce93ec4d92
             
             self.showAlert(title: kMessage, message: "Profile updated successfully")
             print(responseDict)
@@ -717,7 +707,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             
             self.updateSocialConnection()
             print(responseDict)
@@ -728,7 +718,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             
         }
         print(userInfo)
-        ServiceCall.sharedInstance.sendRequest(parameters: userInfo, urlType: RequestedUrlType.DisconnectSocialLogin, method: "POST", successCall: success, falureCall: falure)
+        serviceCall.sendRequest(parameters: userInfo, urlType: RequestedUrlType.DisconnectSocialLogin, method: "POST", successCall: success, falureCall: falure)
         
     }
 
