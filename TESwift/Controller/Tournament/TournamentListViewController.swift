@@ -32,8 +32,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     var isLoadMoreSearch:Bool = false
     var isLoadMoreTournament:Bool = false
     var searchResults:NSMutableArray = NSMutableArray()
-    
-    
+
     //class Variables
     var tournamentsArray:NSMutableArray = NSMutableArray()
     
@@ -43,9 +42,9 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         self.setStyleGuide()
         
-        self.getUsersTournament()
-        
         self.setupMenu()
+        
+        self.getUsersTournament()
         
         // Do any additional setup after loading the view.
     }
@@ -114,7 +113,6 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.menuButton.isHidden = true
         self.searchBtnOutlet.isHidden = true
         self.plusIcon.isHidden = true
-        self.tableView.alpha = 0.5
         self.tournamentTitleLbl.isHidden = true
     }
     
@@ -127,8 +125,6 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.menuButton.isHidden = false
         self.searchBtnOutlet.isHidden = false
         self.plusIcon.isHidden = false
-
-        self.tableView.alpha = 1.0
         self.tournamentTitleLbl.isHidden = false
         self.searchBar.text = ""
         
@@ -175,65 +171,55 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     
     func getUsersTournament()
     {
-        let success: successHandler = {responseObject, responseType in
+        let success: teHelper_Success_CallBack = {arrTournamentList in
             
             self.hideHUD()
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
-            print(responseDict)
-            if let array:NSArray = responseDict.object(forKey: "list") as? NSArray
+
+            if arrTournamentList.count < PAGE_SIZE {
+                self.isLoadMoreTournament = false
+            }else
             {
-                self.tournamentsArray = NSMutableArray.init(array: array)
-                self.tableView.reloadData()
+                self.isLoadMoreTournament = true
             }
+            
+            COMMON_SETTING.myProfile?.addToTournament(NSSet(array:arrTournamentList as! [Any]))
+            TETournamentList.save(self.manageObjectContext())
+            
+            self.updateTournamentList()
         }
-        let failure: falureHandler = {error, responseString, responseType in
+        let failure: teHelper_Falure_CallBack = {error, responseString in
             self.hideHUD()
             print(responseString)
         }
         
         self.showHUD()
-        ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetUsersTournament, method: "GET", successCall: success, falureCall: failure)
+        
+        TournamentHelper().getTournamentByUser(pageNumber: "\(self.pageNumberForTournament)", success: success, failure: failure)
+        
     }
     
-    func loadMoreTournament() {
+    func updateTournamentList()
+    {
+        let tournamentList:NSArray = NSArray.init(array: (COMMON_SETTING.myProfile?.tournament?.allObjects)!)
         
-        let success: successHandler = {responseObject, responseType in
-            
-            self.hideHUD()
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
-            if responseType == RequestedUrlType.GetUsersTournament {
-                
-                //initialize hype list
-                if let array:NSArray =  responseDict.object(forKey: "list") as? NSArray
-                {
-                    if array.count < PAGE_SIZE {
-                        self.isLoadMoreTournament = false
-                    }else
-                    {
-                        self.isLoadMoreTournament = true
-                    }
-                    
-                    for task in array {
-                        self.tournamentsArray.add(task)
-                    }
-                    // self.tournamentsArray.addObjects(from: array as! [Any])
-                    self.tableView.reloadData()
-                }
-                
-            }
+        let sortedArray = self.sortArrayElements(inputArray: tournamentList, key: "lastUpdatedAt", isAscending: false)
+        
+        self.tournamentsArray = NSMutableArray.init(array: sortedArray)
+        
+        self.tableView.reloadData()
+    }
+    
+    
+    func deleteTournamentForIndexPath(indexPath:IndexPath)
+    {
+        var tournaDict:NSDictionary = NSDictionary()
+        if isSearchEnabled && self.searchResults.count>0
+        {
+            tournaDict = serviceCall.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
+        }else
+        {
+            tournaDict = serviceCall.parseResponse(responseObject: self.tournamentsArray.object(at: indexPath.row))
         }
-        let failure: falureHandler = {error, responseString, responseType in
-            self.hideHUD()
-            print(responseString)
-        }
-        
-        self.showHUD()
-        
-        let requestDict:NSMutableDictionary = NSMutableDictionary()
-        requestDict.setValue("\(self.pageNumberForTournament)", forKey: "pagenumber")
-        
-        // Service call for get user profile data (Hypes, upcomings, person, followers)
-        ServiceCall.sharedInstance.sendRequest(parameters: requestDict, urlType: RequestedUrlType.GetUsersTournament, method: "GET", successCall: success, falureCall: failure)
     }
     
     
@@ -283,7 +269,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         
-        if commonSetting.isInternetAvailable {
+        if COMMON_SETTING.isInternetAvailable {
             var endScrolling = 0
             var dimension = 0
             
@@ -300,7 +286,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
                 {
                     self.pageNumberForTournament += 1
                     self.isLoadMoreTournament = false
-                    self.loadMoreTournament()
+                    self.getUsersTournament()
                 }
             }
         }
@@ -319,7 +305,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
                 self.searchResults.removeAllObjects()
             }
             
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             
             if let responseObjects:NSArray = responseDict.value(forKey: "list") as? NSArray {
                 if responseObjects.count < PAGE_SIZE
@@ -376,22 +362,29 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         leftUtilityButton.sw_addUtilityButton(with: StyleGuide.tableViewRightView(), icon: UIImage(named: "HypeImage"))
 
         
-        var tournaDict:NSDictionary = NSDictionary()
+        var tournamentDetail:TETournamentList?
         
-        if isSearchEnabled {
-            tournaDict = self.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
+        if isSearchEnabled && self.searchResults.count>0
+        {
+//            tournaDict = serviceCall.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
+//            cell.tournmentName.textColor = UIColor.lightGray
+//            cell.yearLabel.textColor = UIColor.lightGray
+//            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: tournaDict.stringValueForKey(key: "name").uppercased(), searchedText: self.searchBar.text!)
         }else
         {
-            tournaDict = self.parseResponse(responseObject: self.tournamentsArray.object(at: indexPath.row))
+            tournamentDetail = self.tournamentsArray.object(at: indexPath.row) as? TETournamentList
+            
+            cell.tournmentName.textColor = UIColor.white
+            cell.yearLabel.textColor = UIColor.white
+            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: (tournamentDetail?.tournamentName?.uppercased())!, searchedText: (tournamentDetail?.tournamentName?.uppercased())!)
         }
         
         cell.backGroundImage.image = nil
-        cell.tournmentName.text = tournaDict.stringValueForKey(key: "name").uppercased()
-        cell.yearLabel.text = self.getFormattedDateString(info: tournaDict, indexPath: indexPath, format: "yyyy")
+        cell.yearLabel.text = self.getFormattedDateStringOfTournament(tournament: tournamentDetail!, format: "yyyy")
         
         self.setDefaultImages(cell: cell, indexPath: indexPath)
         
-        let imagekey:String = tournaDict.stringValueForKey(key: "imageKey")
+        let imagekey:String = (tournamentDetail?.imageKay)!
         weak var weakCell:TournamentListTableViewCell? = cell
         let sucess:downloadImageSuccess = {image, imageKey in
             
@@ -404,23 +397,29 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
             weakCell!.progressBar.stopAnimating()
         }
         
-        if !commonSetting.isEmptySting(imagekey) {
+        if !COMMON_SETTING.isEmptySting(imagekey) {
             cell.progressBar.startAnimating()
             ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }
+        
        // let swiftAray:NSArray = rightUtilityButton as NSArray
         cell.rightUtilityButtons = rightUtilityButton.reversed()
         cell.leftUtilityButtons = leftUtilityButton.reversed()
         cell.delegate = self
+        cell.hideUtilityButtons(animated: true)
+        
         return cell
     }
     
     //MARK: - Swipable Table view cell delegate
     
     func swipeableTableViewCell(_ cell: SWTableViewCell!, didTriggerRightUtilityButtonWith index: Int) {
-        switch index {
+        switch index
+        {
         case 0:
-            print("Im pressed at right")
+            let selectedIndexPath:IndexPath = self.tableView.indexPath(for: cell)!
+            self.deleteTournamentForIndexPath(indexPath: selectedIndexPath)
+            break
         default: break
             
         }
@@ -433,6 +432,10 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         default: break
             
         }
+    }
+    
+    func swipeableTableViewCellShouldHideUtilityButtons(onSwipe cell: SWTableViewCell!) -> Bool {
+        return true
     }
 }
 

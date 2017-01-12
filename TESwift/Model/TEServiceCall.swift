@@ -153,6 +153,10 @@ class ServiceCall: NSObject {
         case .DisconnectSocialLogin:
             urlString = String(format: "%@/user/disconnect/socialnetwork/%@",Network_Header,parameter.stringValueForKey(key: "socialType"))
             break
+            
+        case .CreateNewTournament:
+            urlString = String(format: "%@/tournament",Main_Header)
+            break
         default: break
             
         }
@@ -162,7 +166,7 @@ class ServiceCall: NSObject {
     
     func sendRequest(parameters:NSMutableDictionary ,urlType:RequestedUrlType,method:String,successCall:@escaping successHandler,falureCall:@escaping falureHandler) -> Void {
         
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             
             let error:NSError = NSError();
             falureCall(error,kNoInternetConnect,urlType)
@@ -369,7 +373,7 @@ class ServiceCall: NSObject {
         {
             if let errResponse: String = String(data:infoData, encoding: String.Encoding.utf8)
             {
-                let responseDict = BaseViewController().parseResponse(responseObject: errResponse as Any)
+                let responseDict = serviceCall.parseResponse(responseObject: errResponse as Any)
                 if let array:NSArray = responseDict.value(forKey: "errorMessages") as? NSArray {
                     if let errorMessage:String = array.firstObject as? String
                     {
@@ -386,7 +390,7 @@ class ServiceCall: NSObject {
         if image == nil {
             let error:NSError = NSError();
             falureCall(error,"Invalid Parameter")
-        }else if !commonSetting.isInternetAvailable {
+        }else if !COMMON_SETTING.isInternetAvailable {
             let error:NSError = NSError();
             falureCall(error,kNoInternetConnect)
         }
@@ -446,10 +450,10 @@ class ServiceCall: NSObject {
     
     func downloadImage(imageKey:String,urlType:RequestedUrlType,successCall:@escaping downloadImageSuccess,falureCall:@escaping downloadImageFailed){
         
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             let error:NSError = NSError();
             falureCall(error,kNoInternetConnect)
-        }else if commonSetting.isEmptyStingOrWithBlankSpace(imageKey) {
+        }else if COMMON_SETTING.isEmptyStingOrWithBlankSpace(imageKey) {
             let error:NSError = NSError();
             falureCall(error,"Invalid Parameter")
         }
@@ -570,10 +574,21 @@ class ServiceCall: NSObject {
         self.searchManager.operationQueue.cancelAllOperations()
     }
     
+    func parseResponse(responseObject:Any) -> NSDictionary {
+        
+        if let responseDict:NSDictionary = responseObject as? NSDictionary {
+            return responseDict;
+        }else if let responseString:String = responseObject as? String
+        {
+            return responseString.convertToDictionary(text: responseString)
+        }
+        return NSDictionary()
+    }
+    
     
     func getImageForKey(imageKey:String) -> UIImage?{
         
-        if commonSetting.isEmptyStingOrWithBlankSpace(imageKey)
+        if COMMON_SETTING.isEmptyStingOrWithBlankSpace(imageKey)
         {
             return nil
         }else

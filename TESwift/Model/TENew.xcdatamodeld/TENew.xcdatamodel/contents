@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11232" systemVersion="15G31" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="11759" systemVersion="16C67" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="GameList" representedClassName=".GameList" syncable="YES">
         <attribute name="gameDescripton" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="gameID" optional="YES" attributeType="String" syncable="YES"/>
@@ -33,7 +33,7 @@
         <attribute name="userid" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="username" optional="YES" attributeType="String" syncable="YES"/>
         <relationship name="socialdetails" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="UserSocialDetail" inverseName="myprofile" inverseEntity="UserSocialDetail" syncable="YES"/>
-        <relationship name="tournament" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TETournamentList" inverseName="myProfile" inverseEntity="TETournamentList" syncable="YES"/>
+        <relationship name="tournament" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="TETournamentList" inverseName="myProfile" inverseEntity="TETournamentList" syncable="YES"/>
     </entity>
     <entity name="TEPlayerDetails" representedClassName=".TEPlayerDetails" syncable="YES">
         <attribute name="approved" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
@@ -161,9 +161,9 @@
         <attribute name="seasonImageKay" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="seasonName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="sequentialpairings" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="shareDateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="shareURL" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="showRounds" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="startDateTime" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="started" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="teamBasedTE" optional="YES" attributeType="Boolean" usesScalarValueType="YES" syncable="YES"/>
         <attribute name="tournamentDesciption" optional="YES" attributeType="String" syncable="YES"/>
@@ -202,6 +202,7 @@
         <relationship name="myprofile" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="TEMyProfile" inverseName="socialdetails" inverseEntity="TEMyProfile" syncable="YES"/>
     </entity>
     <elements>
+        <element name="GameList" positionX="-45" positionY="135" width="128" height="90"/>
         <element name="TEMyProfile" positionX="-63" positionY="-18" width="128" height="465"/>
         <element name="TEPlayerDetails" positionX="-54" positionY="135" width="128" height="495"/>
         <element name="TEStaffDetail" positionX="-45" positionY="144" width="128" height="255"/>
@@ -210,6 +211,5 @@
         <element name="TETournamentList" positionX="-54" positionY="144" width="128" height="1080"/>
         <element name="UserDetails" positionX="-45" positionY="144" width="128" height="135"/>
         <element name="UserSocialDetail" positionX="-36" positionY="153" width="128" height="165"/>
-        <element name="GameList" positionX="-45" positionY="135" width="128" height="90"/>
     </elements>
 </model>

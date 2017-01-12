@@ -105,7 +105,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         userInfo.setValue(self.txtEmailId.text!, forKey: "email")
         userInfo.setValue(self.txtLocation.text!, forKey: "location")
         
-        if !commonSetting.isEmptySting(imageKey)
+        if !COMMON_SETTING.isEmptySting(imageKey)
         {
             userInfo.setValue(imageKey, forKey: "imageKey")
         }
@@ -117,7 +117,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
         }
         
@@ -233,23 +233,23 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         
         var flag:Bool = true
         
-        if (commonSetting.isEmptyStingOrWithBlankSpace(self.txtUsername.text!))
+        if (COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.txtUsername.text!))
         {
             self.showAlert(title: kError, message: kEnterUsername)
             flag = false
-        }else if(commonSetting.isEmptySting(self.txtDisplayname.text!))
+        }else if(COMMON_SETTING.isEmptySting(self.txtDisplayname.text!))
         {
             self.showAlert(title: kError, message: kEnterDisplayname)
             flag = false
-        }else if(commonSetting.isEmptyStingOrWithBlankSpace(self.txtPassword.text!))
+        }else if(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.txtPassword.text!))
         {
             self.showAlert(title: kError, message: kEnterPassword)
             flag = false
-        }else if(!commonSetting.validatePassword(password: self.txtPassword.text!))
+        }else if(!COMMON_SETTING.validatePassword(password: self.txtPassword.text!))
         {
             self.showAlert(title: kError, message: kPasswordRulesMessage)
             flag = false
-        }else if(commonSetting.isEmptyStingOrWithBlankSpace(self.txtConfirmPassword.text!))
+        }else if(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.txtConfirmPassword.text!))
         {
             self.showAlert(title: kError, message: kEnterConfirmPassword)
             flag = false
@@ -257,11 +257,11 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         {
             self.showAlert(title: kError, message: kEnterSamePassword)
             flag = false
-        }else if(commonSetting.isEmptyStingOrWithBlankSpace(self.txtEmailId.text!))
+        }else if(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.txtEmailId.text!))
         {
             self.showAlert(title: kError, message: kEnterEmail)
             flag = false
-        }else if(!commonSetting.validateEmailID(emailID: self.txtEmailId.text!))
+        }else if(!COMMON_SETTING.validateEmailID(emailID: self.txtEmailId.text!))
         {
             self.showAlert(title: kError, message: kInvalidEmail)
             flag = false
@@ -293,9 +293,19 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     
     override func onLogInSuccess(_ userInfo: NSDictionary,connectType:SocialConnectType) -> Void {
         
-        commonSetting.userLoginInfo = userInfo
         self.hideHUD()
-        appDelegate.configureMenuViewController(navigationCont: self.navigationController!)
+        
+        //reset UserDetail
+        UserDetails.deleteAllFromEntity(inManage: self.manageObjectContext())
+        
+        //Inset freash details
+        _ = UserDetails.insertUserDetails(info:userInfo, context:self.manageObjectContext())
+        UserDetails.save(self.manageObjectContext())
+        
+        let predicate = NSPredicate(format: "userName == %@", userInfo.stringValueForKey(key: "username"))
+        COMMON_SETTING.userDetail = UserDetails.fetchUserDetailsFor(context: self.manageObjectContext(), predicate: predicate)
+        //setup left menu
+        APP_DELEGATE.configureMenuViewController(navigationCont: self.navigationController!)
     }
     func onLogInFailure(_ userInfo: String) -> Void {
         self.hideHUD()
@@ -335,14 +345,14 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     // may be called if forced even if shouldEndEditing returns NO (e.g. view removed from window) or endEditing:YES called
     func textFieldDidEndEditing(_ textField: UITextField){
         if textField == txtUsername {
-            if !(commonSetting.isEmptySting(self.txtUsername.text!))
+            if !(COMMON_SETTING.isEmptySting(self.txtUsername.text!))
             {
                 self.showHUD()
                 self.isUsernameExists(username: self.txtUsername.text!)
             }
         }else if textField == txtEmailId {
-            if commonSetting.isInternetAvailable {
-                if !(commonSetting.isEmptySting(self.txtEmailId.text!))
+            if COMMON_SETTING.isInternetAvailable {
+                if !(COMMON_SETTING.isEmptySting(self.txtEmailId.text!))
                 {
                     self.showHUD()
                     self.isEmailIdExists(emailID: self.txtEmailId.text!)
@@ -557,7 +567,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             self.hideHUD()
             print(responseDict)
         }
@@ -584,7 +594,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
     
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
              self.hideHUD()
             print(responseDict)
         }
@@ -609,7 +619,7 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
 
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             self.autoLocationList = responseDict["list"] as! NSArray
 //            var myNewName = NSMutableArray(array:self.autoLocationList)

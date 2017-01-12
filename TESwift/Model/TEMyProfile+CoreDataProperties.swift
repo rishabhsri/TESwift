@@ -42,7 +42,7 @@ extension TEMyProfile {
     @NSManaged public var userid: String?
     @NSManaged public var username: String?
     @NSManaged public var socialdetails: NSSet?
-    @NSManaged public var tournament: TETournamentList?
+    @NSManaged public var tournament: NSSet?
 
 }
 

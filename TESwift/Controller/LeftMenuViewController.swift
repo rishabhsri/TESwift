@@ -18,14 +18,21 @@ class LeftMenuViewController: BaseViewController {
     @IBOutlet weak var tournamentYPos: NSLayoutConstraint!
     @IBOutlet var yPositions: [NSLayoutConstraint]!
     
+    public var currentNavVC:UINavigationController?
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        self.userProImage.setRoundedImage(image: UIImage(named:"UserDefaultImage")!, borderWidth: 0, imageWidth: self.userProImage.frame.size.width)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        self.setUpData(userInfo: commonSetting.userLoginInfo)
+    override func viewWillAppear(_ animated: Bool)
+    {
+        super.viewWillAppear(animated)
+        
+        self.setUpData()
+        
         self.updateConstraints()
     }
     
@@ -57,17 +64,23 @@ class LeftMenuViewController: BaseViewController {
         self.view.setNeedsLayout()
     }
     
-    func setUpData(userInfo: NSDictionary) -> Void {
+    func setCurrentNavigationController(navVC:UINavigationController)
+    {
+        self.currentNavVC = navVC
+    }
+    
+    func setUpData() -> Void
+    {
+        let predicate = NSPredicate(format: "username == %@", (COMMON_SETTING.userDetail?.userName)!)
+        COMMON_SETTING.myProfile = TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
         
-        self.displayNameLbl.text = userInfo.value(forKey: "name") as? String
-        self.userNameLbl.text = String(format: "@%@", (userInfo.value(forKey: "username") as? String)!)
+        self.displayNameLbl.text = COMMON_SETTING.myProfile?.name?.uppercased()
         
-        let imageKey = commonSetting.imageKeyProfile
+        self.userNameLbl.text = COMMON_SETTING.myProfile?.username
         
-        self.userProImage.image = UIImage(named:"UserDefaultImage")
-        
-        if imageKey != nil {
-            if !(commonSetting.isEmptyStingOrWithBlankSpace(imageKey!))
+        if let imagekey:String = COMMON_SETTING.myProfile?.imageKey
+        {
+            if !(COMMON_SETTING.isEmptyStingOrWithBlankSpace(imagekey))
             {
                 //On Success Call
                 let success:downloadImageSuccess = {image,imageKey in
@@ -77,21 +90,17 @@ class LeftMenuViewController: BaseViewController {
                     
                     self.backGround_BG.image = image
                     
-                    self.setBlurImage(imageView: self.backGround_BG)
-                    
+                    self.setBlurImage(imageView: self.backGround_BG,imageKey:imageKey.appending("_leftMenu"))
                 }
                 
                 //On Falure Call
                 let falure:downloadImageFailed = {error,responseMessage in
-                    
                     // Falure call implementation
-                    
                 }
                 
-                ServiceCall.sharedInstance.downloadImage(imageKey: imageKey!, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
+                ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: success, falureCall: falure)
             }
         }
-        
     }
     
     // MARK: - IBActions
@@ -132,15 +141,21 @@ class LeftMenuViewController: BaseViewController {
     }
     @IBAction func profileAction(_ sender: Any)
     {
-        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
-        let dashBoardVC:MyDashBoardViewController = storyBoard.instantiateViewController(withIdentifier: "MyDashBoardViewControllerID") as! MyDashBoardViewController
-        self.setFrontVC(frontVC: dashBoardVC)
+        if currentNavVC?.childViewControllers.first is MyDashBoardViewController
+        {
+            APP_DELEGATE.menuController?.revealToggle(self)
+        }else
+        {
+            let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
+            let dashBoardVC:MyDashBoardViewController = storyBoard.instantiateViewController(withIdentifier: "MyDashBoardViewControllerID") as! MyDashBoardViewController
+            self.setFrontVC(frontVC: dashBoardVC)
+        }
     }
     
     func setFrontVC(frontVC:UIViewController) {
-        let navigationController:UINavigationController = UINavigationController.init(rootViewController: frontVC)
-        navigationController.navigationBar.isHidden = true
-        appDelegate.menuController?.setFront(navigationController, animated: true)
-        appDelegate.menuController?.revealToggle(self)
+        currentNavVC = UINavigationController.init(rootViewController: frontVC)
+        currentNavVC?.navigationBar.isHidden = true
+        APP_DELEGATE.menuController?.setFront(currentNavVC, animated: true)
+        APP_DELEGATE.menuController?.revealToggle(self)
     }
 }

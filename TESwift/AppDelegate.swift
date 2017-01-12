@@ -118,7 +118,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 break;
             }
             
-            commonSetting.isInternetAvailable = internetAvailable
+            COMMON_SETTING.isInternetAvailable = internetAvailable
         })
     }
     

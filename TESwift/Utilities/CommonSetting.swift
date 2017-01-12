@@ -10,14 +10,14 @@ import UIKit
 
 class CommonSetting: NSObject {
     
-    var userLoginInfo:NSDictionary = NSDictionary()
-    var imageKeyProfile:String?
     var isInternetAvailable:Bool = false
     var isFBConnect:Bool = false
     var isTwitchConnect:Bool = false
     var isGoogleConnect:Bool = false
     var isTwitterConnect:Bool = false
     var listViewColors:[String] = [String]()
+    var userDetail:UserDetails?
+    var myProfile:TEMyProfile?
     
     //Methods
     class var sharedInstance: CommonSetting {

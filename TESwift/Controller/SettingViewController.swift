@@ -153,15 +153,15 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         {
             self.showAlert(title: kError, message: kEnterUsername)
             flag = false
-        }else if(commonSetting.isEmptyStingOrWithBlankSpace(self.txtEmail.text!))
+        }else if(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.txtEmail.text!))
         {
             self.showAlert(title: kError, message: kEnterEmail)
             flag = false
-        }else if(!commonSetting.validateEmailID(emailID: self.txtEmail.text!))
+        }else if(!COMMON_SETTING.validateEmailID(emailID: self.txtEmail.text!))
         {
             self.showAlert(title: kError, message: kInvalidEmail)
             flag = false
-        }else if(!commonSetting.validateNumber(self.txtPhoneNumber.text!))
+        }else if(!COMMON_SETTING.validateNumber(self.txtPhoneNumber.text!))
         {
             self.showAlert(title: kError, message: kEnterValidAge)
             flag = false
@@ -188,7 +188,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     func updateSettingDetails()
     {
-        let predicate = NSPredicate(format: "username == %@", (commonSetting.userLoginInfo.stringValueForKey(key: "username")))
+        let predicate = NSPredicate(format: "username == %@", (COMMON_SETTING.userDetail?.userName)!)
         
         if let profile:TEMyProfile =  TEMyProfile.fetchMyProfileDetail(context: self.manageObjectContext(), predicate: predicate)
         {
@@ -248,10 +248,18 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     func setProfileImage() {
         
+<<<<<<< HEAD
         let imagekey:String = (self.myProfile?.imageKey)!
+=======
+        let imagekey:String = (COMMON_SETTING.myProfile?.imageKey)!
+>>>>>>> 2987698f379fe5ed7c46a528b1fc0dce93ec4d92
         
-        if !commonSetting.isEmptyStingOrWithBlankSpace(imagekey)
+        if !COMMON_SETTING.isEmptyStingOrWithBlankSpace(imagekey)
         {
+<<<<<<< HEAD
+=======
+        
+>>>>>>> 2987698f379fe5ed7c46a528b1fc0dce93ec4d92
             //On Success Call
             let success:downloadImageSuccess = {image,imageKey in
                 // Success call implementation
@@ -387,55 +395,55 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     func updateSocialConnection() -> Void {
         if let socailConnectFB:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: self.myProfile!, with: self.context!, socialType: "FACEBOOK")
         {
-            commonSetting.isFBConnect = true
+            COMMON_SETTING.isFBConnect = true
         }
         else{
-            commonSetting.isFBConnect = false
+            COMMON_SETTING.isFBConnect = false
         }
         
         if let socailConnectTwitter:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: self.myProfile!, with: self.context!, socialType: "TWITTER")
         {
-            commonSetting.isTwitterConnect = true
+            COMMON_SETTING.isTwitterConnect = true
         }
         else{
-            commonSetting.isTwitterConnect = false
+            COMMON_SETTING.isTwitterConnect = false
         }
         
         if let socailConnectGoogle:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: self.myProfile!, with: self.context!, socialType: "GOOGLEPLUS")
         {
-            commonSetting.isGoogleConnect = true
+            COMMON_SETTING.isGoogleConnect = true
         }
         else{
-            commonSetting.isGoogleConnect = false
+            COMMON_SETTING.isGoogleConnect = false
         }
         if let socailConnectTwitch:UserSocialDetail = TEMyProfile.fetchUserSocailDetails(for: self.myProfile!, with: self.context!, socialType: "TWITCH")
         {
-            commonSetting.isTwitchConnect = true
+            COMMON_SETTING.isTwitchConnect = true
         }
         else{
-            commonSetting.isTwitchConnect = false
+            COMMON_SETTING.isTwitchConnect = false
         }
         
         // update selected images of social connect
-        if commonSetting.isFBConnect {
+        if COMMON_SETTING.isFBConnect {
             self.imgFBConnected.isHidden = false
         }
         else{
             self.imgFBConnected.isHidden = true
         }
-        if commonSetting.isTwitterConnect {
+        if COMMON_SETTING.isTwitterConnect {
             self.imgTwitterConnected.isHidden = false
         }
         else{
             self.imgTwitterConnected.isHidden = true
         }
-        if commonSetting.isGoogleConnect {
+        if COMMON_SETTING.isGoogleConnect {
             self.imgGoogleConnected.isHidden = false
         }
         else{
             self.imgGoogleConnected.isHidden = true
         }
-        if commonSetting.isTwitchConnect {
+        if COMMON_SETTING.isTwitchConnect {
             self.imgTwitchConnected.isHidden = false
         }
         else{
@@ -476,26 +484,26 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         userInfo.setValue(self.txtPhoneNumber.text, forKey:"phoneNumber")
         userInfo.setValue(self.txtName.text, forKey:"name")
         userInfo.setValue(self.txtEmail.text, forKey:"email")
-        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtAge.text!))
+        if !(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.txtAge.text!))
         {
             userInfo.setValue(NSNumber.init(value: Int(self.txtAge.text!)!), forKey: "age")
         }
-        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtGender.text!)) {
+        if !(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.txtGender.text!)) {
             userInfo.setValue(self.txtGender.text, forKey: "sex")
             
         }
-        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.txtLocation.text!)) {
+        if !(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.txtLocation.text!)) {
             userInfo.setValue(self.txtLocation.text, forKey: "location")
             
         }
-        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.profileImageKey)) {
+        if !(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.profileImageKey)) {
             userInfo.setValue(self.profileImageKey, forKey: "imageKey")
         }
         else{
             userInfo.setValue(self.myProfile?.imageKey, forKey: "imageKey")
         }
         
-        if !(commonSetting.isEmptyStingOrWithBlankSpace(self.teamIconImageKey)) {
+        if !(COMMON_SETTING.isEmptyStingOrWithBlankSpace(self.teamIconImageKey)) {
             userInfo.setValue(self.teamIconImageKey, forKey: "teamIcon")
         }
         else{
@@ -541,6 +549,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         //On Success Call
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
+<<<<<<< HEAD
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             if self.didEmailChanged {
                 self.didEmailChanged = false
@@ -550,6 +559,9 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             else{
             
             TEMyProfile.deleteAllFormMyProfile(context: self.manageObjectContext())
+=======
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
+>>>>>>> 2987698f379fe5ed7c46a528b1fc0dce93ec4d92
             
             self.showAlert(title: kMessage, message: "Profile updated successfully")
             print(responseDict)
@@ -572,17 +584,17 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     @IBAction func socialConnectViaFacebook(_ sender: Any) {
         
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             self.showNoInternetAlert()
             return
         }
-        if commonSetting.isFBConnect{
+        if COMMON_SETTING.isFBConnect{
             
             let refreshAlert = UIAlertController(title: kMessage, message: kDisconnect, preferredStyle: UIAlertControllerStyle.alert)
             
             refreshAlert.addAction(UIAlertAction(title: kOK, style: .default, handler: { (action: UIAlertAction!) in
                 
-                commonSetting.isFBConnect = false
+                COMMON_SETTING.isFBConnect = false
                 self.imgFBConnected.isHidden = true
                 let dicReq = NSMutableDictionary.init(object: "facebook", forKey: "socialType" as NSCopying)
                 
@@ -606,17 +618,17 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
 
     
     @IBAction func socialConnectViaTwitter(_ sender: Any) {
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             self.showNoInternetAlert()
             return
         }
-        if commonSetting.isTwitterConnect{
+        if COMMON_SETTING.isTwitterConnect{
             
             let refreshAlert = UIAlertController(title: kMessage, message: kDisconnect, preferredStyle: UIAlertControllerStyle.alert)
             
             refreshAlert.addAction(UIAlertAction(title: kOK, style: .default, handler: { (action: UIAlertAction!) in
                 
-                commonSetting.isTwitterConnect = false
+                COMMON_SETTING.isTwitterConnect = false
                 self.imgTwitterConnected.isHidden = true
                 
                 
@@ -640,16 +652,16 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     }
     
     @IBAction func socialConnectViaGoogle(_ sender: Any) {
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             self.showNoInternetAlert()
             return
         }
-        if commonSetting.isGoogleConnect{
+        if COMMON_SETTING.isGoogleConnect{
             
             let refreshAlert = UIAlertController(title: kMessage, message: kDisconnect, preferredStyle: UIAlertControllerStyle.alert)
             
             refreshAlert.addAction(UIAlertAction(title: kOK, style: .default, handler: { (action: UIAlertAction!) in
-                commonSetting.isGoogleConnect = false
+                COMMON_SETTING.isGoogleConnect = false
                 self.imgGoogleConnected.isHidden = true
                 
                 let dicReq = NSMutableDictionary.init(object: "google", forKey: "socialType" as NSCopying)
@@ -668,17 +680,17 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     }
     @IBAction func socialConnectViaTwitch(_ sender: Any) {
         
-        if !commonSetting.isInternetAvailable {
+        if !COMMON_SETTING.isInternetAvailable {
             self.showNoInternetAlert()
             return
         }
-        if commonSetting.isTwitchConnect{
+        if COMMON_SETTING.isTwitchConnect{
             
             let refreshAlert = UIAlertController(title: kMessage, message: kDisconnect, preferredStyle: UIAlertControllerStyle.alert)
             
             refreshAlert.addAction(UIAlertAction(title: kOK, style: .default, handler: { (action: UIAlertAction!) in
                 
-                commonSetting.isTwitchConnect = false
+                COMMON_SETTING.isTwitchConnect = false
                 self.imgTwitchConnected.isHidden = true
                 let dicReq = NSMutableDictionary.init(object: "twitch", forKey: "socialType" as NSCopying)
                 
@@ -786,19 +798,19 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         self.hideHUD()
         
         if connectType == SocialConnectType.FACEBOOK {
-            commonSetting.isFBConnect = true
+            COMMON_SETTING.isFBConnect = true
             self.imgFBConnected.isHidden = false
         }
         else if connectType == SocialConnectType.TWITTER {
-            commonSetting.isTwitterConnect = true
+            COMMON_SETTING.isTwitterConnect = true
             self.imgTwitchConnected.isHidden = false
         }
         else if connectType == SocialConnectType.GOOGLEPLUS {
-            commonSetting.isGoogleConnect = true
+            COMMON_SETTING.isGoogleConnect = true
             self.imgGoogleConnected.isHidden = false
         }
         else if connectType == SocialConnectType.TWITCH {
-            commonSetting.isTwitchConnect = true
+            COMMON_SETTING.isTwitchConnect = true
             self.imgTwitchConnected.isHidden = false
         }
     
@@ -1097,7 +1109,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         
         let success:successHandler = {responseObject,requestType in
             // Success call implementation
-            let responseDict = self.parseResponse(responseObject: responseObject as Any)
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             self.autoLocationList = responseDict["list"] as! NSArray
             //            var myNewName = NSMutableArray(array:self.autoLocationList)
