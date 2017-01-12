@@ -197,7 +197,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
             let responseDict = self.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
-            TEMyProfile.insertMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
+            TEMyProfile.insertMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext(),isSocialResponse: false)
             
         }
         let failure: falureHandler = {error, responseString, responseType in
