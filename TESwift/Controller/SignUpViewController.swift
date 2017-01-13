@@ -68,18 +68,21 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
     //MARK:- Utility Methods
     func styleGuide()->Void {
         
-        txtUsername.attributedPlaceholder = NSAttributedString(string:"Username",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
-        txtDisplayname.attributedPlaceholder = NSAttributedString(string:"Display Name",
-                                                                  attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
-        txtPassword.attributedPlaceholder = NSAttributedString(string:"Password",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
-        txtConfirmPassword.attributedPlaceholder = NSAttributedString(string:"Confirm Password",
-                                                                      attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
-        txtEmailId.attributedPlaceholder = NSAttributedString(string:"Email-ID",
-                                                              attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
-        txtLocation.attributedPlaceholder = NSAttributedString(string:"Location",
-                                                               attributes:[NSForegroundColorAttributeName: UIColor.lightGray])
+        txtUsername.attributedPlaceholder = self.getAttributedGrayPlaceholder(text: "Username")
+        txtDisplayname.attributedPlaceholder = self.getAttributedGrayPlaceholder(text: "Display Name")
+        txtPassword.attributedPlaceholder = self.getAttributedGrayPlaceholder(text: "Password")
+        txtConfirmPassword.attributedPlaceholder = self.getAttributedGrayPlaceholder(text: "Confirm Password")
+        txtEmailId.attributedPlaceholder = self.getAttributedGrayPlaceholder(text: "Email-ID")
+        txtLocation.attributedPlaceholder = self.getAttributedGrayPlaceholder(text: "Location")
+        
+        let textFieldFont:UIFont = StyleGuide.fontFutaraRegular(withFontSize: IS_IPAD ? 18 : 14)
+        
+        txtUsername.font = textFieldFont
+        txtDisplayname.font = textFieldFont
+        txtPassword.font = textFieldFont
+        txtConfirmPassword.font = textFieldFont
+        txtEmailId.font = textFieldFont
+        txtLocation.font = textFieldFont
         
         lblAlready.textColor = UIColor (colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
         
@@ -87,8 +90,13 @@ class SignUpViewController: SocialConnectViewController ,UIImagePickerController
         {
             self.socialConnectHieght.constant = 40
             self.socialConnectWidth.constant = 40
-            
         }
+    }
+    
+    func getAttributedGrayPlaceholder(text:String) -> NSAttributedString
+    {
+        return NSAttributedString(string:text,
+                                  attributes:[NSForegroundColorAttributeName: StyleGuide.placeHolderFontColor()])
     }
     
     func getSignUpParameters(imageKey:String)->NSMutableDictionary {

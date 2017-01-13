@@ -32,7 +32,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     var isLoadMoreSearch:Bool = false
     var isLoadMoreTournament:Bool = false
     var searchResults:NSMutableArray = NSMutableArray()
-
+    
     //class Variables
     var tournamentsArray:NSMutableArray = NSMutableArray()
     
@@ -174,7 +174,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         let success: teHelper_Success_CallBack = {arrTournamentList in
             
             self.hideHUD()
-
+            
             if arrTournamentList.count < PAGE_SIZE {
                 self.isLoadMoreTournament = false
             }else
@@ -360,16 +360,16 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         let leftUtilityButton:NSMutableArray = NSMutableArray()
         leftUtilityButton.sw_addUtilityButton(with: StyleGuide.tableViewRightView(), icon: UIImage(named: "HypeImage"))
-
+        
         
         var tournamentDetail:TETournamentList?
         
         if isSearchEnabled && self.searchResults.count>0
         {
-//            tournaDict = serviceCall.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
-//            cell.tournmentName.textColor = UIColor.lightGray
-//            cell.yearLabel.textColor = UIColor.lightGray
-//            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: tournaDict.stringValueForKey(key: "name").uppercased(), searchedText: self.searchBar.text!)
+            //            tournaDict = serviceCall.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
+            //            cell.tournmentName.textColor = UIColor.lightGray
+            //            cell.yearLabel.textColor = UIColor.lightGray
+            //            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: tournaDict.stringValueForKey(key: "name").uppercased(), searchedText: self.searchBar.text!)
         }else
         {
             tournamentDetail = self.tournamentsArray.object(at: indexPath.row) as? TETournamentList
@@ -402,13 +402,29 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
             ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
         }
         
-       // let swiftAray:NSArray = rightUtilityButton as NSArray
+        // let swiftAray:NSArray = rightUtilityButton as NSArray
         cell.rightUtilityButtons = rightUtilityButton.reversed()
         cell.leftUtilityButtons = leftUtilityButton.reversed()
         cell.delegate = self
         cell.hideUtilityButtons(animated: true)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
+    {
+        var tournamentDetail:TETournamentList?
+        
+        if isSearchEnabled && self.searchResults.count>0
+        {
+            tournamentDetail = self.searchResults.object(at: indexPath.row) as? TETournamentList
+            
+        }else
+        {
+            tournamentDetail = self.tournamentsArray.object(at: indexPath.row) as? TETournamentList
+        }
+        
+        self.fetchTournamentMiniDetail(tournamentID: (tournamentDetail?.tournamentID)!)
     }
     
     //MARK: - Swipable Table view cell delegate

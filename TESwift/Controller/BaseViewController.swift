@@ -97,7 +97,7 @@ class BaseViewController: UIViewController{
                 self.revealViewController().rearViewRevealWidth = 300
             }
             
-           // view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            // view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
     }
     
@@ -121,7 +121,7 @@ class BaseViewController: UIViewController{
             
             ServiceCall.sharedInstance.saveImage(imageData: UIImagePNGRepresentation(image!)!, imageKey: imageKey)
         }
-
+        
         imageView.image = image
         imageView.layer.backgroundColor = UIColor.black.cgColor
         imageView.layer.opacity = 0.45
@@ -200,7 +200,7 @@ class BaseViewController: UIViewController{
             return String.init(format: "%@ - %@", targetStartDate,targetEndDate)
         }
     }
-
+    
     
     //MARK: Sorters
     
@@ -210,6 +210,34 @@ class BaseViewController: UIViewController{
         let sortedArray = inputArray.sortedArray(using: [sortDiscriptor])
         
         return sortedArray as NSArray
+    }
+    
+    // MARK:- Tournament Utilities
+    
+    func fetchTournamentMiniDetail(tournamentID:String)
+    {
+        let success: teHelper_Success_CallBack = {arrTournamentList in
+            
+            self.hideHUD()
+            if let tournament:TETournamentList = arrTournamentList.firstObject as? TETournamentList
+            {
+                self.showTournamentDetailScreen(tournament: tournament)
+            }
+        }
+        let failure: teHelper_Falure_CallBack = {error, responseString in
+            self.hideHUD()
+            print(responseString)
+        }
+        
+        self.showHUD()
+        
+        TournamentHelper().getTournamentByID(tournamentID: tournamentID, success: success, failure: failure)
+        
+    }
+    
+    func showTournamentDetailScreen(tournament:TETournamentList)
+    {
+        //implementation
     }
     
     // MARK: - TextFields Delegate
