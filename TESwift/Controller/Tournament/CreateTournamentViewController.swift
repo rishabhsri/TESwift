@@ -9,12 +9,6 @@
 import UIKit
 import CoreLocation
 
-enum Pushed_From:Int {
-    case FROM_TOURNAMENTLIST = 0
-    case FROM_EDIT_TOURNAMENT
-    case FROM_UPDATE_TOURNAMENT
-}
-
 class CreateTournamentViewController: SocialConnectViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate{
     
     // Navigation Outlet
@@ -48,6 +42,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var gameSetWin: UITextField!
     @IBOutlet weak var gameSetTieTF: UITextField!
     @IBOutlet weak var perByeTf: UITextField!
+    @IBOutlet weak var perByeLbl: UILabel!
     
     
     @IBOutlet weak var rankByTF: UITextField!
@@ -71,6 +66,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var preRegistraionChargeTF: UITextField!
     @IBOutlet weak var advanceTimerTF: UITextField!
     @IBOutlet weak var checkInTimeTF: NSLayoutConstraint!
+    @IBOutlet weak var rankByTfTopCons: NSLayoutConstraint!
+    
     @IBOutlet weak var checkInTimeTF1: UITextField!
     
     // Constraints Outlet
@@ -104,10 +101,28 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     var endDate = String()
     var selectedAutoAdvanceTimeIndex:Int = 0
     var selectedCheckInTimeIndex:Int = 0
-    var requestComingFrom:Int?
+    public var screenType:Screen_Type = Screen_Type.DEFAULT
+    var scoreViewHieghtConsValue:CGFloat?
+    var tournamentList:TETournamentList?
     
-    override func viewDidLoad() {
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
+        
+        
+        if self.screenType == Screen_Type.EDIT_TOURNAMENT {
+            self.uploadProfileView.isHidden = true
+            self.editTournamentView.isHidden = false
+            self.topNavLbl.text = "Edit Tournament"
+            self.infoButton.isHidden = false
+            self.hypetournamentView.isHidden = false
+            self.uploadProfileView.isHidden = true
+            self.hypeViewHeightCons.constant = 0
+            self.hypeViewTopCons.constant = 0
+            
+          //  self.tournamentList = COMMON_SETTING.myProfile?.tournament
+            
+        }
         self.setUpData()
         self.setUpLayout()
         self.setUpPickerView()
@@ -222,6 +237,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.slectedGameType = "SINGLE_ELIMINATION"
         self.hypeViewHeightCons.constant = 0
         self.hypeViewTopCons.constant = 0
+        self.rankByTfTopCons.constant = 0
         self.hypetournamentView.isHidden = true
         self.tounamentNameTF.text = ""
         self.chooseGameTF.text = ""
@@ -257,7 +273,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         self.selectedCheckInTimeIndex = 0
         self.selectedAutoAdvanceTimeIndex = 0
-        self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - 150
+        self.scoreViewHieghtConsValue = self.scoreViewHightCons.constant
+        self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.scoreViewHieghtConsValue!
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         
     }
@@ -350,8 +367,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         if self.slectedGameType == "ROUND_ROBIN" {
             dicTournamentType.setCustomObject(object:self.rankByTF.text, key: "rankedBy")
+            
             if self.rankByTF.text == "CUSTOM" {
-                
+            dicTournamentType.setCustomObject(object:self.matchPerWinTF.text, key: "rrPtsForMatchWin")
+            dicTournamentType.setCustomObject(object:self.matchPerTieTF.text, key: "rrPtsForMatchTie")
+            dicTournamentType.setCustomObject(object:self.gameSetWin.text, key: "rrPtsForGameWin")
+            dicTournamentType.setCustomObject(object:self.gameSetTieTF.text, key: "rrPtsForGameTie")
+
             }
         }else if self.slectedGameType == "ROUND_ROBIN"
         {
@@ -550,7 +572,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.scoreView.isHidden = true
             self.scoreViewHightCons.constant = 0
             if self.swissBtnOutlet.alpha == 1.0 {
-            self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - 150
+            self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.scoreViewHieghtConsValue!
             }
             self.swissBtnOutlet.alpha = 0.4
             self.singleBtnOutlet.alpha = 1.0
@@ -559,6 +581,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.rankByTF.isHidden = true
             self.rankByTfHeightCOns.constant = 0
+            self.rankByTfTopCons.constant = 0
             self.rankByTFBotttomImg.isHidden = true
             self.rankByTfHeightCOns.constant = 0.0
             
@@ -579,7 +602,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.scoreView.isHidden = true
             self.scoreViewHightCons.constant = 0
             if self.swissBtnOutlet.alpha == 1.0 {
-                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - 150
+                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.scoreViewHieghtConsValue!
             }
             self.swissBtnOutlet.alpha = 0.4
             self.singleBtnOutlet.alpha = 0.4
@@ -588,6 +611,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.rankByTF.isHidden = true
             self.rankByTfHeightCOns.constant = 0
+            self.rankByTfTopCons.constant = 0
             self.rankByTFBotttomImg.isHidden = true
             self.rankByTfHeightCOns.constant = 0.0
             
@@ -605,7 +629,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.scoreView.isHidden = false
             self.scoreViewHightCons.constant = 150
-            self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant + 150
+            self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant + self.scoreViewHieghtConsValue!
             self.swissBtnOutlet.alpha = 1.0
             self.singleBtnOutlet.alpha = 0.4
             self.doubleBtnOutlet.alpha = 0.4
@@ -613,9 +637,12 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.rankByTF.isHidden = true
             self.rankByTfHeightCOns.constant = 0
+            self.rankByTfTopCons.constant = 0
             self.rankByTFBotttomImg.isHidden = true
             self.rankByTfHeightCOns.constant = 0.0
-            
+            self.perByeTf.isHidden = false
+            self.perByeLbl.isHidden = false
+
             
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
@@ -632,7 +659,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.scoreView.isHidden = true
             self.scoreViewHightCons.constant = 0
             if self.swissBtnOutlet.alpha == 1.0 {
-                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - 150
+                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.scoreViewHieghtConsValue!
             }
             self.swissBtnOutlet.alpha = 0.4
             self.singleBtnOutlet.alpha = 0.4
@@ -641,6 +668,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.rankByTF.isHidden = false
             self.rankByTfHeightCOns.constant = 30
+            self.rankByTfTopCons.constant = 15
             self.rankByTFBotttomImg.isHidden = false
             self.rankByTFBtmLineHightCons.constant = 1.0
             self.rankByTF.text = ""
@@ -781,6 +809,19 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         
         if self.activeTextField == self.rankByTF
         {
+            if row == rankByArray.count - 1 {
+                self.scoreView.isHidden = false
+                self.scoreViewHightCons.constant = self.scoreViewHieghtConsValue! - 30
+                self.perByeTf.isHidden = true
+                self.perByeLbl.isHidden = true
+            }else
+            {
+                self.scoreView.isHidden = true
+                self.scoreViewHightCons.constant = 0
+                self.perByeTf.isHidden = false
+                self.perByeLbl.isHidden = false
+            }
+            
             self.rankByTF.text = rankByArray[row] as? String
         }
         else if self.activeTextField == self.advanceTimerTF
