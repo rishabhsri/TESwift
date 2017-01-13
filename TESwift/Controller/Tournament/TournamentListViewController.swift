@@ -44,7 +44,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         self.setupMenu()
         
-        self.getUsersTournament()
+        self.fetchUserTournaments()
         
         // Do any additional setup after loading the view.
     }
@@ -167,6 +167,18 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         self.searchBar.showsCancelButton = true
         
+    }
+    
+    func fetchUserTournaments()
+    {
+        if COMMON_SETTING.myProfile != nil
+        {
+            COMMON_SETTING.myProfile?.tournament = NSSet()
+        }
+        
+        TETournamentList.deleteAllFromEntity(inManage: self.manageObjectContext())
+        
+        self.getUsersTournament()
     }
     
     func getUsersTournament()
@@ -316,13 +328,12 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
                     self.isLoadMoreSearch = true
                 }
                 
-                for item in responseObjects {
-                    self.searchResults.add(item)
-                }
-                //    self.searchResults.addObjects(from: responseObjects as! [Any])
+                let parsedObjects:NSArray = TETournamentList.parseSearchTournamentListDetails(arrTournamentList: responseObjects, context: self.manageObjectContext())
+                self.searchResults.addObjects(from: parsedObjects as! [Any])
                 
-                if self.searchResults.count > 0 {
-                    // self.parseSearchResult(result: self.searchResults)
+                if self.searchResults.count > 0
+                {
+                    
                     self.showTableData()
                 }else
                 {
@@ -366,10 +377,10 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         if isSearchEnabled && self.searchResults.count>0
         {
-            //            tournaDict = serviceCall.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
-            //            cell.tournmentName.textColor = UIColor.lightGray
-            //            cell.yearLabel.textColor = UIColor.lightGray
-            //            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: tournaDict.stringValueForKey(key: "name").uppercased(), searchedText: self.searchBar.text!)
+            tournamentDetail = self.searchResults.object(at: indexPath.row) as? TETournamentList
+            cell.tournmentName.textColor = UIColor.lightGray
+            cell.yearLabel.textColor = UIColor.lightGray
+            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: (tournamentDetail?.tournamentName?.uppercased())!, searchedText: self.searchBar.text!)
         }else
         {
             tournamentDetail = self.tournamentsArray.object(at: indexPath.row) as? TETournamentList

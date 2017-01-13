@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		180B4EF81E0922D200CBCF4D /* TENew.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 180B4EF61E0922D200CBCF4D /* TENew.xcdatamodeld */; };
+		180CED971E2904BD008A4FA7 /* TETournamentList+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180CED961E2904BD008A4FA7 /* TETournamentList+Parsing.swift */; };
 		180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */; };
 		180EDA211E0135320065BF6B /* SocialLoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA201E0135320065BF6B /* SocialLoginViewController.swift */; };
 		180EDA2D1E01765D0065BF6B /* UIImage+ResizeAndFitImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA291E01765D0065BF6B /* UIImage+ResizeAndFitImage.m */; };
@@ -102,6 +103,7 @@
 
 /* Begin PBXFileReference section */
 		180B4EF71E0922D200CBCF4D /* TENew.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TENew.xcdatamodel; sourceTree = "<group>"; };
+		180CED961E2904BD008A4FA7 /* TETournamentList+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TETournamentList+Parsing.swift"; sourceTree = "<group>"; };
 		180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialConnectViewController.swift; sourceTree = "<group>"; };
 		180EDA201E0135320065BF6B /* SocialLoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialLoginViewController.swift; sourceTree = "<group>"; };
 		180EDA281E01765D0065BF6B /* UIImage+ResizeAndFitImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+ResizeAndFitImage.h"; sourceTree = "<group>"; };
@@ -349,6 +351,7 @@
 				1847F2C91E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift */,
 				1847F2CA1E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift */,
 				1886DF5D1E26564E00239A18 /* TournamentHelper.swift */,
+				180CED961E2904BD008A4FA7 /* TETournamentList+Parsing.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -730,6 +733,7 @@
 				1847F2D01E0BEC2A0088E19D /* TETournamentBracket+CoreDataProperties.swift in Sources */,
 				1847F2D41E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift in Sources */,
 				188163DE1E02BE4D00AB2E74 /* HypeTableViewCell.swift in Sources */,
+				180CED971E2904BD008A4FA7 /* TETournamentList+Parsing.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
