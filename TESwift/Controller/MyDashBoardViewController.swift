@@ -64,7 +64,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.setUpStyleGuide()
         
         self.setupData()
-
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -105,7 +105,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         //set info
         self.userNameLbl.text = COMMON_SETTING.userDetail?.name?.uppercased()
         self.emaillbl.text = COMMON_SETTING.userDetail?.emailId
-
+        
         self.getMyProfile()
         
         self.getUserProfileData()
@@ -233,8 +233,8 @@ class MyDashBoardViewController: UniversalSearchViewController{
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-        }, completion: {(isCompleted) -> Void in
-            self.isSwipedUp = true
+            }, completion: {(isCompleted) -> Void in
+                self.isSwipedUp = true
         })
         
         COMMON_SETTING.animateProfileImage(imageView: self.userProImage)
@@ -259,8 +259,8 @@ class MyDashBoardViewController: UniversalSearchViewController{
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-        }, completion: {(isCompleted) -> Void in
-            self.isSwipedUp = false
+            }, completion: {(isCompleted) -> Void in
+                self.isSwipedUp = false
         })
         
         COMMON_SETTING.animateProfileImage(imageView: self.userProImage)
@@ -295,8 +295,8 @@ class MyDashBoardViewController: UniversalSearchViewController{
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
             
-        }, completion: {(isCompleted) -> Void in
-            self.universalSearchBar.becomeFirstResponder()
+            }, completion: {(isCompleted) -> Void in
+                self.universalSearchBar.becomeFirstResponder()
         })
     }
     
@@ -338,7 +338,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
             print(responseDict)
             
             TEMyProfile.deleteAllFormMyProfile(context:self.manageObjectContext())
-            TEMyProfile.insertMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext())
+            TEMyProfile.insertMyProfileDetail(myProfileInfo: responseDict, context: self.manageObjectContext(), isSocialResponse: false)
             
             self.setProfileData()
             
@@ -350,7 +350,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         
         // Service call for get user profile data (Hypes, upcomings, person, followers)
         ServiceCall.sharedInstance.sendRequest(parameters: NSMutableDictionary(), urlType: RequestedUrlType.GetMyProfile, method: "GET", successCall: success, falureCall: failure)
-
+        
     }
     
     func getTournamentById(tournamentID:Int) -> Void {
@@ -408,7 +408,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
                         self.isTournamentLoadMore = true
                         self.tournamentPageIndex = 1
                     }
-                } 
+                }
             }else if responseType == RequestedUrlType.GetNotificationList
             {
                 //initialize hype list

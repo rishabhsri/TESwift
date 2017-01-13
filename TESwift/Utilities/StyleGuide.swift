@@ -11,7 +11,7 @@ import Foundation
 public class StyleGuide
 {
     public static func placeHolderFontColor() -> UIColor {
-        let color = UIColor(red: CGFloat(160 / 255.0), green: CGFloat(160 / 255.0), blue: CGFloat(160 / 255.0), alpha: CGFloat(0.5))
+        let color = UIColor(red: CGFloat(255.0 / 255.0), green: CGFloat(255.0 / 255.0), blue: CGFloat(255.0 / 255.0), alpha: CGFloat(0.25))
         return color
     }
     

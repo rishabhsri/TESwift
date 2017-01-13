@@ -463,9 +463,11 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             self.hideHUD()
-            self.showAlert(title:kMessage, message: "Tournament successfully created.")
-            self.setUpData()
-            _ = TETournamentList.insertNewTournamentDetail(arrTournamentDetail: responseDict, context: self.manageObjectContext())
+        
+            self.showAlert(title: kMessage, message: "Tournament successfully created.", actionHandler: {
+                self.setUpData()
+                _ = TETournamentList.insertTournamentDetails(info: responseDict, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
+                })
         }
         
         //On Failure Call

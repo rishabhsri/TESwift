@@ -142,7 +142,7 @@ public class TETournamentList: TESwiftModel {
         
         let pool:NSArray = info.object(forKey: "poolNames") as! NSArray
         
-        for var name in pool{
+        for  name in pool{
             poolName.append(name as! String)
         }
         
@@ -155,7 +155,7 @@ public class TETournamentList: TESwiftModel {
         
         if let arrPlayers:NSArray = info.object(forKey: "players") as? NSArray {
             if arrPlayers.count > 0 {
-                for var playerDetail in arrPlayers{
+                for  playerDetail in arrPlayers{
                     let playerInfo:TEPlayerDetails = TEPlayerDetails.insertPlayerDetail(info: playerDetail as! NSDictionary, context: context, isPlayerApproves: true)
                     tournamentList.addToPlayer(playerInfo)
                 }
@@ -164,7 +164,7 @@ public class TETournamentList: TESwiftModel {
         
         if let arrPlayers:NSArray = info.object(forKey: "participationRequests") as? NSArray {
             if arrPlayers.count > 0 {
-                for var playerDetail in arrPlayers{
+                for  playerDetail in arrPlayers{
                     let playerInfo:TEPlayerDetails = TEPlayerDetails.insertPlayerDetail(info: playerDetail as! NSDictionary, context: context, isPlayerApproves: false)
                     tournamentList.addToPlayer(playerInfo)
                 }
@@ -173,7 +173,7 @@ public class TETournamentList: TESwiftModel {
         
         if let arrBrackets:NSArray = info.object(forKey: "brackets") as? NSArray {
             if arrBrackets.count > 0 {
-                for var bracketDetail in arrBrackets{
+                for  bracketDetail in arrBrackets{
                     let bracketInfo:TETournamentBracket = TETournamentBracket.insertBracket(info: bracketDetail as! NSDictionary, conetxt: context)
                     tournamentList.addToBracket(bracketInfo)
                 }
@@ -182,14 +182,14 @@ public class TETournamentList: TESwiftModel {
         
         if let arrStaff:NSArray = info.object(forKey: "staff") as? NSArray {
             if arrStaff.count > 0 {
-                for var staffDetail in arrStaff{
+                for  staffDetail in arrStaff{
                     let staffInfo:TEStaffDetail = TEStaffDetail.insertStaff(info: staffDetail as! NSDictionary, conetxt: context)
                     tournamentList.addToStaff(staffInfo)
                 }
             }
         }
         
-        TEMyProfile.save(context)
+        TETournamentList.save(context)
         
         return tournamentList
     }
@@ -219,6 +219,8 @@ public class TETournamentList: TESwiftModel {
         tournamentList.hype = info.boolValueForKey(key: "hype")
         tournamentList.latLong = info.stringValueForKey(key: "latLong")
         tournamentList.completed = info.boolValueForKey(key: "completed")
+        
+        TETournamentList.save(context)
         
         return tournamentList
     }
@@ -318,7 +320,7 @@ public class TETournamentList: TESwiftModel {
         
         let pool:NSArray = info.object(forKey: "poolNames") as! NSArray
         
-        for var name in pool{
+        for  name in pool{
             poolName.append(name as! String)
         }
         
@@ -357,7 +359,7 @@ public class TETournamentList: TESwiftModel {
         }
         if let arrPlayers:NSArray = info.object(forKey: "players") as? NSArray {
             if arrPlayers.count > 0 {
-                for var playerDetail in arrPlayers{
+                for  playerDetail in arrPlayers{
                     let playerInfo:TEPlayerDetails = TEPlayerDetails.insertPlayerDetail(info: playerDetail as! NSDictionary, context: context, isPlayerApproves: true)
                     tournamentList.addToPlayer(playerInfo)
                 }
@@ -366,7 +368,7 @@ public class TETournamentList: TESwiftModel {
 
         if let arrPlayers:NSArray = info.object(forKey: "participationRequests") as? NSArray {
             if arrPlayers.count > 0 {
-                for var playerDetail in arrPlayers{
+                for  playerDetail in arrPlayers{
                     let playerInfo:TEPlayerDetails = TEPlayerDetails.insertPlayerDetail(info: playerDetail as! NSDictionary, context: context, isPlayerApproves: false)
                     tournamentList.addToPlayer(playerInfo)
                 }
@@ -375,7 +377,7 @@ public class TETournamentList: TESwiftModel {
         
         if let arrBrackets:NSArray = info.object(forKey: "brackets") as? NSArray {
             if arrBrackets.count > 0 {
-                for var bracketDetail in arrBrackets{
+                for  bracketDetail in arrBrackets{
                     let bracketInfo:TETournamentBracket = TETournamentBracket.insertBracket(info: bracketDetail as! NSDictionary, conetxt: context)
                     tournamentList.addToBracket(bracketInfo)
                 }
@@ -384,12 +386,14 @@ public class TETournamentList: TESwiftModel {
         
         if let arrStaff:NSArray = info.object(forKey: "staff") as? NSArray {
             if arrStaff.count > 0 {
-                for var staffDetail in arrStaff{
+                for  staffDetail in arrStaff{
                     let staffInfo:TEStaffDetail = TEStaffDetail.insertStaff(info: staffDetail as! NSDictionary, conetxt: context)
                     tournamentList.addToStaff(staffInfo)
                 }
             }
         }
+        TETournamentList.save(context)
+        
         return tournamentList
     }
     
@@ -418,8 +422,6 @@ public class TETournamentList: TESwiftModel {
             tournamentList.add(tournament)
         }
         
-        self.save(context)
-        
         let sortDiscriptor = NSSortDescriptor.init(key: "lastUpdatedAt", ascending: false)
         let arr = tournamentList.sortedArray(using: [sortDiscriptor])
         
@@ -444,22 +446,9 @@ public class TETournamentList: TESwiftModel {
             }
         }
         
-        self.save(context)
-        
         let sortDiscriptor = NSSortDescriptor.init(key: "lastUpdatedAt", ascending: false)
         let arr = tournamentList.sortedArray(using: [sortDiscriptor])
         
         return NSMutableArray.init(array:arr)
-    }
-    
-    static func insertNewTournamentDetail(arrTournamentDetail:NSDictionary, context:NSManagedObjectContext) -> TETournamentList
-    {
-        let tournamentList:TETournamentList = TETournamentList.insertTournamentDetails(info: arrTournamentDetail, context: context, isDummy: false, isUserHype: false)
-        do{
-        try context.save()
-        } catch let Error{
-        print(Error.localizedDescription)
-        }
-        return tournamentList
     }
 }
