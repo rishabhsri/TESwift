@@ -18,7 +18,7 @@ public class TEMyProfile: TESwiftModel {
         TEMyProfile.deleteAllFromEntity(inManage: context)
     }
     
-    static func insertMyProfileDetail(myProfileInfo:NSDictionary, context: NSManagedObjectContext) {
+    static func insertMyProfileDetail(myProfileInfo:NSDictionary, context: NSManagedObjectContext , isSocialResponse: Bool) {
         
         let personInfo:NSDictionary? = myProfileInfo.object(forKey: "person") as! NSDictionary?
         
@@ -46,6 +46,8 @@ public class TEMyProfile: TESwiftModel {
         }
         
         // Configure Social media info
+        if isSocialResponse {
+            
         if let fbInfo:NSDictionary = myProfileInfo.object(forKey: "fbUser") as? NSDictionary {
             let  fbInfo:UserSocialDetail = UserSocialDetail.insertUserDetails(info:fbInfo, context:context, socialMediaType:"FACEBOOK")
             myprofile.addToSocialdetails(fbInfo)
@@ -69,6 +71,7 @@ public class TEMyProfile: TESwiftModel {
             
         }
         
+        }
         if let subInfo:NSDictionary = myProfileInfo.object(forKey: "subscription") as? NSDictionary {
             myprofile.subscriptionType = subInfo.stringValueForKey(key: "subscription")
             myprofile.showTeamIcon = subInfo.boolValueForKey(key: "showTeamIcon")
