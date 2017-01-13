@@ -89,9 +89,10 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     }
     
     @IBAction func actionOnPlusIcon(_ sender: AnyObject) {
-        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
-        let tournamentListVC:UIViewController = storyBoard.instantiateViewController(withIdentifier: "CreateTournamentViewControllerID")
-        self.navigationController?.pushViewController(tournamentListVC, animated: true)
+
+        let createTournamentVC:CreateTournamentViewController = STORYBOARD.instantiateViewController(withIdentifier: "CreateTournamentViewControllerID") as! CreateTournamentViewController
+        createTournamentVC.screenType = Screen_Type.CREATE_TOURNAMENT
+        self.navigationController?.pushViewController(createTournamentVC, animated: true)
     }
     
     // MARK:- Uitlity
@@ -182,7 +183,13 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
                 self.isLoadMoreTournament = true
             }
             
-            COMMON_SETTING.myProfile?.addToTournament(NSSet(array:arrTournamentList as! [Any]))
+            let tournamentSet:NSMutableSet = NSMutableSet()
+            
+            for item in arrTournamentList {
+                tournamentSet.add(item)
+            }
+            
+            COMMON_SETTING.myProfile?.addToTournament(tournamentSet)
             TETournamentList.save(self.manageObjectContext())
             
             self.updateTournamentList()

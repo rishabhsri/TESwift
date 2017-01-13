@@ -46,6 +46,13 @@ struct DeviceType
     static let IS_IPHONE_6P = UIDevice.current.userInterfaceIdiom == .phone && ScreenSize.SCREEN_MAX_LENGTH == 736.0
 }
 
+enum Screen_Type{
+    case CREATE_TOURNAMENT
+    case EDIT_TOURNAMENT
+    case UPDATE_TOURNAMENT
+    case DEFAULT
+}
+
 let kLightBlueColor:UIColor = UIColor(colorLiteralRed: 124.0/255.0, green: 198.0/255.0, blue: 228.0/255.0, alpha: 1.0)
 
 let kPasswordRegex = "^.{6,}$"
@@ -68,6 +75,10 @@ let TWITTER_MAX_CHAR = 140
 let NOTIFICATION_MAX_CHAR = 140
 
 let NAME_MAX_CHAR = 50
+
+let STORYBOARD = UIStoryboard(name: "Storyboard", bundle: nil)
+
+let MAIN_STORYBOARD = UIStoryboard(name: "Main", bundle: nil)
 
 //MARK:- SearchBar appearance
 
