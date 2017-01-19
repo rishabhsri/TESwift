@@ -9,7 +9,7 @@
 import UIKit
 import CoreLocation
 
-class CreateTournamentViewController: SocialConnectViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate{
+class CreateTournamentViewController: SocialConnectViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UITextFieldDelegate, CLLocationManagerDelegate, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, UICollectionViewDelegate, UICollectionViewDataSource{
     
     // Navigation Outlet
     @IBOutlet weak var topNavLbl: UILabel!
@@ -21,8 +21,11 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var tournaDicriptionTextView: UITextView!
     @IBOutlet weak var editTouenamentBG: UIImageView!
     
+    @IBOutlet weak var navigationView: UIView!
     @IBOutlet weak var uploadProfileView: UIView!
+    @IBOutlet weak var considerSwitchesView: UIView!
     
+    @IBOutlet weak var tournamentnameLbl: UILabel!
     @IBOutlet weak var singleBtnOutlet: UIButton!
     @IBOutlet weak var doubleBtnOutlet: UIButton!
     @IBOutlet weak var swissBtnOutlet: UIButton!
@@ -30,6 +33,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var rankByTFBotttomImg: UIImageView!
     
     @IBOutlet weak var tounamentNameTF: UITextField!
+    @IBOutlet weak var hypeBtn: UIButton!
     @IBOutlet weak var chooseGameTF: UITextField!
     @IBOutlet weak var uploadPhotoBtn: UIButton!
     @IBOutlet weak var chooseGameTableView: UITableView!
@@ -43,6 +47,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var gameSetTieTF: UITextField!
     @IBOutlet weak var perByeTf: UITextField!
     @IBOutlet weak var perByeLbl: UILabel!
+    @IBOutlet weak var startEndTournabtn: UIButton!
     
     
     @IBOutlet weak var rankByTF: UITextField!
@@ -54,6 +59,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var tournamentDescTxtView: UITextView!
     @IBOutlet weak var twitterMesTextView: UITextView!
     @IBOutlet weak var notificationMsgtextView: UITextView!
+    @IBOutlet weak var socilIfoImageSelected: UIImageView!
     
     
     @IBOutlet weak var registerSwitch: UISwitch!
@@ -77,7 +83,10 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     @IBOutlet weak var hypeViewHeightCons: NSLayoutConstraint!
     @IBOutlet weak var hypeViewTopCons: NSLayoutConstraint!
     @IBOutlet weak var scrollViewHieghtCon: NSLayoutConstraint!
+    @IBOutlet weak var switchViewhieghtCons: NSLayoutConstraint!
+    @IBOutlet weak var scrollViewTopCons:NSLayoutConstraint!
     
+    @IBOutlet weak var navigationheghtCons: NSLayoutConstraint!
     let imagePicker = UIImagePickerController()
     var pickerView = UIPickerView()
     var datePicker  = UIDatePicker()
@@ -104,32 +113,20 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     public var screenType:Screen_Type = Screen_Type.DEFAULT
     var scoreViewHieghtConsValue:CGFloat?
     var tournamentList:TETournamentList?
+    var staffSet:NSArray = NSArray()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        
-        
-        if self.screenType == Screen_Type.EDIT_TOURNAMENT {
-            self.uploadProfileView.isHidden = true
-            self.editTournamentView.isHidden = false
-            self.topNavLbl.text = "Edit Tournament"
-            self.infoButton.isHidden = false
-            self.hypetournamentView.isHidden = false
-            self.uploadProfileView.isHidden = true
-            self.hypeViewHeightCons.constant = 0
-            self.hypeViewTopCons.constant = 0
-            
-          //  self.tournamentList = COMMON_SETTING.myProfile?.tournament
-            
-        }
         self.setUpData()
         self.setUpLayout()
         self.setUpPickerView()
         self.getGameList()
         self.setUpDatePicker()
-        
         // Do any additional setup after loading the view.
+        if self.screenType == Screen_Type.EDIT_TOURNAMENT {
+            self.setUpdataForEditTournament()
+        }
     }
     
     override func didReceiveMemoryWarning() {
@@ -216,7 +213,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     func setUpDatePicker()
     {
         datePicker = UIDatePicker.init(frame: CGRect(x: 0, y: 467, width: 375, height: 200))
-      //  datePicker.backgroundColor = UIColor.black
+        //  datePicker.backgroundColor = UIColor.black
         //datePicker.tintColor = UIColor.white
         
         self.startDateTF.inputAccessoryView = toolBar
@@ -234,6 +231,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.advanceTimerTF.isUserInteractionEnabled = false
         self.advanceTimerTF.alpha = 0.6
         self.preRegistraionChargeTF.isUserInteractionEnabled = false
+        self.startEndTournabtn.isHidden = true
         self.slectedGameType = "SINGLE_ELIMINATION"
         self.hypeViewHeightCons.constant = 0
         self.hypeViewTopCons.constant = 0
@@ -250,6 +248,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.notificationMsgtextView.text = kDefaultNotificationMsg
         self.uploadPhotoBtn.setBackgroundImage(UIImage(named: "UploadImage"), for: UIControlState.normal)
         self.tournamentUrl.text = kDefalutUrl
+        self.socilIfoImageSelected.isHidden = true
+        
         
         tounamentNameTF.attributedPlaceholder = NSAttributedString(string:"Tournament Name",
                                                                    attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
@@ -277,6 +277,169 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.scoreViewHieghtConsValue!
         scrollView.setContentOffset(CGPoint(x: 0, y: 0), animated: true)
         
+    }
+    
+    func setUpdataForEditTournament() {
+        self.uploadProfileView.isHidden = true
+        self.editTournamentView.isHidden = false
+        self.topNavLbl.text = "Edit Tournament"
+        self.infoButton.isHidden = false
+        self.hypetournamentView.isHidden = false
+        self.uploadProfileView.isHidden = true
+        self.hypeViewHeightCons.constant = 32
+        self.hypeViewTopCons.constant = 24
+        self.navigationheghtCons.constant = 0
+        self.scrollViewTopCons.constant = 0
+        self.navigationView.isHidden = true
+        self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant + self.hypeViewHeightCons.constant + 30
+        
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(uploadProfileBtnAction(_ :)))
+        self.editTouenamentBG.isUserInteractionEnabled = true
+        self.editTouenamentBG.addGestureRecognizer(tapGestureRecognizer)
+        //  self.considerSwitchesView.isHidden = true
+        // self.switchViewhieghtCons.constant = 0
+        //   self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.switchViewhieghtCons.constant
+        if let imageKey:String = tournamentList?.imageKay
+        {
+            let sucess:downloadImageSuccess = {image, imageKey in
+                self.editTouenamentBG.image = image
+            }
+            let failure:downloadImageFailed = {error, responseString in
+                print(responseString)
+            }
+            if !COMMON_SETTING.isEmptySting(imageKey) {
+                ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+            }
+        }
+        self.tournamentnameLbl.text = self.tournamentList?.tournamentName?.uppercased()
+        self.tournamentDescTxtView.text = self.tournamentList?.tournamentDesciption
+        self.tournaDicriptionTextView.text = self.tournamentList?.tournamentDesciption
+        self.tournaDicriptionTextView.isUserInteractionEnabled = false
+        self.tounamentNameTF.text = self.tournamentList?.tournamentName
+        
+        self.chooseGameTF.text = self.tournamentList?.gameName
+        self.gameListObj?.name = self.tournamentList?.gameName
+        self.gameListObj?.gameID = self.tournamentList?.gameId
+        self.gameListObj?.gameDescripton = self.tournamentList?.gameDiscription
+        
+        self.slectedGameType = (self.tournamentList?.tournamentTypeName)!
+        
+        if self.slectedGameType == Single_Elimination {
+            self.singleAction(self)
+        }
+        else if self.slectedGameType == Double_Elimination
+        {
+            self.doubleAction(self)
+        }
+        else if self.slectedGameType == Swiss
+        {
+            self.swissAction(self)
+            self.matchPerWinTF.text = self.tournamentList?.rrPtsForMatchWin
+            self.matchPerTieTF.text = self.tournamentList?.rrPtsForMatchTie
+            self.gameSetWin.text = self.tournamentList?.rrPtsForGameWin
+            self.gameSetTieTF.text = self.tournamentList?.rrPtsForGameTie
+            self.perByeTf.text = self.tournamentList?.rrPtsForGamebye
+        }
+        else if self.slectedGameType == Round_Robin
+        {
+            self.roundRobinAction(self)
+            self.rankByTF.text = self.tournamentList?.rankedBy
+            if self.rankByTF.text == "CUSTOM" {
+                self.matchPerWinTF.text = self.tournamentList?.rrPtsForMatchWin
+                self.matchPerTieTF.text = self.tournamentList?.rrPtsForMatchTie
+                self.gameSetWin.text = self.tournamentList?.rrPtsForGameWin
+                self.gameSetTieTF.text = self.tournamentList?.rrPtsForGameTie
+                
+                self.scoreView.isHidden = false
+                self.scoreViewHightCons.constant = self.scoreViewHieghtConsValue! - 30
+                self.perByeTf.isHidden = true
+                self.perByeLbl.isHidden = true
+            }
+        }
+        
+        // Set the start and end date
+        let targetStartDate:String = String.dateStringFromString(sourceString: tournamentList!.startDateTime!,format: "dd-MM-yyyy")
+        self.startDate  = (self.tournamentList?.startDateTime)!
+        let targetEndDate:String = String.dateStringFromString(sourceString:tournamentList!.endDateTime!,format:"dd-MM-yyyy")
+        self.endDate  = (self.tournamentList?.endDateTime)!
+        self.startDateTF.text = targetStartDate
+        self.endDateTF.text = targetEndDate
+        
+        // Fill the data
+        self.locationTF.text = tournamentList?.venue
+        self.tournamentUrl.text = self.tournamentUrl.text?.appending((tournamentList?.webURL)!)
+        self.registerSwitch.isOn = (self.tournamentList?.preRegister)!
+        self.teamBasedSwitch.isOn = (self.tournamentList?.teamBasedTE)!
+        self.considerTeamSwitch.isOn = self.boolValueFromString(value: (self.tournamentList?.considerTeam)!)
+        self.considerLocationSwitch.isOn = self.boolValueFromString(value: (self.tournamentList?.considerLocation)!)
+        self.scoreSubmissionSwitch.isOn = (self.tournamentList?.allowUserScoreSubmission)!
+        
+        self.paidTournamentSwitch.isOn = (self.tournamentList?.paidTournament)!
+        if self.paidTournamentSwitch.isOn == true {
+            self.preRegistraionChargeTF.isUserInteractionEnabled = true
+        }
+        if self.tournamentList?.hype == true {
+            self.hypeBtn.setBackgroundImage(UIImage(named: "hype_completed"), for: UIControlState.normal)
+        }
+        
+        //Configure Staff Array
+        self.staffSet = (self.tournamentList?.staff?.allObjects as NSArray?)!
+        
+        //Set Bottom button title
+        self.startEndTournabtn.isHidden = false
+        if self.tournamentList?.started == true {
+            self.startEndTournabtn.setTitle("End Tournament", for: UIControlState.normal)
+        }
+        else
+        {
+            self.startEndTournabtn.setTitle("Start Tournament", for: UIControlState.normal)
+        }
+        
+        // Save the cuurent autoAdvance and Approval time.
+        var count = 0
+        for item in self.checkInTimeArray {
+            let dict = item as! NSDictionary
+            let key:[String] = dict.allKeys as! [String]
+            let str:String = dict.value(forKey: key.first!) as! String
+            if str == self.tournamentList?.checkInTime {
+                self.selectedCheckInTimeIndex = count
+                self.checkInTimeTF1.text = key.first!
+                count = 0
+                break
+            }
+            count += 1
+        }
+        for item in self.advanceTimerArray {
+            let dict = item as! NSDictionary
+            let key:[String] = dict.allKeys as! [String]
+            let str:String = dict.value(forKey: key.first!) as! String
+            if str == self.tournamentList?.autoApprovalTime {
+                self.selectedAutoAdvanceTimeIndex = count
+                self.advanceTimerTF.text = key.first!
+                count = 0
+                break
+            }
+            count += 1
+        }
+        
+        //Save the location
+        let ary:[String] = (self.tournamentList?.latLong?.components(separatedBy: ","))!
+        if ary.count>1 {
+            self.strLattitude = ary[0]
+            self.strLaongitude = ary[1]
+        }
+        
+        if !((self.tournamentList?.twitterHandle!)! == "") {
+            self.isTwitterLogIn = true
+            self.socilIfoImageSelected.isHidden = false
+        }else
+        {
+            self.isTwitterLogIn = false
+            self.socilIfoImageSelected.isHidden = true
+        }
+        
+        //Reload Staff Collection
+        self.staffCollectionView.reloadData()
     }
     
     func onClickedToolbeltButton(_ sender: Any) {
@@ -369,13 +532,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             dicTournamentType.setCustomObject(object:self.rankByTF.text, key: "rankedBy")
             
             if self.rankByTF.text == "CUSTOM" {
-            dicTournamentType.setCustomObject(object:self.matchPerWinTF.text, key: "rrPtsForMatchWin")
-            dicTournamentType.setCustomObject(object:self.matchPerTieTF.text, key: "rrPtsForMatchTie")
-            dicTournamentType.setCustomObject(object:self.gameSetWin.text, key: "rrPtsForGameWin")
-            dicTournamentType.setCustomObject(object:self.gameSetTieTF.text, key: "rrPtsForGameTie")
-
+                dicTournamentType.setCustomObject(object:self.matchPerWinTF.text, key: "rrPtsForMatchWin")
+                dicTournamentType.setCustomObject(object:self.matchPerTieTF.text, key: "rrPtsForMatchTie")
+                dicTournamentType.setCustomObject(object:self.gameSetWin.text, key: "rrPtsForGameWin")
+                dicTournamentType.setCustomObject(object:self.gameSetTieTF.text, key: "rrPtsForGameTie")
+                
             }
-        }else if self.slectedGameType == "ROUND_ROBIN"
+        }else if self.slectedGameType == "SWISS"
         {
             dicTournamentType.setCustomObject(object:self.matchPerWinTF.text, key: "rrPtsForMatchWin")
             dicTournamentType.setCustomObject(object:self.matchPerTieTF.text, key: "rrPtsForMatchTie")
@@ -412,6 +575,10 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         dicCreateTournament.setCustomObject(object:self.tournamentDescTxtView.text, key: "description")
         dicCreateTournament.setCustomObject(object:self.tounamentNameTF.text, key: "name")
         
+        if self.screenType == .EDIT_TOURNAMENT {
+            dicCreateTournament.setCustomObject(object: self.tournamentList?.tournamentID, key: "tournamentID")
+        }
+        
         var str = self.tournamentUrl.text
         str = str?.replacingOccurrences(of: kDefalutUrl, with: "")
         dicCreateTournament.setCustomObject(object:str, key: "webURL")
@@ -441,18 +608,6 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         dicCreateTournament.setValue(self.preRegistraionChargeTF.text, forKey: "price")
         dicCreateTournament.setCustomObject(object:NSNumber.init(value: self.paidTournamentSwitch.isOn), key: "paid")
         
-        // var error: NSError?
-        
-        //        do{
-        //            let data = try JSONSerialization.data(withJSONObject: dicCreateTournament, options: JSONSerialization.WritingOptions.prettyPrinted)
-        //            let strData = String.init(data: data, encoding: String.defaultCStringEncoding)
-        //
-        //            print(strData!)
-        //        }
-        //        catch
-        //        {
-        //
-        //        }
         return dicCreateTournament
     }
     
@@ -463,11 +618,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
             print(responseDict)
             self.hideHUD()
-        
-            self.showAlert(title: kMessage, message: "Tournament successfully created.", actionHandler: {
-                self.setUpData()
-                _ = TETournamentList.insertTournamentDetails(info: responseDict, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
-                })
+            if requestType == RequestedUrlType.CreateNewTournament {
+                self.successfullyDone(response: responseDict,actionFor: "CREATE")
+            }
+            else if requestType == RequestedUrlType.UpdateTournament
+            {
+                self.successfullyDone(response: responseDict,actionFor: "UPDATE")
+            }
         }
         
         //On Failure Call
@@ -476,8 +633,29 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             print(responseMessage)
         }
         
-        ServiceCall.sharedInstance.sendRequest(parameters: dict, urlType: RequestedUrlType.CreateNewTournament, method: "POST", successCall: success, falureCall: falure)
-        
+        if self.screenType == Screen_Type.EDIT_TOURNAMENT {
+            ServiceCall.sharedInstance.sendRequest(parameters: dict, urlType: RequestedUrlType.UpdateTournament, method: "PUT", successCall: success, falureCall: falure)
+        }
+        else if self.screenType == Screen_Type.CREATE_TOURNAMENT
+        {
+            ServiceCall.sharedInstance.sendRequest(parameters: dict, urlType: RequestedUrlType.CreateNewTournament, method: "POST", successCall: success, falureCall: falure)
+        }
+    }
+    
+    func successfullyDone(response:NSDictionary, actionFor:String){
+        var alertMessage = "Tournament successfully "
+        if actionFor == "CREATE" {
+            alertMessage.append("Created")
+            _ = TETournamentList.insertTournamentDetails(info: response, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
+        }
+        else if actionFor == "UPDATE" {
+            alertMessage.append("Updated")
+            _ = TETournamentList.updateTournamentDetails(info: response, tournamentList: self.tournamentList!, context: self.manageObjectContext())
+        }
+        self.showAlert(title: kMessage, message: alertMessage, actionHandler: {
+            self.setUpData()
+            self.navigationController?.popViewController(animated: true)
+        })
     }
     
     // MARK: - IBactions
@@ -572,7 +750,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.scoreView.isHidden = true
             self.scoreViewHightCons.constant = 0
             if self.swissBtnOutlet.alpha == 1.0 {
-            self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.scoreViewHieghtConsValue!
+                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.scoreViewHieghtConsValue!
             }
             self.swissBtnOutlet.alpha = 0.4
             self.singleBtnOutlet.alpha = 1.0
@@ -588,8 +766,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
-            }, completion: {(isCompleted) -> Void in
-                // self.isSwipedUp = true
+        }, completion: {(isCompleted) -> Void in
+            // self.isSwipedUp = true
         })
         self.slectedGameType = "SINGLE_ELIMINATION"
         
@@ -618,8 +796,8 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
-            }, completion: {(isCompleted) -> Void in
-                // self.isSwipedUp = true
+        }, completion: {(isCompleted) -> Void in
+            // self.isSwipedUp = true
         })
         self.slectedGameType = "DOUBLE_ELIMINATION"
     }
@@ -642,12 +820,12 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             self.rankByTfHeightCOns.constant = 0.0
             self.perByeTf.isHidden = false
             self.perByeLbl.isHidden = false
-
+            
             
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
-            }, completion: {(isCompleted) -> Void in
-                // self.isSwipedUp = true
+        }, completion: {(isCompleted) -> Void in
+            // self.isSwipedUp = true
         })
         self.slectedGameType = "SWISS"
     }
@@ -676,13 +854,14 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
                                                                      attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
             self.view.setNeedsLayout()
             self.view.layoutIfNeeded()
-            }, completion: {(isCompleted) -> Void in
-                // self.isSwipedUp = true
+        }, completion: {(isCompleted) -> Void in
+            // self.isSwipedUp = true
         })
         self.slectedGameType = "ROUND_ROBIN"
     }
     
     @IBAction func hypeTournamentBnAction(_ sender: AnyObject) {
+        
     }
     
     
@@ -738,15 +917,23 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         }
     }
     
+    @IBAction func startEndTournaAction(_ sender: Any) {
+    }
+    
     
     // MARK: - imagePickerController Delegate
     
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any])
     {
         if let pickerImage = info[UIImagePickerControllerOriginalImage] as? UIImage{
-            self.uploadPhotoBtn.setBackgroundImage(pickerImage, for: UIControlState.normal)
-            self.isImage = true
-            self.uploadPhotoBtn.layer.masksToBounds = true;
+            if self.screenType == Screen_Type.EDIT_TOURNAMENT {
+                self.editTouenamentBG.image = pickerImage
+                self.isImage = true
+            }else{
+                self.uploadPhotoBtn.setBackgroundImage(pickerImage, for: UIControlState.normal)
+                self.isImage = true
+                self.uploadPhotoBtn.layer.masksToBounds = true;
+            }
             //isImageAdded = true
         }
         
@@ -757,6 +944,50 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.dismiss(animated: true, completion: nil)
     }
     
+    // MARK: - CollectionView Delegate.
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let staffCount:Int = self.staffSet.count {
+            return staffCount + 1
+        }
+        else {
+            return 1
+        }
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        let cell:StaffCollectionViewCell = self.staffCollectionView.dequeueReusableCell(withReuseIdentifier: "StaffCollectionViewCell", for: indexPath) as! StaffCollectionViewCell
+        
+        if self.staffSet.count > 0 && self.staffSet.count > indexPath.row{
+            
+            let staffDict:TEStaffDetail = self.staffSet.object(at: indexPath.row) as! TEStaffDetail
+            cell.staffUserName.text = staffDict.name
+            cell.staffImage.layer.cornerRadius = cell.staffImage.frame.height/2
+            cell.staffImage.clipsToBounds = true
+            cell.staffImage.setBackgroundImage(nil, for: UIControlState.normal)
+            cell.staffImage.setBackgroundImage(UIImage(named: "UserDefaultImage"), for: UIControlState.normal)
+            
+            weak var weakCell:StaffCollectionViewCell? = cell
+            if let imageKey:String = staffDict.imageKey
+            {
+                let sucess:downloadImageSuccess = {image, imageKey in
+                    weakCell!.staffImage.setBackgroundImage(image, for: UIControlState.normal)
+                }
+                let failure:downloadImageFailed = {error, responseString in
+                    print(responseString)
+                }
+                if !COMMON_SETTING.isEmptySting(imageKey) {
+                    ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+                }
+            }
+
+        }else
+        {
+            cell.staffImage.setBackgroundImage(UIImage(named: "addMore"), for: UIControlState.normal)
+            cell.staffUserName.text = "Add Staff"
+        }
+        
+        return cell
+    }
     // MARK: - PickerView Delegate
     
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
@@ -812,11 +1043,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             if row == rankByArray.count - 1 {
                 self.scoreView.isHidden = false
                 self.scoreViewHightCons.constant = self.scoreViewHieghtConsValue! - 30
+                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant + self.scoreViewHightCons.constant
                 self.perByeTf.isHidden = true
                 self.perByeLbl.isHidden = true
             }else
             {
                 self.scoreView.isHidden = true
+                self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant - self.scoreViewHightCons.constant
                 self.scoreViewHightCons.constant = 0
                 self.perByeTf.isHidden = false
                 self.perByeLbl.isHidden = false
@@ -964,6 +1197,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     func onLogInSuccess(_ userInfo: NSDictionary) -> Void {
         
         isTwitterLogIn = true
+        self.socilIfoImageSelected.isHidden = false
     }
     
     func onLogInFailure(_ userInfo: String) -> Void {
@@ -1046,7 +1280,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             print(responseMessage)
         }
         
-        ServiceCall.sharedInstance.uploadImage(image: self.uploadPhotoBtn.currentBackgroundImage, urlType: RequestedUrlType.UploadImage, successCall: success, falureCall: falure)
+        if self.screenType == Screen_Type.EDIT_TOURNAMENT {
+            ServiceCall.sharedInstance.uploadImage(image: self.editTouenamentBG.image, urlType: RequestedUrlType.UploadImage, successCall: success, falureCall: falure)
+        }
+        else
+        {
+            ServiceCall.sharedInstance.uploadImage(image: self.uploadPhotoBtn.currentBackgroundImage, urlType: RequestedUrlType.UploadImage, successCall: success, falureCall: falure)
+        }
     }
     
     

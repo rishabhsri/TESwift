@@ -127,6 +127,18 @@ class BaseViewController: UIViewController{
         imageView.layer.opacity = 0.45
     }
     
+    func boolValueFromString(value:String) -> Bool {
+        
+        if value == "0" {
+            return false
+        }
+        else if value == "1"
+        {
+            return true
+        }
+        return false
+    }
+    
     //MARK: Date Formatter
     func getLocaleDateFromString(dateString:String) -> Date {
         
@@ -238,6 +250,10 @@ class BaseViewController: UIViewController{
     func showTournamentDetailScreen(tournament:TETournamentList)
     {
         //implementation
+        let createTournamentVC: CreateTournamentViewController = STORYBOARD.instantiateViewController(withIdentifier: "CreateTournamentViewControllerID") as! CreateTournamentViewController
+        createTournamentVC.tournamentList = tournament
+        createTournamentVC.screenType = Screen_Type.EDIT_TOURNAMENT
+        self.navigationController?.pushViewController(createTournamentVC, animated: true)
     }
     
     // MARK: - TextFields Delegate
