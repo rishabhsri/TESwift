@@ -17,6 +17,8 @@ enum SwitchType : Int {
 
 class SettingViewController: SocialConnectViewController,UIImagePickerControllerDelegate,UINavigationControllerDelegate,CLLocationManagerDelegate, UIPickerViewDelegate,UITextFieldDelegate,UITableViewDelegate,UITableViewDataSource,UIPopoverControllerDelegate {
 
+    @IBOutlet weak var brainTreeTopIpad: NSLayoutConstraint!
+    @IBOutlet weak var messageViewHieghtIpad: NSLayoutConstraint!
     @IBOutlet weak var widthTeamPic: NSLayoutConstraint!
     @IBOutlet weak var hieghtTeamPic: NSLayoutConstraint!
     @IBOutlet weak var widthFbBtn: NSLayoutConstraint!
@@ -26,7 +28,8 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     var noOfOFFMsgSettings = 0
     var profileImageKey = ""
     var teamIconImageKey = ""
-    var heightAdj: Float = 0.0
+    var heightMessageViewValue: CGFloat? = 0
+    var heightMessageViewValueOfIpad: CGFloat?
     var linkAccountHeight: Float = 0.0
     var isImagedPicked = false
     var didEmailChanged = false
@@ -90,19 +93,36 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        self.configurePickerViewData()
-       
-        self.styleGuide()
         
-        self.setupMenu()
-        
+        self.heightMessageViewValue = self.messagingViewHeight.constant
+        self.heightMessageViewValueOfIpad = self.messageViewHieghtIpad.constant
+       
         self.updateSettingDetails()
         
         self.configureLocationTableView()
         
         self.configurePickerView()
+      
+        if self.messagingSwitch.isOn == false {
+            if IS_IPAD {
+                self.messageViewHieghtIpad.constant = 0
+                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - (self.heightMessageViewValueOfIpad)!
+            }
+            else{
+                self.messagingCategoryView.isHidden = true
+                self.messagingViewHeight.constant = 0
+                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - (self.heightMessageViewValue)!
+            }
+        }
+        print( self.ContainerViewHieght.constant)
+        print(self.messagingViewHeight.constant)
+        print(self.lblBrainTreeTop.constant)
+        self.configurePickerViewData()
+       
+        self.styleGuide()
         
+        self.setupMenu()
+       
         //Add Dismiss Keyboard Tap Gesture
         
         self.addDismisskeyboardTapGesture()
@@ -195,15 +215,20 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         if self.isCasualSubscriber(){
             self.lblTeamPicture.isHidden = false
             self.btnTeamPicture.isHidden = false
-            self.lblNotifySettingTop.constant = 106
-            //            self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant + 106
+            self.lblNotifySettingTop.constant =  IS_IPAD ? 116 : 106
+            self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant + 106
         }
         else{
             lblTeamPicture.isHidden = true
             btnTeamPicture.isHidden = true
             self.lblNotifySettingTop.constant = 0
+            if IS_IPAD {
+                self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant - 116
+            }
+            else{
             self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant - 106
         }
+    }
         
         self.txtName.text = COMMON_SETTING.myProfile?.name
         self.txtEmail.text = COMMON_SETTING.myProfile?.emailid
@@ -321,6 +346,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     //MARK:- IBAction Methods
     
     @IBAction func switchValuesChanged(_ sender: Any) {
+        
         let settingSwitch = (sender as! UISwitch)
         msgSettingTag = settingSwitch.tag
         switch msgSettingTag {
@@ -338,11 +364,22 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
                 self.SwitchNotify_Match_Player.isOn = (COMMON_SETTING.myProfile?.notify_match_palyer)!
                 self.switchTournament_Started.isOn = (COMMON_SETTING.myProfile?.tournament_started)!
                 self.messagingCategoryView.isHidden = false
-                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant + 323
-                self.lblBrainTreeTop.constant = 70
                
+                if IS_IPAD {
+                    self.messageViewHieghtIpad.constant = 172
+                    self.ContainerViewHieght.constant = self.ContainerViewHieght.constant + (self.heightMessageViewValueOfIpad)!
+                    
+                    self.brainTreeTopIpad.constant = 18
+                }
+                else{
+                self.messagingViewHeight.constant = 323
+                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant + (self.heightMessageViewValue)!
+                
+               self.lblBrainTreeTop.constant = 70
             }
-            else{
+        }
+           else
+            {
                 self.switchFollow.isOn = false
                 self.switchNotify_Followers.isOn = false
                 self.switchNotify_Approved_Player.isOn = false
@@ -351,10 +388,20 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
                 self.switchPlayer_Added_To_Tournament.isOn = false
                 self.SwitchNotify_Match_Player.isOn = false
                 self.switchTournament_Started.isOn = false
+               
                 self.messagingCategoryView.isHidden = true
-                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - 323
-                self.lblBrainTreeTop.constant = -270
+                
+                if IS_IPAD {
+                    self.messageViewHieghtIpad.constant = 0
+                    self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - (self.heightMessageViewValueOfIpad)!
+                    self.brainTreeTopIpad.constant = 18
+                }
+                else{
+                self.messagingViewHeight.constant = 0
+                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - (self.heightMessageViewValue)!
+                self.lblBrainTreeTop.constant = 70
             }
+        }
             break
             
         case SwitchType.MAILSWITCH.rawValue:
@@ -512,7 +559,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchFollow.isOn),"FOLLOW"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
         arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Approved_Player.isOn),"NOTIFY_APPROVED_PLAYER"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
         
-        arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Followers.isOn),"NOTIFY_FOLLOWERS"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
+       arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Followers.isOn),"NOTIFY_FOLLOWERS"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
         
         arySettings.add( NSDictionary.init(objects: [NSNumber.init(value: self.switchNotify_Match_Admin.isOn),"NOTIFY_MATCH_ADMIN"], forKeys: ["setting" as NSCopying,"type" as NSCopying]))
         
