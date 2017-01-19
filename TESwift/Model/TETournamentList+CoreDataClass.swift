@@ -220,10 +220,36 @@ public class TETournamentList: TESwiftModel {
         tournamentList.latLong = info.stringValueForKey(key: "latLong")
         tournamentList.completed = info.boolValueForKey(key: "completed")
         
-        TETournamentList.save(context)
+        return tournamentList
+    }
+    
+    static func insertSearchTournamentDetails(info:NSDictionary, context:NSManagedObjectContext, isDummy:Bool) -> TETournamentList
+    {
+        let tournamentList:TETournamentList = TETournamentList.newObject(in: context)
+        tournamentList.tournamentID = info.stringValueForKey(key: "id")
+        
+        var startKeyName:String = "startDateTime"
+        var endKeyName:String = "endDateTime"
+        
+        if COMMON_SETTING.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: startKeyName)) {
+            startKeyName = "startDate"
+        }
+        if COMMON_SETTING.isEmptyStingOrWithBlankSpace(info.stringValueForKey(key: endKeyName)) {
+            endKeyName = "endDate"
+        }
+        
+        tournamentList.startDateTime = info.stringValueForKey(key: startKeyName)
+        tournamentList.endDateTime = info.stringValueForKey(key: endKeyName)
+        tournamentList.lastUpdatedAt = info.stringValueForKey(key: "lastUpdatedAt")
+        tournamentList.tournamentName = info.stringValueForKey(key: "name")
+        tournamentList.imageKay = info.stringValueForKey(key: "imageKey")
+        tournamentList.hype = info.boolValueForKey(key: "hype")
+        tournamentList.latLong = info.stringValueForKey(key: "latLong")
+        tournamentList.completed = info.boolValueForKey(key: "completed")
         
         return tournamentList
     }
+
 
     
     static func updateTournamentDetails(info:NSDictionary, tournamentList:TETournamentList, context:NSManagedObjectContext) ->  TETournamentList
@@ -409,46 +435,5 @@ public class TETournamentList: TESwiftModel {
             print(error.localizedDescription)
         }
         return fetchedObjects
-    }
-    
-    //MARK: Parsers
-    
-    static func parseTournamentListMiniDetails(arrTournamentList:NSArray, context:NSManagedObjectContext) -> NSMutableArray
-    {
-        let tournamentList = NSMutableArray()
-        
-        for info in arrTournamentList {
-            let tournament = TETournamentList.insertTournamentMiniDetails(info: info as! NSDictionary, context: context, isDummy: false, isUserHype: false)
-            tournamentList.add(tournament)
-        }
-        
-        let sortDiscriptor = NSSortDescriptor.init(key: "lastUpdatedAt", ascending: false)
-        let arr = tournamentList.sortedArray(using: [sortDiscriptor])
-        
-        return NSMutableArray.init(array:arr)
-    }
-    
-    static func parseTournamentListDetails(arrTournamentList:NSArray, context:NSManagedObjectContext) -> NSMutableArray
-    {
-        let tournamentList = NSMutableArray()
-        
-        for info in arrTournamentList {
-            let predicate = NSPredicate(format: "tournamentID == %@", (info as AnyObject).stringValueForKey(key: "tournamentID"))
-            let filterObjetcs:NSArray = TETournamentList.fetchTournamentListDetail(predicate: predicate, context: context)
-            
-            if filterObjetcs.count == 0 {
-                let tournament = TETournamentList.insertTournamentDetails(info: info as! NSDictionary, context: context, isDummy: false, isUserHype: false)
-                tournamentList.add(tournament)
-            }
-            else{
-                let tournament = TETournamentList.updateTournamentDetails(info: info as! NSDictionary, tournamentList: filterObjetcs.firstObject as! TETournamentList, context: context)
-                tournamentList.add(tournament)
-            }
-        }
-        
-        let sortDiscriptor = NSSortDescriptor.init(key: "lastUpdatedAt", ascending: false)
-        let arr = tournamentList.sortedArray(using: [sortDiscriptor])
-        
-        return NSMutableArray.init(array:arr)
     }
 }

@@ -33,6 +33,7 @@ enum RequestedUrlType {
     case DisconnectSocialLogin
     case GetTournamentByID
     case UpdateTournament
+    case DeleteTournament
 }
 
 let ServerURL = "https://api.tournamentedition.com/tournamentapis/web/srf/services/"
@@ -88,8 +89,8 @@ class ServiceCall: NSObject {
         
     }
     
-    func getRequestUrl(urlType: RequestedUrlType , parameter:NSMutableDictionary ) -> String {
-        
+    func getRequestUrl(urlType: RequestedUrlType , parameter:NSMutableDictionary ) -> String
+    {
         var urlString:String = ""
         
         switch urlType
@@ -97,11 +98,9 @@ class ServiceCall: NSObject {
         case .GetUserLogin:
             urlString = String(format: "%@/login",Network_Header)
             break
-            
         case .GetUserProfileData:
             urlString = String(format: "%@/user/profile/web", Network_Header)
             break
-            
         case .GetNotificationList:
             urlString = String(format: "%@/notifications", Main_Header)
             break
@@ -114,14 +113,12 @@ class ServiceCall: NSObject {
         case .GetUserSignUp:
             urlString = String(format: "%@/user/register",Network_Header)
             break
-            
         case .GetUnAuthSearchedLocation:
             urlString = String(format: "%@unauthenticated/search/location?query=%@",ServerURL,parameter.value(forKey: "locationText") as! String)
             break
         case .GetMyProfile:
             urlString = String(format: "%@/user/profile",Network_Header)
             break
-            
         case .CheckUserNameExists:
             urlString = String(format: "%@unauthenticated/find/user/%@",ServerURL,parameter.stringValueForKey(key: "username"))
             break
@@ -151,7 +148,6 @@ class ServiceCall: NSObject {
         case .UpdateUserProfile:
             urlString = String(format: "%@/user/update/profile",Network_Header)
             break
-        
         case .DisconnectSocialLogin:
             urlString = String(format: "%@/user/disconnect/socialnetwork/%@",Network_Header,parameter.stringValueForKey(key: "socialType"))
             break
@@ -165,6 +161,9 @@ class ServiceCall: NSObject {
             urlString = String(format: "%@/tournament",Main_Header)
             break
         default: break
+        case .DeleteTournament:
+            urlString = String(format: "%@/tournament/%@",Main_Header,parameter.stringValueForKey(key: "tournamentid"))
+            break
         }
         
         return urlString
@@ -656,6 +655,5 @@ class ServiceCall: NSObject {
         }
         return imageDirectoryPath
     }
-    
 }
 

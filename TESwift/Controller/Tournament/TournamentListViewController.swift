@@ -44,7 +44,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         self.setupMenu()
         
-        self.getUsersTournament()
+        self.fetchUserTournaments()
         
         // Do any additional setup after loading the view.
     }
@@ -62,6 +62,21 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.configureSearchBar()
         self.configureSwipeGesture()
     }
+    
+    // MARK:- IBAction
+    
+    @IBAction func actionOnSearchButton(_ sender: AnyObject) {
+        self.showSearchBar()
+    }
+    
+    @IBAction func actionOnPlusIcon(_ sender: AnyObject) {
+        
+        let createTournamentVC:CreateTournamentViewController = STORYBOARD.instantiateViewController(withIdentifier: "CreateTournamentViewControllerID") as! CreateTournamentViewController
+        createTournamentVC.screenType = Screen_Type.CREATE_TOURNAMENT
+        self.navigationController?.pushViewController(createTournamentVC, animated: true)
+    }
+    
+    // MARK:- Swipe Uitlity
     
     func  configureSwipeGesture() {
         self.swipeDownGesture = UISwipeGestureRecognizer()
@@ -82,21 +97,6 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         self.tableView.removeGestureRecognizer(self.swipeDownGesture!)
     }
     
-    // MARK:- IBAction
-    
-    @IBAction func actionOnSearchButton(_ sender: AnyObject) {
-        self.showSearchBar()
-    }
-    
-    @IBAction func actionOnPlusIcon(_ sender: AnyObject) {
-
-        let createTournamentVC:CreateTournamentViewController = STORYBOARD.instantiateViewController(withIdentifier: "CreateTournamentViewControllerID") as! CreateTournamentViewController
-        createTournamentVC.screenType = Screen_Type.CREATE_TOURNAMENT
-        self.navigationController?.pushViewController(createTournamentVC, animated: true)
-    }
-    
-    // MARK:- Uitlity
-    
     func swipeDownHandler(sender:UISwipeGestureRecognizer){
         self.showSearchBar()
     }
@@ -105,6 +105,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         //self.hideSearchBar()
     }
     
+    // MARK:- SearchBar Uitlity
     func showSearchBar() {
         // self.removeSwipeGesture()
         self.searchBar.becomeFirstResponder()
@@ -170,6 +171,19 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
     }
     
+    // MARK:- Tournament Uitlity
+    func fetchUserTournaments()
+    {
+        if COMMON_SETTING.myProfile != nil
+        {
+            COMMON_SETTING.myProfile?.tournament = NSSet()
+        }
+        
+        TETournamentList.deleteAllFromEntity(inManage: self.manageObjectContext())
+        
+        self.getUsersTournament()
+    }
+    
     func getUsersTournament()
     {
         let success: teHelper_Success_CallBack = {arrTournamentList in
@@ -219,13 +233,59 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     
     func deleteTournamentForIndexPath(indexPath:IndexPath)
     {
-        var tournaDict:NSDictionary = NSDictionary()
+        let success: successHandler = {responseObject, responseType in
+            
+            let responseDict = serviceCall.parseResponse(responseObject: responseObject as Any)
+            print(responseDict)
+            
+            self.showAlert(title: kSuccess, message: kTournamentDeleteSuccess, actionHandler:{
+                self.deleteTournamentFromDatabase(indexPath: indexPath)
+            })
+        }
+        let failure: falureHandler = {error, responseString, responseType in
+            
+            print(responseString)
+        }
+        
+        let tournamentDetail:TETournamentList? = self.getTournamentsResource().object(at: indexPath.row) as? TETournamentList
+        
+        let parameters:NSMutableDictionary = NSMutableDictionary()
+        parameters.setValue(tournamentDetail?.tournamentID, forKey: "tournamentid")
+        
+        ServiceCall.sharedInstance.sendRequest(parameters: parameters, urlType: RequestedUrlType.DeleteTournament, method: "DELETE", successCall: success, falureCall: failure)
+        
+    }
+    
+    func getTournamentsResource() -> NSMutableArray
+    {
         if isSearchEnabled && self.searchResults.count>0
         {
-            tournaDict = serviceCall.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
+            return self.searchResults
         }else
         {
-            tournaDict = serviceCall.parseResponse(responseObject: self.tournamentsArray.object(at: indexPath.row))
+            return self.tournamentsArray
+        }
+    }
+    
+    func deleteTournamentFromDatabase(indexPath:IndexPath)
+    {
+        let tournamentDetail:TETournamentList? = self.getTournamentsResource().object(at: indexPath.row) as? TETournamentList
+        
+        //remove from core data
+        TETournamentList.deleteObject(fromEntity: tournamentDetail, in: self.manageObjectContext())
+        
+        //remove from local arrays
+        if isSearchEnabled
+        {
+            self.searchResults.removeObject(at: indexPath.row)
+        }else
+        {
+            self.tournamentsArray.removeObject(at: indexPath.row)
+        }
+        
+        if IS_IPHONE
+        {
+            self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.fade)
         }
     }
     
@@ -323,13 +383,12 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
                     self.isLoadMoreSearch = true
                 }
                 
-                for item in responseObjects {
-                    self.searchResults.add(item)
-                }
-                //    self.searchResults.addObjects(from: responseObjects as! [Any])
+                let parsedObjects:NSArray = TETournamentList.parseSearchTournamentListDetails(arrTournamentList: responseObjects, context: self.manageObjectContext())
+                self.searchResults.addObjects(from: parsedObjects as! [Any])
                 
-                if self.searchResults.count > 0 {
-                    // self.parseSearchResult(result: self.searchResults)
+                if self.searchResults.count > 0
+                {
+                    
                     self.showTableData()
                 }else
                 {
@@ -373,10 +432,10 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         if isSearchEnabled && self.searchResults.count>0
         {
-            //            tournaDict = serviceCall.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
-            //            cell.tournmentName.textColor = UIColor.lightGray
-            //            cell.yearLabel.textColor = UIColor.lightGray
-            //            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: tournaDict.stringValueForKey(key: "name").uppercased(), searchedText: self.searchBar.text!)
+            tournamentDetail = self.searchResults.object(at: indexPath.row) as? TETournamentList
+            cell.tournmentName.textColor = UIColor.lightGray
+            cell.yearLabel.textColor = UIColor.lightGray
+            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: (tournamentDetail?.tournamentName?.uppercased())!, searchedText: self.searchBar.text!)
         }else
         {
             tournamentDetail = self.tournamentsArray.object(at: indexPath.row) as? TETournamentList
@@ -420,16 +479,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath)
     {
-        var tournamentDetail:TETournamentList?
-        
-        if isSearchEnabled && self.searchResults.count>0
-        {
-            tournamentDetail = self.searchResults.object(at: indexPath.row) as? TETournamentList
-            
-        }else
-        {
-            tournamentDetail = self.tournamentsArray.object(at: indexPath.row) as? TETournamentList
-        }
+        let tournamentDetail:TETournamentList? = self.getTournamentsResource().object(at: indexPath.row) as? TETournamentList
         
         self.fetchTournamentMiniDetail(tournamentID: (tournamentDetail?.tournamentID)!)
     }
