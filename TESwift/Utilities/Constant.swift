@@ -116,6 +116,10 @@ let kCameraNotAvailableMessage = "Camera is not available."
 let kNoInternetConnect = "No Internet Connectivity.Please try again later."
 let KSignUpActivate = "An email has been sent for account activation."
 
+//MARK:- Tournament List
+
+let kTournamentDeleteSuccess = "Tournament deleted successfully!"
+
 let KEmailExists = "User with same e-mail already exists"
 let KUserExists = "User with same Username already exists"
 let kEnterValidAge = "Please select valid age."
@@ -132,6 +136,7 @@ let kError = "Error"
 let kWarning = "Warning"
 let kCancel = "Cancel"
 let kMessage = "Message"
+let kSuccess = "Success"
 let kYes = "Yes"
 let kNo = "No"
 let kDisconnect = "Are you sure you want to disconnect?"

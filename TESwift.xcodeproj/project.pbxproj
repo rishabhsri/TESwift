@@ -15,6 +15,7 @@
 		180EDA2F1E01765D0065BF6B /* UIImageView+Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */; };
 		182742BF1E0D2AAF00F00EDB /* TournamentListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182742BE1E0D2AAE00F00EDB /* TournamentListViewController.swift */; };
 		182742C11E0D326600F00EDB /* TournamentListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */; };
+		182A89111E30CD080097CF13 /* SeasonListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182A89101E30CD080097CF13 /* SeasonListViewController.swift */; };
 		182D29E81E125AE800998277 /* CreateTournamentViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182D29E71E125AE800998277 /* CreateTournamentViewController.swift */; };
 		182FB2421E13F4FE007361AD /* GameListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */; };
 		1847F2B61E0BE9940088E19D /* TEMyProfile+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2AB1E0BE9930088E19D /* TEMyProfile+CoreDataClass.swift */; };
@@ -111,6 +112,7 @@
 		180EDA2C1E01765D0065BF6B /* UIImageView+Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Utilities.swift"; sourceTree = "<group>"; };
 		182742BE1E0D2AAE00F00EDB /* TournamentListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TournamentListViewController.swift; sourceTree = "<group>"; };
 		182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TournamentListTableViewCell.swift; sourceTree = "<group>"; };
+		182A89101E30CD080097CF13 /* SeasonListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeasonListViewController.swift; sourceTree = "<group>"; };
 		182D29E71E125AE800998277 /* CreateTournamentViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateTournamentViewController.swift; sourceTree = "<group>"; };
 		182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GameListTableViewCell.swift; sourceTree = "<group>"; };
 		1847F2AB1E0BE9930088E19D /* TEMyProfile+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEMyProfile+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -266,6 +268,14 @@
 			path = TESwift/Controller/Tournament;
 			sourceTree = SOURCE_ROOT;
 		};
+		182A890E1E30CCC80097CF13 /* Seasons */ = {
+			isa = PBXGroup;
+			children = (
+				182A89101E30CD080097CF13 /* SeasonListViewController.swift */,
+			);
+			path = Seasons;
+			sourceTree = "<group>";
+		};
 		185D036C1E0D127B00578DCE /* UniversalSearch */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +322,7 @@
 		1878C8161DF948B100DAC10E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				182A890E1E30CCC80097CF13 /* Seasons */,
 				185D036C1E0D127B00578DCE /* UniversalSearch */,
 				180EDA1B1E0121AC0065BF6B /* SocialConnect */,
 				182742BD1E0D2A5800F00EDB /* Tournament */,
@@ -686,6 +697,7 @@
 				188163D61E02779E00AB2E74 /* PKHUDSystemActivityIndicatorView.swift in Sources */,
 				18F05B6A1E095B450090F57C /* NSDate+Utilities.m in Sources */,
 				188163D21E02779E00AB2E74 /* PKHUDProgressView.swift in Sources */,
+				182A89111E30CD080097CF13 /* SeasonListViewController.swift in Sources */,
 				1847F2CC1E0BEC2A0088E19D /* TETournamentList+CoreDataProperties.swift in Sources */,
 				1847F2BD1E0BE9940088E19D /* UserSocialDetail+CoreDataClass.swift in Sources */,
 				188163D81E02779E00AB2E74 /* PKHUDWideBaseView.swift in Sources */,
