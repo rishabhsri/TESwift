@@ -44,7 +44,7 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         self.setupMenu()
         
-        self.getUsersTournament()
+        self.fetchUserTournaments()
         
         // Do any additional setup after loading the view.
     }
@@ -89,9 +89,10 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     }
     
     @IBAction func actionOnPlusIcon(_ sender: AnyObject) {
-        let storyBoard = UIStoryboard(name: "Storyboard", bundle: nil)
-        let tournamentListVC:UIViewController = storyBoard.instantiateViewController(withIdentifier: "CreateTournamentViewControllerID")
-        self.navigationController?.pushViewController(tournamentListVC, animated: true)
+
+        let createTournamentVC:CreateTournamentViewController = STORYBOARD.instantiateViewController(withIdentifier: "CreateTournamentViewControllerID") as! CreateTournamentViewController
+        createTournamentVC.screenType = Screen_Type.CREATE_TOURNAMENT
+        self.navigationController?.pushViewController(createTournamentVC, animated: true)
     }
     
     // MARK:- Uitlity
@@ -169,6 +170,18 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
     }
     
+    func fetchUserTournaments()
+    {
+        if COMMON_SETTING.myProfile != nil
+        {
+            COMMON_SETTING.myProfile?.tournament = NSSet()
+        }
+        
+        TETournamentList.deleteAllFromEntity(inManage: self.manageObjectContext())
+        
+        self.getUsersTournament()
+    }
+    
     func getUsersTournament()
     {
         let success: teHelper_Success_CallBack = {arrTournamentList in
@@ -182,7 +195,13 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
                 self.isLoadMoreTournament = true
             }
             
-            COMMON_SETTING.myProfile?.addToTournament(NSSet(array:arrTournamentList as! [Any]))
+            let tournamentSet:NSMutableSet = NSMutableSet()
+            
+            for item in arrTournamentList {
+                tournamentSet.add(item)
+            }
+            
+            COMMON_SETTING.myProfile?.addToTournament(tournamentSet)
             TETournamentList.save(self.manageObjectContext())
             
             self.updateTournamentList()
@@ -316,13 +335,12 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
                     self.isLoadMoreSearch = true
                 }
                 
-                for item in responseObjects {
-                    self.searchResults.add(item)
-                }
-                //    self.searchResults.addObjects(from: responseObjects as! [Any])
+                let parsedObjects:NSArray = TETournamentList.parseSearchTournamentListDetails(arrTournamentList: responseObjects, context: self.manageObjectContext())
+                self.searchResults.addObjects(from: parsedObjects as! [Any])
                 
-                if self.searchResults.count > 0 {
-                    // self.parseSearchResult(result: self.searchResults)
+                if self.searchResults.count > 0
+                {
+                    
                     self.showTableData()
                 }else
                 {
@@ -366,10 +384,10 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         if isSearchEnabled && self.searchResults.count>0
         {
-            //            tournaDict = serviceCall.parseResponse(responseObject: self.searchResults.object(at: indexPath.row))
-            //            cell.tournmentName.textColor = UIColor.lightGray
-            //            cell.yearLabel.textColor = UIColor.lightGray
-            //            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: tournaDict.stringValueForKey(key: "name").uppercased(), searchedText: self.searchBar.text!)
+            tournamentDetail = self.searchResults.object(at: indexPath.row) as? TETournamentList
+            cell.tournmentName.textColor = UIColor.lightGray
+            cell.yearLabel.textColor = UIColor.lightGray
+            cell.tournmentName.attributedText = StyleGuide.highlightedSearchedText(name: (tournamentDetail?.tournamentName?.uppercased())!, searchedText: self.searchBar.text!)
         }else
         {
             tournamentDetail = self.tournamentsArray.object(at: indexPath.row) as? TETournamentList
