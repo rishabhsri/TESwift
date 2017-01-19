@@ -160,7 +160,6 @@ class ServiceCall: NSObject {
         case .UpdateTournament:
             urlString = String(format: "%@/tournament",Main_Header)
             break
-        default: break
         case .DeleteTournament:
             urlString = String(format: "%@/tournament/%@",Main_Header,parameter.stringValueForKey(key: "tournamentid"))
             break
