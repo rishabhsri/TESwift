@@ -80,6 +80,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
     
     @IBOutlet weak var ContainerViewHieght: NSLayoutConstraint!
     
+    @IBOutlet weak var iPadContainerViewHieght: NSLayoutConstraint!
     var popover:UIPopoverController?=nil
     var pickerView = UIPickerView()
     var activeTextField = UITextField()
@@ -102,19 +103,23 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
         self.configureLocationTableView()
         
         self.configurePickerView()
-      
+        
         if self.messagingSwitch.isOn == false {
+            
             if IS_IPAD {
                 self.messageViewHieghtIpad.constant = 0
-                self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - (self.heightMessageViewValueOfIpad)!
+                self.iPadContainerViewHieght.constant = self.iPadContainerViewHieght.constant - (self.heightMessageViewValueOfIpad)!
             }
             else{
                 self.messagingCategoryView.isHidden = true
                 self.messagingViewHeight.constant = 0
                 self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - (self.heightMessageViewValue)!
+                
             }
         }
+
         print( self.ContainerViewHieght.constant)
+//        print(self.iPadContainerViewHieght.constant)
         print(self.messagingViewHeight.constant)
         print(self.lblBrainTreeTop.constant)
         self.configurePickerViewData()
@@ -129,7 +134,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
 
     }
     
-    override func didReceiveMemoryWarning() {
+       override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
@@ -223,7 +228,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
             btnTeamPicture.isHidden = true
             self.lblNotifySettingTop.constant = 0
             if IS_IPAD {
-                self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant - 116
+                self.iPadContainerViewHieght.constant =  self.iPadContainerViewHieght.constant - 116
             }
             else{
             self.ContainerViewHieght.constant =  self.ContainerViewHieght.constant - 106
@@ -367,7 +372,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
                
                 if IS_IPAD {
                     self.messageViewHieghtIpad.constant = 172
-                    self.ContainerViewHieght.constant = self.ContainerViewHieght.constant + (self.heightMessageViewValueOfIpad)!
+                    self.iPadContainerViewHieght.constant = self.iPadContainerViewHieght.constant + (self.heightMessageViewValueOfIpad)!
                     
                     self.brainTreeTopIpad.constant = 18
                 }
@@ -393,7 +398,7 @@ class SettingViewController: SocialConnectViewController,UIImagePickerController
                 
                 if IS_IPAD {
                     self.messageViewHieghtIpad.constant = 0
-                    self.ContainerViewHieght.constant = self.ContainerViewHieght.constant - (self.heightMessageViewValueOfIpad)!
+                    self.iPadContainerViewHieght.constant = self.iPadContainerViewHieght.constant - (self.heightMessageViewValueOfIpad)!
                     self.brainTreeTopIpad.constant = 18
                 }
                 else{
