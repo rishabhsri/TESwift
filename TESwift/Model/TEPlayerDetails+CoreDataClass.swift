@@ -21,7 +21,7 @@ public class TEPlayerDetails: TESwiftModel {
             return playerDetails
         }
         
-        let playerDict:NSDictionary = info.object(forKey: "players") as! NSDictionary
+        let playerDict:NSDictionary = info.object(forKey: "player") as! NSDictionary
         
         playerDetails.name = playerDict.stringValueForKey(key: "name")
         playerDetails.country = playerDict.stringValueForKey(key: "country")

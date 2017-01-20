@@ -38,6 +38,7 @@
 		1847F2D31E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2C91E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift */; };
 		1847F2D41E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2CA1E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
+		1851BD7C1E2F92FA000E06FC /* StaffCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1851BD7B1E2F92FA000E06FC /* StaffCollectionViewCell.swift */; };
 		185D036E1E0D127B00578DCE /* UniversalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */; };
 		185D03701E0D33D500578DCE /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */; };
 		1865C8F61E15203C00557D56 /* GameList+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1865C8F41E15203C00557D56 /* GameList+CoreDataClass.swift */; };
@@ -136,6 +137,7 @@
 		1847F2C91E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEPlayerDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1847F2CA1E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEPlayerDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		1851BD7B1E2F92FA000E06FC /* StaffCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaffCollectionViewCell.swift; sourceTree = "<group>"; };
 		185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalSearchViewController.swift; sourceTree = "<group>"; };
 		185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
 		1865C8F41E15203C00557D56 /* GameList+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "GameList+CoreDataClass.swift"; sourceTree = "<group>"; };
@@ -431,6 +433,7 @@
 				182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */,
 				185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */,
 				182FB2411E13F4FE007361AD /* GameListTableViewCell.swift */,
+				1851BD7B1E2F92FA000E06FC /* StaffCollectionViewCell.swift */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -665,6 +668,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				188163DF1E02BE4D00AB2E74 /* NotificationTableViewCell.swift in Sources */,
+				1851BD7C1E2F92FA000E06FC /* StaffCollectionViewCell.swift in Sources */,
 				A1D555D81DFAFED60077EF4E /* SignUpViewController.swift in Sources */,
 				188C8EBE1DF979C300C2D52E /* UIProgressView+AFNetworking.m in Sources */,
 				188C8EB71DF979C300C2D52E /* AFURLSessionManager.m in Sources */,

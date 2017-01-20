@@ -129,6 +129,11 @@ let kDefaultNotificationMsg = "match will begin in 5 minutes"
 
 let kDefalutUrl = "te-app.com/"
 
+let Single_Elimination = "SINGLE_ELIMINATION"
+let Double_Elimination = "DOUBLE_ELIMINATION"
+let Swiss = "SWISS"
+let Round_Robin = "ROUND_ROBIN"
+
 //MARK:- Titles
 
 let kOK = "OK"

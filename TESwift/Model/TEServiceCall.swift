@@ -32,6 +32,7 @@ enum RequestedUrlType {
     case CreateNewTournament
     case DisconnectSocialLogin
     case GetTournamentByID
+    case UpdateTournament
     case DeleteTournament
 }
 
@@ -155,6 +156,9 @@ class ServiceCall: NSObject {
             break
         case .GetTournamentByID:
             urlString = String(format: "%@/tournament/%@",Main_Header,parameter.stringValueForKey(key: "tournamentid"))
+            break
+        case .UpdateTournament:
+            urlString = String(format: "%@/tournament",Main_Header)
             break
         case .DeleteTournament:
             urlString = String(format: "%@/tournament/%@",Main_Header,parameter.stringValueForKey(key: "tournamentid"))
