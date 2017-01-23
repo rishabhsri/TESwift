@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MyDashBoardViewController: UniversalSearchViewController{
+class MyDashBoardViewController: UniversalSearchViewController,UICollectionViewDelegate,UICollectionViewDataSource{
     
     //TopView outlets
     @IBOutlet weak var topViewBGImg: UIImageView!
@@ -22,6 +22,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
     @IBOutlet weak var tournamentsBtn: UIButton!
     @IBOutlet weak var tableView: UITableView!
     
+    @IBOutlet weak var collectionView: UICollectionView!
     
     //autolayout constants                              // Actual values
     @IBOutlet weak var menuBtnTop: NSLayoutConstraint!  // 30
@@ -125,6 +126,16 @@ class MyDashBoardViewController: UniversalSearchViewController{
     
     func setupTableView()
     {
+        if IS_IPAD {
+            self.tableView.isHidden = true
+            self.notificationBtn.alpha = 0.25
+            self.hypBtn.alpha = 1.0
+            self.tournamentsBtn.alpha = 0.25
+            self.currentButtonIndex = 1
+
+        }
+        else{
+        self.collectionView.isHidden = true
         self.notificationBtn.alpha = 0.25
         self.hypBtn.alpha = 1.0
         self.tournamentsBtn.alpha = 0.25
@@ -132,6 +143,7 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.tableView.estimatedRowHeight = 44;
         self.tableView.rowHeight = UITableViewAutomaticDimension;
         self.tableView.tableFooterView = UIView()
+      }
     }
     
     func setProfileData()
@@ -316,7 +328,12 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.hypBtn.alpha = 0.25
         self.tournamentsBtn.alpha = 1.0
         currentButtonIndex = 2
+        if IS_IPAD {
+            self.collectionView.reloadData()
+        }
+        else{
         self.tableView.reloadData()
+    }
     }
     
     @IBAction func hypeAction(_ sender: AnyObject) {
@@ -324,7 +341,13 @@ class MyDashBoardViewController: UniversalSearchViewController{
         self.hypBtn.alpha = 1.0
         self.tournamentsBtn.alpha = 0.25
         currentButtonIndex = 1
-        self.tableView.reloadData()
+      
+        if IS_IPAD {
+            self.collectionView.reloadData()
+        }
+        else{
+            self.tableView.reloadData()
+    }
     }
     
     //MARK:- Service Calls for data
@@ -460,9 +483,14 @@ class MyDashBoardViewController: UniversalSearchViewController{
                         self.isTournamentLoadMore = true
                     }
                     self.tournamentsToShowArray.addObjects(from: array as! [Any])
+                   
+                    if IS_IPAD {
+                        self.collectionView.reloadData()
+                    }
+                    else{
                     self.tableView.reloadData()
                 }
-                
+            }
             }
         }
         let failure: falureHandler = {error, responseString, responseType in
@@ -535,9 +563,13 @@ class MyDashBoardViewController: UniversalSearchViewController{
                         self.isHypeLoadMore = true
                     }
                     self.hypetoShowArray.addObjects(from: array as! [Any])
+                    if IS_IPAD {
+                        self.collectionView.reloadData()
+                    }
+                    else{
                     self.tableView.reloadData()
                 }
-                
+              }
             }
         }
         let failure: falureHandler = {error, responseString, responseType in
@@ -609,6 +641,92 @@ class MyDashBoardViewController: UniversalSearchViewController{
             
         }
     }
+    
+    // MARK: - UICollectionViewDataSource
+   
+        //1
+         func numberOfSections(in collectionView: UICollectionView) -> Int {
+            
+            if tableView == self.universalSearchTableView {
+                return super.numberOfSections(in: tableView)
+            }
+            return 1
+        }
+        
+        //2
+         func collectionView(_ collectionView: UICollectionView,
+                                     numberOfItemsInSection section: Int) -> Int {
+                           var count:Int = 0
+                if currentButtonIndex == 1
+                {
+                    count = hypetoShowArray.count
+                    
+                }else if currentButtonIndex == 2
+                {
+                    count = tournamentsToShowArray.count
+                }
+                
+                if count == 0{
+                    let noDataLabel:UILabel  = UILabel.init(frame: CGRect(x:0,y:0,width:collectionView.bounds.size.width,height:collectionView.bounds.size.height))
+                    if self.isResponseReceived {
+                        noDataLabel.text = "No data available"
+                    }else
+                    {
+                        noDataLabel.text = "Loading..."
+                    }
+                    noDataLabel.textColor = UIColor.lightGray
+                    noDataLabel.textAlignment = NSTextAlignment.center
+                    collectionView.backgroundView = noDataLabel
+                }
+                else{
+                    collectionView.backgroundView   = nil
+                }
+                return count
+            }
+
+    
+        
+        //3
+         func collectionView(_ collectionView: UICollectionView,
+                                     cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+            // create a new cell if needed or reuse an old one
+                          let cell:UICollectionViewCell
+                if currentButtonIndex == 1
+                {
+                 cell = self.configureHypeCellForCollectionView(collectionView:collectionView , indexPath: indexPath)
+//                    tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+                    
+                }
+                else
+                {
+                    cell = self.configureTournamentCellForCollectionView(collectionView: collectionView, indexPath: indexPath)
+//                    tableView.separatorStyle = UITableViewCellSeparatorStyle.none
+                }
+//                tableView.separatorColor = UIColor.darkGray
+            
+                cell.backgroundColor = UIColor.clear
+                
+                return cell
+                
+            }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if self.currentButtonIndex == 2{
+            let tournament:NSDictionary = self.tournamentsToShowArray.object(at: indexPath.row) as! NSDictionary
+            let tournId:Int = tournament.intValueForKey(key: "tournamentID")
+            self.getTournamentById(tournamentID: tournId)
+        }
+
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
+        cell.preservesSuperviewLayoutMargins = false
+//        cell.separatorInset = UIEdgeInsets.zero
+        cell.layoutMargins = UIEdgeInsets.zero
+
+    }
+    
+    
     
     // MARK: - TableView Delegate
     
@@ -728,6 +846,100 @@ class MyDashBoardViewController: UniversalSearchViewController{
             }
         }
     }
+    
+    
+    
+     func  configureHypeCellForCollectionView(collectionView:UICollectionView, indexPath:IndexPath) -> HypeCollectionViewCell {
+        
+        let cell:HypeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HypeCollectionViewCell", for: indexPath) as! HypeCollectionViewCell
+        
+        let hypeInfo:NSDictionary = serviceCall.parseResponse(responseObject: hypetoShowArray.object(at: indexPath.row))
+        
+        // Set Border Image
+        if hypeInfo.stringValueForKey(key: "hypableType") == "TOURNAMENT" {
+            cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        }else
+        {
+            cell.hypeBorderImg.image = UIImage(named: "EventCellHyped")
+        }
+        cell.hypeBgImg.image = nil
+        
+        cell.hypeNameLbl.text = hypeInfo.stringValueForKey(key: "name").uppercased()
+        cell.gameLbl.text = hypeInfo.stringValueForKey(key: "game").uppercased()
+        cell.locationLbl.text = hypeInfo.stringValueForKey(key: "venue").uppercased()
+        cell.dateLbl.text = self.getLocaleDateStringFromString(dateString: hypeInfo.stringValueForKey(key: "startDate"))
+        
+        //Set Default Image
+        self.setDefaultImages(cell: cell, indexPath: indexPath)
+        
+        //Download Image
+        let imageKey = hypeInfo.stringValueForKey(key: "imageKey")
+        
+        let sucess:downloadImageSuccess = {image, imageKey in
+            
+            cell.hypeBgImg.image = image
+            cell.progressBar.stopAnimating()
+        }
+        
+        let failure:downloadImageFailed = {error, responseString in
+            
+            cell.progressBar.stopAnimating()
+        }
+        
+        if imageKey != "" {
+           cell.progressBar.startAnimating()
+            ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+        }
+        return cell
+    }
+   
+    func  configureTournamentCellForCollectionView(collectionView:UICollectionView, indexPath:IndexPath) -> HypeCollectionViewCell{
+       
+        let cell:HypeCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "HypeCollectionViewCell", for: indexPath) as! HypeCollectionViewCell
+       
+        let tournaInfo:NSDictionary = serviceCall.parseResponse(responseObject: tournamentsToShowArray.object(at: indexPath.row))
+        
+        let val = tournaInfo.value(forKey: "hype") as! NSNumber
+        if val == 0 {
+            cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
+        }else
+        {
+            cell.hypeBorderImg.image = UIImage(named: "HypeImageBorder")
+        }
+        cell.hypeBorderImg.image = UIImage(named: "ImageBorder")
+        cell.hypeBgImg.image = nil
+        cell.hypeNameLbl.text = tournaInfo.stringValueForKey(key: "name").uppercased()
+        cell.gameLbl.text = tournaInfo.stringValueForKey(key: "game").uppercased()
+        cell.locationLbl.text = tournaInfo.stringValueForKey(key: "venue").uppercased()
+        cell.dateLbl.text = self.getFormattedDateString(array: tournamentsToShowArray, indexPath: indexPath, format: "yyyy")
+        
+        //Set Default Image
+        self.setDefaultImages(cell: cell, indexPath: indexPath)
+        
+        //Download Image
+        let imageKey = tournaInfo.stringValueForKey(key: "imageKey")
+        
+        let sucess:downloadImageSuccess = {image, imageKey in
+            
+            cell.hypeBgImg.image = image
+            cell.progressBar.stopAnimating()
+        }
+        
+        let failure:downloadImageFailed = {error, responseString in
+            
+            cell.progressBar.stopAnimating()
+        }
+        
+        if imageKey != "" {
+            cell.progressBar.startAnimating()
+            ServiceCall.sharedInstance.downloadImage(imageKey: imageKey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+        }
+        
+        return cell
+
+    }
+    
+    
     
     func  configureHypeCell(tableView:UITableView, indexPath:IndexPath) -> HypeTableViewCell {
         

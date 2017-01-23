@@ -305,11 +305,30 @@ class BaseViewController: UIViewController{
             hypeTableCell.colorString = listColors[indexPath.row%listColors.count]
             hypeTableCell.hypeBgImg.backgroundColor = UIColor.init(hexString: hypeTableCell.colorString!)
             
-        }else if cell is TournamentListTableViewCell
+        }
+        
+        else if cell is HypeCollectionViewCell
+        {
+            let hypeTableCell:HypeCollectionViewCell = cell as! HypeCollectionViewCell
+            hypeTableCell.colorString = listColors[indexPath.row%listColors.count]
+            hypeTableCell.hypeBgImg.backgroundColor = UIColor.init(hexString: hypeTableCell.colorString!)
+            
+        }
+        
+        
+        else if cell is TournamentListTableViewCell
         {
             let tournamentTableCell:TournamentListTableViewCell = cell as! TournamentListTableViewCell
             tournamentTableCell.colorString = listColors[indexPath.row%listColors.count]
             tournamentTableCell.backGroundImage.backgroundColor = UIColor.init(hexString: tournamentTableCell.colorString!)
+        }
+        else if cell is TournamentListCollectionViewCell
+        {
+            let tournamentTableCell:TournamentListCollectionViewCell = cell as! TournamentListCollectionViewCell
+            
+            tournamentTableCell.colorString = listColors[indexPath.row%listColors.count]
+            tournamentTableCell.backGroundImage.backgroundColor = UIColor.init(hexString: tournamentTableCell.colorString!)
+          
         }
         
     }

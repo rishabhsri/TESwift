@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1800979B1E3262D0000E2BB9 /* HypeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1800979A1E3262D0000E2BB9 /* HypeCollectionViewCell.swift */; };
 		180B4EF81E0922D200CBCF4D /* TENew.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 180B4EF61E0922D200CBCF4D /* TENew.xcdatamodeld */; };
 		180CED971E2904BD008A4FA7 /* TETournamentList+Parsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180CED961E2904BD008A4FA7 /* TETournamentList+Parsing.swift */; };
 		180EDA1F1E0122A70065BF6B /* SocialConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */; };
@@ -38,6 +39,7 @@
 		1847F2D31E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2C91E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift */; };
 		1847F2D41E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1847F2CA1E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift */; };
 		184C42591DFA983F001B576A /* LogInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184C42581DFA983F001B576A /* LogInViewController.swift */; };
+		184D63ED1E36290500845183 /* TournamentListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 184D63EC1E36290500845183 /* TournamentListCollectionViewCell.swift */; };
 		1851BD7C1E2F92FA000E06FC /* StaffCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1851BD7B1E2F92FA000E06FC /* StaffCollectionViewCell.swift */; };
 		185D036E1E0D127B00578DCE /* UniversalSearchViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */; };
 		185D03701E0D33D500578DCE /* SearchTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */; };
@@ -104,6 +106,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		1800979A1E3262D0000E2BB9 /* HypeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HypeCollectionViewCell.swift; sourceTree = "<group>"; };
 		180B4EF71E0922D200CBCF4D /* TENew.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = TENew.xcdatamodel; sourceTree = "<group>"; };
 		180CED961E2904BD008A4FA7 /* TETournamentList+Parsing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TETournamentList+Parsing.swift"; sourceTree = "<group>"; };
 		180EDA1E1E0122A70065BF6B /* SocialConnectViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SocialConnectViewController.swift; sourceTree = "<group>"; };
@@ -137,6 +140,7 @@
 		1847F2C91E0BEC2A0088E19D /* TEPlayerDetails+CoreDataClass.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEPlayerDetails+CoreDataClass.swift"; sourceTree = "<group>"; };
 		1847F2CA1E0BEC2A0088E19D /* TEPlayerDetails+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "TEPlayerDetails+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		184C42581DFA983F001B576A /* LogInViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogInViewController.swift; sourceTree = "<group>"; };
+		184D63EC1E36290500845183 /* TournamentListCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TournamentListCollectionViewCell.swift; sourceTree = "<group>"; };
 		1851BD7B1E2F92FA000E06FC /* StaffCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaffCollectionViewCell.swift; sourceTree = "<group>"; };
 		185D036D1E0D127B00578DCE /* UniversalSearchViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UniversalSearchViewController.swift; sourceTree = "<group>"; };
 		185D036F1E0D33D500578DCE /* SearchTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchTableViewCell.swift; sourceTree = "<group>"; };
@@ -428,6 +432,8 @@
 		188163DB1E02BE4D00AB2E74 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				184D63EC1E36290500845183 /* TournamentListCollectionViewCell.swift */,
+				1800979A1E3262D0000E2BB9 /* HypeCollectionViewCell.swift */,
 				188163DC1E02BE4D00AB2E74 /* HypeTableViewCell.swift */,
 				188163DD1E02BE4D00AB2E74 /* NotificationTableViewCell.swift */,
 				182742C01E0D326600F00EDB /* TournamentListTableViewCell.swift */,
@@ -691,6 +697,7 @@
 				1865C8F61E15203C00557D56 /* GameList+CoreDataClass.swift in Sources */,
 				186A23AE1DF9431E005E78D2 /* AppDelegate.swift in Sources */,
 				1847F2B91E0BE9940088E19D /* TEServiceCall.swift in Sources */,
+				1800979B1E3262D0000E2BB9 /* HypeCollectionViewCell.swift in Sources */,
 				188C8EB31DF979C300C2D52E /* AFNetworkReachabilityManager.m in Sources */,
 				180B4EF81E0922D200CBCF4D /* TENew.xcdatamodeld in Sources */,
 				18C7DE461DFEED7A00D635BD /* LeftMenuViewController.swift in Sources */,
@@ -725,6 +732,7 @@
 				1847F2CD1E0BEC2A0088E19D /* TEStaffDetail+CoreDataClass.swift in Sources */,
 				188163CF1E02779E00AB2E74 /* PKHUDAnimation.swift in Sources */,
 				188163B41E02764500AB2E74 /* StyleGuide.swift in Sources */,
+				184D63ED1E36290500845183 /* TournamentListCollectionViewCell.swift in Sources */,
 				1847F2CE1E0BEC2A0088E19D /* TEStaffDetail+CoreDataProperties.swift in Sources */,
 				1847F2BE1E0BE9940088E19D /* UserSocialDetail+CoreDataProperties.swift in Sources */,
 				182D29E81E125AE800998277 /* CreateTournamentViewController.swift in Sources */,

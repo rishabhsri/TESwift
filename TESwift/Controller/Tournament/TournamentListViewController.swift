@@ -8,8 +8,9 @@
 
 import UIKit
 
-class TournamentListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate, SWTableViewCellDelegate {
+class TournamentListViewController: BaseViewController, UITableViewDelegate, UITableViewDataSource, UISearchBarDelegate, UITextFieldDelegate, SWTableViewCellDelegate,UICollectionViewDataSource,UICollectionViewDelegate {
     
+    @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tounamentEmptyView: UIView!
     @IBOutlet weak var navigationBlurView: UIVisualEffectView!
@@ -56,11 +57,22 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     
     func setStyleGuide()
     {
+        if IS_IPAD {
+            self.tableView.isHidden = true
+            self.collectionView.contentInset = UIEdgeInsets(top: 65,left: 0,bottom: 0,right: 0)
+            self.tounamentEmptyView.isHidden = true
+            self.toolBar.frame = CGRect.init(x: 0, y: 0, width: 320, height: 70)
+            self.configureSearchBar()
+            self.configureSwipeGesture()
+        }
+        else{
+        self.collectionView.isHidden = true
         self.tableView.contentInset = UIEdgeInsets(top: 65,left: 0,bottom: 0,right: 0)
         self.tounamentEmptyView.isHidden = true
         self.toolBar.frame = CGRect.init(x: 0, y: 0, width: 320, height: 70)
         self.configureSearchBar()
         self.configureSwipeGesture()
+        }
     }
     
     // MARK:- IBAction
@@ -135,12 +147,27 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     func hideTableData() {
         self.isSearchEnabled = false
         self.searchResults.removeAllObjects()
+        
+        if IS_IPAD {
+            self.tableView.isHidden = true
+            self.collectionView.reloadData()
+        }
+        else{
+        self.collectionView.isHidden = true
         self.tableView.reloadData()
     }
-    
+    }
     func showTableData() {
         self.isSearchEnabled = true
-        self.tableView.reloadData()
+        
+        if IS_IPAD {
+            self.tableView.isHidden = true
+            self.collectionView.reloadData()
+        }
+        else{
+            self.collectionView.isHidden = true
+            self.tableView.reloadData()
+        }
     }
     
     
@@ -227,7 +254,14 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
         
         self.tournamentsArray = NSMutableArray.init(array: sortedArray)
         
-        self.tableView.reloadData()
+        if IS_IPAD {
+            self.tableView.isHidden = true
+            self.collectionView.reloadData()
+        }
+        else{
+            self.collectionView.isHidden = true
+            self.tableView.reloadData()
+        }
     }
     
     
@@ -405,7 +439,87 @@ class TournamentListViewController: BaseViewController, UITableViewDelegate, UIT
     }
     
     
+    // MARK: - UICollectionViewDataSource
     
+    //1
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
+        
+       
+        return 1
+    }
+    
+    //2
+    func collectionView(_ collectionView: UICollectionView,
+                        numberOfItemsInSection section: Int) -> Int {
+        if isSearchEnabled {
+            return self.searchResults.count
+        }
+        return self.tournamentsArray.count
+    }
+    
+    
+    
+    //3
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
+        // create a new cell if needed or reuse an old one
+        let cell:TournamentListCollectionViewCell = collectionView.dequeueReusableCell(withReuseIdentifier: "TournamentListCollectionViewCell", for: indexPath) as! TournamentListCollectionViewCell
+        
+        
+        
+        var tournamentDetail:TETournamentList?
+        
+        if isSearchEnabled && self.searchResults.count>0
+        {
+            tournamentDetail = self.searchResults.object(at: indexPath.row) as? TETournamentList
+            cell.tournamentName.textColor = UIColor.lightGray
+            cell.yearLabel.textColor = UIColor.lightGray
+            cell.tournamentName.attributedText = StyleGuide.highlightedSearchedText(name: (tournamentDetail?.tournamentName?.uppercased())!, searchedText: self.searchBar.text!)
+        }else
+        {
+            tournamentDetail = self.tournamentsArray.object(at: indexPath.row) as? TETournamentList
+        
+            cell.tournamentName.textColor = UIColor.white
+            cell.yearLabel.textColor = UIColor.white
+            cell.tournamentName.attributedText = StyleGuide.highlightedSearchedText(name: (tournamentDetail?.tournamentName?.uppercased())!, searchedText: (tournamentDetail?.tournamentName?.uppercased())!)
+        }
+        
+        cell.backGroundImage.image = nil
+        cell.yearLabel.text = self.getFormattedDateStringOfTournament(tournament: tournamentDetail!, format: "yyyy")
+        
+        self.setDefaultImages(cell: cell, indexPath: indexPath)
+        
+        let imagekey:String = (tournamentDetail?.imageKay)!
+        weak var weakCell:TournamentListCollectionViewCell? = cell
+        let sucess:downloadImageSuccess = {image, imageKey in
+            
+            weakCell!.backGroundImage.image = image
+            weakCell!.progressBar.stopAnimating()
+        }
+        
+        let failure:downloadImageFailed = {error, responseString in
+            
+            weakCell!.progressBar.stopAnimating()
+        }
+        
+        if !COMMON_SETTING.isEmptySting(imagekey) {
+            cell.progressBar.startAnimating()
+            ServiceCall.sharedInstance.downloadImage(imageKey: imagekey, urlType: RequestedUrlType.DownloadImage, successCall: sucess, falureCall: failure)
+        }
+        return cell
+
+        
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let tournamentDetail:TETournamentList? = self.getTournamentsResource().object(at: indexPath.row) as? TETournamentList
+        
+        self.fetchTournamentMiniDetail(tournamentID: (tournamentDetail?.tournamentID)!)
+  
+    }
+
+
     // MARK:- TableView Delegate
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
