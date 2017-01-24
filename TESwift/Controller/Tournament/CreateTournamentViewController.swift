@@ -13,6 +13,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     
     // Navigation Outlet
     @IBOutlet weak var topNavLbl: UILabel!
+    @IBOutlet weak var discordLbl: UILabel!
     @IBOutlet weak var infoButton: UIButton!
     
     //edit Tounrnament View
@@ -129,6 +130,7 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         }
     }
     
+    @IBOutlet weak var discordChannelHieghtCons: NSLayoutConstraint!
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -250,7 +252,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.tournamentUrl.text = kDefalutUrl
         self.socilIfoImageSelected.isHidden = true
         
-        
+        self.matchPerWinTF.text = "1.0"
+        self.matchPerTieTF.text = "0.5"
+        self.gameSetWin.text = "0.0"
+        self.gameSetTieTF.text = "0.0"
+        self.perByeTf.text = "1.0"
+
+
         tounamentNameTF.attributedPlaceholder = NSAttributedString(string:"Tournament Name",
                                                                    attributes:[NSForegroundColorAttributeName: UIColor.lightGray,])
         chooseGameTF.attributedPlaceholder = NSAttributedString(string:"-Choose Game-",
@@ -291,8 +299,12 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.navigationheghtCons.constant = 0
         self.scrollViewTopCons.constant = 0
         self.navigationView.isHidden = true
-        self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant + self.hypeViewHeightCons.constant + 30
-        
+        self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant + self.hypeViewHeightCons.constant - self.discordChannelHieghtCons.constant + 30
+        self.discordChannelSwitch.isHidden = true
+        self.switchViewhieghtCons.constant = switchViewhieghtCons.constant - self.discordChannelHieghtCons.constant
+        self.discordChannelHieghtCons.constant = 0
+        self.discordLbl.isHidden = true
+
         let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:#selector(uploadProfileBtnAction(_ :)))
         self.editTouenamentBG.isUserInteractionEnabled = true
         self.editTouenamentBG.addGestureRecognizer(tapGestureRecognizer)
@@ -373,6 +385,11 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
         self.considerTeamSwitch.isOn = self.boolValueFromString(value: (self.tournamentList?.considerTeam)!)
         self.considerLocationSwitch.isOn = self.boolValueFromString(value: (self.tournamentList?.considerLocation)!)
         self.scoreSubmissionSwitch.isOn = (self.tournamentList?.allowUserScoreSubmission)!
+        
+        if self.scoreSubmissionSwitch.isOn {
+            self.advanceTimerTF.isUserInteractionEnabled = true
+            self.advanceTimerTF.alpha = 1.0
+        }
         
         self.paidTournamentSwitch.isOn = (self.tournamentList?.paidTournament)!
         if self.paidTournamentSwitch.isOn == true {
@@ -643,13 +660,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
     }
     
     func successfullyDone(response:NSDictionary, actionFor:String){
-        var alertMessage = "Tournament successfully "
+        var alertMessage = "Tournament "
         if actionFor == "CREATE" {
-            alertMessage.append("Created")
+            alertMessage.append("Created.")
             _ = TETournamentList.insertTournamentDetails(info: response, context: self.manageObjectContext(), isDummy: false, isUserHype: false)
         }
         else if actionFor == "UPDATE" {
-            alertMessage.append("Updated")
+            alertMessage.append("Updated.")
             _ = TETournamentList.updateTournamentDetails(info: response, tournamentList: self.tournamentList!, context: self.manageObjectContext())
         }
         self.showAlert(title: kMessage, message: alertMessage, actionHandler: {
@@ -807,7 +824,13 @@ class CreateTournamentViewController: SocialConnectViewController, UIImagePicker
             
             self.scoreView.isHidden = false
             self.scoreViewHightCons.constant = 150
+            if self.roundRobinBtnOutlet.alpha == 1.0
+            {
+              self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant
+            }
+            else{
             self.scrollViewHieghtCon.constant = self.scrollViewHieghtCon.constant + self.scoreViewHieghtConsValue!
+            }
             self.swissBtnOutlet.alpha = 1.0
             self.singleBtnOutlet.alpha = 0.4
             self.doubleBtnOutlet.alpha = 0.4
