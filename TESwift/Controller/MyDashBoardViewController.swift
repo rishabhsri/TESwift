@@ -314,7 +314,8 @@ class MyDashBoardViewController: UniversalSearchViewController,UICollectionViewD
     
     // MARK: - IBOutlet Actions
     @IBAction func notificationAction(_ sender: AnyObject) {
-        
+        self.collectionView.isHidden = true
+        self.tableView.isHidden = false
         self.notificationBtn.alpha = 1.0
         self.hypBtn.alpha = 0.25
         self.tournamentsBtn.alpha = 0.25
@@ -329,9 +330,13 @@ class MyDashBoardViewController: UniversalSearchViewController,UICollectionViewD
         self.tournamentsBtn.alpha = 1.0
         currentButtonIndex = 2
         if IS_IPAD {
+            self.collectionView.isHidden = false
+            self.tableView.isHidden = true
             self.collectionView.reloadData()
         }
         else{
+            self.collectionView.isHidden = true
+            self.tableView.isHidden = false
         self.tableView.reloadData()
     }
     }
@@ -343,11 +348,15 @@ class MyDashBoardViewController: UniversalSearchViewController,UICollectionViewD
         currentButtonIndex = 1
       
         if IS_IPAD {
+            self.collectionView.isHidden = false
+            self.tableView.isHidden = true
             self.collectionView.reloadData()
         }
         else{
+            self.collectionView.isHidden = true
+            self.tableView.isHidden = false
             self.tableView.reloadData()
-    }
+        }
     }
     
     //MARK:- Service Calls for data

@@ -25,7 +25,7 @@
                         <viewControllerLayoutGuide type="bottom" id="huK-lf-klO"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="u2x-aQ-hln">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ProfileBG" translatesAutoresizingMaskIntoConstraints="NO" id="7wm-ba-aku"/>
@@ -117,10 +117,10 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="HypeTableViewCell" rowHeight="139" id="XQ8-6q-PQA" customClass="HypeTableViewCell" customModule="TESwift" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="768" height="139"/>
+                                                <rect key="frame" x="0.0" y="28" width="1024" height="139"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="XQ8-6q-PQA" id="UwL-dE-QQM">
-                                                    <frame key="frameInset" width="768" height="139"/>
+                                                    <frame key="frameInset" width="1024" height="139"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1tl-p3-mQc">
@@ -188,10 +188,10 @@
                                                 </connections>
                                             </tableViewCell>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="NotificationTableViewCell" rowHeight="50" id="dTA-FO-D0i" customClass="NotificationTableViewCell" customModule="TESwift" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="167" width="768" height="50"/>
+                                                <rect key="frame" x="0.0" y="167" width="1024" height="50"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="dTA-FO-D0i" id="qSJ-gh-QHI">
-                                                    <frame key="frameInset" width="768" height="50"/>
+                                                    <frame key="frameInset" width="1024" height="50"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <textView clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" delaysContentTouches="NO" canCancelContentTouches="NO" bouncesZoom="NO" editable="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p8W-bG-Nuh">
@@ -207,9 +207,13 @@
                                                     </subviews>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="p8W-bG-Nuh" secondAttribute="trailing" constant="10" id="Ird-dc-0Wf"/>
+                                                        <constraint firstAttribute="trailing" secondItem="p8W-bG-Nuh" secondAttribute="trailing" constant="10" id="Ird-dc-0Wf">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="250"/>
+                                                        </constraint>
                                                         <constraint firstItem="p8W-bG-Nuh" firstAttribute="top" secondItem="qSJ-gh-QHI" secondAttribute="top" id="ag0-wU-zMA"/>
-                                                        <constraint firstItem="p8W-bG-Nuh" firstAttribute="leading" secondItem="qSJ-gh-QHI" secondAttribute="leading" constant="20" id="ksp-Cq-Iqv"/>
+                                                        <constraint firstItem="p8W-bG-Nuh" firstAttribute="leading" secondItem="qSJ-gh-QHI" secondAttribute="leading" constant="20" id="ksp-Cq-Iqv">
+                                                            <variation key="heightClass=regular-widthClass=regular" constant="250"/>
+                                                        </constraint>
                                                         <constraint firstAttribute="bottom" secondItem="p8W-bG-Nuh" secondAttribute="bottom" id="piR-lx-srh"/>
                                                     </constraints>
                                                 </tableViewCellContentView>
@@ -311,13 +315,17 @@
                                     <constraint firstItem="026-va-p1q" firstAttribute="leading" secondItem="rXz-LJ-T8r" secondAttribute="leading" id="0fC-Ve-cbZ"/>
                                     <constraint firstItem="Odg-wV-OXE" firstAttribute="top" secondItem="RoH-ZT-uB0" secondAttribute="top" id="3X2-UE-Vxi"/>
                                     <constraint firstAttribute="bottom" secondItem="026-va-p1q" secondAttribute="bottom" id="7GK-or-tXi"/>
-                                    <constraint firstItem="RoH-ZT-uB0" firstAttribute="leading" secondItem="rXz-LJ-T8r" secondAttribute="leading" constant="22" id="8L8-to-DPv"/>
+                                    <constraint firstItem="RoH-ZT-uB0" firstAttribute="leading" secondItem="rXz-LJ-T8r" secondAttribute="leading" constant="22" id="8L8-to-DPv">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="100"/>
+                                    </constraint>
                                     <constraint firstAttribute="bottom" secondItem="c2d-88-Xss" secondAttribute="bottom" id="CgZ-VZ-SmW"/>
                                     <constraint firstItem="RoH-ZT-uB0" firstAttribute="top" secondItem="rXz-LJ-T8r" secondAttribute="top" constant="10" id="ChL-9B-3Bb"/>
                                     <constraint firstItem="qii-Qq-WFG" firstAttribute="top" secondItem="RoH-ZT-uB0" secondAttribute="top" id="Cmt-V5-bIM"/>
                                     <constraint firstAttribute="trailing" secondItem="c2d-88-Xss" secondAttribute="trailing" id="KXd-eU-S3D"/>
                                     <constraint firstItem="c2d-88-Xss" firstAttribute="leading" secondItem="rXz-LJ-T8r" secondAttribute="leading" id="MCO-wS-BsZ"/>
-                                    <constraint firstAttribute="trailing" secondItem="qii-Qq-WFG" secondAttribute="trailing" constant="22" id="Oyi-pf-1em"/>
+                                    <constraint firstAttribute="trailing" secondItem="qii-Qq-WFG" secondAttribute="trailing" constant="22" id="Oyi-pf-1em">
+                                        <variation key="heightClass=regular-widthClass=regular" constant="100"/>
+                                    </constraint>
                                     <constraint firstItem="Odg-wV-OXE" firstAttribute="centerX" secondItem="rXz-LJ-T8r" secondAttribute="centerX" id="V1K-Ln-E3c"/>
                                     <constraint firstItem="c2d-88-Xss" firstAttribute="top" secondItem="Odg-wV-OXE" secondAttribute="bottom" constant="8" id="Xdk-EX-Tcb"/>
                                     <constraint firstAttribute="trailing" secondItem="026-va-p1q" secondAttribute="trailing" id="fxl-dB-gqi"/>
@@ -354,10 +362,10 @@
                                         <color key="separatorColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <prototypes>
                                             <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="searchResultCell" id="zUN-nB-9wO" customClass="SearchTableViewCell" customModule="TESwift" customModuleProvider="target">
-                                                <rect key="frame" x="0.0" y="28" width="768" height="44"/>
+                                                <rect key="frame" x="0.0" y="28" width="1024" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="zUN-nB-9wO" id="AOb-Sc-JzT">
-                                                    <frame key="frameInset" width="768" height="43"/>
+                                                    <frame key="frameInset" width="1024" height="43"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
                                                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="loginIcon" translatesAutoresizingMaskIntoConstraints="NO" id="C06-yZ-4IC">
@@ -476,7 +484,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Login_BG" translatesAutoresizingMaskIntoConstraints="NO" id="JRz-Jj-ir5"/>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CA4DDAE0-EE2A-4EED-ABCD-5FD8C337A274" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-iP-Wev">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="9F8BBDA1-3542-418C-8442-C747F5D554FD" translatesAutoresizingMaskIntoConstraints="NO" id="Mpp-iP-Wev">
                                 <constraints>
                                     <constraint firstAttribute="height" constant="64" id="DDc-ai-ARo"/>
                                 </constraints>
@@ -584,7 +592,7 @@
                         <viewControllerLayoutGuide type="bottom" id="UhT-F7-ePW"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="c5X-ab-gRM">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DGV-SK-Dys">
@@ -800,7 +808,7 @@
                         <viewControllerLayoutGuide type="bottom" id="XAt-ji-vhc"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="k15-ja-boY">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
@@ -821,7 +829,7 @@
                         <viewControllerLayoutGuide type="bottom" id="7qr-hz-5vo"/>
                     </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="Dp7-P2-0Tr">
-                        <rect key="frame" x="0.0" y="0.0" width="768" height="1024"/>
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="MainBG" translatesAutoresizingMaskIntoConstraints="NO" id="zC3-iZ-3Ht"/>
@@ -858,10 +866,10 @@
                                 <inset key="scrollIndicatorInsets" minX="0.0" minY="45" maxX="0.0" maxY="0.0"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="tournamentCell" id="rpV-yy-9F3" customClass="TournamentListTableViewCell" customModule="TESwift" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="28" width="768" height="140"/>
+                                        <rect key="frame" x="0.0" y="28" width="1024" height="140"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="rpV-yy-9F3" id="Ijv-7H-F9t">
-                                            <frame key="frameInset" width="768" height="140"/>
+                                            <frame key="frameInset" width="1024" height="140"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="cbD-rP-Pb5"/>
@@ -2257,9 +2265,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="AddIcon" width="36" height="36"/>
-        <image name="BackArrowRound" width="36" height="36"/>
-        <image name="CA4DDAE0-EE2A-4EED-ABCD-5FD8C337A274" width="720" height="146">
+        <image name="9F8BBDA1-3542-418C-8442-C747F5D554FD" width="720" height="146">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -9339,6 +9345,8 @@ qAAAAK0AAADEAAAAxgAAAMgABnh8AAZ4gQAGeIwABniVAAZ4qAAGeKwABni3AAZ4wAAGeMUABnjNAAZ4
 LQAGeT8ABnlCAAZ5RwAAAAAAAAQBAAAAAAAAAD4AAAAAAAAAAAAAAAAABnlJA
 </mutableData>
         </image>
+        <image name="AddIcon" width="36" height="36"/>
+        <image name="BackArrowRound" width="36" height="36"/>
         <image name="Done" width="36" height="36"/>
         <image name="DoneBG" width="36" height="36"/>
         <image name="HypeImage_gray" width="35" height="35"/>
